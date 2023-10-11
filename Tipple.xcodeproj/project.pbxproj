@@ -14,6 +14,7 @@
 		340DDE9E2AD6243A00217F2D /* Tipple.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 340DDE9C2AD6243A00217F2D /* Tipple.xcdatamodeld */; };
 		340DDEA02AD6243D00217F2D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 340DDE9F2AD6243D00217F2D /* Assets.xcassets */; };
 		340DDEA32AD6243D00217F2D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 340DDEA12AD6243D00217F2D /* LaunchScreen.storyboard */; };
+		52DCD37F2AD627D900BB4DB3 /* MainSession.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 52DCD37E2AD627D900BB4DB3 /* MainSession.storyboard */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +27,7 @@
 		340DDE9F2AD6243D00217F2D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		340DDEA22AD6243D00217F2D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		340DDEA42AD6243D00217F2D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		52DCD37E2AD627D900BB4DB3 /* MainSession.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = MainSession.storyboard; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -66,6 +68,7 @@
 				340DDEA12AD6243D00217F2D /* LaunchScreen.storyboard */,
 				340DDEA42AD6243D00217F2D /* Info.plist */,
 				340DDE9C2AD6243A00217F2D /* Tipple.xcdatamodeld */,
+				52DCD37E2AD627D900BB4DB3 /* MainSession.storyboard */,
 			);
 			path = Tipple;
 			sourceTree = "<group>";
@@ -130,6 +133,7 @@
 			files = (
 				340DDEA32AD6243D00217F2D /* LaunchScreen.storyboard in Resources */,
 				340DDEA02AD6243D00217F2D /* Assets.xcassets in Resources */,
+				52DCD37F2AD627D900BB4DB3 /* MainSession.storyboard in Resources */,
 				340DDE9B2AD6243A00217F2D /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
