@@ -16,6 +16,7 @@
 		340DDEA32AD6243D00217F2D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 340DDEA12AD6243D00217F2D /* LaunchScreen.storyboard */; };
 		349A6F7D2AD62DAE002A707B /* LoginRegistrationHome.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 349A6F7C2AD62DAE002A707B /* LoginRegistrationHome.storyboard */; };
 		52DCD37F2AD627D900BB4DB3 /* MainSession.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 52DCD37E2AD627D900BB4DB3 /* MainSession.storyboard */; };
+		B3CE37622AD62FF1004FB1A1 /* Settings.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B3CE37612AD62FF1004FB1A1 /* Settings.storyboard */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,6 +31,7 @@
 		340DDEA42AD6243D00217F2D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		349A6F7C2AD62DAE002A707B /* LoginRegistrationHome.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LoginRegistrationHome.storyboard; sourceTree = "<group>"; };
 		52DCD37E2AD627D900BB4DB3 /* MainSession.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = MainSession.storyboard; sourceTree = "<group>"; };
+		B3CE37612AD62FF1004FB1A1 /* Settings.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Settings.storyboard; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -71,6 +73,7 @@
 				340DDEA42AD6243D00217F2D /* Info.plist */,
 				340DDE9C2AD6243A00217F2D /* Tipple.xcdatamodeld */,
 				52DCD37E2AD627D900BB4DB3 /* MainSession.storyboard */,
+				B3CE37612AD62FF1004FB1A1 /* Settings.storyboard */,
 				349A6F7C2AD62DAE002A707B /* LoginRegistrationHome.storyboard */,
 			);
 			path = Tipple;
@@ -137,6 +140,7 @@
 				349A6F7D2AD62DAE002A707B /* LoginRegistrationHome.storyboard in Resources */,
 				340DDEA32AD6243D00217F2D /* LaunchScreen.storyboard in Resources */,
 				340DDEA02AD6243D00217F2D /* Assets.xcassets in Resources */,
+				B3CE37622AD62FF1004FB1A1 /* Settings.storyboard in Resources */,
 				52DCD37F2AD627D900BB4DB3 /* MainSession.storyboard in Resources */,
 				340DDE9B2AD6243A00217F2D /* Main.storyboard in Resources */,
 			);
