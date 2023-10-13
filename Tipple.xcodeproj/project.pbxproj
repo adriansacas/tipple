@@ -14,6 +14,12 @@
 		340DDE9E2AD6243A00217F2D /* Tipple.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 340DDE9C2AD6243A00217F2D /* Tipple.xcdatamodeld */; };
 		340DDEA02AD6243D00217F2D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 340DDE9F2AD6243D00217F2D /* Assets.xcassets */; };
 		340DDEA32AD6243D00217F2D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 340DDEA12AD6243D00217F2D /* LaunchScreen.storyboard */; };
+		3411E5112AD8BC5800297E01 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3411E5102AD8BC5800297E01 /* LoginViewController.swift */; };
+		3411E5142AD8BF1700297E01 /* SignupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3411E5132AD8BF1700297E01 /* SignupViewController.swift */; };
+		3411E5162AD8C09B00297E01 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3411E5152AD8C09B00297E01 /* HomeViewController.swift */; };
+		348821D22AD7932E00B677F3 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 348821D12AD7932E00B677F3 /* GoogleService-Info.plist */; };
+		348821E12AD793AE00B677F3 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 348821E02AD793AE00B677F3 /* FirebaseAuth */; };
+		348821E72AD793AE00B677F3 /* FirebaseDatabase in Frameworks */ = {isa = PBXBuildFile; productRef = 348821E62AD793AE00B677F3 /* FirebaseDatabase */; };
 		349A6F7D2AD62DAE002A707B /* LoginRegistrationHome.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 349A6F7C2AD62DAE002A707B /* LoginRegistrationHome.storyboard */; };
 		49A02BA32AD62EB500E59826 /* SessionsTracker.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 49A02BA22AD62EB500E59826 /* SessionsTracker.storyboard */; };
 		52DCD37F2AD627D900BB4DB3 /* MainSession.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 52DCD37E2AD627D900BB4DB3 /* MainSession.storyboard */; };
@@ -39,6 +45,11 @@
 		340DDE9F2AD6243D00217F2D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		340DDEA22AD6243D00217F2D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		340DDEA42AD6243D00217F2D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		3411E5102AD8BC5800297E01 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		3411E5122AD8BDE700297E01 /* TippleRelease.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = TippleRelease.entitlements; sourceTree = "<group>"; };
+		3411E5132AD8BF1700297E01 /* SignupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignupViewController.swift; sourceTree = "<group>"; };
+		3411E5152AD8C09B00297E01 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
+		348821D12AD7932E00B677F3 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		349A6F7C2AD62DAE002A707B /* LoginRegistrationHome.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LoginRegistrationHome.storyboard; sourceTree = "<group>"; };
 		49A02BA22AD62EB500E59826 /* SessionsTracker.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = SessionsTracker.storyboard; sourceTree = "<group>"; };
 		52DCD37E2AD627D900BB4DB3 /* MainSession.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = MainSession.storyboard; sourceTree = "<group>"; };
@@ -59,6 +70,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				348821E72AD793AE00B677F3 /* FirebaseDatabase in Frameworks */,
+				348821E12AD793AE00B677F3 /* FirebaseAuth in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -84,6 +97,7 @@
 		340DDE922AD6243A00217F2D /* Tipple */ = {
 			isa = PBXGroup;
 			children = (
+				3411E5122AD8BDE700297E01 /* TippleRelease.entitlements */,
 				340DDE932AD6243A00217F2D /* AppDelegate.swift */,
 				340DDE952AD6243A00217F2D /* SceneDelegate.swift */,
 				340DDE972AD6243A00217F2D /* ViewController.swift */,
@@ -105,6 +119,10 @@
 				B341BF7C2AD92D0500505C37 /* ProfileInfoWeightVC.swift */,
 				B341BF7E2AD92E6100505C37 /* ProfileInfoPhoneVC.swift */,
 				B341BF802AD92F7500505C37 /* ProfileInfoEmailVC.swift */,
+				3411E5102AD8BC5800297E01 /* LoginViewController.swift */,
+				3411E5132AD8BF1700297E01 /* SignupViewController.swift */,
+				3411E5152AD8C09B00297E01 /* HomeViewController.swift */,
+				348821D12AD7932E00B677F3 /* GoogleService-Info.plist */,
 			);
 			path = Tipple;
 			sourceTree = "<group>";
@@ -125,6 +143,10 @@
 			dependencies = (
 			);
 			name = Tipple;
+			packageProductDependencies = (
+				348821E02AD793AE00B677F3 /* FirebaseAuth */,
+				348821E62AD793AE00B677F3 /* FirebaseDatabase */,
+			);
 			productName = Tipple;
 			productReference = 340DDE902AD6243A00217F2D /* Tipple.app */;
 			productType = "com.apple.product-type.application";
@@ -153,6 +175,9 @@
 				Base,
 			);
 			mainGroup = 340DDE872AD6243A00217F2D;
+			packageReferences = (
+				348821D32AD793AE00B677F3 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+			);
 			productRefGroup = 340DDE912AD6243A00217F2D /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -168,6 +193,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				349A6F7D2AD62DAE002A707B /* LoginRegistrationHome.storyboard in Resources */,
+				348821D22AD7932E00B677F3 /* GoogleService-Info.plist in Resources */,
 				340DDEA32AD6243D00217F2D /* LaunchScreen.storyboard in Resources */,
 				49A02BA32AD62EB500E59826 /* SessionsTracker.storyboard in Resources */,
 				340DDEA02AD6243D00217F2D /* Assets.xcassets in Resources */,
@@ -184,6 +210,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3411E5142AD8BF1700297E01 /* SignupViewController.swift in Sources */,
 				340DDE982AD6243A00217F2D /* ViewController.swift in Sources */,
 				B341BF752AD8C11A00505C37 /* ProfileInfoNameVC.swift in Sources */,
 				B341BF792AD9094300505C37 /* ProfileInfoBirthdayVC.swift in Sources */,
@@ -192,6 +219,8 @@
 				340DDE942AD6243A00217F2D /* AppDelegate.swift in Sources */,
 				B341BF7B2AD9125400505C37 /* ProfileInfoHeightVC.swift in Sources */,
 				B36E61E42AD88C2300AFF50E /* SettingsVC.swift in Sources */,
+				3411E5112AD8BC5800297E01 /* LoginViewController.swift in Sources */,
+				3411E5162AD8C09B00297E01 /* HomeViewController.swift in Sources */,
 				340DDE962AD6243A00217F2D /* SceneDelegate.swift in Sources */,
 				B341BF732AD8A05600505C37 /* SettingsProfileInfoVC.swift in Sources */,
 				B341BF7D2AD92D0500505C37 /* ProfileInfoWeightVC.swift in Sources */,
@@ -354,6 +383,7 @@
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
+				INFOPLIST_KEY_UIStatusBarStyle = "";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -374,6 +404,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Tipple/TippleRelease.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 2LZ22D9N74;
@@ -382,6 +413,7 @@
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
+				INFOPLIST_KEY_UIStatusBarStyle = "";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -419,6 +451,30 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		348821D32AD793AE00B677F3 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 10.16.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		348821E02AD793AE00B677F3 /* FirebaseAuth */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 348821D32AD793AE00B677F3 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAuth;
+		};
+		348821E62AD793AE00B677F3 /* FirebaseDatabase */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 348821D32AD793AE00B677F3 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseDatabase;
+		};
+/* End XCSwiftPackageProductDependency section */
 
 /* Begin XCVersionGroup section */
 		340DDE9C2AD6243A00217F2D /* Tipple.xcdatamodeld */ = {
