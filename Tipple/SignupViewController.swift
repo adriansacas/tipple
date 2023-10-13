@@ -19,15 +19,14 @@ class SignupViewController: UIViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        //TODO: Cannot show Automatic Strong Passwords for app bundleID: CS371L.Tipple due to error: iCloud Keychain is disabled
-        passwordTextField.isSecureTextEntry = true
-        confirmPasswordTextField.isSecureTextEntry = true
+        //TODO: Fix error "Cannot show Automatic Strong Passwords for app bundleID: CS371L.Tipple due to error: iCloud Keychain is disabled"
+        //passwordTextField.isSecureTextEntry = true
+        //confirmPasswordTextField.isSecureTextEntry = true
     }
 
     @IBAction func signupButtonPressed(_ sender: Any) {
         
         if(passwordTextField.text! != confirmPasswordTextField.text!){
-            
             self.errorStatus.text = "Confirm password does not match password"
         } else {
             Auth.auth().createUser(withEmail: emailAddressTextField.text!, password: passwordTextField.text!) {
@@ -51,7 +50,7 @@ class SignupViewController: UIViewController {
     
     
     @IBAction func loginTextButtonPressed(_ sender: Any) {
-            performSegue(withIdentifier: "loginSegue", sender: nil)
+            //performSegue(withIdentifier: "loginSegue", sender: nil)
     }
     
     /*

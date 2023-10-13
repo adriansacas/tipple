@@ -44,7 +44,7 @@ class HomeViewController: UIViewController {
     }
     
     @IBAction func signOutButtonPressed(_ sender: Any) {
-        performSegue(withIdentifier: "homeToLoginSegue", sender: nil)
+        //performSegue(withIdentifier: "homeToLoginSegue", sender: nil)
         
     }
     /*

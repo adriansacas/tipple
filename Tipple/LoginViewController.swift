@@ -23,11 +23,10 @@ class LoginViewController: UIViewController {
     
     @IBAction func loginButtonPressed(_ sender: Any) {
         
-        //TODO: Error if emailAddress and text field are empty
         if(emailAddressTextField.text! == "" || passwordTextField.text! == ""){
-            self.errorStatus.text = "Please fill in all fields to login"
+            self.errorStatus.text = "Must complete all fields to login"
         } else {
-            Auth.auth().signIn(withEmail: emailAddressTextField.text!, password: passwordTextField.text!) {
+            Auth.auth().signIn(withEmail: emailAddressTextField.text! , password: passwordTextField.text!) {
                 (authResult, error) in
                 if let error = error as NSError? {
                     self.errorStatus.text = "\(error.localizedDescription)"
