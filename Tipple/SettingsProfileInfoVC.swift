@@ -12,6 +12,11 @@ protocol ProfileInfoDelegate: AnyObject {
     func didUpdateProfileInfo(_ updatedInfo: ProfileInfo)
 }
 
+protocol ProfileInfoDelegateSettingVC: UIViewController {
+    var userProfileInfo: ProfileInfo? { get set }
+    var delegate: ProfileInfoDelegate? { get set }
+}
+
 class SettingsProfileInfoVC: UIViewController, UITableViewDataSource, UITableViewDelegate, ProfileInfoDelegate {
 
     @IBOutlet weak var profileImage: UIImageView!
@@ -19,7 +24,6 @@ class SettingsProfileInfoVC: UIViewController, UITableViewDataSource, UITableVie
     let textCellIdentifier = "TextCell"
     let tableFields: [String] = ["Name", "Birthday", "Gender", "Height", "Weight", "Phone", "Email"]
     let firestoreManager = FirestoreManager.shared
-//    var userProfileData: [String: Any] = [:]
     var userProfileInfo: ProfileInfo?
     
     override func viewDidLoad() {
@@ -33,30 +37,9 @@ class SettingsProfileInfoVC: UIViewController, UITableViewDataSource, UITableVie
         tableView.dataSource = self
         
         getUserProfileData()
-        
-        // TESTING: Create a user document
-//        let dateFormatter = DateFormatter()
-//        dateFormatter.dateFormat = "yyyy-MM-dd"
-//        if let birthDate = dateFormatter.date(from: "2024-10-14"), let userID = Auth.auth().currentUser?.uid, let email = Auth.auth().currentUser?.email {
-//            FirestoreManager.shared.createUserDocument(
-//                userID: userID,
-//                firstName: "John",
-//                lastName: "Doe",
-//                phoneNumber: "1234567890",
-//                birthDay: birthDate,
-//                gender: "Man",
-//                heightFeet: 6,
-//                heightInches: 2,
-//                weight: 180,
-//                email: email
-//            )
-//        } else {
-//            print("Invalid date format or invalid userid")
-//        }
     }
     
     func didUpdateProfileInfo(_ updatedInfo: ProfileInfo) {
-        print("delegate")
         userProfileInfo = updatedInfo
         tableView.reloadData()
     }
@@ -126,11 +109,12 @@ class SettingsProfileInfoVC: UIViewController, UITableViewDataSource, UITableVie
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "NameSegueIdentifier",
-           let destination = segue.destination as? ProfileInfoNameVC {
-            destination.userProfileInfo = userProfileInfo
-            destination.delegate = self
+        guard let destination = segue.destination as? ProfileInfoDelegateSettingVC else {
+            return
         }
+
+        destination.userProfileInfo = userProfileInfo
+        destination.delegate = self
     }
     
     func getUserProfileData() {
@@ -148,23 +132,4 @@ class SettingsProfileInfoVC: UIViewController, UITableViewDataSource, UITableVie
             }
         }
     }
-    
-//    func fetchUserProfileData() {
-//        if let userID = Auth.auth().currentUser?.uid {
-//            firestoreManager.getUserData(userID: userID) { result in
-//                switch result {
-//                case .success(let userData):
-//                    self.userProfileData = userData
-//                    // Reload the table view to update the detailTextLabels
-//                    DispatchQueue.main.async {
-//                        self.tableView.reloadData()
-//                    }
-//                    print(self.userProfileData)
-//                case .failure(let error):
-//                    print("Error fetching user data: \(error.localizedDescription)")
-//                }
-//            }
-//        }
-//    }
-
 }

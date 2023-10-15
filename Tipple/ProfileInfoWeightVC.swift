@@ -6,16 +6,52 @@
 //
 
 import UIKit
+import FirebaseAuth
 
-class ProfileInfoWeightVC: UITableViewController {
+class ProfileInfoWeightVC: UITableViewController, ProfileInfoDelegateSettingVC {
     
     @IBOutlet weak var weightTextField: UITextField!
+    
+    weak var delegate: ProfileInfoDelegate?
+    var userProfileInfo: ProfileInfo?
+    let firestoreManager = FirestoreManager.shared
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // TODO: Populate the textField with firebase data
         weightTextField.borderStyle = .none
-        weightTextField.text = "140"
+        weightTextField.keyboardType = .numberPad
+        
+        setInitialWeight()
     }
+    
+    func setInitialWeight() {
+        if let weight = userProfileInfo?.weight {
+            weightTextField.text = String(weight)
+        }
+    }
+    
+    @IBAction func saveChanges(_ sender: Any) {
+        guard let userID = Auth.auth().currentUser?.uid,
+              let weightText = weightTextField.text,
+              let weight = Int(weightText) else {
+            // Handle invalid input or user not authenticated
+            return
+        }
+
+        let updatedData: [String: Any] = [
+            "weight": weight
+        ]
+
+        firestoreManager.updateUserDocument(userID: userID, updatedData: updatedData)
+
+        userProfileInfo?.weight = weight
+
+        if let updatedProfileInfo = userProfileInfo {
+            delegate?.didUpdateProfileInfo(updatedProfileInfo)
+        }
+
+        navigationController?.popViewController(animated: true)
+    }
+    
 }
