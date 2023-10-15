@@ -1,1 +1,9 @@
+## User settings--ignore
+xcuserdata/
+
+## Xcode 8 and earlier--ignore
+*.xcscmblueprint
+*.xccheckout
+
+## what we decided to do for groups
 *.pbxproj merge=union
