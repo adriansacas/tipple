@@ -9,6 +9,29 @@ import Foundation
 import Firebase
 import FirebaseFirestore
 
+
+/*
+ EXAMPLE:
+    let firestoreManager = FirestoreManager.shared
+    let dateFormatter = DateFormatter()
+    dateFormatter.dateFormat = "yyyy-MM-dd"
+    if let birthDate = dateFormatter.date(from: "2024-10-14"), let userID = Auth.auth().currentUser?.uid, let email = Auth.auth().currentUser?.email {
+         FirestoreManager.shared.createUserDocument(
+             userID: userID,
+             firstName: "John",
+             lastName: "Doe",
+             phoneNumber: "1234567890",
+             birthDay: birthDate,
+             gender: "Man",
+             heightFeet: 6,
+             heightInches: 2,
+             weight: 180,
+             email: email
+         )
+    } else {
+     print("Invalid date format or invalid userid")
+    }
+ */
 class FirestoreManager {
 
     static let shared = FirestoreManager()
@@ -90,9 +113,7 @@ class FirestoreManager {
         }
     }
 
-    // Add more functions for updating and deleting user data as needed
-
-    // Example function for updating user data
+    // Function for updating user data
     func updateUserDocument(userID: String, updatedData: [String: Any]) {
         let userRef = db.collection(usersCollection).document(userID)
         userRef.updateData(updatedData) { error in
@@ -104,7 +125,7 @@ class FirestoreManager {
         }
     }
 
-    // Example function for deleting user data
+    // Function for deleting user data
     func deleteUserDocument(userID: String) {
         let userRef = db.collection(usersCollection).document(userID)
         userRef.delete { error in
