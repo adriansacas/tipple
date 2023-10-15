@@ -23,6 +23,9 @@
 		349A6F7D2AD62DAE002A707B /* LoginRegistrationHome.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 349A6F7C2AD62DAE002A707B /* LoginRegistrationHome.storyboard */; };
 		49A02BA32AD62EB500E59826 /* SessionsTracker.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 49A02BA22AD62EB500E59826 /* SessionsTracker.storyboard */; };
 		52DCD37F2AD627D900BB4DB3 /* MainSession.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 52DCD37E2AD627D900BB4DB3 /* MainSession.storyboard */; };
+		B3329D342ADB53A300F23531 /* FirestoreManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3329D332ADB53A300F23531 /* FirestoreManager.swift */; };
+		B3329D372ADB654D00F23531 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = B3329D362ADB654D00F23531 /* FirebaseFirestore */; };
+		B3329D392ADB71D900F23531 /* ProfileInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3329D382ADB71D900F23531 /* ProfileInfo.swift */; };
 		B341BF732AD8A05600505C37 /* SettingsProfileInfoVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B341BF722AD8A05600505C37 /* SettingsProfileInfoVC.swift */; };
 		B341BF752AD8C11A00505C37 /* ProfileInfoNameVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B341BF742AD8C11A00505C37 /* ProfileInfoNameVC.swift */; };
 		B341BF772AD8F53D00505C37 /* ProfileInfoGenderVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B341BF762AD8F53D00505C37 /* ProfileInfoGenderVC.swift */; };
@@ -53,6 +56,8 @@
 		349A6F7C2AD62DAE002A707B /* LoginRegistrationHome.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LoginRegistrationHome.storyboard; sourceTree = "<group>"; };
 		49A02BA22AD62EB500E59826 /* SessionsTracker.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = SessionsTracker.storyboard; sourceTree = "<group>"; };
 		52DCD37E2AD627D900BB4DB3 /* MainSession.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = MainSession.storyboard; sourceTree = "<group>"; };
+		B3329D332ADB53A300F23531 /* FirestoreManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestoreManager.swift; sourceTree = "<group>"; };
+		B3329D382ADB71D900F23531 /* ProfileInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileInfo.swift; sourceTree = "<group>"; };
 		B341BF722AD8A05600505C37 /* SettingsProfileInfoVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsProfileInfoVC.swift; sourceTree = "<group>"; };
 		B341BF742AD8C11A00505C37 /* ProfileInfoNameVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileInfoNameVC.swift; sourceTree = "<group>"; };
 		B341BF762AD8F53D00505C37 /* ProfileInfoGenderVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileInfoGenderVC.swift; sourceTree = "<group>"; };
@@ -72,6 +77,7 @@
 			files = (
 				348821E72AD793AE00B677F3 /* FirebaseDatabase in Frameworks */,
 				348821E12AD793AE00B677F3 /* FirebaseAuth in Frameworks */,
+				B3329D372ADB654D00F23531 /* FirebaseFirestore in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -83,6 +89,7 @@
 			children = (
 				340DDE922AD6243A00217F2D /* Tipple */,
 				340DDE912AD6243A00217F2D /* Products */,
+				B3329D352ADB654D00F23531 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -123,8 +130,17 @@
 				3411E5132AD8BF1700297E01 /* SignupViewController.swift */,
 				3411E5152AD8C09B00297E01 /* HomeViewController.swift */,
 				348821D12AD7932E00B677F3 /* GoogleService-Info.plist */,
+				B3329D332ADB53A300F23531 /* FirestoreManager.swift */,
+				B3329D382ADB71D900F23531 /* ProfileInfo.swift */,
 			);
 			path = Tipple;
+			sourceTree = "<group>";
+		};
+		B3329D352ADB654D00F23531 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -146,6 +162,7 @@
 			packageProductDependencies = (
 				348821E02AD793AE00B677F3 /* FirebaseAuth */,
 				348821E62AD793AE00B677F3 /* FirebaseDatabase */,
+				B3329D362ADB654D00F23531 /* FirebaseFirestore */,
 			);
 			productName = Tipple;
 			productReference = 340DDE902AD6243A00217F2D /* Tipple.app */;
@@ -213,6 +230,7 @@
 				3411E5142AD8BF1700297E01 /* SignupViewController.swift in Sources */,
 				340DDE982AD6243A00217F2D /* ViewController.swift in Sources */,
 				B341BF752AD8C11A00505C37 /* ProfileInfoNameVC.swift in Sources */,
+				B3329D392ADB71D900F23531 /* ProfileInfo.swift in Sources */,
 				B341BF792AD9094300505C37 /* ProfileInfoBirthdayVC.swift in Sources */,
 				340DDE9E2AD6243A00217F2D /* Tipple.xcdatamodeld in Sources */,
 				B341BF812AD92F7500505C37 /* ProfileInfoEmailVC.swift in Sources */,
@@ -225,6 +243,7 @@
 				B341BF732AD8A05600505C37 /* SettingsProfileInfoVC.swift in Sources */,
 				B341BF7D2AD92D0500505C37 /* ProfileInfoWeightVC.swift in Sources */,
 				B341BF772AD8F53D00505C37 /* ProfileInfoGenderVC.swift in Sources */,
+				B3329D342ADB53A300F23531 /* FirestoreManager.swift in Sources */,
 				B341BF7F2AD92E6200505C37 /* ProfileInfoPhoneVC.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -473,6 +492,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 348821D32AD793AE00B677F3 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseDatabase;
+		};
+		B3329D362ADB654D00F23531 /* FirebaseFirestore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 348821D32AD793AE00B677F3 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseFirestore;
 		};
 /* End XCSwiftPackageProductDependency section */
 
