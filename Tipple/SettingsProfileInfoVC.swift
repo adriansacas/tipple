@@ -17,10 +17,11 @@ protocol ProfileInfoDelegateSettingVC: UIViewController {
     var delegate: ProfileInfoDelegate? { get set }
 }
 
-class SettingsProfileInfoVC: UIViewController, UITableViewDataSource, UITableViewDelegate, ProfileInfoDelegate {
+class SettingsProfileInfoVC: UIViewController, UITableViewDataSource, UITableViewDelegate, ProfileInfoDelegate, UIImagePickerControllerDelegate & UINavigationControllerDelegate {
 
     @IBOutlet weak var profileImage: UIImageView!
     @IBOutlet weak var tableView: UITableView!
+    
     let textCellIdentifier = "TextCell"
     let tableFields: [String] = ["Name", "Birthday", "Gender", "Height", "Weight", "Phone", "Email"]
     let firestoreManager = FirestoreManager.shared
@@ -37,6 +38,8 @@ class SettingsProfileInfoVC: UIViewController, UITableViewDataSource, UITableVie
         tableView.dataSource = self
         
         getUserProfileData()
+        
+        tapGesture()
     }
     
     func didUpdateProfileInfo(_ updatedInfo: ProfileInfo) {
@@ -131,5 +134,52 @@ class SettingsProfileInfoVC: UIViewController, UITableViewDataSource, UITableVie
                 }
             }
         }
+    }
+    
+    func tapGesture() {
+        let tap = UITapGestureRecognizer(target: self, action: #selector(profileImageTapped))
+        profileImage.isUserInteractionEnabled = true
+        profileImage.addGestureRecognizer(tap)
+    }
+    
+    @objc func profileImageTapped() {
+//        let imagePicker = UIImagePickerController()
+//        imagePicker.sourceType = .photoLibrary
+//        self.present(imagePicker, animated: true, completion: nil)
+        
+        let imagePicker = UIImagePickerController()
+        imagePicker.delegate = self
+
+        let alertController = UIAlertController(title: "Change Profile Picture", message: nil, preferredStyle: .actionSheet)
+        
+        alertController.addAction(UIAlertAction(title: "Take Photo", style: .default, handler: { _ in
+            if UIImagePickerController.isSourceTypeAvailable(.camera) {
+                imagePicker.sourceType = .camera
+                self.present(imagePicker, animated: true, completion: nil)
+            } else {
+                // Handle when the camera is not available
+            }
+        }))
+
+        alertController.addAction(UIAlertAction(title: "Choose Photo", style: .default, handler: { _ in
+            imagePicker.sourceType = .photoLibrary
+            self.present(imagePicker, animated: true, completion: nil)
+        }))
+
+        alertController.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+
+        self.present(alertController, animated: true, completion: nil)
+    }
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
+        if let image = info[.originalImage] as? UIImage {
+            // Update the profileImage UIImageView with the selected image
+            profileImage.image = image
+
+            // Save the image to UserDefaults or another storage mechanism if needed
+            // Note: For a production app, consider using a dedicated image storage service like Firebase Storage.
+        }
+
+        picker.dismiss(animated: true, completion: nil)
     }
 }
