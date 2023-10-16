@@ -6,13 +6,18 @@
 //
 
 import UIKit
+import FirebaseAuth
 
-class ProfileInfoGenderVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
+class ProfileInfoGenderVC: UIViewController, UITableViewDataSource, UITableViewDelegate, ProfileInfoDelegateSettingVC {
     
     @IBOutlet var tableView: UITableView!
     let textCellIdentifier = "TextCell"
     let tableFields: [String] = ["Man", "Woman", "Non-binary"]
     var selectedIndexPath: IndexPath?
+    
+    weak var delegate: ProfileInfoDelegate?
+    let firestoreManager = FirestoreManager.shared
+    var userProfileInfo: ProfileInfo?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -24,8 +29,11 @@ class ProfileInfoGenderVC: UIViewController, UITableViewDataSource, UITableViewD
     }
     
     func initialSelectedIndexPath() {
-//        TODO: Get gender from firebase
-        selectedIndexPath = IndexPath(row: 0, section: 0)
+        if let gender = userProfileInfo?.gender, let genderIndex = tableFields.firstIndex(of: gender) {
+            selectedIndexPath = IndexPath(row: genderIndex, section: 0)
+        } else {
+            print("Error retrieving gender.")
+        }
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -61,5 +69,27 @@ class ProfileInfoGenderVC: UIViewController, UITableViewDataSource, UITableViewD
         tableView.cellForRow(at: indexPath)?.accessoryType = .checkmark
     }
 
+    @IBAction func saveChanges(_ sender: Any) {
+        guard let selectedIndexPath = selectedIndexPath,
+              let userID = Auth.auth().currentUser?.uid else {
+            // Handle invalid input or user not authenticated
+            return
+        }
+        
+        let gender = tableFields[selectedIndexPath.row]
+        
+        let updatedData: [String: Any] = [
+            "gender": gender
+        ]
+        
+        firestoreManager.updateUserDocument(userID: userID, updatedData: updatedData)
+        
+        userProfileInfo?.gender = gender
+        if let updatedProfileInfo = userProfileInfo {
+            delegate?.didUpdateProfileInfo(updatedProfileInfo)
+        }
+        
+        navigationController?.popViewController(animated: true)
+    }
     
 }

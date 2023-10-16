@@ -21,7 +21,7 @@ import FirebaseFirestore
              firstName: "John",
              lastName: "Doe",
              phoneNumber: "1234567890",
-             birthDay: birthDate,
+             birthday: birthDate,
              gender: "Man",
              heightFeet: 6,
              heightInches: 2,
@@ -45,13 +45,13 @@ class FirestoreManager {
     }
 
     // Function to add a new user document
-    func createUserDocument(userID: String, firstName: String, lastName: String, phoneNumber: String, birthDay: Date, gender: String, heightFeet: Int, heightInches: Int, weight: Int, email: String) {
+    func createUserDocument(userID: String, firstName: String, lastName: String, phoneNumber: String, birthday: Date, gender: String, heightFeet: Int, heightInches: Int, weight: Int, email: String) {
         let userRef = db.collection(usersCollection).document(userID)
         let userData: [String: Any] = [
             "firstName": firstName,
             "lastName": lastName,
             "phoneNumber": phoneNumber,
-            "birthDay": birthDay,
+            "birthday": birthday,
             "gender": gender,
             "heightFeet": heightFeet,
             "heightInches": heightInches,
@@ -97,13 +97,13 @@ class FirestoreManager {
                    let firstName = userData["firstName"] as? String,
                    let lastName = userData["lastName"] as? String,
                    let phoneNumber = userData["phoneNumber"] as? String,
-                   let birthDayTimestamp = userData["birthDay"] as? Timestamp,
+                   let birthdayTimestamp = userData["birthday"] as? Timestamp,
                    let gender = userData["gender"] as? String,
                    let heightFeet = userData["heightFeet"] as? Int,
                    let heightInches = userData["heightInches"] as? Int,
                    let weight = userData["weight"] as? Int{
-                    let birthDay = birthDayTimestamp.dateValue()
-                    let profileInfo = ProfileInfo(firstName: firstName, lastName: lastName, phoneNumber: phoneNumber, birthDay: birthDay, gender: gender, heightFeet: heightFeet, heightInches: heightInches, weight: weight)
+                    let birthday = birthdayTimestamp.dateValue()
+                    let profileInfo = ProfileInfo(firstName: firstName, lastName: lastName, phoneNumber: phoneNumber, birthday: birthday, gender: gender, heightFeet: heightFeet, heightInches: heightInches, weight: weight)
                     completion(profileInfo, nil)
                 } else {
                     completion(nil, NSError(domain: "", code: 0, userInfo: ["message": "User data not found or is invalid"]))

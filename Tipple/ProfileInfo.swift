@@ -11,17 +11,17 @@ class ProfileInfo {
     var firstName: String
     var lastName: String
     var phoneNumber: String
-    var birthDay: Date
+    var birthday: Date
     var gender: String
     var heightFeet: Int
     var heightInches: Int
     var weight: Int
 
-    init(firstName: String, lastName: String, phoneNumber: String, birthDay: Date, gender: String, heightFeet: Int, heightInches: Int, weight: Int) {
+    init(firstName: String, lastName: String, phoneNumber: String, birthday: Date, gender: String, heightFeet: Int, heightInches: Int, weight: Int) {
         self.firstName = firstName
         self.lastName = lastName
         self.phoneNumber = phoneNumber
-        self.birthDay = birthDay
+        self.birthday = birthday
         self.gender = gender
         self.heightFeet = heightFeet
         self.heightInches = heightInches
@@ -55,6 +55,6 @@ class ProfileInfo {
     func getBirthDate() -> String {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "MM/dd/yyyy"
-        return dateFormatter.string(from: birthDay)
+        return dateFormatter.string(from: birthday)
     }
 }

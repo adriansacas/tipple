@@ -8,20 +8,21 @@
 import UIKit
 import FirebaseAuth
 
-class ProfileInfoNameVC: UITableViewController {
+class ProfileInfoNameVC: UITableViewController, ProfileInfoDelegateSettingVC {
 
     @IBOutlet weak var firstNameTextField: UITextField!
     @IBOutlet weak var lastNameTextField: UITextField!
     
     weak var delegate: ProfileInfoDelegate?
-    let firestoreManager = FirestoreManager.shared
     var userProfileInfo: ProfileInfo?
+    let firestoreManager = FirestoreManager.shared
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         firstNameTextField.borderStyle = .none
         lastNameTextField.borderStyle = .none
+        
         firstNameTextField.text = userProfileInfo?.firstName
         lastNameTextField.text = userProfileInfo?.lastName
     }
@@ -39,10 +40,11 @@ class ProfileInfoNameVC: UITableViewController {
             "lastName": lastName
         ]
         
-        FirestoreManager.shared.updateUserDocument(userID: userID, updatedData: updatedData)
+        firestoreManager.updateUserDocument(userID: userID, updatedData: updatedData)
         
         userProfileInfo?.firstName = firstName
         userProfileInfo?.lastName = lastName
+        
         if let updatedProfileInfo = userProfileInfo {
             delegate?.didUpdateProfileInfo(updatedProfileInfo)
         }

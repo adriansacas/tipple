@@ -288,7 +288,11 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Gender" id="PIa-BB-jeE">
-                        <barButtonItem key="rightBarButtonItem" title="Save" id="uQD-Rl-Dfk"/>
+                        <barButtonItem key="rightBarButtonItem" title="Save" id="uQD-Rl-Dfk">
+                            <connections>
+                                <action selector="saveChanges:" destination="SRW-ri-943" id="X9G-j1-drd"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="tableView" destination="xUU-p4-IYC" id="sCx-Gh-78t"/>
@@ -363,7 +367,11 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Height" id="L8c-ox-XtV">
-                        <barButtonItem key="rightBarButtonItem" title="Save" id="cVI-rg-3kb"/>
+                        <barButtonItem key="rightBarButtonItem" title="Save" id="cVI-rg-3kb">
+                            <connections>
+                                <action selector="saveChanges:" destination="P26-Z7-JSu" id="Pqp-bE-z6b"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="feetTextField" destination="WPt-UU-qgu" id="jiw-F1-y1H"/>
@@ -398,8 +406,55 @@
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="2DT-Uh-GGo">
-                                                    <rect key="frame" x="86" y="4" width="206" height="34"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GmW-VL-K7L">
+                                                    <rect key="frame" x="129" y="11" width="204" height="21"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="kyi-UW-04s">
+                                        <rect key="frame" x="20" y="61.666667938232422" width="353" height="43.666667938232422"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="kyi-UW-04s" id="Iho-1O-xdx">
+                                            <rect key="frame" x="0.0" y="0.0" width="353" height="43.666667938232422"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="New e-mail" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UCO-O4-Ne9">
+                                                    <rect key="frame" x="20" y="11" width="87" height="21"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ycH-1U-REa">
+                                                    <rect key="frame" x="127" y="5" width="206" height="34"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                    <textInputTraits key="textInputTraits"/>
+                                                </textField>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="qlQ-cL-bTq">
+                                        <rect key="frame" x="20" y="105.33333587646484" width="353" height="43.666667938232422"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="qlQ-cL-bTq" id="YKK-ul-oWB">
+                                            <rect key="frame" x="0.0" y="0.0" width="353" height="43.666667938232422"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Password" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cE5-Km-Bel">
+                                                    <rect key="frame" x="20" y="11" width="74" height="21"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="mXW-Rb-VF9">
+                                                    <rect key="frame" x="127" y="5" width="206" height="34"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <textInputTraits key="textInputTraits"/>
@@ -416,15 +471,21 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Email" id="002-iH-fX5">
-                        <barButtonItem key="rightBarButtonItem" title="Save" id="egi-ie-z5A"/>
+                        <barButtonItem key="rightBarButtonItem" title="Save" id="egi-ie-z5A">
+                            <connections>
+                                <action selector="saveChanges:" destination="jew-Kr-llD" id="uW9-7x-bn1"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <outlet property="emailTextField" destination="2DT-Uh-GGo" id="fdo-JS-V2q"/>
+                        <outlet property="currentEmailLabel" destination="GmW-VL-K7L" id="qkC-Xd-kKH"/>
+                        <outlet property="newEmailTextField" destination="ycH-1U-REa" id="KSQ-t8-gln"/>
+                        <outlet property="passwordTextField" destination="mXW-Rb-VF9" id="9wd-pG-K1p"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="phC-Eg-ho9" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3469" y="482"/>
+            <point key="canvasLocation" x="3467.9389312977096" y="481.69014084507046"/>
         </scene>
         <!--Phone-->
         <scene sceneID="YTv-C1-wIU">
@@ -468,7 +529,11 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Phone" id="bJU-cs-lXs">
-                        <barButtonItem key="rightBarButtonItem" title="Save" id="5JM-Rs-zDz"/>
+                        <barButtonItem key="rightBarButtonItem" title="Save" id="5JM-Rs-zDz">
+                            <connections>
+                                <action selector="saveChanges:" destination="gj9-er-OaF" id="Ww8-f7-tSR"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="phoneTextField" destination="nBo-gB-f9i" id="qxc-d1-Ope"/>
@@ -520,7 +585,11 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Weight" id="yJT-tw-IgA">
-                        <barButtonItem key="rightBarButtonItem" title="Save" id="CZg-bd-7TR"/>
+                        <barButtonItem key="rightBarButtonItem" title="Save" id="CZg-bd-7TR">
+                            <connections>
+                                <action selector="saveChanges:" destination="i4d-0I-KxE" id="enm-Jl-PoW"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="weightTextField" destination="tAH-2o-lrM" id="3xA-AL-xDX"/>
@@ -528,7 +597,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="WDP-tM-etr" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="5094" y="482"/>
+            <point key="canvasLocation" x="5230" y="482"/>
         </scene>
         <!--Birthday-->
         <scene sceneID="esY-qo-VvO">
@@ -550,7 +619,11 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Birthday" id="ms6-ca-ZAK">
-                        <barButtonItem key="rightBarButtonItem" title="Save" id="t83-A9-fde"/>
+                        <barButtonItem key="rightBarButtonItem" title="Save" id="t83-A9-fde">
+                            <connections>
+                                <action selector="saveChanges:" destination="DXE-gJ-T4U" id="1lT-BZ-DaF"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="datePicker" destination="ml0-bg-bMd" id="dcq-Xq-foN"/>
