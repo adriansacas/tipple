@@ -260,15 +260,26 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
                     <navigationItem key="navigationItem" id="MUJ-Es-wYy"/>
+                    <connections>
+                        <segue destination="V2S-uN-EC2" kind="presentation" identifier="individualToQASegue" modalPresentationStyle="fullScreen" id="Zhh-Sg-Ty8"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ra6-22-TuO" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="514" y="711"/>
+            <point key="canvasLocation" x="738" y="758"/>
+        </scene>
+        <!--ActiveSessions-->
+        <scene sceneID="fi2-tn-s78">
+            <objects>
+                <viewControllerPlaceholder storyboardIdentifier="PreQuestionsVC" storyboardName="ActiveSessions" id="V2S-uN-EC2" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="5HX-xc-8Hb" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1499" y="681"/>
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
         <segue reference="lE3-FY-89B"/>
-        <segue reference="cGE-tr-5Qm"/>
+        <segue reference="hlQ-b1-GlN"/>
     </inferredMetricsTieBreakers>
     <resources>
         <systemColor name="systemBackgroundColor">

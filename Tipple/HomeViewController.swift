@@ -23,10 +23,14 @@ class HomeViewController: UIViewController {
             preferredStyle: .alert
         )
         
-        controller.addAction(UIAlertAction(
+        let individualSessionAction = UIAlertAction(
             title: "Individual Session",
             style: .default
-        ))
+        ) { (action) in
+            self.performSegue(withIdentifier: "individualToQASegue", sender: self)
+        }
+
+        controller.addAction(individualSessionAction)
         
         controller.addAction(UIAlertAction(
             title: "Group Session",
@@ -47,6 +51,8 @@ class HomeViewController: UIViewController {
         //performSegue(withIdentifier: "homeToLoginSegue", sender: nil)
         
     }
+    
+
     /*
     // MARK: - Navigation
 
