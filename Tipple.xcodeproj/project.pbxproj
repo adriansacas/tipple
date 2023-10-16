@@ -21,6 +21,7 @@
 		348821E12AD793AE00B677F3 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 348821E02AD793AE00B677F3 /* FirebaseAuth */; };
 		348821E72AD793AE00B677F3 /* FirebaseDatabase in Frameworks */ = {isa = PBXBuildFile; productRef = 348821E62AD793AE00B677F3 /* FirebaseDatabase */; };
 		349A6F7D2AD62DAE002A707B /* LoginRegistrationHome.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 349A6F7C2AD62DAE002A707B /* LoginRegistrationHome.storyboard */; };
+		349B1F742ADDDF3F00588DCF /* MOCKScrollViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 349B1F732ADDDF3F00588DCF /* MOCKScrollViewController.swift */; };
 		49837CF02ADCFF47001F4B8B /* CalendarHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49837CEF2ADCFF47001F4B8B /* CalendarHelper.swift */; };
 		49837CF22ADCFF8D001F4B8B /* DayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49837CF12ADCFF8D001F4B8B /* DayViewController.swift */; };
 		49837CF42ADCFFA8001F4B8B /* SymptomsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49837CF32ADCFFA8001F4B8B /* SymptomsViewController.swift */; };
@@ -61,6 +62,7 @@
 		3411E5152AD8C09B00297E01 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		348821D12AD7932E00B677F3 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		349A6F7C2AD62DAE002A707B /* LoginRegistrationHome.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LoginRegistrationHome.storyboard; sourceTree = "<group>"; };
+		349B1F732ADDDF3F00588DCF /* MOCKScrollViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MOCKScrollViewController.swift; sourceTree = "<group>"; };
 		49837CEF2ADCFF47001F4B8B /* CalendarHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CalendarHelper.swift; sourceTree = "<group>"; };
 		49837CF12ADCFF8D001F4B8B /* DayViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DayViewController.swift; sourceTree = "<group>"; };
 		49837CF32ADCFFA8001F4B8B /* SymptomsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SymptomsViewController.swift; sourceTree = "<group>"; };
@@ -153,6 +155,7 @@
 				348821D12AD7932E00B677F3 /* GoogleService-Info.plist */,
 				B3329D332ADB53A300F23531 /* FirestoreManager.swift */,
 				B3329D382ADB71D900F23531 /* ProfileInfo.swift */,
+				349B1F732ADDDF3F00588DCF /* MOCKScrollViewController.swift */,
 			);
 			path = Tipple;
 			sourceTree = "<group>";
@@ -253,6 +256,7 @@
 				B341BF752AD8C11A00505C37 /* ProfileInfoNameVC.swift in Sources */,
 				B3329D392ADB71D900F23531 /* ProfileInfo.swift in Sources */,
 				B341BF792AD9094300505C37 /* ProfileInfoBirthdayVC.swift in Sources */,
+				349B1F742ADDDF3F00588DCF /* MOCKScrollViewController.swift in Sources */,
 				340DDE9E2AD6243A00217F2D /* Tipple.xcdatamodeld in Sources */,
 				49A0B6282ADDA23C0080E6FA /* DrinkInfo.swift in Sources */,
 				B341BF812AD92F7500505C37 /* ProfileInfoEmailVC.swift in Sources */,
