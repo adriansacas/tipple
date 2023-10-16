@@ -242,7 +242,7 @@
                                 <buttonConfiguration key="configuration" style="filled" title="Previous Session"/>
                                 <connections>
                                     <action selector="previousSessionButtonPressed:" destination="ICB-pa-paD" eventType="touchUpInside" id="DYB-4L-pkW"/>
-                                    <segue destination="bxW-tw-8ZW" kind="show" id="Mo7-iq-Gwl"/>
+                                    <segue destination="cvJ-Pw-z9X" kind="show" id="5uJ-1f-JzI"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hHh-fL-FSh">
@@ -277,15 +277,15 @@
             </objects>
             <point key="canvasLocation" x="1499" y="681"/>
         </scene>
-        <!--SessionTracker-->
-        <scene sceneID="wAO-3s-c4L">
+        <!--SessionsTracker-->
+        <scene sceneID="717-Zl-91E">
             <objects>
-                <viewControllerPlaceholder storyboardName="SessionTracker" id="bxW-tw-8ZW" sceneMemberID="viewController">
-                    <navigationItem key="navigationItem" id="ba4-CK-XAZ"/>
+                <viewControllerPlaceholder storyboardIdentifier="NavController" storyboardName="SessionsTracker" id="cvJ-Pw-z9X" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="lR5-Ze-LRO"/>
                 </viewControllerPlaceholder>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Abu-KL-06d" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="YMp-al-lqs" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1407" y="903"/>
+            <point key="canvasLocation" x="1498" y="932"/>
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
@@ -297,7 +297,7 @@
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
         <systemColor name="systemRedColor">
-            <color red="1" green="0.23137254901960785" blue="0.18823529411764706" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>
