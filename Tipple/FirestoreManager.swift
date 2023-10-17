@@ -46,9 +46,9 @@ class FirestoreManager {
     }
 
     // Function to add a new user document
-    func createUserDocument(userID: String, firstName: String, lastName: String, phoneNumber: String, birthday: Date, gender: String, heightFeet: Int, heightInches: Int, weight: Int, email: String, profileImageURL: String) {
+    func createUserDocument(userID: String, firstName: String, lastName: String, phoneNumber: String, birthday: Date, gender: String, heightFeet: Int, heightInches: Int, weight: Int, email: String, profileImageURL: String = "") {
         let userRef = db.collection(usersCollection).document(userID)
-        let userData: [String: Any] = [
+        var userData: [String: Any] = [
             "firstName": firstName,
             "lastName": lastName,
             "phoneNumber": phoneNumber,
@@ -57,9 +57,13 @@ class FirestoreManager {
             "heightFeet": heightFeet,
             "heightInches": heightInches,
             "weight": weight,
-            "email": email,
-            "profileImageURL": profileImageURL
+            "email": email
         ]
+        
+        // Add profileImageURL to userData only if it's not an empty string
+        if !profileImageURL.isEmpty {
+            userData["profileImageURL"] = profileImageURL
+        }
         
         userRef.setData(userData) { error in
             if let error = error {

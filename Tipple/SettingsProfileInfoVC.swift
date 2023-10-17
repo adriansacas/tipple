@@ -205,7 +205,7 @@ class SettingsProfileInfoVC: UIViewController, UITableViewDataSource, UITableVie
         // Convert the image to Data
         if let imageData = image.jpegData(compressionQuality: 0.3) {
             // Upload the image
-            let uploadTask = imageRef.putData(imageData, metadata: nil) { (metadata, error) in
+            _ = imageRef.putData(imageData, metadata: nil) { (metadata, error) in
                 if let error = error {
                     completion(nil, error)
                 } else {
