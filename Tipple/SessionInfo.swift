@@ -65,4 +65,14 @@ class SessionInfo {
     func getType() -> String {
         return sessionType
     }
+    
+    func getAlcConsumedInGrams() -> Float {
+        var totalAlcoholGrams: Float = 0.0
+
+        for drink in drinksInSession {
+            totalAlcoholGrams += drink.getAlcInGrams()
+        }
+
+        return totalAlcoholGrams
+    }
 }

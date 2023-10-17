@@ -21,6 +21,13 @@ class DrinkInfo {
         self.bacAtTime = bacAtTime
     }
     
+    init(drinkType: String, drinkNum: Int, bacAtTime: Float, timeAt: Date) {
+        self.type = drinkType
+        self.timeAt = timeAt
+        self.drinkNum = drinkNum
+        self.bacAtTime = bacAtTime
+    }
+    
     // Returns timestamp of drink in "hr: min am/pm"
     func getTimestamp() -> String {
         let timeFormatter = DateFormatter()
@@ -37,5 +44,17 @@ class DrinkInfo {
     // Returns the BAC level at the time of drink creation
     func getBAC() -> String {
         return String(format: "Angle: %.2f", self.bacAtTime)
+    }
+    
+    // Returns the amount of grams in a given alc type
+    func getAlcInGrams() -> Float {
+        switch self.type {
+            case "beer": return 13.0
+            case "seltzer": return 9.0
+            case "shot": return 14.0
+            case "wine": return 16.0
+            case "cocktail": return 14.0
+            default: return 14.0
+        }
     }
 }

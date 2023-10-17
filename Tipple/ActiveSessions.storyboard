@@ -78,7 +78,6 @@
                                 </buttonConfiguration>
                                 <connections>
                                     <action selector="startSessionButton:" destination="Y6W-OH-hqX" eventType="touchUpInside" id="60v-zi-HfD"/>
-                                    <segue destination="eJW-Df-XMv" kind="presentation" identifier="questionToActiveSegue" modalPresentationStyle="overFullScreen" id="00K-vw-HeK"/>
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Pre-Session Questionnaire" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="b79-cu-b3z">
@@ -97,11 +96,12 @@
                         <outlet property="endLocation" destination="yB9-15-3bX" id="pDR-jK-vjl"/>
                         <outlet property="partyLocation" destination="r4o-su-XCp" id="ukW-dR-dFr"/>
                         <outlet property="shareSession" destination="fby-Dq-BK1" id="FMc-Ky-r8x"/>
+                        <segue destination="eJW-Df-XMv" kind="presentation" identifier="questionToActiveSegue" modalPresentationStyle="fullScreen" id="55x-RD-lh1"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ief-a0-LHa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="515" y="-30"/>
+            <point key="canvasLocation" x="562" y="-30"/>
         </scene>
         <!--SessionPageVC-->
         <scene sceneID="bsZ-ZL-gHa">
@@ -153,6 +153,7 @@
                     <navigationItem key="navigationItem" id="V62-iw-Ubk"/>
                     <connections>
                         <outlet property="drinkSelectorSegmented" destination="D6y-JR-0KQ" id="7Uf-Qz-UEH"/>
+                        <outlet property="navItemTitle" destination="NRG-4X-Ref" id="waB-3o-ao4"/>
                         <outlet property="statusSegmented" destination="W18-eh-qea" id="op0-kq-8lH"/>
                     </connections>
                 </viewController>

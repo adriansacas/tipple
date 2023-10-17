@@ -17,8 +17,10 @@ class QuestionnaireVC: UIViewController {
     @IBOutlet weak var endLocation: UISearchBar!
     
     var userID: String?
+    var sessionID: String?
     var userProfileInfo: ProfileInfo?
     var currentSession: SessionInfo?
+    
     let firestoreManager = FirestoreManager.shared
     let qToActiveSegue = "questionToActiveSegue"
     
@@ -27,7 +29,6 @@ class QuestionnaireVC: UIViewController {
 
         // Do any additional setup after loading the view.
         getUserID()
-        //getUserProfileData()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -37,8 +38,8 @@ class QuestionnaireVC: UIViewController {
     }
     
     
-    func getUserProfileData() {
-        firestoreManager.getUserData(userID: self.userID!) { [weak self] (profileInfo, error) in
+    func getUserProfileData(user: String) {
+        firestoreManager.getUserData(userID: user) { [weak self] (profileInfo, error) in
             if let error = error {
                 print("Error fetching user data: \(error.localizedDescription)")
             } else if let profileInfo = profileInfo {
@@ -51,6 +52,7 @@ class QuestionnaireVC: UIViewController {
     func getUserID() {
         if let userID = Auth.auth().currentUser?.uid {
             self.userID = userID
+            getUserProfileData(user: userID)
         } else {
             print("Error fetching user ID from currentUser")
         }
@@ -69,21 +71,8 @@ class QuestionnaireVC: UIViewController {
             membersList: []
         )
         
-        guard let userID = self.userID else {
-            print("No User ID Available")
-            return
-        }
-        
-        firestoreManager.addSessionInfo(userID: userID, session: session) {
-            error in
-            if let error = error {
-                print("Error adding session: \(error)")
-            } else {
-                print("Session added successfully")
-            }
-        }
-        
         self.currentSession = session
+        self.performSegue(withIdentifier: qToActiveSegue, sender: self)
     }
     
     
@@ -99,14 +88,4 @@ class QuestionnaireVC: UIViewController {
         }
     }
     
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }
