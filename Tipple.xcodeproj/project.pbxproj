@@ -22,6 +22,9 @@
 		348821E72AD793AE00B677F3 /* FirebaseDatabase in Frameworks */ = {isa = PBXBuildFile; productRef = 348821E62AD793AE00B677F3 /* FirebaseDatabase */; };
 		349A6F7D2AD62DAE002A707B /* LoginRegistrationHome.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 349A6F7C2AD62DAE002A707B /* LoginRegistrationHome.storyboard */; };
 		349B1F742ADDDF3F00588DCF /* MOCKScrollViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 349B1F732ADDDF3F00588DCF /* MOCKScrollViewController.swift */; };
+		34F604132ADF4B0C00E331A2 /* Tipple_Red_Status.png in Resources */ = {isa = PBXBuildFile; fileRef = 34F604102ADF4B0B00E331A2 /* Tipple_Red_Status.png */; };
+		34F604142ADF4B0C00E331A2 /* Tipple_Yellow_Status.png in Resources */ = {isa = PBXBuildFile; fileRef = 34F604112ADF4B0C00E331A2 /* Tipple_Yellow_Status.png */; };
+		34F604152ADF4B0C00E331A2 /* Tipple_Green_Status.png in Resources */ = {isa = PBXBuildFile; fileRef = 34F604122ADF4B0C00E331A2 /* Tipple_Green_Status.png */; };
 		34F78C3A2ADF181300A238A3 /* Tipple_aLogo.png in Resources */ = {isa = PBXBuildFile; fileRef = 34F78C392ADF181300A238A3 /* Tipple_aLogo.png */; };
 		49A0B6282ADDA23C0080E6FA /* DrinkInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49A0B6272ADDA23C0080E6FA /* DrinkInfo.swift */; };
 		49A0B62C2ADDA2A00080E6FA /* SessionInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49A0B62B2ADDA2A00080E6FA /* SessionInfo.swift */; };
@@ -66,6 +69,9 @@
 		348821D12AD7932E00B677F3 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		349A6F7C2AD62DAE002A707B /* LoginRegistrationHome.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LoginRegistrationHome.storyboard; sourceTree = "<group>"; };
 		349B1F732ADDDF3F00588DCF /* MOCKScrollViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MOCKScrollViewController.swift; sourceTree = "<group>"; };
+		34F604102ADF4B0B00E331A2 /* Tipple_Red_Status.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Tipple_Red_Status.png; sourceTree = "<group>"; };
+		34F604112ADF4B0C00E331A2 /* Tipple_Yellow_Status.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Tipple_Yellow_Status.png; sourceTree = "<group>"; };
+		34F604122ADF4B0C00E331A2 /* Tipple_Green_Status.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Tipple_Green_Status.png; sourceTree = "<group>"; };
 		34F78C392ADF181300A238A3 /* Tipple_aLogo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Tipple_aLogo.png; sourceTree = "<group>"; };
 		49A0B6272ADDA23C0080E6FA /* DrinkInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DrinkInfo.swift; sourceTree = "<group>"; };
 		49A0B62B2ADDA2A00080E6FA /* SessionInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SessionInfo.swift; sourceTree = "<group>"; };
@@ -127,6 +133,9 @@
 			isa = PBXGroup;
 			children = (
 				3411E5122AD8BDE700297E01 /* TippleRelease.entitlements */,
+				34F604122ADF4B0C00E331A2 /* Tipple_Green_Status.png */,
+				34F604102ADF4B0B00E331A2 /* Tipple_Red_Status.png */,
+				34F604112ADF4B0C00E331A2 /* Tipple_Yellow_Status.png */,
 				34F78C392ADF181300A238A3 /* Tipple_aLogo.png */,
 				340DDE932AD6243A00217F2D /* AppDelegate.swift */,
 				340DDE952AD6243A00217F2D /* SceneDelegate.swift */,
@@ -243,6 +252,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				349A6F7D2AD62DAE002A707B /* LoginRegistrationHome.storyboard in Resources */,
+				34F604142ADF4B0C00E331A2 /* Tipple_Yellow_Status.png in Resources */,
 				34F78C3A2ADF181300A238A3 /* Tipple_aLogo.png in Resources */,
 				348821D22AD7932E00B677F3 /* GoogleService-Info.plist in Resources */,
 				340DDEA32AD6243D00217F2D /* LaunchScreen.storyboard in Resources */,
@@ -251,6 +261,8 @@
 				B3CE37622AD62FF1004FB1A1 /* Settings.storyboard in Resources */,
 				340DDE9B2AD6243A00217F2D /* Main.storyboard in Resources */,
 				49B2C13D2ADEFD140025E38C /* ActiveSessions.storyboard in Resources */,
+				34F604132ADF4B0C00E331A2 /* Tipple_Red_Status.png in Resources */,
+				34F604152ADF4B0C00E331A2 /* Tipple_Green_Status.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
