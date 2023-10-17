@@ -23,21 +23,15 @@
 		349A6F7D2AD62DAE002A707B /* LoginRegistrationHome.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 349A6F7C2AD62DAE002A707B /* LoginRegistrationHome.storyboard */; };
 		349B1F742ADDDF3F00588DCF /* MOCKScrollViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 349B1F732ADDDF3F00588DCF /* MOCKScrollViewController.swift */; };
 		34F78C3A2ADF181300A238A3 /* Tipple_aLogo.png in Resources */ = {isa = PBXBuildFile; fileRef = 34F78C392ADF181300A238A3 /* Tipple_aLogo.png */; };
-		49837CF02ADCFF47001F4B8B /* CalendarHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49837CEF2ADCFF47001F4B8B /* CalendarHelper.swift */; };
-		49837CF22ADCFF8D001F4B8B /* DayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49837CF12ADCFF8D001F4B8B /* DayViewController.swift */; };
-		49837CF42ADCFFA8001F4B8B /* SymptomsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49837CF32ADCFFA8001F4B8B /* SymptomsViewController.swift */; };
-		49837CF62ADCFFC0001F4B8B /* CalendarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49837CF52ADCFFC0001F4B8B /* CalendarViewController.swift */; };
-		49837CF82ADD0563001F4B8B /* DateCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49837CF72ADD0563001F4B8B /* DateCell.swift */; };
-		49A02BA32AD62EB500E59826 /* SessionsTracker.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 49A02BA22AD62EB500E59826 /* SessionsTracker.storyboard */; };
 		49A0B6282ADDA23C0080E6FA /* DrinkInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49A0B6272ADDA23C0080E6FA /* DrinkInfo.swift */; };
 		49A0B62C2ADDA2A00080E6FA /* SessionInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49A0B62B2ADDA2A00080E6FA /* SessionInfo.swift */; };
-		49B2C1312ADEF9580025E38C /* SessionsTracker.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 49B2C1302ADEF9580025E38C /* SessionsTracker.storyboard */; };
 		49B2C1372ADEF9BA0025E38C /* SessionsListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49B2C1362ADEF9BA0025E38C /* SessionsListViewController.swift */; };
 		49B2C1392ADEFC320025E38C /* QuestionnaireVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49B2C1382ADEFC320025E38C /* QuestionnaireVC.swift */; };
 		49B2C13D2ADEFD140025E38C /* ActiveSessions.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 49B2C13C2ADEFD140025E38C /* ActiveSessions.storyboard */; };
 		49B2C13F2ADEFE630025E38C /* ShowActiveVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49B2C13E2ADEFE630025E38C /* ShowActiveVC.swift */; };
-		49B2C1412ADF07E60025E38C /* DayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49B2C1402ADF07E60025E38C /* DayViewController.swift */; };
 		49B2C1432ADF08360025E38C /* SymptomsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49B2C1422ADF08360025E38C /* SymptomsViewController.swift */; };
+		49F26E202ADF27B900FF70A7 /* SessionsTracker.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 49F26E1F2ADF27B900FF70A7 /* SessionsTracker.storyboard */; };
+		49F26E222ADF287900FF70A7 /* DayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49F26E212ADF287900FF70A7 /* DayViewController.swift */; };
 		B3329D342ADB53A300F23531 /* FirestoreManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3329D332ADB53A300F23531 /* FirestoreManager.swift */; };
 		B3329D372ADB654D00F23531 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = B3329D362ADB654D00F23531 /* FirebaseFirestore */; };
 		B3329D392ADB71D900F23531 /* ProfileInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3329D382ADB71D900F23531 /* ProfileInfo.swift */; };
@@ -73,21 +67,15 @@
 		349A6F7C2AD62DAE002A707B /* LoginRegistrationHome.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LoginRegistrationHome.storyboard; sourceTree = "<group>"; };
 		349B1F732ADDDF3F00588DCF /* MOCKScrollViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MOCKScrollViewController.swift; sourceTree = "<group>"; };
 		34F78C392ADF181300A238A3 /* Tipple_aLogo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Tipple_aLogo.png; sourceTree = "<group>"; };
-		49837CEF2ADCFF47001F4B8B /* CalendarHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CalendarHelper.swift; sourceTree = "<group>"; };
-		49837CF12ADCFF8D001F4B8B /* DayViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DayViewController.swift; sourceTree = "<group>"; };
-		49837CF32ADCFFA8001F4B8B /* SymptomsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SymptomsViewController.swift; sourceTree = "<group>"; };
-		49837CF52ADCFFC0001F4B8B /* CalendarViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CalendarViewController.swift; sourceTree = "<group>"; };
-		49837CF72ADD0563001F4B8B /* DateCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateCell.swift; sourceTree = "<group>"; };
-		49A02BA22AD62EB500E59826 /* SessionsTracker.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = SessionsTracker.storyboard; sourceTree = "<group>"; };
 		49A0B6272ADDA23C0080E6FA /* DrinkInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DrinkInfo.swift; sourceTree = "<group>"; };
 		49A0B62B2ADDA2A00080E6FA /* SessionInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SessionInfo.swift; sourceTree = "<group>"; };
-		49B2C1302ADEF9580025E38C /* SessionsTracker.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = SessionsTracker.storyboard; path = "../../cs371l-tipple copy2/Tipple/SessionsTracker.storyboard"; sourceTree = "<group>"; };
 		49B2C1362ADEF9BA0025E38C /* SessionsListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SessionsListViewController.swift; sourceTree = "<group>"; };
 		49B2C1382ADEFC320025E38C /* QuestionnaireVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QuestionnaireVC.swift; sourceTree = "<group>"; };
 		49B2C13C2ADEFD140025E38C /* ActiveSessions.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = ActiveSessions.storyboard; sourceTree = "<group>"; };
 		49B2C13E2ADEFE630025E38C /* ShowActiveVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShowActiveVC.swift; sourceTree = "<group>"; };
-		49B2C1402ADF07E60025E38C /* DayViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = DayViewController.swift; path = ../DayViewController.swift; sourceTree = "<group>"; };
 		49B2C1422ADF08360025E38C /* SymptomsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SymptomsViewController.swift; sourceTree = "<group>"; };
+		49F26E1F2ADF27B900FF70A7 /* SessionsTracker.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = SessionsTracker.storyboard; sourceTree = "<group>"; };
+		49F26E212ADF287900FF70A7 /* DayViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DayViewController.swift; sourceTree = "<group>"; };
 		B3329D332ADB53A300F23531 /* FirestoreManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestoreManager.swift; sourceTree = "<group>"; };
 		B3329D382ADB71D900F23531 /* ProfileInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileInfo.swift; sourceTree = "<group>"; };
 		B341BF722AD8A05600505C37 /* SettingsProfileInfoVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsProfileInfoVC.swift; sourceTree = "<group>"; };
@@ -150,12 +138,12 @@
 				340DDE9C2AD6243A00217F2D /* Tipple.xcdatamodeld */,
 				49A0B62B2ADDA2A00080E6FA /* SessionInfo.swift */,
 				49B2C13C2ADEFD140025E38C /* ActiveSessions.storyboard */,
-				49B2C1402ADF07E60025E38C /* DayViewController.swift */,
 				49B2C13E2ADEFE630025E38C /* ShowActiveVC.swift */,
 				49A0B6272ADDA23C0080E6FA /* DrinkInfo.swift */,
 				49B2C1422ADF08360025E38C /* SymptomsViewController.swift */,
-				49B2C1302ADEF9580025E38C /* SessionsTracker.storyboard */,
+				49F26E212ADF287900FF70A7 /* DayViewController.swift */,
 				49B2C1362ADEF9BA0025E38C /* SessionsListViewController.swift */,
+				49F26E1F2ADF27B900FF70A7 /* SessionsTracker.storyboard */,
 				49B2C1382ADEFC320025E38C /* QuestionnaireVC.swift */,
 				B3CE37612AD62FF1004FB1A1 /* Settings.storyboard */,
 				B36E61E32AD88C2300AFF50E /* SettingsVC.swift */,
@@ -258,8 +246,8 @@
 				34F78C3A2ADF181300A238A3 /* Tipple_aLogo.png in Resources */,
 				348821D22AD7932E00B677F3 /* GoogleService-Info.plist in Resources */,
 				340DDEA32AD6243D00217F2D /* LaunchScreen.storyboard in Resources */,
-				49B2C1312ADEF9580025E38C /* SessionsTracker.storyboard in Resources */,
 				340DDEA02AD6243D00217F2D /* Assets.xcassets in Resources */,
+				49F26E202ADF27B900FF70A7 /* SessionsTracker.storyboard in Resources */,
 				B3CE37622AD62FF1004FB1A1 /* Settings.storyboard in Resources */,
 				340DDE9B2AD6243A00217F2D /* Main.storyboard in Resources */,
 				49B2C13D2ADEFD140025E38C /* ActiveSessions.storyboard in Resources */,
@@ -290,7 +278,7 @@
 				49B2C1372ADEF9BA0025E38C /* SessionsListViewController.swift in Sources */,
 				49B2C13F2ADEFE630025E38C /* ShowActiveVC.swift in Sources */,
 				3411E5112AD8BC5800297E01 /* LoginViewController.swift in Sources */,
-				49B2C1412ADF07E60025E38C /* DayViewController.swift in Sources */,
+				49F26E222ADF287900FF70A7 /* DayViewController.swift in Sources */,
 				49B2C1432ADF08360025E38C /* SymptomsViewController.swift in Sources */,
 				3411E5162AD8C09B00297E01 /* HomeViewController.swift in Sources */,
 				49A0B62C2ADDA2A00080E6FA /* SessionInfo.swift in Sources */,
