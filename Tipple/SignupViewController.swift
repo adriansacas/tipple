@@ -13,16 +13,33 @@ class SignupViewController: UIViewController, UIPickerViewDataSource, UIPickerVi
     @IBOutlet weak var emailAddressTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
     @IBOutlet weak var confirmPasswordTextField: UITextField!
+    
+    @IBOutlet weak var firstNameTextField: UITextField!
+    @IBOutlet weak var lastNameTextField: UITextField!
+    @IBOutlet weak var phoneNumberTextField: UITextField!
+    @IBOutlet weak var birthdayPicker: UIDatePicker!
     @IBOutlet weak var genderTextField: UITextField!
+    @IBOutlet weak var heightTextField: UITextField!
     @IBOutlet weak var weightTextField: UITextField!
     @IBOutlet weak var errorStatus: UILabel!
     
-    
     var genderPicker = UIPickerView()
     var weightPicker = UIPickerView()
+    var heightPicker = UIPickerView()
     
     let genderIdentityChoices = ["Man", "Woman", "Non-Binary"]
     let weightRangeChoices: [Int] = Array(60 ... 300)
+    let heightFeetChoices: [Int] = Array(3 ... 7)
+    let heightInchChoices: [Int] = Array(0 ... 11)
+    
+    let firestoreManager = FirestoreManager.shared
+    var firstName: String = ""
+    var lastName: String = ""
+    var phoneNumber: String = ""
+    var gender: String = ""
+    var heightFeet: Int = -1
+    var heightInch: Int = -1
+    var weight: Int = -1
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,19 +49,24 @@ class SignupViewController: UIViewController, UIPickerViewDataSource, UIPickerVi
         //passwordTextField.isSecureTextEntry = true
         //confirmPasswordTextField.isSecureTextEntry = true
         
+        //birthdayTextField.inputView = datePicker
         genderTextField.inputView = genderPicker
+        heightTextField.inputView = heightPicker
         weightTextField.inputView = weightPicker
         
         //setting picker text fields
         genderPicker.delegate = self
         genderPicker.dataSource = self
         
+        heightPicker.delegate = self
+        heightPicker.dataSource = self
+        
         weightPicker.delegate = self
         weightPicker.dataSource = self
         
         //settings tags for pickers
         genderPicker.tag = 1
-        //height picker
+        heightPicker.tag = 2
         weightPicker.tag = 3
     }
 
@@ -53,28 +75,70 @@ class SignupViewController: UIViewController, UIPickerViewDataSource, UIPickerVi
         if(passwordTextField.text! != confirmPasswordTextField.text!){
             self.errorStatus.text = "Confirm password does not match password"
         } else {
-            Auth.auth().createUser(withEmail: emailAddressTextField.text!, password: passwordTextField.text!) {
-                (authResult, error) in
-                if let error = error as NSError? {
-                    self.errorStatus.text = "\(error.localizedDescription)"
-                } else {
-                    self.errorStatus.text = ""
-                }
-                
-                //log in new user immediately
-                if error == nil {
-                    Auth.auth().signIn(withEmail: self.emailAddressTextField.text!, password: self.passwordTextField.text!)
-                    self.performSegue(withIdentifier: "signupToHomeSegue", sender: nil)
-                 }
-            }
             
+            //only try and add user if all information is complete
+            loadPersonalData()
+            
+            //check if all data is filled
+            if(allDataFilled()) {
+                
+                //register user to firebase
+                Auth.auth().createUser(withEmail: emailAddressTextField.text!, password: passwordTextField.text!) {
+                    (authResult, error) in
+                    if let error = error as NSError? {
+                        
+                        //TODO: add alert instead of error text
+                        self.errorStatus.text = "\(error.localizedDescription)"
+                    } else {
+                        self.errorStatus.text = ""
+                    }
+                    
+                    //log in new user immediately and save data to firebase
+                    if error == nil {
+                        Auth.auth().signIn(withEmail: self.emailAddressTextField.text!, password: self.passwordTextField.text!)
+                        self.performSegue(withIdentifier: "signupToHomeSegue", sender: nil)
+                        
+                        //add information to fire base
+                        if let userId = Auth.auth().currentUser?.uid, let email = Auth.auth().currentUser?.email {
+                            self.firestoreManager.createUserDocument(
+                                                            userID: userId,
+                                                            firstName: self.firstName,
+                                                            lastName: self.lastName,
+                                                            phoneNumber: self.phoneNumber,
+                                                            birthday: self.birthdayPicker.date,
+                                                            gender: self.gender,
+                                                            heightFeet: self.heightFeet,
+                                                            heightInches: self.heightInch,
+                                                            weight: self.weight,
+                                                            email: email)
+                        } else {
+                            print("Error: Couldn't save data to firebase")
+                        }
+                    }
+                }
+            } else {
+                print("Error: Personal data is not filled in")
+            }
         }
-        
     }
     
     
     @IBAction func loginTextButtonPressed(_ sender: Any) {
             //performSegue(withIdentifier: "loginSegue", sender: nil)
+    }
+    
+    func loadPersonalData() {
+        firstName = firstNameTextField.text!
+        lastName = lastNameTextField.text!
+        phoneNumber = phoneNumberTextField.text!
+    }
+    
+    func allDataFilled() -> Bool{
+        //checks if all text fields were filled
+        if(firstName != "" && lastName != "" && phoneNumber != "" && gender != "" && heightFeet != -1 && heightInch != -1 && weight != -1){
+            return true
+        }
+        return false
     }
     
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
@@ -97,7 +161,12 @@ class SignupViewController: UIViewController, UIPickerViewDataSource, UIPickerVi
         case 1:
             return genderIdentityChoices.count
         case 2:
-            return 0
+            
+            if(component == 0) {
+                return heightFeetChoices.count
+            } else {
+                return heightInchChoices.count
+            }
         case 3:
             return weightRangeChoices.count
         default:
@@ -111,7 +180,12 @@ class SignupViewController: UIViewController, UIPickerViewDataSource, UIPickerVi
         case 1:
             return genderIdentityChoices[row]
         case 2:
-            return "No height data yet"
+            
+            if(component == 0) {
+                return String(heightFeetChoices[row])
+            } else {
+                return String(heightInchChoices[row])
+            }
         case 3:
             return String(weightRangeChoices[row])
         default:
@@ -123,26 +197,24 @@ class SignupViewController: UIViewController, UIPickerViewDataSource, UIPickerVi
         
         switch pickerView.tag {
         case 1:
-            genderTextField.text = genderIdentityChoices[row]
+            gender = genderIdentityChoices[row]
+            
+            genderTextField.text = gender
             genderTextField.resignFirstResponder()
         case 2:
-            return //TODO
+            heightFeet = heightFeetChoices[pickerView.selectedRow(inComponent: 0)]
+            heightInch = heightInchChoices[pickerView.selectedRow(inComponent: 1)]
+            
+            heightTextField.text = "\(heightFeet)\' \(heightInch)\" "
+            heightTextField.resignFirstResponder()
         case 3:
-            weightTextField.text = String(weightRangeChoices[row])
+            weight = weightRangeChoices[row]
+            
+            weightTextField.text = String(weight)
             weightTextField.resignFirstResponder()
         default:
             return
         }
     }
-    
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }
