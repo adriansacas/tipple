@@ -16,8 +16,9 @@ class ProfileInfo {
     var heightFeet: Int
     var heightInches: Int
     var weight: Int
+    var profileImageURL: String
 
-    init(firstName: String, lastName: String, phoneNumber: String, birthday: Date, gender: String, heightFeet: Int, heightInches: Int, weight: Int) {
+    init(firstName: String, lastName: String, phoneNumber: String, birthday: Date, gender: String, heightFeet: Int, heightInches: Int, weight: Int, profileImageURL: String) {
         self.firstName = firstName
         self.lastName = lastName
         self.phoneNumber = phoneNumber
@@ -26,6 +27,7 @@ class ProfileInfo {
         self.heightFeet = heightFeet
         self.heightInches = heightInches
         self.weight = weight
+        self.profileImageURL = profileImageURL
     }
 
     // Function to return the full name (first name and last name)

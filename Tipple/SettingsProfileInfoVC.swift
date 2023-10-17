@@ -7,6 +7,7 @@
 
 import UIKit
 import FirebaseAuth
+import FirebaseStorage
 
 protocol ProfileInfoDelegate: AnyObject {
     func didUpdateProfileInfo(_ updatedInfo: ProfileInfo)
@@ -130,6 +131,7 @@ class SettingsProfileInfoVC: UIViewController, UITableViewDataSource, UITableVie
                     // Reload the table view to update the detailTextLabels
                     DispatchQueue.main.async {
                         self?.tableView.reloadData()
+                        self?.setProfileImage()
                     }
                 }
             }
@@ -143,10 +145,6 @@ class SettingsProfileInfoVC: UIViewController, UITableViewDataSource, UITableVie
     }
     
     @objc func profileImageTapped() {
-//        let imagePicker = UIImagePickerController()
-//        imagePicker.sourceType = .photoLibrary
-//        self.present(imagePicker, animated: true, completion: nil)
-        
         let imagePicker = UIImagePickerController()
         imagePicker.delegate = self
 
@@ -172,14 +170,82 @@ class SettingsProfileInfoVC: UIViewController, UITableViewDataSource, UITableVie
     }
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
-        if let image = info[.originalImage] as? UIImage {
-            // Update the profileImage UIImageView with the selected image
-            profileImage.image = image
+        if let selectedImage = info[.originalImage] as? UIImage {
+            uploadImageToFirebaseStorage(image: selectedImage) { [weak self] (url, error) in
+                if let url = url, let userID = Auth.auth().currentUser?.uid {
+                    let updatedData: [String: Any] = [
+                        "profileImageURL": url.absoluteString
+                    ]
 
-            // Save the image to UserDefaults or another storage mechanism if needed
-            // Note: For a production app, consider using a dedicated image storage service like Firebase Storage.
+                    self?.firestoreManager.updateUserDocument(userID: userID, updatedData: updatedData)
+
+                    // Update the profileImage UIImageView with the selected image
+                    self?.profileImage.image = selectedImage
+                } else {
+                    // Handle the error
+                    print("Image upload error: \(error?.localizedDescription ?? "Unknown error")")
+                }
+            }
         }
 
         picker.dismiss(animated: true, completion: nil)
+    }
+    
+    func uploadImageToFirebaseStorage(image: UIImage, completion: @escaping (URL?, Error?) -> Void) {
+        // Create a reference to Firebase Storage
+        let storage = Storage.storage()
+        let storageReference = storage.reference()
+
+        // Create a unique name for the image (e.g., user's UID + a timestamp)
+        let imageName = "\(Auth.auth().currentUser?.uid ?? "").jpg"
+
+        // Create a reference to the file in Firebase Storage
+        let imageRef = storageReference.child("profile_images/\(imageName)")
+
+        // Convert the image to Data
+        if let imageData = image.jpegData(compressionQuality: 0.3) {
+            // Upload the image
+            let uploadTask = imageRef.putData(imageData, metadata: nil) { (metadata, error) in
+                if let error = error {
+                    completion(nil, error)
+                } else {
+                    // Image uploaded successfully
+                    imageRef.downloadURL { (url, error) in
+                        if let downloadURL = url {
+                            completion(downloadURL, nil)
+                        } else {
+                            completion(nil, error)
+                        }
+                    }
+                }
+            }
+        } else {
+            // Handle data conversion error
+            let error = NSError(domain: "", code: 0, userInfo: [NSLocalizedDescriptionKey: "Image conversion failed"])
+            completion(nil, error)
+        }
+    }
+    
+    func setProfileImage() {
+        guard let imageURLString = userProfileInfo?.profileImageURL,
+              let imageURL = URL(string: imageURLString) else {
+            return
+        }
+
+        // Create a URLSession data task to download the image
+        URLSession.shared.dataTask(with: imageURL) { [weak self] (data, response, error) in
+            if let error = error {
+                print("Error downloading image: \(error.localizedDescription)")
+                return
+            }
+
+            // Ensure that the downloaded data is an image
+            if let data = data, let image = UIImage(data: data) {
+                // Update the profileImage UIImageView on the main thread
+                DispatchQueue.main.async {
+                    self?.profileImage.image = image
+                }
+            }
+        }.resume()
     }
 }

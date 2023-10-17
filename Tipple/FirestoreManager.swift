@@ -16,7 +16,7 @@ import FirebaseFirestore
     let dateFormatter = DateFormatter()
     dateFormatter.dateFormat = "yyyy-MM-dd"
     if let birthDate = dateFormatter.date(from: "2024-10-14"), let userID = Auth.auth().currentUser?.uid, let email = Auth.auth().currentUser?.email {
-         FirestoreManager.shared.createUserDocument(
+         firestoreManager.createUserDocument(
              userID: userID,
              firstName: "John",
              lastName: "Doe",
@@ -26,7 +26,8 @@ import FirebaseFirestore
              heightFeet: 6,
              heightInches: 2,
              weight: 180,
-             email: email
+             email: email,
+             profileImageURL: ""
          )
     } else {
      print("Invalid date format or invalid userid")
@@ -45,7 +46,7 @@ class FirestoreManager {
     }
 
     // Function to add a new user document
-    func createUserDocument(userID: String, firstName: String, lastName: String, phoneNumber: String, birthday: Date, gender: String, heightFeet: Int, heightInches: Int, weight: Int, email: String) {
+    func createUserDocument(userID: String, firstName: String, lastName: String, phoneNumber: String, birthday: Date, gender: String, heightFeet: Int, heightInches: Int, weight: Int, email: String, profileImageURL: String) {
         let userRef = db.collection(usersCollection).document(userID)
         let userData: [String: Any] = [
             "firstName": firstName,
@@ -56,7 +57,8 @@ class FirestoreManager {
             "heightFeet": heightFeet,
             "heightInches": heightInches,
             "weight": weight,
-            "email": email
+            "email": email,
+            "profileImageURL": profileImageURL
         ]
         
         userRef.setData(userData) { error in
@@ -101,9 +103,10 @@ class FirestoreManager {
                    let gender = userData["gender"] as? String,
                    let heightFeet = userData["heightFeet"] as? Int,
                    let heightInches = userData["heightInches"] as? Int,
+                   let profileImageURL = userData["profileImageURL"] as? String,
                    let weight = userData["weight"] as? Int{
                     let birthday = birthdayTimestamp.dateValue()
-                    let profileInfo = ProfileInfo(firstName: firstName, lastName: lastName, phoneNumber: phoneNumber, birthday: birthday, gender: gender, heightFeet: heightFeet, heightInches: heightInches, weight: weight)
+                    let profileInfo = ProfileInfo(firstName: firstName, lastName: lastName, phoneNumber: phoneNumber, birthday: birthday, gender: gender, heightFeet: heightFeet, heightInches: heightInches, weight: weight, profileImageURL: profileImageURL)
                     completion(profileInfo, nil)
                 } else {
                     completion(nil, NSError(domain: "", code: 0, userInfo: ["message": "User data not found or is invalid"]))
