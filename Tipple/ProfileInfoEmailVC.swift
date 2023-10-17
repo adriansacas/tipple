@@ -56,7 +56,7 @@ class ProfileInfoEmailVC: UITableViewController, ProfileInfoDelegateSettingVC {
                 if let error = error {
                     // Handle reauthentication error
                     print("Reauthentication failed: \(error.localizedDescription)")
-                    self.showAlert(title: "Reauthentication Failed", message: error.localizedDescription)
+                    AlertUtils.showAlert(title: "Reauthentication Failed", message: error.localizedDescription, viewController: self)
                 } else {
                     // User is successfully reauthenticated
                     // Verify the new email address first
@@ -64,14 +64,14 @@ class ProfileInfoEmailVC: UITableViewController, ProfileInfoDelegateSettingVC {
                         if let error = error {
                             // Handle email verification error
                             print("Email verification failed: \(error.localizedDescription)")
-                            self.showAlert(title: "Email Verification Failed", message: error.localizedDescription)
+                            AlertUtils.showAlert(title: "Email Verification Failed", message: error.localizedDescription, viewController: self)
                         } else {
                             // Email address verified, now update the email
                             user?.updateEmail(to: newEmail) { error in
                                 if let error = error {
                                     // Handle email update error
                                     print("Email update failed: \(error.localizedDescription)")
-                                    self.showAlert(title: "Email Update Failed", message: error.localizedDescription)
+                                    AlertUtils.showAlert(title: "Email Update Failed", message: error.localizedDescription, viewController: self)
                                 } else {
                                     // Email address updated successfully
                                     print("Email updated to: \(newEmail)")
@@ -100,11 +100,5 @@ class ProfileInfoEmailVC: UITableViewController, ProfileInfoDelegateSettingVC {
         }
         
         return false
-    }
-    
-    func showAlert(title: String, message: String) {
-        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-        self.present(alert, animated: true, completion: nil)
     }
 }
