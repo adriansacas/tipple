@@ -111,17 +111,17 @@ class DayViewController: UIViewController, updateSymptoms {
 //        }
 //        return result
 //    }
-//    
+//
 //    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-//        
+//
 //        var identifier = tableView == logTableView ? logTextCellIdentifier : symptomsTextCellIdentifier
-//        
+//
 //        let cell = tableView.dequeueReusableCell(withIdentifier: identifier, for: indexPath as IndexPath)
-//    
+//
 //        let row = indexPath.row
-//        
+//
 //        var newText = tableView == logTableView ? logs[row] : symptoms[row]
-//        
+//
 //        cell.textLabel?.text = newText
 //
 //        return cell

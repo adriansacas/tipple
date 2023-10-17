@@ -25,6 +25,17 @@ class SessionInfo {
     var membersList: [String]?
     // var polls: [PollInfo]?
     
+    init() {
+        self.startTime = Date()
+        self.sessionType = ""
+        self.drinksInSession = []
+        self.startLocation = ""
+        self.endLocation = ""
+        self.ateBefore = false
+        self.sessionName = ""
+        self.shareSession = false
+        self.membersList = []
+    }
     
     init(startTime: Date, sessionType: String, drinksInSession: [DrinkInfo], startLocation: String? = nil, endLocation: String? = nil, ateBefore: Bool? = nil, sessionName: String? = nil, shareSession: Bool? = nil, membersList: [String]? = nil) {
         self.startTime = startTime
