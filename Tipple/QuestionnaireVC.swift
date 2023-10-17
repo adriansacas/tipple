@@ -27,7 +27,13 @@ class QuestionnaireVC: UIViewController {
 
         // Do any additional setup after loading the view.
         getUserID()
-        getUserProfileData()
+        //getUserProfileData()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        // Just ensuring that the search fields are getting reset at the end of a view
+        partyLocation.text = nil
+        endLocation.text = nil
     }
     
     

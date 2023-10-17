@@ -16,21 +16,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="430" height="932"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <navigationBar contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="U53-ZV-DLd">
-                                <rect key="frame" x="0.0" y="59" width="430" height="44"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
-                                <color key="barTintColor" red="0.21176470588235294" green="0.20392156862745098" blue="0.63921568627450975" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                                <items>
-                                    <navigationItem id="uZa-Ta-rCQ">
-                                        <barButtonItem key="leftBarButtonItem" title="Return" id="yki-7h-xQl">
-                                            <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                            <connections>
-                                                <action selector="returnPressed:" destination="Y6W-OH-hqX" id="sSn-UZ-RK6"/>
-                                            </connections>
-                                        </barButtonItem>
-                                    </navigationItem>
-                                </items>
-                            </navigationBar>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Have You Eaten In Last 3 Hours?" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IJJ-Qs-jz7">
                                 <rect key="frame" x="20" y="258" width="247" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -93,7 +78,7 @@
                                 </buttonConfiguration>
                                 <connections>
                                     <action selector="startSessionButton:" destination="Y6W-OH-hqX" eventType="touchUpInside" id="60v-zi-HfD"/>
-                                    <segue destination="eJW-Df-XMv" kind="show" identifier="questionToActiveSegue" id="00K-vw-HeK"/>
+                                    <segue destination="eJW-Df-XMv" kind="presentation" identifier="questionToActiveSegue" modalPresentationStyle="overFullScreen" id="00K-vw-HeK"/>
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Pre-Session Questionnaire" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="b79-cu-b3z">
@@ -123,25 +108,53 @@
             <objects>
                 <viewController storyboardIdentifier="SessionPageVC" title="SessionPageVC" id="eJW-Df-XMv" customClass="ShowActiveVC" customModule="Tipple" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="CaN-ji-dwe">
-                        <rect key="frame" x="0.0" y="0.0" width="430" height="922"/>
+                        <rect key="frame" x="0.0" y="0.0" width="430" height="932"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <segmentedControl opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" translatesAutoresizingMaskIntoConstraints="NO" id="D6y-JR-0KQ">
-                                <rect key="frame" x="20" y="788" width="390" height="32"/>
+                                <rect key="frame" x="20" y="813" width="390" height="32"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <segments>
                                     <segment title="beer"/>
-                                    <segment title="Second"/>
+                                    <segment title="wine"/>
                                     <segment title="seltzer"/>
                                     <segment title="cocktail"/>
                                     <segment title="shot"/>
                                 </segments>
                             </segmentedControl>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="xgT-Eh-jLK">
+                                <rect key="frame" x="40" y="286" width="350" height="350"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                            <segmentedControl opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" translatesAutoresizingMaskIntoConstraints="NO" id="W18-eh-qea">
+                                <rect key="frame" x="20" y="112" width="390" height="32"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <segments>
+                                    <segment title="BAC"/>
+                                    <segment title="Status"/>
+                                    <segment title="# of Drinks"/>
+                                </segments>
+                            </segmentedControl>
+                            <navigationBar contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="eMz-yQ-rZB">
+                                <rect key="frame" x="0.0" y="54" width="430" height="44"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                                <color key="barTintColor" red="0.21176470589999999" green="0.20392156859999999" blue="0.63921568630000003" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <textAttributes key="titleTextAttributes">
+                                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </textAttributes>
+                                <items>
+                                    <navigationItem title="&lt;Insert Session Name&gt;" id="NRG-4X-Ref"/>
+                                </items>
+                            </navigationBar>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="dQd-cq-9Zl"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
-                    <navigationItem key="navigationItem" id="cbM-II-qmd"/>
+                    <navigationItem key="navigationItem" id="V62-iw-Ubk"/>
+                    <connections>
+                        <outlet property="drinkSelectorSegmented" destination="D6y-JR-0KQ" id="7Uf-Qz-UEH"/>
+                        <outlet property="statusSegmented" destination="W18-eh-qea" id="op0-kq-8lH"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="rDX-3C-zQi" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
