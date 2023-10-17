@@ -10,6 +10,32 @@ Already a pro? Just edit this README.md and make it your own. Want to make it ea
 
 ## Contributions
 
-## Differences/Deviations
+Adrian Castaned (%)
+- 
+- 
+- 
 
+Andrew White (%)
+- 
+-
+-
+
+Claudia Castillo (%)
+- 
+-
+-
+
+Danica Padlan (%)
+- Initial Firebase setup
+- All of Login, Registration, and Home page
+- Checked and saved user's email, password, and personal data to Firebase
+- Connect some segues from Home page to other storyboards
+
+
+
+## Differences/Deviations
+- Password and Confirm Password text field in Register page has a 
+'Cannot show Automatic Strong Passwords' error when setting isSecureTextEntry to true, will work on finding the solution to this by Beta
+-
+-
 
