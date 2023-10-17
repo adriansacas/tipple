@@ -12,7 +12,6 @@ class LoginViewController: UIViewController {
 
     @IBOutlet weak var emailAddressTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
-    @IBOutlet weak var errorStatus: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -24,14 +23,13 @@ class LoginViewController: UIViewController {
     @IBAction func loginButtonPressed(_ sender: Any) {
         
         if(emailAddressTextField.text! == "" || passwordTextField.text! == ""){
-            self.errorStatus.text = "Must complete all fields to login"
+            AlertUtils.showAlert(title: "Incomplete Fields", message: "Complete all fields to login.", viewController: self)
         } else {
             Auth.auth().signIn(withEmail: emailAddressTextField.text! , password: passwordTextField.text!) {
                 (authResult, error) in
-                if let error = error as NSError? {
-                    self.errorStatus.text = "\(error.localizedDescription)"
+                if (error as NSError?) != nil {
+                    AlertUtils.showAlert(title: "Login Error", message: "Email may not exist or password is incorrect.", viewController: self)
                 } else {
-                    self.errorStatus.text = ""
                     self.performSegue(withIdentifier: "loginToHomeSegue", sender: nil)
                 }
             }
@@ -41,15 +39,4 @@ class LoginViewController: UIViewController {
     @IBAction func signupTextButtonPressed(_ sender: Any){
         performSegue(withIdentifier: "signupSegue", sender: nil)
     }
-    
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }

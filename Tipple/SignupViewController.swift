@@ -21,7 +21,6 @@ class SignupViewController: UIViewController, UIPickerViewDataSource, UIPickerVi
     @IBOutlet weak var genderTextField: UITextField!
     @IBOutlet weak var heightTextField: UITextField!
     @IBOutlet weak var weightTextField: UITextField!
-    @IBOutlet weak var errorStatus: UILabel!
     
     var genderPicker = UIPickerView()
     var weightPicker = UIPickerView()
@@ -73,7 +72,7 @@ class SignupViewController: UIViewController, UIPickerViewDataSource, UIPickerVi
     @IBAction func signupButtonPressed(_ sender: Any) {
         
         if(passwordTextField.text! != confirmPasswordTextField.text!){
-            self.errorStatus.text = "Confirm password does not match password"
+            AlertUtils.showAlert(title: "Mismatch passwords", message: "Passwords are not the same.", viewController: self)
         } else {
             
             //only try and add user if all information is complete
@@ -86,11 +85,7 @@ class SignupViewController: UIViewController, UIPickerViewDataSource, UIPickerVi
                 Auth.auth().createUser(withEmail: emailAddressTextField.text!, password: passwordTextField.text!) {
                     (authResult, error) in
                     if let error = error as NSError? {
-                        
-                        //TODO: add alert instead of error text
-                        self.errorStatus.text = "\(error.localizedDescription)"
-                    } else {
-                        self.errorStatus.text = ""
+                        AlertUtils.showAlert(title: "Invalid Email", message: "Email address already used. Please use another.", viewController: self)
                     }
                     
                     //log in new user immediately and save data to firebase
@@ -112,19 +107,19 @@ class SignupViewController: UIViewController, UIPickerViewDataSource, UIPickerVi
                                                             weight: self.weight,
                                                             email: email)
                         } else {
-                            print("Error: Couldn't save data to firebase")
+                            AlertUtils.showAlert(title: "Error Registering Data", message: "Try again later.", viewController: self)
                         }
                     }
                 }
             } else {
-                print("Error: Personal data is not filled in")
+                AlertUtils.showAlert(title: "Missing Information", message: "Complete all fields to register new account.", viewController: self)
             }
         }
     }
     
     
     @IBAction func loginTextButtonPressed(_ sender: Any) {
-            //performSegue(withIdentifier: "loginSegue", sender: nil)
+            performSegue(withIdentifier: "loginSegue", sender: nil)
     }
     
     func loadPersonalData() {
@@ -133,9 +128,17 @@ class SignupViewController: UIViewController, UIPickerViewDataSource, UIPickerVi
         phoneNumber = phoneNumberTextField.text!
     }
     
+    //checks if all text fields were filled
     func allDataFilled() -> Bool{
-        //checks if all text fields were filled
-        if(firstName != "" && lastName != "" && phoneNumber != "" && gender != "" && heightFeet != -1 && heightInch != -1 && weight != -1){
+        if(passwordTextField.text! != "" &&
+           confirmPasswordTextField.text! != "" &&
+           firstName != "" &&
+           lastName != "" &&
+           phoneNumber != "" &&
+           gender != "" &&
+           heightFeet != -1 &&
+           heightInch != -1 &&
+           weight != -1){
             return true
         }
         return false
@@ -216,5 +219,4 @@ class SignupViewController: UIViewController, UIPickerViewDataSource, UIPickerVi
             return
         }
     }
-
 }

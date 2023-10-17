@@ -22,6 +22,13 @@
 		348821E72AD793AE00B677F3 /* FirebaseDatabase in Frameworks */ = {isa = PBXBuildFile; productRef = 348821E62AD793AE00B677F3 /* FirebaseDatabase */; };
 		349A6F7D2AD62DAE002A707B /* LoginRegistrationHome.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 349A6F7C2AD62DAE002A707B /* LoginRegistrationHome.storyboard */; };
 		349B1F742ADDDF3F00588DCF /* MOCKScrollViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 349B1F732ADDDF3F00588DCF /* MOCKScrollViewController.swift */; };
+		34F78C3A2ADF181300A238A3 /* Tipple_aLogo.png in Resources */ = {isa = PBXBuildFile; fileRef = 34F78C392ADF181300A238A3 /* Tipple_aLogo.png */; };
+		49837CF02ADCFF47001F4B8B /* CalendarHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49837CEF2ADCFF47001F4B8B /* CalendarHelper.swift */; };
+		49837CF22ADCFF8D001F4B8B /* DayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49837CF12ADCFF8D001F4B8B /* DayViewController.swift */; };
+		49837CF42ADCFFA8001F4B8B /* SymptomsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49837CF32ADCFFA8001F4B8B /* SymptomsViewController.swift */; };
+		49837CF62ADCFFC0001F4B8B /* CalendarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49837CF52ADCFFC0001F4B8B /* CalendarViewController.swift */; };
+		49837CF82ADD0563001F4B8B /* DateCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49837CF72ADD0563001F4B8B /* DateCell.swift */; };
+		49A02BA32AD62EB500E59826 /* SessionsTracker.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 49A02BA22AD62EB500E59826 /* SessionsTracker.storyboard */; };
 		49A0B6282ADDA23C0080E6FA /* DrinkInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49A0B6272ADDA23C0080E6FA /* DrinkInfo.swift */; };
 		49A0B62C2ADDA2A00080E6FA /* SessionInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49A0B62B2ADDA2A00080E6FA /* SessionInfo.swift */; };
 		49B2C1312ADEF9580025E38C /* SessionsTracker.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 49B2C1302ADEF9580025E38C /* SessionsTracker.storyboard */; };
@@ -65,6 +72,13 @@
 		348821D12AD7932E00B677F3 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		349A6F7C2AD62DAE002A707B /* LoginRegistrationHome.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LoginRegistrationHome.storyboard; sourceTree = "<group>"; };
 		349B1F732ADDDF3F00588DCF /* MOCKScrollViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MOCKScrollViewController.swift; sourceTree = "<group>"; };
+		34F78C392ADF181300A238A3 /* Tipple_aLogo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Tipple_aLogo.png; sourceTree = "<group>"; };
+		49837CEF2ADCFF47001F4B8B /* CalendarHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CalendarHelper.swift; sourceTree = "<group>"; };
+		49837CF12ADCFF8D001F4B8B /* DayViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DayViewController.swift; sourceTree = "<group>"; };
+		49837CF32ADCFFA8001F4B8B /* SymptomsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SymptomsViewController.swift; sourceTree = "<group>"; };
+		49837CF52ADCFFC0001F4B8B /* CalendarViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CalendarViewController.swift; sourceTree = "<group>"; };
+		49837CF72ADD0563001F4B8B /* DateCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateCell.swift; sourceTree = "<group>"; };
+		49A02BA22AD62EB500E59826 /* SessionsTracker.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = SessionsTracker.storyboard; sourceTree = "<group>"; };
 		49A0B6272ADDA23C0080E6FA /* DrinkInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DrinkInfo.swift; sourceTree = "<group>"; };
 		49A0B62B2ADDA2A00080E6FA /* SessionInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SessionInfo.swift; sourceTree = "<group>"; };
 		49B2C1302ADEF9580025E38C /* SessionsTracker.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = SessionsTracker.storyboard; path = "../../cs371l-tipple copy2/Tipple/SessionsTracker.storyboard"; sourceTree = "<group>"; };
@@ -125,6 +139,7 @@
 			isa = PBXGroup;
 			children = (
 				3411E5122AD8BDE700297E01 /* TippleRelease.entitlements */,
+				34F78C392ADF181300A238A3 /* Tipple_aLogo.png */,
 				340DDE932AD6243A00217F2D /* AppDelegate.swift */,
 				340DDE952AD6243A00217F2D /* SceneDelegate.swift */,
 				340DDE972AD6243A00217F2D /* ViewController.swift */,
@@ -240,6 +255,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				349A6F7D2AD62DAE002A707B /* LoginRegistrationHome.storyboard in Resources */,
+				34F78C3A2ADF181300A238A3 /* Tipple_aLogo.png in Resources */,
 				348821D22AD7932E00B677F3 /* GoogleService-Info.plist in Resources */,
 				340DDEA32AD6243D00217F2D /* LaunchScreen.storyboard in Resources */,
 				49B2C1312ADEF9580025E38C /* SessionsTracker.storyboard in Resources */,
