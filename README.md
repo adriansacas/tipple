@@ -10,11 +10,14 @@ Already a pro? Just edit this README.md and make it your own. Want to make it ea
 
 ## Contributions
 
-Adrian Castaned (%)
+Adrian Sanchez (%)
 -
-- 
-- 
-- 
+- Settings storyboard
+  - Update profile info view controllers to update name, dob, gender, height, weight, phone, email, profile picture
+- FirestoreManager class to manage create, update, and delete Firestore database operations
+- ProfileInfo class to manage profile operations
+- Fire Storage Setup
+- AlertUtils class
 
 Andrew White (%)
 -
@@ -40,6 +43,6 @@ Danica Padlan (%)
 ## Differences/Deviations
 - Password and Confirm Password text field in Register page has a 
 'Cannot show Automatic Strong Passwords' error when setting isSecureTextEntry to true, will work on finding the solution to this by Beta
--
+- In order for a user to update their email address they must re-authenticate and confirm their email first. However, can't seem to be able to send emails. Will investigate further. 
 -
 

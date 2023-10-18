@@ -26,8 +26,7 @@ import FirebaseFirestore
              heightFeet: 6,
              heightInches: 2,
              weight: 180,
-             email: email,
-             profileImageURL: ""
+             email: email
          )
     } else {
      print("Invalid date format or invalid userid")
@@ -73,24 +72,6 @@ class FirestoreManager {
             }
         }
     }
-    
-    // Function to retrieve user data by user ID
-    //    func getUserData(userID: String, completion: @escaping (Result<[String: Any], Error>) -> Void) {
-    //        let userRef = db.collection(usersCollection).document(userID)
-    //        userRef.getDocument { (document, error) in
-    //            if let error = error {
-    //                completion(.failure(error))
-    //            } else if let document = document, document.exists {
-    //                if let userData = document.data() {
-    //                    completion(.success(userData))
-    //                } else {
-    //                    completion(.failure(NSError(domain: "", code: 0, userInfo: ["message": "User data not found"])))
-    //                }
-    //            } else {
-    //                completion(.failure(NSError(domain: "", code: 0, userInfo: ["message": "User document not found"])))
-    //            }
-    //        }
-    //    }
     
     // Function to retrieve user data and parse it into a ProfileInfo object
     func getUserData(userID: String, completion: @escaping (ProfileInfo?, Error?) -> Void) {
@@ -191,7 +172,7 @@ class FirestoreManager {
         }
     }
     
-    
+
     // Adds a session for a given userID
     func addSessionInfo(userID: String, session: SessionInfo, completion: @escaping (String?, Error?) -> Void) {
         let userDocRef = db.collection(usersCollection).document(userID)

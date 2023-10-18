@@ -39,12 +39,11 @@ class ProfileInfoEmailVC: UITableViewController, ProfileInfoDelegateSettingVC {
             return
         }
 
-        // Perform validation for email addresses if needed
-//        if isValidEmail(newEmail) {
-//            print("Valid email address")
-//        } else {
-//            print("Invalid email address")
-//        }
+        if isValidEmail(newEmail) {
+            print("Valid email address")
+        } else {
+            print("Invalid email address")
+        }
 
         if currentEmail != newEmail {
             // Re-authenticate the user with their current credentials
