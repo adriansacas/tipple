@@ -20,6 +20,7 @@ Adrian Sanchez (%)
 - AlertUtils class
 
 Andrew White (%)
+-
 - Session/Drink Info Classes
   - Wrote classes for a given session and different types of drinks
   - Jointly defined data schema for Firebase storage of sessions
