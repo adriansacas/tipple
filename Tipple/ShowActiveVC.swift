@@ -28,6 +28,7 @@ class ShowActiveVC: UIViewController {
     @IBOutlet weak var drinkSelectorSegmented: UISegmentedControl!
     @IBOutlet weak var statusSegmented: UISegmentedControl!
     @IBOutlet weak var navItemTitle: UINavigationItem!
+    @IBOutlet weak var mainGlassIV: UIImageView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -107,6 +108,14 @@ class ShowActiveVC: UIViewController {
         statusSegmented.setTitle(String(format: "%.2f", bacValue), forSegmentAt: indicies["BAC"]!)
         statusSegmented.setTitle(status, forSegmentAt: indicies["STATUS"]!)
         statusSegmented.setTitle(String(drinks), forSegmentAt: indicies["NUMDRINK"]!)
+        
+        if bacValue < 0.08 {
+            mainGlassIV.image = UIImage(named: "Tipple_Green_Status")
+        } else if (bacValue < 0.12) {
+            mainGlassIV.image = UIImage(named: "Tipple_Yellow_Status")
+        } else {
+            mainGlassIV.image = UIImage(named: "Tipple_Red_Status")
+        }
     }
     
     func updateDrinks(drinkType: String, amount: Int) {
@@ -176,6 +185,21 @@ class ShowActiveVC: UIViewController {
         }
     }
 
+    func loadImage(at path: String) -> UIImage? {
+        let paths = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)
+        let documentPath = paths[0]
+        let imagePath = documentPath.appending(path)
+        guard fileExists(at: imagePath) else {
+            return nil
+        }
+        guard let image = UIImage(contentsOfFile: imagePath) else {
+            return nil
+        }
+        return image
+    }
 
+    func fileExists(at path: String) -> Bool {
+        return FileManager.default.fileExists(atPath: path)
+    }
 
 }
