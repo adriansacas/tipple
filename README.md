@@ -20,10 +20,15 @@ Adrian Sanchez (%)
 - AlertUtils class
 
 Andrew White (%)
--
-- 
--
--
+- Session/Drink Info Classes
+  - Wrote classes for a given session and different types of drinks
+  - Jointly defined data schema for Firebase storage of sessions
+  - Wrote & added FirestoreManager methods to create/retrieve/update sessions & drinks for a session
+- ActiveSessions storyboard
+  - Created views for inital questionnare for a session 
+  - Created session locally/firebase & displays information for session
+    - Updates firebase session as changes are made within view
+    - Keeps track of users drinks / runningBAC / and a status and updates view as changes are inputed
 
 Claudia Castillo (%)
 -
@@ -48,4 +53,7 @@ Danica Padlan (%)
 - Symptoms not yet saved to a session in firebase as it would require to change many current working areas
 - Total drinks in Day View presented by a simple counter rather than a pie chart, will look into changing for beta
 - Notifications pushed to beta, still deciding the best approach to them
+- Drink increments are presented through an alert instead of a hidden/unhidden stepper. Experiencing issues on displaying stepper at appropriate time/place
+- No way to go to settings/previous sessions/friends list from a current running session. Will implement in beta.
+
 
