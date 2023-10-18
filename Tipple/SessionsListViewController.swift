@@ -36,7 +36,7 @@ class SessionsListViewController: UIViewController, UITableViewDelegate, UITable
         firestoreManager.getAllSessions(userID: userID!) {
             list, error in
             if let error = error {
-                print("Error adding session: \(error)")
+                print("Error retrieving session: \(error)")
             } else {
                 self.tableView.beginUpdates()
                 var count = 0
@@ -74,11 +74,14 @@ class SessionsListViewController: UIViewController, UITableViewDelegate, UITable
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let row = indexPath.row
         session = sessions![row]
+        
+        self.performSegue(withIdentifier: "DayViewSegueIdentifier", sender: self)
+        
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "sessionSegueIdentifier",
-           let nextVC = segue.destination as? DayViewController // typecasting
+        if segue.identifier == "DayViewSegueIdentifier",
+           let nextVC = segue.destination as? DayViewController
         {
             nextVC.delegate = self
             nextVC.session = self.session

@@ -43,7 +43,7 @@ class DrinkInfo {
     
     // Returns the BAC level at the time of drink creation
     func getBAC() -> String {
-        return String(format: "Angle: %.2f", self.bacAtTime)
+        return String(format: "%.2f", self.bacAtTime)
     }
     
     // Returns the amount of grams in a given alc type

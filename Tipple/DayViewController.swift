@@ -30,8 +30,8 @@ class DayViewController: UIViewController, updateSymptoms {
     let symptomsTextCellIdentifier = "SymptomsCell"
     
     var session:SessionInfo = SessionInfo()
-    var symptoms:[String] = ["Headache"]
-    var logs:String = "10:00PM\t\t\t\tBeer\t\t\t\t\t0.05%"
+    var symptoms:[String] = ["No symptoms logged yet"]
+    var logs:String = ""
     
     var delegate:UIViewController?
     
@@ -41,6 +41,7 @@ class DayViewController: UIViewController, updateSymptoms {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "MM/dd/YY"
         titleLabel.text = dateFormatter.string(from: session.getStartTime())
+        self.title = session.getName()
         
         // symptoms = session!.getSymptoms()
         
@@ -56,18 +57,18 @@ class DayViewController: UIViewController, updateSymptoms {
         var cocktails = 0
         
         session.getSessionDrinks().forEach { drink in
-            if drink.type == "Beer" {
+            if drink.type == "beer" {
                 beer += 1
-            } else if drink.type == "Seltzer" {
+            } else if drink.type == "seltzer" {
                 seltzer += 1
-            } else if drink.type == "Wine" {
+            } else if drink.type == "wine" {
                 wine += 1
-            } else if drink.type == "Shot" {
+            } else if drink.type == "shot" {
                 shots += 1
-            } else if drink.type == "Cocktail" {
+            } else if drink.type == "cocktail" {
                 cocktails += 1
             }
-            logs += "\(drink.getTimestamp())\t\t\t\t\(drink.type)\t\t\t\t\t\(drink.getBAC())%\n"
+            logs += "\(drink.getTimestamp())\t\t\t\t\(drink.type)\t\t\t\t\t\(drink.getBAC())\n"
         }
         
         beersCounter.text = "\(beer)"
@@ -101,31 +102,6 @@ class DayViewController: UIViewController, updateSymptoms {
                 nextVC.sessionSymptoms = symptoms
             }
     }
-    
-//    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-//        var result = 0
-//        if tableView == logTableView {
-//            result = logs.count
-//        } else if tableView == symptomsTableView {
-//            result = symptoms.count
-//        }
-//        return result
-//    }
-//    
-//    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-//        
-//        var identifier = tableView == logTableView ? logTextCellIdentifier : symptomsTextCellIdentifier
-//        
-//        let cell = tableView.dequeueReusableCell(withIdentifier: identifier, for: indexPath as IndexPath)
-//    
-//        let row = indexPath.row
-//        
-//        var newText = tableView == logTableView ? logs[row] : symptoms[row]
-//        
-//        cell.textLabel?.text = newText
-//
-//        return cell
-//    }
     
 
 }
