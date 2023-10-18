@@ -80,8 +80,16 @@
                                     <action selector="startSessionButton:" destination="Y6W-OH-hqX" eventType="touchUpInside" id="60v-zi-HfD"/>
                                 </connections>
                             </button>
+                            <navigationBar contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="B90-Gy-jPD">
+                                <rect key="frame" x="0.0" y="0.0" width="430" height="44"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                                <color key="barTintColor" red="0.21176470589999999" green="0.20392156859999999" blue="0.63921568630000003" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <items>
+                                    <navigationItem id="nLB-0A-45t"/>
+                                </items>
+                            </navigationBar>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Pre-Session Questionnaire" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="b79-cu-b3z">
-                                <rect key="frame" x="98" y="122" width="234" height="99"/>
+                                <rect key="frame" x="98" y="105" width="234" height="99"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="32"/>
                                 <nil key="textColor"/>
@@ -102,6 +110,16 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ief-a0-LHa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="562" y="-30"/>
+        </scene>
+        <!--HomeViewController-->
+        <scene sceneID="Zeh-9L-wKN">
+            <objects>
+                <viewControllerPlaceholder storyboardName="LoginRegistrationHome" referencedIdentifier="HomeViewController" id="h9U-t8-eS0" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="bnx-tn-nk8"/>
+                </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="h1h-1T-HGn" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2288" y="-190"/>
         </scene>
         <!--SessionPageVC-->
         <scene sceneID="bsZ-ZL-gHa">
@@ -143,7 +161,13 @@
                                     <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </textAttributes>
                                 <items>
-                                    <navigationItem title="&lt;Insert Session Name&gt;" id="NRG-4X-Ref"/>
+                                    <navigationItem title="&lt;Insert Session Name&gt;" id="NRG-4X-Ref">
+                                        <barButtonItem key="leftBarButtonItem" systemItem="stop" id="Imm-1q-Wsg">
+                                            <connections>
+                                                <action selector="exitSession:" destination="eJW-Df-XMv" id="79h-Dv-SYL"/>
+                                            </connections>
+                                        </barButtonItem>
+                                    </navigationItem>
                                 </items>
                             </navigationBar>
                         </subviews>
@@ -156,6 +180,7 @@
                         <outlet property="mainGlassIV" destination="xgT-Eh-jLK" id="Iz7-Zl-0SQ"/>
                         <outlet property="navItemTitle" destination="NRG-4X-Ref" id="waB-3o-ao4"/>
                         <outlet property="statusSegmented" destination="W18-eh-qea" id="op0-kq-8lH"/>
+                        <segue destination="h9U-t8-eS0" kind="presentation" identifier="exitToMain" modalPresentationStyle="fullScreen" modalTransitionStyle="flipHorizontal" id="Jsx-39-VmU"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="rDX-3C-zQi" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

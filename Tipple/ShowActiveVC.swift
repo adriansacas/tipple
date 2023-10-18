@@ -20,6 +20,7 @@ class ShowActiveVC: UIViewController {
     var runningBAC: Float = 0.0
     var runningStatus: String = "😄"
     var runningDrinkCounter: Int = 0
+    let endSessionSegue = "exitToMain"
     
     let indicies = ["BAC": 0,
                     "STATUS": 1,
@@ -185,21 +186,22 @@ class ShowActiveVC: UIViewController {
         }
     }
 
-    func loadImage(at path: String) -> UIImage? {
-        let paths = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)
-        let documentPath = paths[0]
-        let imagePath = documentPath.appending(path)
-        guard fileExists(at: imagePath) else {
-            return nil
-        }
-        guard let image = UIImage(contentsOfFile: imagePath) else {
-            return nil
-        }
-        return image
-    }
+    @IBAction func exitSession(_ sender: Any) {
+        let alertController = UIAlertController(
+            title: "Finish Session",
+            message: "Are you sure you want to finish your session?",
+            preferredStyle: .alert
+        )
 
-    func fileExists(at path: String) -> Bool {
-        return FileManager.default.fileExists(atPath: path)
-    }
+        // Add a "Cancel" action
+        alertController.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
 
+        // Add a "Finish" action
+        alertController.addAction(UIAlertAction(title: "Finish", style: .destructive) { _ in
+            self.performSegue(withIdentifier: self.endSessionSegue, sender: self)
+        })
+
+        // Present the alert
+        self.present(alertController, animated: true, completion: nil)
+    }
 }

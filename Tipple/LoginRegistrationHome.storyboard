@@ -333,7 +333,7 @@
         <!--Home View Controller-->
         <scene sceneID="R7r-vs-EuP">
             <objects>
-                <viewController id="ICB-pa-paD" customClass="HomeViewController" customModule="Tipple" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="HomeViewController" id="ICB-pa-paD" customClass="HomeViewController" customModule="Tipple" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="V7W-aJ-Ffh">
                         <rect key="frame" x="0.0" y="0.0" width="430" height="932"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -401,7 +401,7 @@
                     </view>
                     <navigationItem key="navigationItem" id="MUJ-Es-wYy"/>
                     <connections>
-                        <segue destination="V2S-uN-EC2" kind="presentation" identifier="individualToQASegue" modalPresentationStyle="fullScreen" id="Zhh-Sg-Ty8"/>
+                        <segue destination="V2S-uN-EC2" kind="presentation" identifier="individualToQASegue" id="Zhh-Sg-Ty8"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ra6-22-TuO" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -437,7 +437,7 @@
     </scenes>
     <inferredMetricsTieBreakers>
         <segue reference="X0c-9F-Ju1"/>
-        <segue reference="cGE-tr-5Qm"/>
+        <segue reference="hlQ-b1-GlN"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="Tipple_aLogo.png" width="1455" height="1412"/>
