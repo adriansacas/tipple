@@ -47,10 +47,8 @@ class SessionsListViewController: UIViewController, UITableViewDelegate, UITable
                     count += 1
                 }
                 self.tableView.endUpdates()
-                
             }
         }
-        
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

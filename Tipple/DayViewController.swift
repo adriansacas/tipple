@@ -15,8 +15,6 @@ protocol updateSymptoms {
 class DayViewController: UIViewController, updateSymptoms {
     
     @IBOutlet weak var titleLabel: UILabel!
-    //@IBOutlet weak var logTableView: UITableView!
-    //@IBOutlet weak var symptomsTableView: UITableView!
     
     @IBOutlet weak var symptomsLabel: UILabel!
     @IBOutlet weak var logsLabel: UILabel!
@@ -43,7 +41,7 @@ class DayViewController: UIViewController, updateSymptoms {
         titleLabel.text = dateFormatter.string(from: session.getStartTime())
         self.title = session.getName()
         
-        // symptoms = session!.getSymptoms()
+        // symptoms = session!.getSymptoms() beta release
         
         populateDrinks()
         populateSymptoms()
@@ -57,18 +55,24 @@ class DayViewController: UIViewController, updateSymptoms {
         var cocktails = 0
         
         session.getSessionDrinks().forEach { drink in
-            if drink.type == "beer" {
+            if drink.getType() == "Beer" {
                 beer += 1
-            } else if drink.type == "seltzer" {
+            } else if drink.getType() == "Seltzer" {
                 seltzer += 1
-            } else if drink.type == "wine" {
+            } else if drink.getType() == "Wine" {
                 wine += 1
-            } else if drink.type == "shot" {
+            } else if drink.getType() == "Shot" {
                 shots += 1
-            } else if drink.type == "cocktail" {
+            } else if drink.getType() == "Cocktail" {
                 cocktails += 1
             }
-            logs += "\(drink.getTimestamp())\t\t\t\t\(drink.type)\t\t\t\t\t\(drink.getBAC())\n"
+            
+            if drink.getType() == "Cocktail" {
+                logs += "\(drink.getTimestamp())\t\t\t\t\(drink.type)\t\t\t\t\(drink.getBAC())\n"
+            } else {
+                logs += "\(drink.getTimestamp())\t\t\t\t\(drink.type)\t\t\t\t\t\(drink.getBAC())\n"
+            }
+            
         }
         
         beersCounter.text = "\(beer)"
@@ -99,7 +103,7 @@ class DayViewController: UIViewController, updateSymptoms {
                let nextVC = segue.destination as? SymptomsViewController // typecasting
             {
                 nextVC.delegate = self
-                nextVC.sessionSymptoms = symptoms
+                nextVC.sessionSymptoms = symptoms // beta release add to firebase
             }
     }
     
