@@ -47,4 +47,5 @@ Danica Padlan (%)
 - Previous sessions not presented as a calendar but rather a list view due to experiencing issues going from a selected date to the Day View
 - Symptoms not yet saved to a session in firebase as it would require to change many current working areas
 - Total drinks in Day View presented by a simple counter rather than a pie chart, will look into changing for beta
+- Notifications pushed to beta, still deciding the best approach to them
 
