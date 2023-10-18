@@ -1,16 +1,11 @@
 # CS371L Tipple
 
 
-
 ## Alpha Doc
-
-To make it easy for you to get started with GitLab, here's a list of recommended next steps.
-
-Already a pro? Just edit this README.md and make it your own. Want to make it easy? [Use the template at the bottom](#editing-this-readme)!
 
 ## Contributions
 
-Adrian Sanchez (%)
+Adrian Sanchez (25%)
 -
 - Settings storyboard
   - Update profile info view controllers to update name, dob, gender, height, weight, phone, email, profile picture
@@ -19,7 +14,7 @@ Adrian Sanchez (%)
 - Fire Storage Setup
 - AlertUtils class
 
-Andrew White (%)
+Andrew White (25%)
 -
 - Session/Drink Info Classes
   - Wrote classes for a given session and different types of drinks
@@ -31,13 +26,13 @@ Andrew White (%)
     - Updates firebase session as changes are made within view
     - Keeps track of users drinks / runningBAC / and a status and updates view as changes are inputed
 
-Claudia Castillo (%)
+Claudia Castillo (25%)
 -
 - All of Previous Sessions list view, Day view, and Symptoms updater
 - Minor changes to SessionInfo and DrinkInfo
 - Some contribution in designing the data schema to tailor to what my screens needed
 
-Danica Padlan (%)
+Danica Padlan (25%)
 -
 - Initial Firebase setup
 - All of Login, Registration, and Home page
