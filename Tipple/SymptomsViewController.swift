@@ -30,6 +30,10 @@ class SymptomsViewController: UIViewController, UITableViewDelegate, UITableView
         tableView.delegate = self
         tableView.dataSource = self
         
+        for i in 0...symptoms.count-1 {
+            selected[i] = sessionSymptoms.contains(symptoms[i])
+        }
+        
         // set symptoms
     }
     
@@ -42,6 +46,10 @@ class SymptomsViewController: UIViewController, UITableViewDelegate, UITableView
     
         let row = indexPath.row
         cell.textLabel?.text = symptoms[row]
+        
+        if selected[row] {
+            cell.accessoryType = .checkmark
+        }
 
         return cell
     }
@@ -52,13 +60,13 @@ class SymptomsViewController: UIViewController, UITableViewDelegate, UITableView
         
         guard let cell = tableView.cellForRow(at: indexPath) else { return }
         
-        // Update the selected item to indicate whether the user packed it or not.
+        // Update the selected item to indicate whether the user selected it or not.
         let current = selected[indexPath.row]
         let newItem = !current
         selected.remove(at: indexPath.row)
         selected.insert(newItem, at: indexPath.row)
         
-        // Show a check mark next to packed items.
+        // Show a check mark next to selected items.
         if newItem {
             cell.accessoryType = .checkmark
         } else {
