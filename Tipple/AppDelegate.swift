@@ -14,11 +14,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
 
-    func application(_ application: UIApplication,
-      didFinishLaunchingWithOptions launchOptions:
-                     [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-      FirebaseApp.configure()
-      return true
+    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+        FirebaseApp.configure()
+        
+        // Customize the navigation bar appearance for the entire app
+        let navigationBarAppearace = UINavigationBar.appearance()
+        navigationBarAppearace.tintColor = UIColor(hex: "#FFFFFF")
+        navigationBarAppearace.backgroundColor = UIColor(hex: "#3634A3")
+        navigationBarAppearace.titleTextAttributes = [NSAttributedString.Key.foregroundColor:UIColor.white]
+        
+        return true
     }
 
     // MARK: UISceneSession Lifecycle
@@ -81,4 +86,3 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
 }
-
