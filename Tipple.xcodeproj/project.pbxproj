@@ -17,6 +17,12 @@
 		3411E5112AD8BC5800297E01 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3411E5102AD8BC5800297E01 /* LoginViewController.swift */; };
 		3411E5142AD8BF1700297E01 /* SignupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3411E5132AD8BF1700297E01 /* SignupViewController.swift */; };
 		3411E5162AD8C09B00297E01 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3411E5152AD8C09B00297E01 /* HomeViewController.swift */; };
+		344830112AEB64B100039FAD /* HexUIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 344830102AEB64B100039FAD /* HexUIColor.swift */; };
+		344830142AEB676A00039FAD /* GroupSession.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 344830132AEB676A00039FAD /* GroupSession.storyboard */; };
+		344830172AEB67B700039FAD /* RegisterGroupSessionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 344830162AEB67B700039FAD /* RegisterGroupSessionViewController.swift */; };
+		344830192AEB67DA00039FAD /* ManageGroupSessionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 344830182AEB67DA00039FAD /* ManageGroupSessionViewController.swift */; };
+		3448301B2AEB684000039FAD /* EditGroupSessionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3448301A2AEB684000039FAD /* EditGroupSessionViewController.swift */; };
+		3448301D2AEB685B00039FAD /* InviteCodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3448301C2AEB685B00039FAD /* InviteCodeViewController.swift */; };
 		348821D22AD7932E00B677F3 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 348821D12AD7932E00B677F3 /* GoogleService-Info.plist */; };
 		348821E12AD793AE00B677F3 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 348821E02AD793AE00B677F3 /* FirebaseAuth */; };
 		348821E72AD793AE00B677F3 /* FirebaseDatabase in Frameworks */ = {isa = PBXBuildFile; productRef = 348821E62AD793AE00B677F3 /* FirebaseDatabase */; };
@@ -66,6 +72,12 @@
 		3411E5122AD8BDE700297E01 /* TippleRelease.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = TippleRelease.entitlements; sourceTree = "<group>"; };
 		3411E5132AD8BF1700297E01 /* SignupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignupViewController.swift; sourceTree = "<group>"; };
 		3411E5152AD8C09B00297E01 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
+		344830102AEB64B100039FAD /* HexUIColor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HexUIColor.swift; sourceTree = "<group>"; };
+		344830132AEB676A00039FAD /* GroupSession.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = GroupSession.storyboard; sourceTree = "<group>"; };
+		344830162AEB67B700039FAD /* RegisterGroupSessionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterGroupSessionViewController.swift; sourceTree = "<group>"; };
+		344830182AEB67DA00039FAD /* ManageGroupSessionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManageGroupSessionViewController.swift; sourceTree = "<group>"; };
+		3448301A2AEB684000039FAD /* EditGroupSessionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditGroupSessionViewController.swift; sourceTree = "<group>"; };
+		3448301C2AEB685B00039FAD /* InviteCodeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InviteCodeViewController.swift; sourceTree = "<group>"; };
 		348821D12AD7932E00B677F3 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		349A6F7C2AD62DAE002A707B /* LoginRegistrationHome.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LoginRegistrationHome.storyboard; sourceTree = "<group>"; };
 		349B1F732ADDDF3F00588DCF /* MOCKScrollViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MOCKScrollViewController.swift; sourceTree = "<group>"; };
@@ -143,6 +155,7 @@
 				340DDE992AD6243A00217F2D /* Main.storyboard */,
 				340DDE9F2AD6243D00217F2D /* Assets.xcassets */,
 				340DDEA12AD6243D00217F2D /* LaunchScreen.storyboard */,
+				344830102AEB64B100039FAD /* HexUIColor.swift */,
 				340DDEA42AD6243D00217F2D /* Info.plist */,
 				340DDE9C2AD6243A00217F2D /* Tipple.xcdatamodeld */,
 				49A0B62B2ADDA2A00080E6FA /* SessionInfo.swift */,
@@ -155,16 +168,37 @@
 				49F26E1F2ADF27B900FF70A7 /* SessionsTracker.storyboard */,
 				49B2C1382ADEFC320025E38C /* QuestionnaireVC.swift */,
 				B33F29462AEB115300B10CF7 /* Settings */,
-				349A6F7C2AD62DAE002A707B /* LoginRegistrationHome.storyboard */,
-				3411E5102AD8BC5800297E01 /* LoginViewController.swift */,
-				3411E5132AD8BF1700297E01 /* SignupViewController.swift */,
-				3411E5152AD8C09B00297E01 /* HomeViewController.swift */,
+				344830122AEB65F100039FAD /* LoginRegistrationHome */,
 				348821D12AD7932E00B677F3 /* GoogleService-Info.plist */,
 				B3329D332ADB53A300F23531 /* FirestoreManager.swift */,
 				349B1F732ADDDF3F00588DCF /* MOCKScrollViewController.swift */,
 				B34377172ADE71BA003B1D96 /* AlertUtils.swift */,
+				344830152AEB678C00039FAD /* GroupSession */,
 			);
 			path = Tipple;
+			sourceTree = "<group>";
+		};
+		344830122AEB65F100039FAD /* LoginRegistrationHome */ = {
+			isa = PBXGroup;
+			children = (
+				349A6F7C2AD62DAE002A707B /* LoginRegistrationHome.storyboard */,
+				3411E5102AD8BC5800297E01 /* LoginViewController.swift */,
+				3411E5132AD8BF1700297E01 /* SignupViewController.swift */,
+				3411E5152AD8C09B00297E01 /* HomeViewController.swift */,
+			);
+			path = LoginRegistrationHome;
+			sourceTree = "<group>";
+		};
+		344830152AEB678C00039FAD /* GroupSession */ = {
+			isa = PBXGroup;
+			children = (
+				344830132AEB676A00039FAD /* GroupSession.storyboard */,
+				344830162AEB67B700039FAD /* RegisterGroupSessionViewController.swift */,
+				344830182AEB67DA00039FAD /* ManageGroupSessionViewController.swift */,
+				3448301A2AEB684000039FAD /* EditGroupSessionViewController.swift */,
+				3448301C2AEB685B00039FAD /* InviteCodeViewController.swift */,
+			);
+			path = GroupSession;
 			sourceTree = "<group>";
 		};
 		B3329D352ADB654D00F23531 /* Frameworks */ = {
@@ -273,6 +307,7 @@
 				348821D22AD7932E00B677F3 /* GoogleService-Info.plist in Resources */,
 				340DDEA32AD6243D00217F2D /* LaunchScreen.storyboard in Resources */,
 				340DDEA02AD6243D00217F2D /* Assets.xcassets in Resources */,
+				344830142AEB676A00039FAD /* GroupSession.storyboard in Resources */,
 				49F26E202ADF27B900FF70A7 /* SessionsTracker.storyboard in Resources */,
 				B3CE37622AD62FF1004FB1A1 /* Settings.storyboard in Resources */,
 				340DDE9B2AD6243A00217F2D /* Main.storyboard in Resources */,
@@ -291,16 +326,21 @@
 			files = (
 				3411E5142AD8BF1700297E01 /* SignupViewController.swift in Sources */,
 				340DDE982AD6243A00217F2D /* ViewController.swift in Sources */,
+				3448301D2AEB685B00039FAD /* InviteCodeViewController.swift in Sources */,
 				B341BF752AD8C11A00505C37 /* ProfileInfoNameVC.swift in Sources */,
+				344830172AEB67B700039FAD /* RegisterGroupSessionViewController.swift in Sources */,
 				B3329D392ADB71D900F23531 /* ProfileInfo.swift in Sources */,
 				B341BF792AD9094300505C37 /* ProfileInfoBirthdayVC.swift in Sources */,
 				B34377182ADE71BB003B1D96 /* AlertUtils.swift in Sources */,
 				349B1F742ADDDF3F00588DCF /* MOCKScrollViewController.swift in Sources */,
 				340DDE9E2AD6243A00217F2D /* Tipple.xcdatamodeld in Sources */,
 				49A0B6282ADDA23C0080E6FA /* DrinkInfo.swift in Sources */,
+				344830112AEB64B100039FAD /* HexUIColor.swift in Sources */,
 				B341BF812AD92F7500505C37 /* ProfileInfoEmailVC.swift in Sources */,
 				340DDE942AD6243A00217F2D /* AppDelegate.swift in Sources */,
+				3448301B2AEB684000039FAD /* EditGroupSessionViewController.swift in Sources */,
 				B341BF7B2AD9125400505C37 /* ProfileInfoHeightVC.swift in Sources */,
+				344830192AEB67DA00039FAD /* ManageGroupSessionViewController.swift in Sources */,
 				49B2C1392ADEFC320025E38C /* QuestionnaireVC.swift in Sources */,
 				B36E61E42AD88C2300AFF50E /* SettingsVC.swift in Sources */,
 				49B2C1372ADEF9BA0025E38C /* SessionsListViewController.swift in Sources */,
