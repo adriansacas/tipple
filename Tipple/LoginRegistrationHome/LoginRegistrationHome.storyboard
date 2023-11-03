@@ -298,7 +298,7 @@
                                 </subviews>
                                 <constraints>
                                     <constraint firstItem="zpV-tv-Gf2" firstAttribute="top" secondItem="5GM-BV-wCa" secondAttribute="top" id="09g-8w-s6e"/>
-                                    <constraint firstAttribute="bottom" secondItem="zpV-tv-Gf2" secondAttribute="bottom" id="27d-OE-K89"/>
+                                    <constraint firstAttribute="bottom" secondItem="zpV-tv-Gf2" secondAttribute="bottom" constant="-150" id="27d-OE-K89"/>
                                     <constraint firstItem="zpV-tv-Gf2" firstAttribute="leading" secondItem="5GM-BV-wCa" secondAttribute="leading" id="Y5d-BP-DWm"/>
                                     <constraint firstAttribute="trailing" secondItem="zpV-tv-Gf2" secondAttribute="trailing" id="pW2-Hw-Qpb"/>
                                 </constraints>
@@ -419,6 +419,7 @@
                     <navigationItem key="navigationItem" id="MUJ-Es-wYy"/>
                     <connections>
                         <segue destination="V2S-uN-EC2" kind="presentation" identifier="individualToQASegue" id="Zhh-Sg-Ty8"/>
+                        <segue destination="STg-b5-a0C" kind="presentation" identifier="groupSessionSegue" id="avd-V3-8XS"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ra6-22-TuO" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -450,6 +451,14 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="n1K-Gg-Zb3" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1492" y="849"/>
+        </scene>
+        <!--GroupSession-->
+        <scene sceneID="XSB-zX-hkz">
+            <objects>
+                <viewControllerPlaceholder storyboardName="GroupSession" id="STg-b5-a0C" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="4ms-7Q-iJ3" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1481" y="675"/>
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>

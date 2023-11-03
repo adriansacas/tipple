@@ -35,7 +35,11 @@ class HomeViewController: UIViewController {
         controller.addAction(UIAlertAction(
             title: "Group Session",
             style: .default
-        ))
+        ) { (action) in
+            self.performSegue(withIdentifier: "groupSessionSegue", sender: self)
+        }
+                             
+        )
         present(controller, animated: true)
     }
     

@@ -20,12 +20,12 @@ class LoginViewController: UIViewController {
         passwordTextField.isSecureTextEntry = true;
         
         //TODO: uncomment after testing
-//        // Auto login user if they didn't log out
-//        Auth.auth().addStateDidChangeListener() { (auth, user) in
-//            if user != nil {
-//                self.performSegue(withIdentifier: "loginToHomeSegue", sender: nil)
-//            }
-//        }
+        // Auto login user if they didn't log out
+        Auth.auth().addStateDidChangeListener() { (auth, user) in
+            if user != nil {
+                self.performSegue(withIdentifier: "loginToHomeSegue", sender: nil)
+            }
+        }
     }
     
     @IBAction func loginButtonPressed(_ sender: Any) {

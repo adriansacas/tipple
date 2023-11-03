@@ -23,6 +23,7 @@ class SessionInfo {
     var sessionName: String?
     var shareSession: Bool?
     var membersList: [String]?
+    var endGroupSessionTime: Date //for group sessison
     // var polls: [PollInfo]?
     
     init() {
@@ -35,6 +36,7 @@ class SessionInfo {
         self.sessionName = ""
         self.shareSession = false
         self.membersList = []
+        self.endGroupSessionTime = Date() //TODO: determine if need to keep
     }
     
     init(startTime: Date, sessionType: String, drinksInSession: [DrinkInfo], startLocation: String? = nil, endLocation: String? = nil, ateBefore: Bool? = nil, sessionName: String? = nil, shareSession: Bool? = nil, membersList: [String]? = nil) {
@@ -47,6 +49,7 @@ class SessionInfo {
         self.sessionName = sessionName
         self.shareSession = shareSession
         self.membersList = membersList
+        self.endGroupSessionTime = Date() //TODO: determine if need to keep
     }
     
     
