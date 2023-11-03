@@ -9,12 +9,23 @@ import UIKit
 
 class InviteCodeVC: UIViewController {
 
+    @IBOutlet weak var sessionNameTextLabel: UILabel!
+    @IBOutlet weak var sessionEndDateTimeLabel: UILabel!
     @IBOutlet weak var inviteCodeImageView: UIImageView!
+    
+    var currentSession: SessionInfo?
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
+        // Display current session name and end date/time
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateStyle = .long
+        dateFormatter.timeStyle = .short
+        let formattedDate = dateFormatter.string(from: currentSession!.endGroupSessionTime)
+        
+        sessionNameTextLabel.text = currentSession?.sessionName
+        sessionEndDateTimeLabel.text = formattedDate
     }
     
 

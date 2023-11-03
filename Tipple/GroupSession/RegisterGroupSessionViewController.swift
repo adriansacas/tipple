@@ -43,11 +43,15 @@ class RegisterGroupSessionVC: UIViewController {
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
-        if segue.identifier == manageGroupSegue, let destination = segue.destination as? ManageGroupSessionVC {
-            destination.currentSession = self.currentSession
+        guard let destination = segue.destination as? UINavigationController else {
+                return
         }
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+        
+        guard let finalDestination = destination.viewControllers.first as? ManageGroupSessionVC else {
+                return
+            }
+        
+        finalDestination.currentSession = self.currentSession
     }
 
 }

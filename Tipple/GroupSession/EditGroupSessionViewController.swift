@@ -10,22 +10,33 @@ import UIKit
 class EditGroupSessionVC: UIViewController {
 
     @IBOutlet weak var editSessionNameTextField: UITextField!
-    @IBOutlet weak var editSessionTimeTextField: UITextField!
+    @IBOutlet weak var editEndSessionDateTimePicker: UIDatePicker!
+    
+    var delegate:UIViewController?
+    var currentSession: SessionInfo?
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
+        //Update text field to current session and time
+        editSessionNameTextField.text = currentSession?.sessionName
+        editEndSessionDateTimePicker.date = currentSession!.endGroupSessionTime
     }
     
     @IBAction func updateSessionButtonPressed(_ sender: Any) {
         
-        //TODO: get data from firebase, update it, then return new data to firebase
-        
+        //check if text field is filled
+        if(editSessionNameTextField.text != "") {
+            //call protocol functions
+            let mainVC = delegate as? EditSession
+            mainVC?.changeSessionName(newSessionName: editSessionNameTextField.text!)
+            mainVC?.changeEndSessionDateTime(newEndDateTime: editEndSessionDateTimePicker.date)
+        }
     }
     
     @IBAction func deleteSessionButtonPressed(_ sender: Any) {
-        //TODO: delete session from firebase and segue back to main screen
+        
+        //TODO: have alerts to ensure decision, then don't save session and segue back to main screen
         
     }
     

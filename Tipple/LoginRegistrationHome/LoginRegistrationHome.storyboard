@@ -419,7 +419,7 @@
                     <navigationItem key="navigationItem" id="MUJ-Es-wYy"/>
                     <connections>
                         <segue destination="V2S-uN-EC2" kind="presentation" identifier="individualToQASegue" id="Zhh-Sg-Ty8"/>
-                        <segue destination="STg-b5-a0C" kind="presentation" identifier="groupSessionSegue" id="avd-V3-8XS"/>
+                        <segue destination="STg-b5-a0C" kind="presentation" identifier="groupSessionSegue" modalPresentationStyle="automatic" id="avd-V3-8XS"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ra6-22-TuO" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -455,7 +455,9 @@
         <!--GroupSession-->
         <scene sceneID="XSB-zX-hkz">
             <objects>
-                <viewControllerPlaceholder storyboardName="GroupSession" id="STg-b5-a0C" sceneMemberID="viewController"/>
+                <viewControllerPlaceholder storyboardName="GroupSession" id="STg-b5-a0C" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="Hw9-36-mVC"/>
+                </viewControllerPlaceholder>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4ms-7Q-iJ3" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1481" y="675"/>
