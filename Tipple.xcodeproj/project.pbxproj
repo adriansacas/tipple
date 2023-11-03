@@ -159,14 +159,19 @@
 				340DDEA42AD6243D00217F2D /* Info.plist */,
 				340DDE9C2AD6243A00217F2D /* Tipple.xcdatamodeld */,
 				494A450F2AF5A51C00B54542 /* ActiveSession */,
+				49A0B62B2ADDA2A00080E6FA /* SessionInfo.swift */,
+				49B2C13C2ADEFD140025E38C /* ActiveSessions.storyboard */,
+				49B2C13E2ADEFE630025E38C /* ShowActiveVC.swift */,
+				49A0B6272ADDA23C0080E6FA /* DrinkInfo.swift */,
+				49B2C1382ADEFC320025E38C /* QuestionnaireVC.swift */,
+				344830122AEB65F100039FAD /* LoginRegistrationHome */,
 				496B2CAC2AF59B4400F8EE21 /* PrevSessions */,
 				B33F29462AEB115300B10CF7 /* Settings */,
-				344830122AEB65F100039FAD /* LoginRegistrationHome */,
+				344830152AEB678C00039FAD /* GroupSession */,
 				348821D12AD7932E00B677F3 /* GoogleService-Info.plist */,
 				B3329D332ADB53A300F23531 /* FirestoreManager.swift */,
 				349B1F732ADDDF3F00588DCF /* MOCKScrollViewController.swift */,
 				B34377172ADE71BA003B1D96 /* AlertUtils.swift */,
-				344830152AEB678C00039FAD /* GroupSession */,
 			);
 			path = Tipple;
 			sourceTree = "<group>";

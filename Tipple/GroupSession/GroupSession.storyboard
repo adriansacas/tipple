@@ -78,6 +78,16 @@
             </objects>
             <point key="canvasLocation" x="1973.2824427480916" y="3.5211267605633805"/>
         </scene>
+        <!--LoginRegistrationHome-->
+        <scene sceneID="ApS-Gl-Y5X">
+            <objects>
+                <viewControllerPlaceholder storyboardName="LoginRegistrationHome" id="c2O-R1-5Vv" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="mhY-Gd-3Lb"/>
+                </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Ffd-mD-7cy" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1111" y="1966"/>
+        </scene>
         <!--Edit Group SessionVC-->
         <scene sceneID="ehd-oY-Szr">
             <objects>
@@ -152,6 +162,7 @@
                     <connections>
                         <outlet property="editEndSessionDateTimePicker" destination="5tg-fb-kGU" id="oVj-I8-gDV"/>
                         <outlet property="editSessionNameTextField" destination="YqR-F9-qGh" id="YKX-bu-baI"/>
+                        <segue destination="c2O-R1-5Vv" kind="presentation" identifier="editSessionToHomeSegue" animates="NO" modalPresentationStyle="fullScreen" id="6hP-V1-Vwe"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8Ne-F8-B7i" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -257,7 +268,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="82F-cn-MN3">
-                                <rect key="frame" x="141" y="351" width="110" height="35"/>
+                                <rect key="frame" x="142" y="403" width="110" height="35"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="filled" title="Invite Code"/>
@@ -266,19 +277,25 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tv5-SN-VfE">
-                                <rect key="frame" x="144" y="417" width="103" height="35"/>
+                                <rect key="frame" x="145" y="469" width="103" height="35"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="filled" title="Group List"/>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Yqr-7Y-e13">
+                                <rect key="frame" x="125" y="340" width="143" height="35"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="filled" title="Access Session"/>
+                            </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="84a-OK-c2o">
-                                <rect key="frame" x="137" y="497" width="117" height="35"/>
+                                <rect key="frame" x="138" y="538" width="117" height="35"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="filled" title="Manage Poll"/>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="d6P-PY-1Q9">
-                                <rect key="frame" x="121" y="573" width="151" height="35"/>
+                                <rect key="frame" x="121" y="614" width="151" height="35"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="filled" title="Session Settings"/>
@@ -287,7 +304,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BgI-rs-1rz">
-                                <rect key="frame" x="137" y="663" width="117" height="35"/>
+                                <rect key="frame" x="138" y="704" width="117" height="35"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="filled" title="End Session">

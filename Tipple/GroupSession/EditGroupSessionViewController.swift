@@ -36,18 +36,29 @@ class EditGroupSessionVC: UIViewController {
     
     @IBAction func deleteSessionButtonPressed(_ sender: Any) {
         
-        //TODO: have alerts to ensure decision, then don't save session and segue back to main screen
+        let deleteAlertController = UIAlertController(
+            title: "Are you sure you want to delete?",
+            message: "The current session will not be saved.",
+            preferredStyle: .alert
+        )
         
+        deleteAlertController.addAction(UIAlertAction(
+            title: "Cancel",
+            style: .default)
+        )
+        
+        deleteAlertController.addAction(UIAlertAction(
+            title: "Delete",
+            style: .destructive,
+            handler: {
+                (action) in
+                
+                //TODO: assumes the user stayed logged in, find better solution
+                self.performSegue(withIdentifier: "editSessionToHomeSegue", sender: nil)
+            })
+        )
+        
+        present(deleteAlertController, animated: true)
     }
-    
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }

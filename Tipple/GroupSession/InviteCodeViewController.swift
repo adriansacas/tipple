@@ -14,6 +14,7 @@ class InviteCodeVC: UIViewController {
     @IBOutlet weak var inviteCodeImageView: UIImageView!
     
     var currentSession: SessionInfo?
+    var groupQRCode: UIImage?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -26,19 +27,10 @@ class InviteCodeVC: UIViewController {
         
         sessionNameTextLabel.text = currentSession?.sessionName
         sessionEndDateTimeLabel.text = formattedDate
+        
+        inviteCodeImageView.image = groupQRCode
     }
     
-
-    //TODO: generate QR code from Bulko's comment, make image bigger when clicked on, connect QR code to add individual to group session (Andrew part)
+    //TODO: make QR image bigger when clicked on?
     
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }

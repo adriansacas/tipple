@@ -20,6 +20,7 @@ class ManageGroupSessionVC: UIViewController, EditSession {
     @IBOutlet weak var sessionEndDateTimeLabel: UILabel!
 
     var currentSession: SessionInfo?
+    var groupQRCode: UIImage?
     
     var inviteCodeSegue = "inviteCodeSegue"
     var sessionSettingSegue = "sessionSettingSegue"
@@ -62,6 +63,7 @@ class ManageGroupSessionVC: UIViewController, EditSession {
         if segue.identifier == inviteCodeSegue, let destination = segue.destination as? InviteCodeVC {
             
             destination.currentSession = self.currentSession
+            destination.groupQRCode = self.groupQRCode
             
         } else if segue.identifier == sessionSettingSegue, let destination = segue.destination as? EditGroupSessionVC {
             
