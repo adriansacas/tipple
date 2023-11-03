@@ -9,13 +9,26 @@ import UIKit
 
 class EditGroupSessionViewController: UIViewController {
 
+    @IBOutlet weak var editSessionNameTextField: UITextField!
+    @IBOutlet weak var editSessionTimeTextField: UITextField!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
     }
     
-
+    @IBAction func updateSessionButtonPressed(_ sender: Any) {
+        
+        //TODO: get data from firebase, update it, then return new data to firebase
+        
+    }
+    
+    @IBAction func deleteSessionButtonPressed(_ sender: Any) {
+        //TODO: delete session from firebase and segue back to main screen
+        
+    }
+    
     /*
     // MARK: - Navigation
 

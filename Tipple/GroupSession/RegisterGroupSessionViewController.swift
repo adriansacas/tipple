@@ -9,13 +9,23 @@ import UIKit
 
 class RegisterGroupSessionViewController: UIViewController {
 
+    @IBOutlet weak var sessionNameTextField: UITextField!
+    @IBOutlet weak var endSessionTextField: UILabel!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
     }
     
+    //TODO: add custom picker view data content
 
+    @IBAction func createSessionButtonPressed(_ sender: Any) {
+        
+        //TODO: take in values from text field and save to firebase in session struct
+        
+    }
+    
     /*
     // MARK: - Navigation
 

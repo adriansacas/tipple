@@ -9,6 +9,8 @@ import UIKit
 
 class InviteCodeViewController: UIViewController {
 
+    @IBOutlet weak var inviteCodeImageView: UIImageView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -16,6 +18,8 @@ class InviteCodeViewController: UIViewController {
     }
     
 
+    //TODO: generate QR code from Bulko's comment, make image bigger when clicked on, connect QR code to add individual to group session (Andrew part)
+    
     /*
     // MARK: - Navigation
 
