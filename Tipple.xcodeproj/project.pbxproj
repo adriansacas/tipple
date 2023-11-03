@@ -158,11 +158,7 @@
 				344830102AEB64B100039FAD /* HexUIColor.swift */,
 				340DDEA42AD6243D00217F2D /* Info.plist */,
 				340DDE9C2AD6243A00217F2D /* Tipple.xcdatamodeld */,
-				49A0B62B2ADDA2A00080E6FA /* SessionInfo.swift */,
-				49B2C13C2ADEFD140025E38C /* ActiveSessions.storyboard */,
-				49B2C13E2ADEFE630025E38C /* ShowActiveVC.swift */,
-				49A0B6272ADDA23C0080E6FA /* DrinkInfo.swift */,
-				49B2C1382ADEFC320025E38C /* QuestionnaireVC.swift */,
+				494A450F2AF5A51C00B54542 /* ActiveSession */,
 				496B2CAC2AF59B4400F8EE21 /* PrevSessions */,
 				B33F29462AEB115300B10CF7 /* Settings */,
 				344830122AEB65F100039FAD /* LoginRegistrationHome */,
@@ -196,6 +192,18 @@
 				3448301C2AEB685B00039FAD /* InviteCodeViewController.swift */,
 			);
 			path = GroupSession;
+			sourceTree = "<group>";
+		};
+		494A450F2AF5A51C00B54542 /* ActiveSession */ = {
+			isa = PBXGroup;
+			children = (
+				49B2C13C2ADEFD140025E38C /* ActiveSessions.storyboard */,
+				49A0B62B2ADDA2A00080E6FA /* SessionInfo.swift */,
+				49A0B6272ADDA23C0080E6FA /* DrinkInfo.swift */,
+				49B2C13E2ADEFE630025E38C /* ShowActiveVC.swift */,
+				49B2C1382ADEFC320025E38C /* QuestionnaireVC.swift */,
+			);
+			path = ActiveSession;
 			sourceTree = "<group>";
 		};
 		496B2CAC2AF59B4400F8EE21 /* PrevSessions */ = {
