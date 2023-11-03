@@ -7,7 +7,7 @@
 
 import UIKit
 
-class EditGroupSessionViewController: UIViewController {
+class EditGroupSessionVC: UIViewController {
 
     @IBOutlet weak var editSessionNameTextField: UITextField!
     @IBOutlet weak var editSessionTimeTextField: UITextField!

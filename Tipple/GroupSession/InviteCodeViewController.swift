@@ -7,7 +7,7 @@
 
 import UIKit
 
-class InviteCodeViewController: UIViewController {
+class InviteCodeVC: UIViewController {
 
     @IBOutlet weak var inviteCodeImageView: UIImageView!
     
