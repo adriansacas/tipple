@@ -162,11 +162,8 @@
 				49B2C13C2ADEFD140025E38C /* ActiveSessions.storyboard */,
 				49B2C13E2ADEFE630025E38C /* ShowActiveVC.swift */,
 				49A0B6272ADDA23C0080E6FA /* DrinkInfo.swift */,
-				49B2C1422ADF08360025E38C /* SymptomsViewController.swift */,
-				49F26E212ADF287900FF70A7 /* DayViewController.swift */,
-				49B2C1362ADEF9BA0025E38C /* SessionsListViewController.swift */,
-				49F26E1F2ADF27B900FF70A7 /* SessionsTracker.storyboard */,
 				49B2C1382ADEFC320025E38C /* QuestionnaireVC.swift */,
+				496B2CAC2AF59B4400F8EE21 /* PrevSessions */,
 				B33F29462AEB115300B10CF7 /* Settings */,
 				344830122AEB65F100039FAD /* LoginRegistrationHome */,
 				348821D12AD7932E00B677F3 /* GoogleService-Info.plist */,
@@ -199,6 +196,17 @@
 				3448301C2AEB685B00039FAD /* InviteCodeViewController.swift */,
 			);
 			path = GroupSession;
+			sourceTree = "<group>";
+		};
+		496B2CAC2AF59B4400F8EE21 /* PrevSessions */ = {
+			isa = PBXGroup;
+			children = (
+				49F26E1F2ADF27B900FF70A7 /* SessionsTracker.storyboard */,
+				49B2C1422ADF08360025E38C /* SymptomsViewController.swift */,
+				49F26E212ADF287900FF70A7 /* DayViewController.swift */,
+				49B2C1362ADEF9BA0025E38C /* SessionsListViewController.swift */,
+			);
+			path = PrevSessions;
 			sourceTree = "<group>";
 		};
 		B3329D352ADB654D00F23531 /* Frameworks */ = {
