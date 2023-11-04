@@ -105,7 +105,10 @@ class SignupViewController: UIViewController, UIPickerViewDataSource, UIPickerVi
                                                             heightFeet: self.heightFeet,
                                                             heightInches: self.heightInch,
                                                             weight: self.weight,
-                                                            email: email)
+                                                            email: email, 
+                                                            profileImageURL: "",
+                                                            sessionIDS: []
+)
                         } else {
                             AlertUtils.showAlert(title: "Error Registering Data", message: "Try again later.", viewController: self)
                         }

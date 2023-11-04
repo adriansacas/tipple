@@ -17,8 +17,9 @@ class ProfileInfo {
     var heightInches: Int
     var weight: Int
     var profileImageURL: String
+    var sessionIDS: [String]
 
-    init(firstName: String, lastName: String, phoneNumber: String, birthday: Date, gender: String, heightFeet: Int, heightInches: Int, weight: Int, profileImageURL: String) {
+    init(firstName: String, lastName: String, phoneNumber: String, birthday: Date, gender: String, heightFeet: Int, heightInches: Int, weight: Int, profileImageURL: String, sessionIDS: [String]? = nil) {
         self.firstName = firstName
         self.lastName = lastName
         self.phoneNumber = phoneNumber
@@ -28,6 +29,11 @@ class ProfileInfo {
         self.heightInches = heightInches
         self.weight = weight
         self.profileImageURL = profileImageURL
+        if sessionIDS == nil {
+            self.sessionIDS = []
+        } else{
+            self.sessionIDS = sessionIDS!
+        }
     }
 
     // Function to return the full name (first name and last name)
@@ -58,5 +64,9 @@ class ProfileInfo {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "MM/dd/yyyy"
         return dateFormatter.string(from: birthday)
+    }
+    
+    func getAllSessionIDS() -> [String] {
+        return self.sessionIDS
     }
 }

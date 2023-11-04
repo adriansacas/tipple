@@ -20,7 +20,7 @@ class EditGroupSessionVC: UIViewController {
 
         //Update text field to current session and time
         editSessionNameTextField.text = currentSession?.sessionName
-        editEndSessionDateTimePicker.date = currentSession!.endGroupSessionTime
+        editEndSessionDateTimePicker.date = currentSession!.endGroupSessionTime!
     }
     
     @IBAction func updateSessionButtonPressed(_ sender: Any) {

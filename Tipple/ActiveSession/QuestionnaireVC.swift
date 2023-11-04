@@ -59,19 +59,20 @@ class QuestionnaireVC: UIViewController {
     }
     
     @IBAction func startSessionButton(_ sender: Any) {
-        let session = SessionInfo(
-            startTime: Date.now,
-            sessionType: "Individual",
-            drinksInSession: [],
-            startLocation: partyLocation.text ?? "",
-            endLocation: endLocation.text ?? "",
-            ateBefore: eatenToggle.isOn,
-            sessionName: "My Session",
-            shareSession: shareSession.isOn,
-            membersList: []
-        )
+        let session = SessionInfo(createdBy: self.userID!,
+                                  membersList: [],
+                                  sessionType: "Individual",
+                                  startTime: Date.now,
+                                  drinksInSession: [],
+                                  stillActive: true, 
+                                  startLocation: partyLocation.text ?? "",
+                                  endLocation: endLocation.text ?? "",
+                                  ateBefore: eatenToggle.isOn,
+                                  sessionName: "My Session",
+                                  shareSession: shareSession.isOn)
         
         self.currentSession = session
+        self.currentSession?.membersList.append(userID!)
         self.performSegue(withIdentifier: qToActiveSegue, sender: self)
     }
     

@@ -32,7 +32,7 @@ class ManageGroupSessionVC: UIViewController, EditSession {
         let dateFormatter = DateFormatter()
         dateFormatter.dateStyle = .long
         dateFormatter.timeStyle = .short
-        let formattedDate = dateFormatter.string(from: currentSession!.endGroupSessionTime)
+        let formattedDate = dateFormatter.string(from: currentSession!.endGroupSessionTime!)
         
         sessionNameTextLabel.text = currentSession?.sessionName
         sessionEndDateTimeLabel.text = formattedDate
@@ -50,7 +50,7 @@ class ManageGroupSessionVC: UIViewController, EditSession {
         let dateFormatter = DateFormatter()
         dateFormatter.dateStyle = .long
         dateFormatter.timeStyle = .short
-        let formattedDate = dateFormatter.string(from: currentSession!.endGroupSessionTime)
+        let formattedDate = dateFormatter.string(from: currentSession!.endGroupSessionTime!)
         sessionEndDateTimeLabel.text = formattedDate
     }
     
