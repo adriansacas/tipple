@@ -23,6 +23,10 @@ class SymptomsViewController: UIViewController, UITableViewDelegate, UITableView
     var selected = [false, false, false, false, false, false, false, false, false, false, false]
     
     let textCellIdentifier = "TextCell"
+    
+    let tips = ["Headache" : "Taking Aspirin or Ibuprofen can help alieviate headaches, but stay away from Tylenol!",
+                "Dehydration" : "Acohol promotes urination, so make sure to drink plenty of water before, during, and after drinking",
+                "Nausea" : "Eat some bread or cracker! Carbs help absorb any alcohol left in the stomach to combat nausea"]
 
     override func viewDidLoad() {
         super.viewDidLoad()

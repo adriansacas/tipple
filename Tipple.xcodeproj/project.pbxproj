@@ -32,6 +32,8 @@
 		34F604142ADF4B0C00E331A2 /* Tipple_Yellow_Status.png in Resources */ = {isa = PBXBuildFile; fileRef = 34F604112ADF4B0C00E331A2 /* Tipple_Yellow_Status.png */; };
 		34F604152ADF4B0C00E331A2 /* Tipple_Green_Status.png in Resources */ = {isa = PBXBuildFile; fileRef = 34F604122ADF4B0C00E331A2 /* Tipple_Green_Status.png */; };
 		34F78C3A2ADF181300A238A3 /* Tipple_aLogo.png in Resources */ = {isa = PBXBuildFile; fileRef = 34F78C392ADF181300A238A3 /* Tipple_aLogo.png */; };
+		494A45112AF5D4AE00B54542 /* QRScanner.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 494A45102AF5D4AE00B54542 /* QRScanner.storyboard */; };
+		494A45132AF5D7FD00B54542 /* QRScannerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 494A45122AF5D7FD00B54542 /* QRScannerController.swift */; };
 		49A0B6282ADDA23C0080E6FA /* DrinkInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49A0B6272ADDA23C0080E6FA /* DrinkInfo.swift */; };
 		49A0B62C2ADDA2A00080E6FA /* SessionInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49A0B62B2ADDA2A00080E6FA /* SessionInfo.swift */; };
 		49B2C1372ADEF9BA0025E38C /* SessionsListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49B2C1362ADEF9BA0025E38C /* SessionsListViewController.swift */; };
@@ -85,6 +87,8 @@
 		34F604112ADF4B0C00E331A2 /* Tipple_Yellow_Status.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Tipple_Yellow_Status.png; sourceTree = "<group>"; };
 		34F604122ADF4B0C00E331A2 /* Tipple_Green_Status.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Tipple_Green_Status.png; sourceTree = "<group>"; };
 		34F78C392ADF181300A238A3 /* Tipple_aLogo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Tipple_aLogo.png; sourceTree = "<group>"; };
+		494A45102AF5D4AE00B54542 /* QRScanner.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = QRScanner.storyboard; sourceTree = "<group>"; };
+		494A45122AF5D7FD00B54542 /* QRScannerController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRScannerController.swift; sourceTree = "<group>"; };
 		49A0B6272ADDA23C0080E6FA /* DrinkInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DrinkInfo.swift; sourceTree = "<group>"; };
 		49A0B62B2ADDA2A00080E6FA /* SessionInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SessionInfo.swift; sourceTree = "<group>"; };
 		49B2C1362ADEF9BA0025E38C /* SessionsListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SessionsListViewController.swift; sourceTree = "<group>"; };
@@ -158,6 +162,7 @@
 				344830102AEB64B100039FAD /* HexUIColor.swift */,
 				340DDEA42AD6243D00217F2D /* Info.plist */,
 				340DDE9C2AD6243A00217F2D /* Tipple.xcdatamodeld */,
+				494A45142AF5F26200B54542 /* QRCode */,
 				494A450F2AF5A51C00B54542 /* ActiveSession */,
 				49A0B62B2ADDA2A00080E6FA /* SessionInfo.swift */,
 				49B2C13C2ADEFD140025E38C /* ActiveSessions.storyboard */,
@@ -209,6 +214,15 @@
 				49B2C1382ADEFC320025E38C /* QuestionnaireVC.swift */,
 			);
 			path = ActiveSession;
+			sourceTree = "<group>";
+		};
+		494A45142AF5F26200B54542 /* QRCode */ = {
+			isa = PBXGroup;
+			children = (
+				494A45102AF5D4AE00B54542 /* QRScanner.storyboard */,
+				494A45122AF5D7FD00B54542 /* QRScannerController.swift */,
+			);
+			path = QRCode;
 			sourceTree = "<group>";
 		};
 		496B2CAC2AF59B4400F8EE21 /* PrevSessions */ = {
@@ -322,6 +336,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				494A45112AF5D4AE00B54542 /* QRScanner.storyboard in Resources */,
 				349A6F7D2AD62DAE002A707B /* LoginRegistrationHome.storyboard in Resources */,
 				34F604142ADF4B0C00E331A2 /* Tipple_Yellow_Status.png in Resources */,
 				34F78C3A2ADF181300A238A3 /* Tipple_aLogo.png in Resources */,
@@ -376,6 +391,7 @@
 				B341BF7D2AD92D0500505C37 /* ProfileInfoWeightVC.swift in Sources */,
 				B341BF772AD8F53D00505C37 /* ProfileInfoGenderVC.swift in Sources */,
 				B3329D342ADB53A300F23531 /* FirestoreManager.swift in Sources */,
+				494A45132AF5D7FD00B54542 /* QRScannerController.swift in Sources */,
 				B341BF7F2AD92E6200505C37 /* ProfileInfoPhoneVC.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
