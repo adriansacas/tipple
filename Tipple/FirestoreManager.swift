@@ -143,8 +143,10 @@ class FirestoreManager {
                 if let userData = document.data(),
                    let sessionIDS = userData["sessionIDS"] as? [String] {
                     
-                    var sessions: [SessionInfo] = []
                     let sessionDBRef = self.db.collection(self.sessionCollection)
+                    var sessionsFetched = 0         // Track the number of fetched sessions
+                    var sessions: [SessionInfo] = []
+                    
                     for sessionID in sessionIDS {
                         var memberList = [String]()
                         let sessionRef = sessionDBRef.document(sessionID)
@@ -155,34 +157,55 @@ class FirestoreManager {
                             }
                             
                             if let sessionDocument = sessionDocument, sessionDocument.exists,
-                               let sessionData = sessionDocument.data(),
-                               let createdBy = sessionData["createdBy"] as? String,
-                               let endTimeTimestamp = sessionData["endTime"] as? Timestamp,
-                               let sessionName = sessionData["sessionName"] as? String,
-                               let sessionType = sessionData["sessionType"] as? String{
+                               let sessionData = sessionDocument.data(){
+                                let sessionTemp = SessionInfo()
+                                
+                                if let createdBy = sessionData["createdBy"] as? String {
+                                    sessionTemp.createdBy = createdBy
+                                }
+                                
+                                if let endTimeTimestamp = sessionData["endTime"] as? Timestamp {
+                                    sessionTemp.endGroupSessionTime = endTimeTimestamp.dateValue()
+                                    
+                                }
+                                
+                                if let sessionName = sessionData["sessionName"] as? String {
+                                    sessionTemp.sessionName = sessionName
+                                }
+                                
+                                if let sessionType = sessionData["sessionType"] as? String{
+                                    sessionTemp.sessionType = sessionType
+                                }
+                                
                                 let membersCollection = sessionRef.collection(self.memberColInSess)
                                 membersCollection.getDocuments { (memberDocuments, memberError) in
                                     if let memberError = memberError {
                                         completion(nil, memberError)
                                         return
                                     }
-                                    let sessionTemp = SessionInfo()
-                                    sessionTemp.createdBy = createdBy
-                                    sessionTemp.endGroupSessionTime = endTimeTimestamp.dateValue()
-                                    sessionTemp.sessionName = sessionName
-                                    sessionTemp.sessionType = sessionType
                                     
-                                    for memberDoc in memberDocuments!.documents {
-                                        let memberID = memberDoc.documentID
+                                    for doc in memberDocuments!.documents {
+                                        let memberID = doc.documentID
+                                        let memberDoc = doc.data()
                                         if memberID == userID {
-                                            if  let activeSession = memberDoc["activeSession"] as? Bool,
-                                                let ateBefore = memberDoc["ateBefore"] as? Bool,
-                                                let endLocation = memberDoc["endLocation"] as? String,
-                                                let startLocation = memberDoc["startLocation"] as? String,
-                                                let drinksInSessionData = memberDoc["drinksInSession"] as? [[String: Any]],
-                                                let startTimeTimestamp = memberDoc["startTime"] as? Timestamp,
-                                                let symptomsList = memberDoc["symptomsList"] as? [String]{
-                                                var drinksInSession: [DrinkInfo] = []
+                                            if let activeSession = memberDoc["activeSession"] as? Bool {
+                                                sessionTemp.stillActive = activeSession
+                                            }
+                                            
+                                            if let ateBefore = memberDoc["ateBefore"] as? Bool {
+                                                sessionTemp.ateBefore = ateBefore
+                                            }
+                                            
+                                            if let endLocation = memberDoc["endLocation"] as? String {
+                                                sessionTemp.endLocation = endLocation
+                                            }
+                                            
+                                            if let startLocation = memberDoc["startLocation"] as? String {
+                                                sessionTemp.startLocation = startLocation
+                                            }
+                                            var drinksInSession: [DrinkInfo] = []
+                                            
+                                            if let drinksInSessionData = memberDoc["drinksInSession"] as? [[String: Any]] {
                                                 for drinkData in drinksInSessionData {
                                                     if let type = drinkData["type"] as? String,
                                                        let timeAtTimestamp = drinkData["timeAt"] as? Timestamp,
@@ -193,29 +216,41 @@ class FirestoreManager {
                                                         drinksInSession.append(drinkInfo)
                                                     }
                                                 }
-                                                
-                                                sessionTemp.stillActive = activeSession
-                                                sessionTemp.ateBefore = ateBefore
-                                                sessionTemp.endLocation = endLocation
-                                                sessionTemp.startLocation = startLocation
-                                                sessionTemp.drinksInSession = drinksInSession
-                                                sessionTemp.symptomsList = symptomsList
+                                            }
+                                            
+                                            if let startTimeTimestamp = memberDoc["startTime"] as? Timestamp {
                                                 sessionTemp.startTime = startTimeTimestamp.dateValue()
                                             }
+                                            var currentSymptoms = [String]()
+                                            if let symptomsList = memberDoc["symptomsList"] as? [String]{
+                                                currentSymptoms.append(contentsOf: symptomsList)
+                                            }
+                                            
+                                            sessionTemp.symptomsList = currentSymptoms
+                                            sessionTemp.drinksInSession = drinksInSession
+                                            
                                         }
                                         memberList.append(memberID)
                                     }
                                     sessionTemp.membersList = memberList
                                     sessions.append(sessionTemp)
+                                    sessionsFetched += 1
+                                    
+                                    if sessionsFetched == sessionIDS.count {
+                                        // All sessions have been fetched
+                                        completion(sessions, nil)
+                                    }
                                 }
+                            } else {
+                                completion(nil, NSError(domain: "", code: 0, userInfo: ["message": "User data not found or is invalid"]))
                             }
                         }
                     }
-                    completion(sessions, nil)
                 }
             }
         }
     }
+            
     
     // Adds a member to a given session document
     func addMembersToSession(sessionID: String, userID: String, session: SessionInfo, completion: @escaping (Error?) -> Void) {
