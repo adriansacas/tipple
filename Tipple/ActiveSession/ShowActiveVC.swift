@@ -34,16 +34,6 @@ class ShowActiveVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        firestoreManager.addSessionInfo(userID: self.userID!, session: self.currentSession!) { documentID, error in
-            if let error = error {
-                print("Error adding session: \(error)")
-            } else if let documentID = documentID {
-                self.sessionID = documentID
-                print("Session added successfully with document ID: \(self.sessionID ?? "Value not set")")
-            }
-        }
-        
-        
         // Set up an action for the drink selector
         drinkSelectorSegmented.addTarget(self, action: #selector(segmentedControlValueChanged(_:)), for: .valueChanged)
         
@@ -51,12 +41,21 @@ class ShowActiveVC: UIViewController {
         statusSegmented.isUserInteractionEnabled = false
         updateStatusInfo(bacValue: runningBAC, status: runningStatus, drinks: runningDrinkCounter)
         
-        // Setup the navbar title and other items
-        if currentSession != nil {
-            navItemTitle.title = currentSession?.sessionName
-        }
     }
 
+    
+    override func viewWillAppear(_ animated: Bool) {
+        firestoreManager.getSessionInfo(userID: self.userID!, sessionDocumentID: self.sessionID!) { sessionTemp, error in
+            if let error = error {
+                print("Error adding session: \(error)")
+            } else if let sessionTemp = sessionTemp {
+                self.currentSession = sessionTemp
+                self.navItemTitle.title = self.currentSession?.sessionName ?? ""
+                print("Session successfully retrieved before view appearing with document ID: \(self.sessionID ?? "Value not set")")
+            }
+        }
+    }
+    
     @objc func segmentedControlValueChanged(_ sender: UISegmentedControl) {
         drinkIncreaseAlert = UIAlertController(
                                 title: "How Many Drinks?",

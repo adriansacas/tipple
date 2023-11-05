@@ -8,7 +8,9 @@
 import UIKit
 
 class HomeViewController: UIViewController {
-
+    
+    var sessionType: String?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -27,6 +29,7 @@ class HomeViewController: UIViewController {
             title: "Individual Session",
             style: .default
         ) { (action) in
+            self.sessionType = "Individual"
             self.performSegue(withIdentifier: "individualToQASegue", sender: self)
         }
 
@@ -36,7 +39,8 @@ class HomeViewController: UIViewController {
             title: "Group Session",
             style: .default
         ) { (action) in
-            self.performSegue(withIdentifier: "groupSessionSegue", sender: self)
+            self.sessionType = "Group"
+            self.performSegue(withIdentifier: "individualToQASegue", sender: self)
         }
                              
         )
@@ -54,5 +58,15 @@ class HomeViewController: UIViewController {
     @IBAction func signOutButtonPressed(_ sender: Any) {
         performSegue(withIdentifier: "homeToLoginSegue", sender: nil)
     }
-
+    
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        // Get the new view controller using segue.destination.
+        // Pass the selected object to the new view controller.
+        
+        if segue.identifier == "individualToQASegue",
+           let destination = segue.destination as? QuestionnaireVC {
+            destination.sessionType = self.sessionType
+        }
+    }
 }

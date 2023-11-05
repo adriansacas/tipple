@@ -45,6 +45,7 @@
 		49B2C1432ADF08360025E38C /* SymptomsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49B2C1422ADF08360025E38C /* SymptomsViewController.swift */; };
 		49F26E202ADF27B900FF70A7 /* SessionsTracker.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 49F26E1F2ADF27B900FF70A7 /* SessionsTracker.storyboard */; };
 		49F26E222ADF287900FF70A7 /* DayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49F26E212ADF287900FF70A7 /* DayViewController.swift */; };
+		52B510182AF8542B00BDEB82 /* PreQuestions.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 52B510172AF8542B00BDEB82 /* PreQuestions.storyboard */; };
 		B3329D342ADB53A300F23531 /* FirestoreManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3329D332ADB53A300F23531 /* FirestoreManager.swift */; };
 		B3329D372ADB654D00F23531 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = B3329D362ADB654D00F23531 /* FirebaseFirestore */; };
 		B3329D392ADB71D900F23531 /* ProfileInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3329D382ADB71D900F23531 /* ProfileInfo.swift */; };
@@ -100,6 +101,7 @@
 		49B2C1422ADF08360025E38C /* SymptomsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SymptomsViewController.swift; sourceTree = "<group>"; };
 		49F26E1F2ADF27B900FF70A7 /* SessionsTracker.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = SessionsTracker.storyboard; sourceTree = "<group>"; };
 		49F26E212ADF287900FF70A7 /* DayViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DayViewController.swift; sourceTree = "<group>"; };
+		52B510172AF8542B00BDEB82 /* PreQuestions.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = PreQuestions.storyboard; sourceTree = "<group>"; };
 		B3329D332ADB53A300F23531 /* FirestoreManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestoreManager.swift; sourceTree = "<group>"; };
 		B3329D382ADB71D900F23531 /* ProfileInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileInfo.swift; sourceTree = "<group>"; };
 		B341BF722AD8A05600505C37 /* SettingsProfileInfoVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsProfileInfoVC.swift; sourceTree = "<group>"; };
@@ -207,6 +209,7 @@
 			isa = PBXGroup;
 			children = (
 				494A45152AF5F36200B54542 /* ActiveSessions.storyboard */,
+				52B510172AF8542B00BDEB82 /* PreQuestions.storyboard */,
 				494A45172AF5F36F00B54542 /* DrinkInfo.swift */,
 				494A45192AF5F37500B54542 /* QuestionnaireVC.swift */,
 				494A451B2AF5F37B00B54542 /* SessionInfo.swift */,
@@ -352,6 +355,7 @@
 				34F604132ADF4B0C00E331A2 /* Tipple_Red_Status.png in Resources */,
 				34F604152ADF4B0C00E331A2 /* Tipple_Green_Status.png in Resources */,
 				494A45162AF5F36200B54542 /* ActiveSessions.storyboard in Resources */,
+				52B510182AF8542B00BDEB82 /* PreQuestions.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

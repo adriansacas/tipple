@@ -415,7 +415,7 @@ class FirestoreManager {
             
                 
                 // Append the new symptoms to the symptoms array
-                currentSymptoms.append(contentsOf: symptoms)
+                currentSymptoms = symptoms
                 
                 // Update the "drinksInSession" field in the document
                 userDocRef.updateData(["symptomsList": currentSymptoms]) { updateError in
@@ -487,7 +487,7 @@ class FirestoreManager {
                         memberDict["BAC"] = "0.00"
                     }
                     
-                    self.getUserData(userID: userID) { (profileInfo, error) in
+                    self.getUserData(userID: memberID) { (profileInfo, error) in
                         if let error = error {
                             memberDict["contactInfo"] = ""
                             memberDict["name"] = ""
@@ -504,6 +504,102 @@ class FirestoreManager {
                     dictOfMembers[memberID] = memberDict
                 }
                 completion(dictOfMembers, nil)
+            }
+        }
+    }
+
+    func getSessionInfo(userID: String, sessionDocumentID: String, completion: @escaping (SessionInfo?, Error?) -> Void){
+        let sessionDBRef = db.collection(sessionCollection)
+        let sessionRef = sessionDBRef.document(sessionDocumentID)
+
+        sessionRef.getDocument { (sessionDocument, sessionError) in
+            if let sessionError = sessionError {
+                completion(nil, sessionError)
+                return
+            }
+
+            if let sessionDocument = sessionDocument, sessionDocument.exists,
+               let sessionData = sessionDocument.data() {
+                let sessionTemp = SessionInfo()
+                sessionTemp.sessionDocID = sessionDocumentID
+
+                if let createdBy = sessionData["createdBy"] as? String {
+                    sessionTemp.createdBy = createdBy
+                }
+
+                if let endTimeTimestamp = sessionData["endTime"] as? Timestamp {
+                    sessionTemp.endGroupSessionTime = endTimeTimestamp.dateValue()
+                }
+
+                if let sessionName = sessionData["sessionName"] as? String {
+                    sessionTemp.sessionName = sessionName
+                }
+
+                if let sessionType = sessionData["sessionType"] as? String {
+                    sessionTemp.sessionType = sessionType
+                }
+                
+                var membersList = [String]()
+                let membersCollection = sessionRef.collection(self.memberColInSess)
+                membersCollection.getDocuments { (memberDocuments, memberError) in
+                    if let memberError = memberError {
+                        completion(nil, memberError)
+                        return
+                    }
+                    
+                    for doc in memberDocuments!.documents {
+                        let memberID = doc.documentID
+                        let memberDoc = doc.data()
+                        if memberID == userID {
+                            if let activeSession = memberDoc["activeSession"] as? Bool {
+                                sessionTemp.stillActive = activeSession
+                            }
+                            
+                            if let ateBefore = memberDoc["ateBefore"] as? Bool {
+                                sessionTemp.ateBefore = ateBefore
+                            }
+                            
+                            if let endLocation = memberDoc["endLocation"] as? String {
+                                sessionTemp.endLocation = endLocation
+                            }
+                            
+                            if let startLocation = memberDoc["startLocation"] as? String {
+                                sessionTemp.startLocation = startLocation
+                            }
+                            var drinksInSession: [DrinkInfo] = []
+                            
+                            if let drinksInSessionData = memberDoc["drinksInSession"] as? [[String: Any]] {
+                                for drinkData in drinksInSessionData {
+                                    if let type = drinkData["type"] as? String,
+                                       let timeAtTimestamp = drinkData["timeAt"] as? Timestamp,
+                                       let drinkNum = drinkData["drinkNum"] as? Int,
+                                       let bacAtTime = drinkData["bacAtTime"] as? Float {
+                                        let timeAt = timeAtTimestamp.dateValue()
+                                        let drinkInfo = DrinkInfo(drinkType: type, drinkNum: drinkNum, bacAtTime: bacAtTime, timeAt: timeAt)
+                                        drinksInSession.append(drinkInfo)
+                                    }
+                                }
+                            }
+                            
+                            if let startTimeTimestamp = memberDoc["startTime"] as? Timestamp {
+                                sessionTemp.startTime = startTimeTimestamp.dateValue()
+                            }
+                            var currentSymptoms = [String]()
+                            if let symptomsList = memberDoc["symptomsList"] as? [String]{
+                                currentSymptoms.append(contentsOf: symptomsList)
+                            }
+                            
+                            sessionTemp.symptomsList = currentSymptoms
+                            sessionTemp.drinksInSession = drinksInSession
+                            
+                        }
+                        membersList.append(memberID)
+                    }
+                    sessionTemp.membersList = membersList
+                    completion(sessionTemp, nil) // Return the sessionTemp object upon completion
+                }
+            } else {
+                completion(nil, NSError(domain: "", code: 0, userInfo: ["message": "Session data not found or is invalid"]))
             }
         }
     }
