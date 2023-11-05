@@ -58,13 +58,9 @@ class FirestoreManager {
             "heightInches": heightInches,
             "weight": weight,
             "email": email,
+            "profileImageURL": profileImageURL,
             "sessionIDS": sessionIDS
         ]
-        
-        // Add profileImageURL to userData only if it's not an empty string
-        if !profileImageURL.isEmpty {
-            userData["profileImageURL"] = profileImageURL
-        }
         
         userRef.setData(userData) { error in
             if let error = error {
