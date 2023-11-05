@@ -8,7 +8,11 @@
 import UIKit
 import FirebaseAuth
 
-class SessionsListViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+protocol update {
+    func updateSessions()
+}
+
+class SessionsListViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, update {
     
     var userID:String?
     var sessions:[SessionInfo]?
@@ -46,6 +50,7 @@ class SessionsListViewController: UIViewController, UITableViewDelegate, UITable
                     self.tableView.insertRows(at: [indexPath], with: .automatic)
                     count += 1
                 }
+                self.sessions = self.sessions!.sorted(by: { $0.startTime.compare($1.startTime) == .orderedDescending })
                 self.tableView.endUpdates()
             }
         }
@@ -74,6 +79,18 @@ class SessionsListViewController: UIViewController, UITableViewDelegate, UITable
         
         self.performSegue(withIdentifier: "DayViewSegueIdentifier", sender: self)
         
+    }
+    
+    func updateSessions() {
+        firestoreManager.getAllSessions(userID: userID!) {
+            list, error in
+            if let error = error {
+                print("Error retrieving session: \(error)")
+            } else {
+                self.sessions![self.sessionRow!] = list![self.sessionRow!]
+                self.tableView.reloadData()
+            }
+        }
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

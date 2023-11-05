@@ -61,59 +61,66 @@ class DayViewController: UIViewController, updateSymptoms, ChartViewDelegate {
         }
         
         pieChart.delegate = self
-        
         symptoms = session.getAllSymptoms()
-        
         populateDrinks()
         populateSympAndTips()
-        
-        print("session ID: \(sessionID!)")
-        print("session id straight from session: \(String(describing: session.sessionDocID))")
     }
     
+    // Draws pie chart
     override func viewDidLayoutSubviews() {
+        
+        var totalDrinks = Double(beer + seltzer + wine + shots + cocktails)
+        
         pieChart.frame = CGRect(x: 0, y: 25, width: self.view.frame.size.width, height: 350)
         
         view2.addSubview(pieChart)
         
-        var entries = [ChartDataEntry]()
+        var entries = [PieChartDataEntry]()
         
-        entries.append(ChartDataEntry(x: Double(beer), y: Double(beer)))
-        entries.append(ChartDataEntry(x: Double(seltzer), y: Double(seltzer)))
-        entries.append(ChartDataEntry(x: Double(wine), y: Double(wine)))
-        entries.append(ChartDataEntry(x: Double(shots), y: Double(shots)))
-        entries.append(ChartDataEntry(x: Double(cocktails), y: Double(cocktails)))
+        // add data entries
+        entries.append(PieChartDataEntry(value: Double(beer), label: "Beers"))
+        entries.append(PieChartDataEntry(value: Double(seltzer), label: "Seltzers"))
+        entries.append(PieChartDataEntry(value: Double(wine), label: "Wine"))
+        entries.append(PieChartDataEntry(value: Double(shots), label: "Shots"))
+        entries.append(PieChartDataEntry(value: Double(cocktails), label: "Cocktails"))
         
+        // set colors
         let set = PieChartDataSet(entries: entries)
-        set.colors = ChartColorTemplates.colorful()
+        let colorString = [NSUIColor(cgColor: UIColor(hex: "#3634A3").cgColor),
+                               NSUIColor(cgColor: UIColor(hex: "#D70015").cgColor),
+                               NSUIColor(cgColor: UIColor(hex: "#7D7AFF").cgColor),
+                               NSUIColor(cgColor: UIColor(hex: "#FF6961").cgColor),
+                               NSUIColor(cgColor: UIColor(hex: "#ffb861").cgColor)]
+        set.colors = colorString
+        
         let data = PieChartData(dataSet: set)
         pieChart.data = data
     }
     
     func populateDrinks() {
-            
-            session.getSessionDrinks().forEach { drink in
-                if drink.getType() == "Beer" {
-                    beer += 1
-                } else if drink.getType() == "Seltzer" {
-                    seltzer += 1
-                } else if drink.getType() == "Wine" {
-                    wine += 1
-                } else if drink.getType() == "Shot" {
-                    shots += 1
-                } else if drink.getType() == "Cocktail" {
-                    cocktails += 1
-                }
-                
-                if drink.getType() == "Cocktail" {
-                    logs += "\(drink.getTimestamp())\t\t\t\t\(drink.type)\t\t\t\t\(drink.getBAC())\n"
-                } else {
-                    logs += "\(drink.getTimestamp())\t\t\t\t\(drink.type)\t\t\t\t\t\(drink.getBAC())\n"
-                }
-                
+        // getting count for each type of drink
+        session.getSessionDrinks().forEach { drink in
+            if drink.getType() == "Beer" {
+                beer += 1
+            } else if drink.getType() == "Seltzer" {
+                seltzer += 1
+            } else if drink.getType() == "Wine" {
+                wine += 1
+            } else if drink.getType() == "Shot" {
+                shots += 1
+            } else if drink.getType() == "Cocktail" {
+                cocktails += 1
             }
             
-            logsLabel.text = logs
+            if drink.getType() == "Cocktail" {
+                logs += "\(drink.getTimestamp())\t\t\t\t\(drink.type)\t\t\t\t\(drink.getBAC())\n"
+            } else {
+                logs += "\(drink.getTimestamp())\t\t\t\t\(drink.type)\t\t\t\t\t\(drink.getBAC())\n"
+            }
+            
+        }
+        
+        logsLabel.text = logs
         
     }
     
@@ -136,23 +143,16 @@ class DayViewController: UIViewController, updateSymptoms, ChartViewDelegate {
     }
     
     func update(symptoms: [String]) {
-        var temp:[String] = []
         
-        for symp in symptoms {
-            if !self.symptoms.contains(symp) {
-                temp.append(symp)
-            }
-        }
-        
-        if !temp.isEmpty {
-            firestoreManager.updateSymptomsForSession(userID: self.userID!, sessionID: self.sessionID!, symptoms: temp) {
-                error in if let error = error {
-                    print("Error updating symptoms: \(error)")
-                }
+        firestoreManager.updateSymptomsForSession(userID: self.userID!, sessionID: self.sessionID!, symptoms: symptoms) {
+            error in if let error = error {
+                print("Error updating symptoms: \(error)")
             }
         }
         
         self.symptoms = symptoms
+        let otherVC = delegate as! update
+        otherVC.updateSessions()
         
         populateSympAndTips()
     }
