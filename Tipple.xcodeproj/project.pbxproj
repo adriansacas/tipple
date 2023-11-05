@@ -39,6 +39,8 @@
 		494A451A2AF5F37500B54542 /* QuestionnaireVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 494A45192AF5F37500B54542 /* QuestionnaireVC.swift */; };
 		494A451C2AF5F37B00B54542 /* SessionInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 494A451B2AF5F37B00B54542 /* SessionInfo.swift */; };
 		494A451E2AF5F38300B54542 /* ShowActiveVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 494A451D2AF5F38300B54542 /* ShowActiveVC.swift */; };
+		49593C392AF71BBD00B37653 /* DGCharts in Frameworks */ = {isa = PBXBuildFile; productRef = 49593C382AF71BBD00B37653 /* DGCharts */; };
+		49593C3B2AF71BBD00B37653 /* DGChartsDynamic in Frameworks */ = {isa = PBXBuildFile; productRef = 49593C3A2AF71BBD00B37653 /* DGChartsDynamic */; };
 		49B2C1372ADEF9BA0025E38C /* SessionsListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49B2C1362ADEF9BA0025E38C /* SessionsListViewController.swift */; };
 		49B2C1432ADF08360025E38C /* SymptomsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49B2C1422ADF08360025E38C /* SymptomsViewController.swift */; };
 		49F26E202ADF27B900FF70A7 /* SessionsTracker.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 49F26E1F2ADF27B900FF70A7 /* SessionsTracker.storyboard */; };
@@ -120,7 +122,9 @@
 			files = (
 				348821E72AD793AE00B677F3 /* FirebaseDatabase in Frameworks */,
 				B34377162ADE21B4003B1D96 /* FirebaseStorage in Frameworks */,
+				49593C392AF71BBD00B37653 /* DGCharts in Frameworks */,
 				348821E12AD793AE00B677F3 /* FirebaseAuth in Frameworks */,
+				49593C3B2AF71BBD00B37653 /* DGChartsDynamic in Frameworks */,
 				B3329D372ADB654D00F23531 /* FirebaseFirestore in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -285,6 +289,8 @@
 				348821E62AD793AE00B677F3 /* FirebaseDatabase */,
 				B3329D362ADB654D00F23531 /* FirebaseFirestore */,
 				B34377152ADE21B4003B1D96 /* FirebaseStorage */,
+				49593C382AF71BBD00B37653 /* DGCharts */,
+				49593C3A2AF71BBD00B37653 /* DGChartsDynamic */,
 			);
 			productName = Tipple;
 			productReference = 340DDE902AD6243A00217F2D /* Tipple.app */;
@@ -316,6 +322,7 @@
 			mainGroup = 340DDE872AD6243A00217F2D;
 			packageReferences = (
 				348821D32AD793AE00B677F3 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				49593C372AF71BBD00B37653 /* XCRemoteSwiftPackageReference "Charts" */,
 			);
 			productRefGroup = 340DDE912AD6243A00217F2D /* Products */;
 			projectDirPath = "";
@@ -623,6 +630,14 @@
 				minimumVersion = 10.16.0;
 			};
 		};
+		49593C372AF71BBD00B37653 /* XCRemoteSwiftPackageReference "Charts" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/danielgindi/Charts";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.0.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -635,6 +650,16 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 348821D32AD793AE00B677F3 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseDatabase;
+		};
+		49593C382AF71BBD00B37653 /* DGCharts */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 49593C372AF71BBD00B37653 /* XCRemoteSwiftPackageReference "Charts" */;
+			productName = DGCharts;
+		};
+		49593C3A2AF71BBD00B37653 /* DGChartsDynamic */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 49593C372AF71BBD00B37653 /* XCRemoteSwiftPackageReference "Charts" */;
+			productName = DGChartsDynamic;
 		};
 		B3329D362ADB654D00F23531 /* FirebaseFirestore */ = {
 			isa = XCSwiftPackageProductDependency;
