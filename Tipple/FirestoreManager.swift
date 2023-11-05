@@ -159,7 +159,7 @@ class FirestoreManager {
                             if let sessionDocument = sessionDocument, sessionDocument.exists,
                                let sessionData = sessionDocument.data(){
                                 let sessionTemp = SessionInfo()
-                                
+                                sessionTemp.sessionDocID = sessionDocument.documentID                                
                                 if let createdBy = sessionData["createdBy"] as? String {
                                     sessionTemp.createdBy = createdBy
                                 }
