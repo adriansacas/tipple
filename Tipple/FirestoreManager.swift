@@ -457,7 +457,8 @@ class FirestoreManager {
                     
                     var memberDict = ["status" : false,
                                       "contactInfo" : "",
-                                      "BAC" : ""]
+                                      "BAC" : "",
+                                      "name": ""]
                     
                     /* Store whether this user is still active or not */
                     if let activeSession = memberDoc["activeSession"] as? Bool {
@@ -493,10 +494,14 @@ class FirestoreManager {
                     self.getUserData(userID: userID) { (profileInfo, error) in
                         if let error = error {
                             memberDict["contactInfo"] = ""
+                            memberDict["name"] = ""
                         } else if let tempProfile = profileInfo {
                             memberDict["contactInfo"] = tempProfile.phoneNumber
+                            memberDict["name"] = tempProfile.firstName + " " + tempProfile.lastName
+
                         } else {
                             memberDict["contactInfo"] = ""
+                            memberDict["name"] = ""
                         }
                     }
                     // Append the memberDict to dictOfMembers
