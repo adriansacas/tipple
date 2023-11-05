@@ -10,9 +10,9 @@ import FirebaseAuth
 
 class SessionsListViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
-    var userID: String?
+    var userID:String?
     var sessions:[SessionInfo]?
-    var session:SessionInfo = SessionInfo()
+    var sessionRow:Int?
     let firestoreManager = FirestoreManager.shared
     
     @IBOutlet weak var tableView: UITableView!
@@ -70,8 +70,7 @@ class SessionsListViewController: UIViewController, UITableViewDelegate, UITable
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let row = indexPath.row
-        session = sessions![row]
+        sessionRow = indexPath.row
         
         self.performSegue(withIdentifier: "DayViewSegueIdentifier", sender: self)
         
@@ -82,7 +81,9 @@ class SessionsListViewController: UIViewController, UITableViewDelegate, UITable
            let nextVC = segue.destination as? DayViewController
         {
             nextVC.delegate = self
-            nextVC.session = self.session
+            nextVC.session = self.sessions![self.sessionRow!]
+            nextVC.sessionID = self.self.sessions![self.sessionRow!].getSessionDocID()
+            nextVC.userID = self.userID!
         }
     }
 

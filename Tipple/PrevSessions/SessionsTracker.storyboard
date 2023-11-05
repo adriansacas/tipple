@@ -166,7 +166,7 @@
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1vX-Oi-xH4" userLabel="Symptoms List">
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No symptoms logged yet" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1vX-Oi-xH4" userLabel="Symptoms List">
                                                 <rect key="frame" x="25" y="600.33333333333337" width="385" height="20.333333333333371"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="385" id="NgC-7L-798"/>
@@ -176,13 +176,13 @@
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tips" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="c9g-tK-tfC">
-                                                <rect key="frame" x="22.000000000000004" y="659.66666666666663" width="39.333333333333343" height="24"/>
+                                                <rect key="frame" x="22.000000000000004" y="665.66666666666663" width="39.333333333333343" height="24"/>
                                                 <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="20"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Z1H-cE-JZr" userLabel="Tips Label">
-                                                <rect key="frame" x="20" y="715.66666666666663" width="385" height="20.333333333333371"/>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Z1H-cE-JZr" userLabel="Tips Label">
+                                                <rect key="frame" x="20" y="714.66666666666663" width="385" height="0.0"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="385" id="Chm-cX-QE8"/>
                                                 </constraints>
@@ -203,7 +203,7 @@
                                         <constraints>
                                             <constraint firstItem="AEa-ZQ-3Lc" firstAttribute="leading" secondItem="cvT-nJ-vOS" secondAttribute="leading" constant="24" id="6Te-c8-EQQ"/>
                                             <constraint firstItem="Z1H-cE-JZr" firstAttribute="leading" secondItem="cvT-nJ-vOS" secondAttribute="leading" constant="20" symbolic="YES" id="8gr-0P-FCX"/>
-                                            <constraint firstItem="Z1H-cE-JZr" firstAttribute="top" secondItem="c9g-tK-tfC" secondAttribute="bottom" constant="32" id="Mt8-aG-Rvv"/>
+                                            <constraint firstItem="Z1H-cE-JZr" firstAttribute="top" secondItem="c9g-tK-tfC" secondAttribute="bottom" constant="25" id="Mt8-aG-Rvv"/>
                                             <constraint firstAttribute="height" constant="1500" id="NQ4-yJ-YNw"/>
                                             <constraint firstItem="2na-F7-ZDB" firstAttribute="top" secondItem="cvT-nJ-vOS" secondAttribute="top" constant="400" id="QV3-KP-U0f"/>
                                             <constraint firstItem="yiS-lM-BHK" firstAttribute="centerX" secondItem="cvT-nJ-vOS" secondAttribute="centerX" constant="69" id="QnX-eP-cqV"/>
@@ -219,7 +219,7 @@
                                             <constraint firstItem="1vX-Oi-xH4" firstAttribute="centerX" secondItem="cvT-nJ-vOS" secondAttribute="centerX" constant="2.5" id="ngG-ER-tV9"/>
                                             <constraint firstItem="c9g-tK-tfC" firstAttribute="leading" secondItem="cvT-nJ-vOS" secondAttribute="leading" constant="22" id="q2b-jb-cUg"/>
                                             <constraint firstItem="1vX-Oi-xH4" firstAttribute="top" secondItem="AEa-ZQ-3Lc" secondAttribute="bottom" constant="25" id="q4N-Js-exC"/>
-                                            <constraint firstItem="c9g-tK-tfC" firstAttribute="top" secondItem="1vX-Oi-xH4" secondAttribute="bottom" constant="39" id="wnA-BG-hw9"/>
+                                            <constraint firstItem="c9g-tK-tfC" firstAttribute="top" secondItem="1vX-Oi-xH4" secondAttribute="bottom" constant="45" id="wnA-BG-hw9"/>
                                             <constraint firstItem="1vX-Oi-xH4" firstAttribute="centerX" secondItem="cvT-nJ-vOS" secondAttribute="centerX" constant="2.5" id="xNO-T6-eDK"/>
                                             <constraint firstItem="EYX-Df-gHv" firstAttribute="centerX" secondItem="cvT-nJ-vOS" secondAttribute="centerX" constant="-1" id="yKa-0k-Q3O"/>
                                         </constraints>

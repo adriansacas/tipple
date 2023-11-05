@@ -7,6 +7,7 @@
 
 import UIKit
 import DGCharts
+import FirebaseAuth
 
 protocol updateSymptoms {
     func update(symptoms:[String])
@@ -19,8 +20,6 @@ class DayViewController: UIViewController, updateSymptoms, ChartViewDelegate {
                 "Nausea" : "Eat some bread or cracker! Carbs help absorb any alcohol left in the stomach to combat nausea",
                 "Slurred speech" : "Drinking on an empty stomach can cause the alcohol to be absorbed in blood stream faster, make sure to eat before!",
                 "Vomiting" : "Drinking in moderation can help prevent adverse effects"]
-    
-    var scrollView: UIScrollView!
 
     @IBOutlet weak var tipsLabel: UILabel!
     @IBOutlet weak var symptomsLabel: UILabel!
@@ -28,9 +27,12 @@ class DayViewController: UIViewController, updateSymptoms, ChartViewDelegate {
     
     let logTextCellIdentifier = "LogCell"
     let symptomsTextCellIdentifier = "SymptomsCell"
+    let firestoreManager = FirestoreManager.shared
     
     var session:SessionInfo = SessionInfo()
-    var symptoms:[String] = ["No symptoms logged yet"]
+    var sessionID:String?
+    var symptoms:[String] = []
+    var userID:String?
     var logs:String = ""
     
     var delegate:UIViewController?
@@ -52,12 +54,21 @@ class DayViewController: UIViewController, updateSymptoms, ChartViewDelegate {
         dateFormatter.dateFormat = "MM/dd/YY"
         self.title = "\(dateFormatter.string(from: session.getStartTime())) - \(session.getName())"
         
+        if let userID = Auth.auth().currentUser?.uid {
+            self.userID = userID
+        } else {
+            print("Error fetching user ID from currentUser")
+        }
+        
         pieChart.delegate = self
         
-        // symptoms = session!.getSymptoms() beta release
+        symptoms = session.getAllSymptoms()
         
         populateDrinks()
         populateSympAndTips()
+        
+        print("session ID: \(sessionID!)")
+        print("session id straight from session: \(String(describing: session.sessionDocID))")
     }
     
     override func viewDidLayoutSubviews() {
@@ -108,17 +119,41 @@ class DayViewController: UIViewController, updateSymptoms, ChartViewDelegate {
     
     func populateSympAndTips() {
         var sympTemp = ""
-        var tipsTemp = ""
+        var tipsTemp = "- Drink responsibly!\n\n"
         for symp in symptoms {
             sympTemp += "\(symp)\n"
-            tipsTemp += "\(tips[symp, default:""])\n"
+            let temp = tips[symp, default:""]
+            if temp != "" {
+                tipsTemp += "- \(temp)\n\n"
+            }
         }
-        symptomsLabel.text = sympTemp
+        
+        if sympTemp != "" {
+            symptomsLabel.text = sympTemp
+        }
+        
         tipsLabel.text = tipsTemp
     }
     
     func update(symptoms: [String]) {
+        var temp:[String] = []
+        
+        for symp in symptoms {
+            if !self.symptoms.contains(symp) {
+                temp.append(symp)
+            }
+        }
+        
+        if !temp.isEmpty {
+            firestoreManager.updateSymptomsForSession(userID: self.userID!, sessionID: self.sessionID!, symptoms: temp) {
+                error in if let error = error {
+                    print("Error updating symptoms: \(error)")
+                }
+            }
+        }
+        
         self.symptoms = symptoms
+        
         populateSympAndTips()
     }
     
