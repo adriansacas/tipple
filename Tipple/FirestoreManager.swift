@@ -404,7 +404,7 @@ class FirestoreManager {
     }
     
     // Function to update the symptoms of a given session
-    func updateDrinksInSession(userID: String, sessionID: String, symptoms: [String], completion: @escaping (Error?) -> Void) {
+    func updateSymptomsForSession(userID: String, sessionID: String, symptoms: [String], completion: @escaping (Error?) -> Void) {
         print("Attempting symptoms update with IDS\n\t-- USERID: \(userID), sessionID: \(sessionID)")
         
         
@@ -436,4 +436,75 @@ class FirestoreManager {
             }
         }
     }
+    
+    // Function to pull information for group members list tableview
+    func pullGroupMembers(userID: String, sessionID: String, completion: @escaping ([String: [String: Any]]?, Error?) -> Void) {
+        let sessionDocRef = db.collection(sessionCollection).document(sessionID).collection(memberColInSess)
+        
+        var dictOfMembers: [String: [String: Any]] = [:]
+
+        
+        sessionDocRef.getDocuments { (querySnapshot, error) in
+            if let error = error {
+                completion(nil, error) // Handle the error and pass it to the completion block
+            } else {
+                for document in querySnapshot!.documents {
+                    let memberDoc = document.data()
+                    let memberID = document.documentID
+                    if memberID == userID {
+                        continue
+                    }
+                    
+                    var memberDict = ["status" : false,
+                                      "contactInfo" : "",
+                                      "BAC" : ""]
+                    
+                    /* Store whether this user is still active or not */
+                    if let activeSession = memberDoc["activeSession"] as? Bool {
+                        memberDict["status"] = activeSession
+                    }
+                    
+                    /* Pull and the current drinks in order to calculate the BAC for the user */
+                    var drinksInSession: [DrinkInfo] = []
+                    if let drinksInSessionData = memberDoc["drinksInSession"] as? [[String: Any]] {
+                        for drinkData in drinksInSessionData {
+                            if let type = drinkData["type"] as? String,
+                               let timeAtTimestamp = drinkData["timeAt"] as? Timestamp,
+                               let drinkNum = drinkData["drinkNum"] as? Int,
+                               let bacAtTime = drinkData["bacAtTime"] as? Float {
+                                let timeAt = timeAtTimestamp.dateValue()
+                                let drinkInfo = DrinkInfo(drinkType: type, drinkNum: drinkNum, bacAtTime: bacAtTime, timeAt: timeAt)
+                                drinksInSession.append(drinkInfo)
+                            }
+                        }
+                    }
+                    if !drinksInSession.isEmpty {
+                        if let mostRecentDrink = drinksInSession.max(by: { $0.timeAt < $1.timeAt }) {
+                            // `mostRecentDrink` now contains the `DrinkInfo` with the most recent timestamp
+                            memberDict["BAC"] = mostRecentDrink.getBAC()
+                        } else {
+                            // The `drinksInSession` array is empty
+                            memberDict["BAC"] = "0.00"
+                        }
+                    } else {
+                        memberDict["BAC"] = "0.00"
+                    }
+                    
+                    self.getUserData(userID: userID) { (profileInfo, error) in
+                        if let error = error {
+                            memberDict["contactInfo"] = ""
+                        } else if let tempProfile = profileInfo {
+                            memberDict["contactInfo"] = tempProfile.phoneNumber
+                        } else {
+                            memberDict["contactInfo"] = ""
+                        }
+                    }
+                    // Append the memberDict to dictOfMembers
+                    dictOfMembers[memberID] = memberDict
+                }
+                completion(dictOfMembers, nil)
+            }
+        }
+    }
+
 }
