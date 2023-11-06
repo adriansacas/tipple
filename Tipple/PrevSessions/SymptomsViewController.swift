@@ -33,8 +33,6 @@ class SymptomsViewController: UIViewController, UITableViewDelegate, UITableView
         for i in 0...symptoms.count-1 {
             selected[i] = sessionSymptoms.contains(symptoms[i])
         }
-        
-        // set symptoms
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

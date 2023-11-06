@@ -365,7 +365,7 @@
                                     <color key="baseBackgroundColor" systemColor="systemIndigoColor"/>
                                 </buttonConfiguration>
                                 <connections>
-                                    <action selector="joinSessionButtonPressed:" destination="ICB-pa-paD" eventType="touchUpInside" id="i0y-f9-9vh"/>
+                                    <segue destination="ncn-VT-jPt" kind="show" identifier="JoinToQRSegue" id="lot-rO-xE4"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lcv-o1-tp9">
@@ -426,13 +426,23 @@
             </objects>
             <point key="canvasLocation" x="736.74418604651157" y="757.72532188841205"/>
         </scene>
+        <!--QRScanner-->
+        <scene sceneID="6By-CN-af4">
+            <objects>
+                <viewControllerPlaceholder storyboardName="QRScanner" id="ncn-VT-jPt" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="sce-R9-CAr"/>
+                </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="YN6-uh-4nd" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1530" y="695"/>
+        </scene>
         <!--PreQuestions-->
         <scene sceneID="fi2-tn-s78">
             <objects>
                 <viewControllerPlaceholder storyboardIdentifier="PreQuestionsVC" storyboardName="PreQuestions" id="V2S-uN-EC2" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="5HX-xc-8Hb" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1492" y="713"/>
+            <point key="canvasLocation" x="1718" y="617"/>
         </scene>
         <!--SessionsTracker-->
         <scene sceneID="717-Zl-91E">
@@ -442,7 +452,7 @@
                 </viewControllerPlaceholder>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="YMp-al-lqs" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1492" y="758"/>
+            <point key="canvasLocation" x="1506" y="758"/>
         </scene>
         <!--Settings-->
         <scene sceneID="OPa-A8-miC">
@@ -450,7 +460,7 @@
                 <viewControllerPlaceholder storyboardName="Settings" id="oSu-wf-FQU" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="n1K-Gg-Zb3" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1492" y="849"/>
+            <point key="canvasLocation" x="1473" y="833"/>
         </scene>
         <!--GroupSession-->
         <scene sceneID="XSB-zX-hkz">
@@ -460,7 +470,7 @@
                 </viewControllerPlaceholder>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4ms-7Q-iJ3" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1497" y="617"/>
+            <point key="canvasLocation" x="1370" y="564"/>
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>

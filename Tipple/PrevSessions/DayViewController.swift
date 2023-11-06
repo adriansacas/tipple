@@ -7,6 +7,7 @@
 
 import UIKit
 import DGCharts
+import FirebaseAuth
 
 protocol updateSymptoms {
     func update(symptoms:[String])
@@ -19,8 +20,6 @@ class DayViewController: UIViewController, updateSymptoms, ChartViewDelegate {
                 "Nausea" : "Eat some bread or cracker! Carbs help absorb any alcohol left in the stomach to combat nausea",
                 "Slurred speech" : "Drinking on an empty stomach can cause the alcohol to be absorbed in blood stream faster, make sure to eat before!",
                 "Vomiting" : "Drinking in moderation can help prevent adverse effects"]
-    
-    var scrollView: UIScrollView!
 
     @IBOutlet weak var tipsLabel: UILabel!
     @IBOutlet weak var symptomsLabel: UILabel!
@@ -28,9 +27,12 @@ class DayViewController: UIViewController, updateSymptoms, ChartViewDelegate {
     
     let logTextCellIdentifier = "LogCell"
     let symptomsTextCellIdentifier = "SymptomsCell"
+    let firestoreManager = FirestoreManager.shared
     
     var session:SessionInfo = SessionInfo()
-    var symptoms:[String] = ["No symptoms logged yet"]
+    var sessionID:String?
+    var symptoms:[String] = []
+    var userID:String?
     var logs:String = ""
     
     var delegate:UIViewController?
@@ -52,73 +54,106 @@ class DayViewController: UIViewController, updateSymptoms, ChartViewDelegate {
         dateFormatter.dateFormat = "MM/dd/YY"
         self.title = "\(dateFormatter.string(from: session.getStartTime())) - \(session.getName())"
         
+        if let userID = Auth.auth().currentUser?.uid {
+            self.userID = userID
+        } else {
+            print("Error fetching user ID from currentUser")
+        }
+        
         pieChart.delegate = self
-        
-        // symptoms = session!.getSymptoms() beta release
-        
+        symptoms = session.getAllSymptoms()
         populateDrinks()
         populateSympAndTips()
     }
     
+    // Draws pie chart
     override func viewDidLayoutSubviews() {
+        
         pieChart.frame = CGRect(x: 0, y: 25, width: self.view.frame.size.width, height: 350)
         
         view2.addSubview(pieChart)
         
-        var entries = [ChartDataEntry]()
+        var entries = [PieChartDataEntry]()
         
-        entries.append(ChartDataEntry(x: Double(beer), y: Double(beer)))
-        entries.append(ChartDataEntry(x: Double(seltzer), y: Double(seltzer)))
-        entries.append(ChartDataEntry(x: Double(wine), y: Double(wine)))
-        entries.append(ChartDataEntry(x: Double(shots), y: Double(shots)))
-        entries.append(ChartDataEntry(x: Double(cocktails), y: Double(cocktails)))
+        // add data entries
+        entries.append(PieChartDataEntry(value: Double(beer), label: "Beers"))
+        entries.append(PieChartDataEntry(value: Double(seltzer), label: "Seltzers"))
+        entries.append(PieChartDataEntry(value: Double(wine), label: "Wine"))
+        entries.append(PieChartDataEntry(value: Double(shots), label: "Shots"))
+        entries.append(PieChartDataEntry(value: Double(cocktails), label: "Cocktails"))
         
+        // set colors
         let set = PieChartDataSet(entries: entries)
-        set.colors = ChartColorTemplates.colorful()
+        let colorString = [NSUIColor(cgColor: UIColor(hex: "#3634A3").cgColor),
+                               NSUIColor(cgColor: UIColor(hex: "#D70015").cgColor),
+                               NSUIColor(cgColor: UIColor(hex: "#7D7AFF").cgColor),
+                               NSUIColor(cgColor: UIColor(hex: "#FF6961").cgColor),
+                               NSUIColor(cgColor: UIColor(hex: "#ffb861").cgColor)]
+        set.colors = colorString
+        
         let data = PieChartData(dataSet: set)
         pieChart.data = data
     }
     
     func populateDrinks() {
-            
-            session.getSessionDrinks().forEach { drink in
-                if drink.getType() == "Beer" {
-                    beer += 1
-                } else if drink.getType() == "Seltzer" {
-                    seltzer += 1
-                } else if drink.getType() == "Wine" {
-                    wine += 1
-                } else if drink.getType() == "Shot" {
-                    shots += 1
-                } else if drink.getType() == "Cocktail" {
-                    cocktails += 1
-                }
-                
-                if drink.getType() == "Cocktail" {
-                    logs += "\(drink.getTimestamp())\t\t\t\t\(drink.type)\t\t\t\t\(drink.getBAC())\n"
-                } else {
-                    logs += "\(drink.getTimestamp())\t\t\t\t\(drink.type)\t\t\t\t\t\(drink.getBAC())\n"
-                }
-                
+        // getting count for each type of drink
+        session.getSessionDrinks().forEach { drink in
+            if drink.getType() == "Beer" {
+                beer += 1
+            } else if drink.getType() == "Seltzer" {
+                seltzer += 1
+            } else if drink.getType() == "Wine" {
+                wine += 1
+            } else if drink.getType() == "Shot" {
+                shots += 1
+            } else if drink.getType() == "Cocktail" {
+                cocktails += 1
             }
             
-            logsLabel.text = logs
+            if drink.getType() == "Cocktail" {
+                logs += "\(drink.getTimestamp())\t\t\t\t\(drink.type)\t\t\t\t\(drink.getBAC())\n"
+            } else {
+                logs += "\(drink.getTimestamp())\t\t\t\t\(drink.type)\t\t\t\t\t\(drink.getBAC())\n"
+            }
+            
+        }
+        
+        logsLabel.text = logs
         
     }
     
     func populateSympAndTips() {
+        var count = 1
         var sympTemp = ""
-        var tipsTemp = ""
+        var tipsTemp = "Tip #\(count): Drink responsibly!\n\n"
         for symp in symptoms {
             sympTemp += "\(symp)\n"
-            tipsTemp += "\(tips[symp, default:""])\n"
+            let temp = tips[symp, default:""]
+            if temp != "" {
+                count += 1
+                tipsTemp += "Tip #\(count): \(temp)\n\n"
+            }
         }
-        symptomsLabel.text = sympTemp
+        
+        if sympTemp != "" {
+            symptomsLabel.text = sympTemp
+        }
+        
         tipsLabel.text = tipsTemp
     }
     
     func update(symptoms: [String]) {
+        
+        firestoreManager.updateSymptomsForSession(userID: self.userID!, sessionID: self.sessionID!, symptoms: symptoms) {
+            error in if let error = error {
+                print("Error updating symptoms: \(error)")
+            }
+        }
+        
         self.symptoms = symptoms
+        let otherVC = delegate as! update
+        otherVC.updateSessions()
+        
         populateSympAndTips()
     }
     

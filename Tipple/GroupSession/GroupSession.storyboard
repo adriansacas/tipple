@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="22155" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Y6W-OH-hqX">
-    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <device id="retina6_72" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22131"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
@@ -13,7 +13,7 @@
             <objects>
                 <viewController id="Y6W-OH-hqX" customClass="RegisterGroupSessionVC" customModule="Tipple" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="5EZ-qb-Rvc">
-                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <rect key="frame" x="0.0" y="0.0" width="430" height="932"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Register Group" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eCd-Uf-nkJ">
@@ -24,10 +24,10 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="z6W-GD-d8D">
-                                <rect key="frame" x="127" y="487" width="139" height="35"/>
+                                <rect key="frame" x="134" y="487" width="125" height="35"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="filled" title="Create Session"/>
+                                <buttonConfiguration key="configuration" style="filled" title="Start Session"/>
                                 <connections>
                                     <action selector="createSessionButtonPressed:" destination="Y6W-OH-hqX" eventType="touchUpInside" id="qdr-vG-Hg5"/>
                                 </connections>
@@ -60,7 +60,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <datePicker contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="dateAndTime" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="ocy-jF-s1j">
-                                <rect key="frame" x="0.0" y="363" width="223" height="45"/>
+                                <rect key="frame" x="0.0" y="363" width="260" height="45"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                             </datePicker>
                         </subviews>
@@ -93,7 +93,7 @@
             <objects>
                 <viewController id="e4D-kU-EB4" customClass="EditGroupSessionVC" customModule="Tipple" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="nHv-GS-dk0">
-                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <rect key="frame" x="0.0" y="0.0" width="430" height="932"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5g2-3p-wLh">
@@ -151,7 +151,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <datePicker contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="dateAndTime" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="5tg-fb-kGU">
-                                <rect key="frame" x="16" y="362" width="211" height="31"/>
+                                <rect key="frame" x="16" y="362" width="248" height="31"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                             </datePicker>
                         </subviews>
@@ -174,7 +174,7 @@
             <objects>
                 <viewController id="839-df-POO" customClass="InviteCodeVC" customModule="Tipple" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="fZx-2G-xol">
-                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <rect key="frame" x="0.0" y="0.0" width="430" height="932"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Session Ends @" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RHd-rJ-AKF">
@@ -231,12 +231,12 @@
             </objects>
             <point key="canvasLocation" x="2995" y="1527"/>
         </scene>
-        <!--Manage Group SessionVC-->
+        <!--manageSessionGroupVC-->
         <scene sceneID="WsK-Lu-gt0">
             <objects>
-                <viewController id="eDn-wV-OIN" customClass="ManageGroupSessionVC" customModule="Tipple" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="manageSessionGroupVC" title="manageSessionGroupVC" id="eDn-wV-OIN" customClass="ManageGroupSessionVC" customModule="Tipple" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="H2i-eL-gm8">
-                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <rect key="frame" x="0.0" y="0.0" width="430" height="932"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="&quot;Session Name&quot;" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ibf-rN-wT1">
@@ -287,6 +287,9 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="filled" title="Access Session"/>
+                                <connections>
+                                    <segue destination="al7-QM-VMx" kind="show" identifier="manageToActiveSegue" id="GCQ-Wo-vNf"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="84a-OK-c2o">
                                 <rect key="frame" x="138" y="538" width="117" height="35"/>
@@ -319,11 +322,12 @@
                     <connections>
                         <outlet property="sessionEndDateTimeLabel" destination="GfJ-9A-K7m" id="Dbd-8k-EVo"/>
                         <outlet property="sessionNameTextLabel" destination="ibf-rN-wT1" id="kzL-PF-y7P"/>
+                        <outlet property="settingsButton" destination="d6P-PY-1Q9" id="1vl-rf-f3i"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hmg-BC-sr3" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1973" y="1527"/>
+            <point key="canvasLocation" x="1973" y="1526"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="rug-AD-fAq">
@@ -331,7 +335,7 @@
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="RBp-77-4TQ" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="ggg-Io-86B">
-                        <rect key="frame" x="0.0" y="0.0" width="393" height="44"/>
+                        <rect key="frame" x="0.0" y="0.0" width="430" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
@@ -343,13 +347,23 @@
             </objects>
             <point key="canvasLocation" x="1973" y="757"/>
         </scene>
+        <!--ActiveSessions-->
+        <scene sceneID="kXX-1O-MkN">
+            <objects>
+                <viewControllerPlaceholder storyboardName="ActiveSessions" id="al7-QM-VMx" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="fpg-bj-E0e"/>
+                </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="igh-Fx-SPn" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2502" y="1416"/>
+        </scene>
     </scenes>
     <resources>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
         <systemColor name="systemRedColor">
-            <color red="1" green="0.23137254901960785" blue="0.18823529411764706" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

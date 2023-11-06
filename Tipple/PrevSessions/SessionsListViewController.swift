@@ -8,11 +8,15 @@
 import UIKit
 import FirebaseAuth
 
-class SessionsListViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+protocol update {
+    func updateSessions()
+}
+
+class SessionsListViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, update {
     
-    var userID: String?
+    var userID:String?
     var sessions:[SessionInfo]?
-    var session:SessionInfo = SessionInfo()
+    var sessionRow:Int?
     let firestoreManager = FirestoreManager.shared
     
     @IBOutlet weak var tableView: UITableView!
@@ -46,6 +50,7 @@ class SessionsListViewController: UIViewController, UITableViewDelegate, UITable
                     self.tableView.insertRows(at: [indexPath], with: .automatic)
                     count += 1
                 }
+                self.sessions = self.sessions!.sorted(by: { $0.startTime.compare($1.startTime) == .orderedDescending })
                 self.tableView.endUpdates()
             }
         }
@@ -70,11 +75,22 @@ class SessionsListViewController: UIViewController, UITableViewDelegate, UITable
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let row = indexPath.row
-        session = sessions![row]
+        sessionRow = indexPath.row
         
         self.performSegue(withIdentifier: "DayViewSegueIdentifier", sender: self)
         
+    }
+    
+    func updateSessions() {
+        firestoreManager.getAllSessions(userID: userID!) {
+            list, error in
+            if let error = error {
+                print("Error retrieving session: \(error)")
+            } else {
+                self.sessions![self.sessionRow!] = list![self.sessionRow!]
+                self.tableView.reloadData()
+            }
+        }
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -82,7 +98,9 @@ class SessionsListViewController: UIViewController, UITableViewDelegate, UITable
            let nextVC = segue.destination as? DayViewController
         {
             nextVC.delegate = self
-            nextVC.session = self.session
+            nextVC.session = self.sessions![self.sessionRow!]
+            nextVC.sessionID = self.self.sessions![self.sessionRow!].getSessionDocID()
+            nextVC.userID = self.userID!
         }
     }
 

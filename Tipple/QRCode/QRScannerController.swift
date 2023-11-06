@@ -10,14 +10,15 @@ import UIKit
 import AVFoundation
 
 class QRScannerController: UIViewController {
-
+    
     @IBOutlet var messageLabel:UILabel!
     
     var captureSession = AVCaptureSession()
     
     var videoPreviewLayer: AVCaptureVideoPreviewLayer?
     var qrCodeFrameView: UIView?
-
+    
+    
     private let supportedCodeTypes = [AVMetadataObject.ObjectType.upce,
                                       AVMetadataObject.ObjectType.code39,
                                       AVMetadataObject.ObjectType.code39Mod43,
@@ -31,68 +32,77 @@ class QRScannerController: UIViewController {
                                       AVMetadataObject.ObjectType.dataMatrix,
                                       AVMetadataObject.ObjectType.interleaved2of5,
                                       AVMetadataObject.ObjectType.qr]
-   
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        checkCameraAccess { granted in
+            if granted {
+                self.performSegue(withIdentifier: "qrToQuestionSegue", sender: nil)
 
-        // Get the back-facing camera for capturing videos
-        guard let captureDevice = AVCaptureDevice.default(for: AVMediaType.video) else {
-            print("Failed to get the camera device")
-            return
+                // Camera access is granted, proceed with your logic
+                // Get the back-facing camera for capturing videos
+                guard let captureDevice = AVCaptureDevice.default(for: AVMediaType.video) else {
+                    print("Failed to get the camera device")
+                    return
+                }
+                
+                do {
+                    // Get an instance of the AVCaptureDeviceInput class using the previous device object.
+                    let input = try AVCaptureDeviceInput(device: captureDevice)
+                    
+                    // Set the input device on the capture session.
+                    self.captureSession.addInput(input)
+                    
+                    // Initialize a AVCaptureMetadataOutput object and set it as the output device to the capture session.
+                    let captureMetadataOutput = AVCaptureMetadataOutput()
+                    self.captureSession.addOutput(captureMetadataOutput)
+                    
+                    // Set delegate and use the default dispatch queue to execute the call back
+                    captureMetadataOutput.setMetadataObjectsDelegate(self, queue: DispatchQueue.main)
+                    captureMetadataOutput.metadataObjectTypes = self.supportedCodeTypes
+                    //            captureMetadataOutput.metadataObjectTypes = [AVMetadataObject.ObjectType.qr]
+                    
+                } catch {
+                    // If any error occurs, simply print it out and don't continue any more.
+                    print(error)
+                    return
+                }
+                
+                // Initialize the video preview layer and add it as a sublayer to the viewPreview view's layer.
+                self.videoPreviewLayer = AVCaptureVideoPreviewLayer(session: self.captureSession)
+                self.videoPreviewLayer?.videoGravity = AVLayerVideoGravity.resizeAspectFill
+                self.videoPreviewLayer?.frame = self.view.layer.bounds
+                self.view.layer.addSublayer(self.videoPreviewLayer!)
+                
+                // Start video capture.
+                self.captureSession.startRunning()
+                
+                // Move the message label and top bar to the front
+                self.view.bringSubviewToFront(self.messageLabel)
+                
+                // Initialize QR Code Frame to highlight the QR code
+                self.qrCodeFrameView = UIView()
+                
+                if let qrCodeFrameView = self.qrCodeFrameView {
+                    qrCodeFrameView.layer.borderColor = UIColor.green.cgColor
+                    qrCodeFrameView.layer.borderWidth = 2
+                    self.view.addSubview(qrCodeFrameView)
+                    self.view.bringSubviewToFront(qrCodeFrameView)
+                }
+            }
         }
         
-        do {
-            // Get an instance of the AVCaptureDeviceInput class using the previous device object.
-            let input = try AVCaptureDeviceInput(device: captureDevice)
-            
-            // Set the input device on the capture session.
-            captureSession.addInput(input)
-            
-            // Initialize a AVCaptureMetadataOutput object and set it as the output device to the capture session.
-            let captureMetadataOutput = AVCaptureMetadataOutput()
-            captureSession.addOutput(captureMetadataOutput)
-            
-            // Set delegate and use the default dispatch queue to execute the call back
-            captureMetadataOutput.setMetadataObjectsDelegate(self, queue: DispatchQueue.main)
-            captureMetadataOutput.metadataObjectTypes = supportedCodeTypes
-//            captureMetadataOutput.metadataObjectTypes = [AVMetadataObject.ObjectType.qr]
-            
-        } catch {
-            // If any error occurs, simply print it out and don't continue any more.
-            print(error)
-            return
-        }
         
-        // Initialize the video preview layer and add it as a sublayer to the viewPreview view's layer.
-        videoPreviewLayer = AVCaptureVideoPreviewLayer(session: captureSession)
-        videoPreviewLayer?.videoGravity = AVLayerVideoGravity.resizeAspectFill
-        videoPreviewLayer?.frame = view.layer.bounds
-        view.layer.addSublayer(videoPreviewLayer!)
-        
-        // Start video capture.
-        captureSession.startRunning()
-        
-        // Move the message label and top bar to the front
-        view.bringSubviewToFront(messageLabel)
-        
-        // Initialize QR Code Frame to highlight the QR code
-        qrCodeFrameView = UIView()
-        
-        if let qrCodeFrameView = qrCodeFrameView {
-            qrCodeFrameView.layer.borderColor = UIColor.green.cgColor
-            qrCodeFrameView.layer.borderWidth = 2
-            view.addSubview(qrCodeFrameView)
-            view.bringSubviewToFront(qrCodeFrameView)
-        }
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
     
     // MARK: - Helper methods
-
+    
     func launchApp(decodedURL: String) {
         
         if presentedViewController != nil {
@@ -116,41 +126,87 @@ class QRScannerController: UIViewController {
         
         present(alertPrompt, animated: true, completion: nil)
     }
-  private func updatePreviewLayer(layer: AVCaptureConnection, orientation: AVCaptureVideoOrientation) {
-    layer.videoOrientation = orientation
-    videoPreviewLayer?.frame = self.view.bounds
-  }
-  
-  override func viewDidLayoutSubviews() {
-    super.viewDidLayoutSubviews()
     
-    if let connection =  self.videoPreviewLayer?.connection  {
-      let currentDevice: UIDevice = UIDevice.current
-      let orientation: UIDeviceOrientation = currentDevice.orientation
-      let previewLayerConnection : AVCaptureConnection = connection
-      
-      if previewLayerConnection.isVideoOrientationSupported {
-        switch (orientation) {
-        case .portrait:
-          updatePreviewLayer(layer: previewLayerConnection, orientation: .portrait)
-          break
-        case .landscapeRight:
-          updatePreviewLayer(layer: previewLayerConnection, orientation: .landscapeLeft)
-          break
-        case .landscapeLeft:
-          updatePreviewLayer(layer: previewLayerConnection, orientation: .landscapeRight)
-          break
-        case .portraitUpsideDown:
-          updatePreviewLayer(layer: previewLayerConnection, orientation: .portraitUpsideDown)
-          break
-        default:
-          updatePreviewLayer(layer: previewLayerConnection, orientation: .portrait)
-          break
+    func checkCameraAccess(completion: @escaping (Bool) -> Void) {
+        switch AVCaptureDevice.authorizationStatus(for: .video) {
+        case .denied:
+            print("Denied, request permission from settings")
+            presentCameraSettings()
+            completion(false)
+        case .restricted:
+            print("Restricted, device owner must approve")
+            completion(false)
+        case .authorized:
+            print("Authorized, proceed")
+            completion(true)
+        case .notDetermined:
+            AVCaptureDevice.requestAccess(for: .video) { success in
+                if success {
+                    print("Permission granted, proceed")
+                    completion(true)
+                } else {
+                    print("Permission denied")
+                    completion(false)
+                }
+            }
+        @unknown default:
+            completion(false)
         }
-      }
     }
-  }
-
+    
+    
+    func presentCameraSettings() {
+        let alertController = UIAlertController(title: "Error",
+                                                message: "Camera access is denied",
+                                                preferredStyle: .alert)
+        alertController.addAction(UIAlertAction(title: "Cancel", style: .default))
+        present(alertController, animated: true)
+    }
+    
+    private func updatePreviewLayer(layer: AVCaptureConnection, orientation: AVCaptureVideoOrientation) {
+        layer.videoOrientation = orientation
+        videoPreviewLayer?.frame = self.view.bounds
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        
+        if let connection =  self.videoPreviewLayer?.connection  {
+            let currentDevice: UIDevice = UIDevice.current
+            let orientation: UIDeviceOrientation = currentDevice.orientation
+            let previewLayerConnection : AVCaptureConnection = connection
+            
+            if previewLayerConnection.isVideoOrientationSupported {
+                switch (orientation) {
+                case .portrait:
+                    updatePreviewLayer(layer: previewLayerConnection, orientation: .portrait)
+                    break
+                case .landscapeRight:
+                    updatePreviewLayer(layer: previewLayerConnection, orientation: .landscapeLeft)
+                    break
+                case .landscapeLeft:
+                    updatePreviewLayer(layer: previewLayerConnection, orientation: .landscapeRight)
+                    break
+                case .portraitUpsideDown:
+                    updatePreviewLayer(layer: previewLayerConnection, orientation: .portraitUpsideDown)
+                    break
+                default:
+                    updatePreviewLayer(layer: previewLayerConnection, orientation: .portrait)
+                    break
+                }
+            }
+        }
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        // Get the new view controller using segue.destination.
+        // Pass the selected object to the new view controller.
+        
+        if segue.identifier == "qrToQuestionSegue",
+           let destination = segue.destination as? QuestionnaireVC {
+            destination.sessionType = "Join"
+        }
+    }
 }
 
 extension QRScannerController: AVCaptureMetadataOutputObjectsDelegate {
@@ -172,8 +228,8 @@ extension QRScannerController: AVCaptureMetadataOutputObjectsDelegate {
             qrCodeFrameView?.frame = barCodeObject!.bounds
             
             if metadataObj.stringValue != nil {
-                launchApp(decodedURL: metadataObj.stringValue!)
                 messageLabel.text = metadataObj.stringValue
+                self.performSegue(withIdentifier: "qrToQuestionSegue", sender: nil)
             }
         }
     }

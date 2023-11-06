@@ -25,7 +25,7 @@ class ShowActiveVC: UIViewController {
     let indicies = ["BAC": 0,
                     "STATUS": 1,
                     "NUMDRINK": 2]
-
+    
     @IBOutlet weak var drinkSelectorSegmented: UISegmentedControl!
     @IBOutlet weak var statusSegmented: UISegmentedControl!
     @IBOutlet weak var navItemTitle: UINavigationItem!
@@ -39,8 +39,6 @@ class ShowActiveVC: UIViewController {
         
         // Ensure that the status segmented controller is always disabled for users (for now)
         statusSegmented.isUserInteractionEnabled = false
-        updateStatusInfo(bacValue: runningBAC, status: runningStatus, drinks: runningDrinkCounter)
-        
     }
 
     
@@ -51,6 +49,18 @@ class ShowActiveVC: UIViewController {
             } else if let sessionTemp = sessionTemp {
                 self.currentSession = sessionTemp
                 self.navItemTitle.title = self.currentSession?.sessionName ?? ""
+                
+                if self.userProfileInfo == nil {
+                    self.firestoreManager.getUserData(userID: self.userID!) { [weak self] (profileInfo, error) in
+                        if let error = error {
+                            print("Error fetching user data: \(error.localizedDescription)")
+                        } else if let profileInfo = profileInfo {
+                            self?.userProfileInfo = profileInfo
+                            self?.setStatusInfo()
+                        }
+                    }
+                }
+                
                 print("Session successfully retrieved before view appearing with document ID: \(self.sessionID ?? "Value not set")")
             }
         }
@@ -116,6 +126,24 @@ class ShowActiveVC: UIViewController {
         } else {
             mainGlassIV.image = UIImage(named: "Tipple_Red_Status")
         }
+    }
+    
+    
+    func setStatusInfo(){
+        let drinks: [DrinkInfo] = self.currentSession!.drinksInSession
+        var tempBAC: Float = 0
+        if !drinks.isEmpty{
+            let latestDrink = drinks.max(by: { $0.timeAt < $1.timeAt })
+            tempBAC = latestDrink!.bacAtTime
+        }
+        
+        self.runningDrinkCounter = drinks.count
+        self.runningBAC = tempBAC
+        self.runningStatus = calculateStatus()
+        
+        updateStatusInfo(bacValue: self.runningBAC,
+                         status: self.runningStatus,
+                         drinks: self.runningDrinkCounter)
     }
     
     func updateDrinks(drinkType: String, amount: Int) {
@@ -196,6 +224,7 @@ class ShowActiveVC: UIViewController {
         alertController.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
 
         // Add a "Finish" action
+        // TODO: Mark a session as finished one they exit to the main page.
         alertController.addAction(UIAlertAction(title: "Finish", style: .destructive) { _ in
             self.performSegue(withIdentifier: self.endSessionSegue, sender: self)
         })

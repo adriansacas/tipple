@@ -12,18 +12,19 @@ class RegisterGroupSessionVC: UIViewController {
     @IBOutlet weak var sessionNameTextField: UITextField!
     @IBOutlet weak var endSessionDateTimePicker: UIDatePicker!
     
-    var currentSession: SessionInfo?
-    var groupQRCode: UIImage?
+    let firestoreManager = FirestoreManager.shared
+    var sessionID: String?
+    var userID: String?
+    var generatedQR: UIImage?
     var manageGroupSegue = "manageGroupSessionSegue"
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        
-        //TODO: take out after testing
-        currentSession = SessionInfo()
     }
+    
+
     
     @IBAction func createSessionButtonPressed(_ sender: Any) {
         
@@ -31,19 +32,28 @@ class RegisterGroupSessionVC: UIViewController {
         
         if(sessionNameTextField.text != ""){
             //update current session list and group end time
-            self.currentSession?.sessionName = sessionNameTextField.text
-            self.currentSession?.endGroupSessionTime = endSessionDateTimePicker.date
             
-            //generate and save group session's QR code using the initial session name string + date and time string
-            groupQRCode = generateQRCode(from: "\(sessionNameTextField.text ?? "default string") \(DateFormatter().string(from: endSessionDateTimePicker.date))")
-        
-            //segue to new screen
-            performSegue(withIdentifier: manageGroupSegue, sender: self)
+            let newSessionFields = ["sessionName" : (sessionNameTextField.text ?? "") as String,
+                                    "endTime" : endSessionDateTimePicker.date] as [String : Any]
+            
+            firestoreManager.updateGroupSession(userID: self.userID!, sessionID: self.sessionID!, fields: newSessionFields) { error in
+                if let error = error {
+                    print("Error adding session: \(error)")
+                } else {
+                    //generate and save group session's QR code using the sessionID
+                    self.generatedQR = self.generateQRCode(from: self.sessionID!)
+                
+                    //segue to new screen
+                    self.performSegue(withIdentifier: self.manageGroupSegue, sender: self)
+                }
+            }
+            
+
         }
     }
     
     //boiler plate code
-    //TODO: generate a QR code here using the initial session name string + date and time string, connect QR code to add individual to group session (Andrew part)
+    //TODO: generate a QR code here using the sessionID string, connect QR code to add individual to group session (Andrew part)
     func generateQRCode(from string: String) -> UIImage? {
         let data = string.data(using: String.Encoding.ascii)
 
@@ -62,15 +72,18 @@ class RegisterGroupSessionVC: UIViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
         guard let destination = segue.destination as? UINavigationController else {
-                return
+            return
         }
         
         guard let finalDestination = destination.viewControllers.first as? ManageGroupSessionVC else {
-                return
-            }
+            return
+        }
         
-        finalDestination.currentSession = self.currentSession
-        finalDestination.groupQRCode = self.groupQRCode
+        finalDestination.groupQRCode = self.generatedQR
+        finalDestination.userID = self.userID
+        finalDestination.sessionID = self.sessionID
+        finalDestination.sessionName = self.sessionNameTextField.text!
+        finalDestination.endDate = endSessionDateTimePicker.date
     }
 
 }

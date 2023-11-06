@@ -15,22 +15,35 @@ class QuestionnaireVC: UIViewController {
     @IBOutlet weak var shareSession: UISwitch!
     @IBOutlet weak var partyLocation: UISearchBar!
     @IBOutlet weak var endLocation: UISearchBar!
-    
+    @IBOutlet weak var startButton: UIButton!
     
     var sessionType: String?
     var userID: String?
     var sessionID: String?
-    var userProfileInfo: ProfileInfo?    
+    var sessionName: String?
+    var endDate: Date?
+    var userProfileInfo: ProfileInfo?
     let firestoreManager = FirestoreManager.shared
     let qToActiveSegue = "questionToActiveSegue"
+    let qToGroupSegue  = "questionToGroupManage"
+    let qToGroupJoinSegue = "questionsToGroupJoin"
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        print(sessionType ?? "No Session Type Passed")
 
+        
+        if self.sessionType == "Group" {
+            startButton.setTitle("Continue", for: .normal)
+        } else if self.sessionType == "Join" {
+            startButton.setTitle("Join Session", for: .normal)
+        }
+        
+        
         // Do any additional setup after loading the view.
         getUserID()
         
-        print(sessionType ?? "No Session Type Passed")
+
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -61,29 +74,76 @@ class QuestionnaireVC: UIViewController {
     }
     
     @IBAction func startSessionButton(_ sender: Any) {
-        let session = SessionInfo(createdBy: self.userID!,
-                                  membersList: [self.userID!],
-                                  sessionType: "Individual",
-                                  startTime: Date.now,
-                                  drinksInSession: [],
-                                  stillActive: true, 
-                                  startLocation: partyLocation.text ?? "",
-                                  endLocation: endLocation.text ?? "",
-                                  ateBefore: eatenToggle.isOn,
-                                  sessionName: "My Session",
-                                  shareSession: shareSession.isOn)
+        guard (self.sessionType != nil) else {
+            return
+        }
         
-        
-        
-        firestoreManager.addSessionInfo(userID: self.userID!, session: session) { documentID, error in
-            if let error = error {
-                print("Error adding session: \(error)")
-            } else if let documentID = documentID {
-                self.sessionID = documentID
-                print("Session added successfully with document ID: \(self.sessionID ?? "Value not set")")
-                self.performSegue(withIdentifier: self.qToActiveSegue, sender: self)
+        if self.sessionType == "Individual" || self.sessionType == "Group" {
+            let session = SessionInfo(createdBy: self.userID!,
+                                      membersList: [self.userID!],
+                                      sessionType: self.sessionType!,
+                                      startTime: Date.now,
+                                      drinksInSession: [],
+                                      stillActive: true,
+                                      startLocation: partyLocation.text ?? "",
+                                      endLocation: endLocation.text ?? "",
+                                      ateBefore: eatenToggle.isOn,
+                                      sessionName: "My Session",
+                                      shareSession: shareSession.isOn)
+            
+            
+            
+            firestoreManager.addSessionInfo(userID: self.userID!, session: session) { documentID, error in
+                if let error = error {
+                    print("Error adding session: \(error)")
+                } else if let documentID = documentID {
+                    self.sessionID = documentID
+                    print("Session added successfully with document ID: \(self.sessionID ?? "Value not set")")
+                    
+                    
+                    if self.sessionType == "Individual" {
+                        self.performSegue(withIdentifier: self.qToActiveSegue, sender: self)
+                    } else {
+                        self.performSegue(withIdentifier: self.qToGroupSegue, sender: self)
+                    }
+                    
+                }
+            }
+        } else if self.sessionType == "Join" {
+            /* HARDCODED SESSION TO JOIN ATM 
+                TODO: MAKE SURE THE SESSION YOU"RE JOINING IS A GROUP SESSION
+             */
+            self.sessionID = "zkSnlUbzMdye6nFwFRy6"
+            let session = SessionInfo()
+            session.startTime = Date.now
+            session.drinksInSession = []
+            session.stillActive = true
+            session.startLocation = partyLocation.text ?? ""
+            session.endLocation = endLocation.text ?? ""
+            session.ateBefore = eatenToggle.isOn
+            session.shareSession = shareSession.isOn
+            
+            
+            firestoreManager.addMembersToSession(sessionID: self.sessionID!, 
+                                                 userID: self.userID!,
+                                                 session: session) { error in
+                if let error = error {
+                    print("Error adding member to session: \(error)")
+                }
+                self.firestoreManager.getSessionInfo(userID: self.userID!, sessionDocumentID: self.sessionID!) { sessionTemp, error in
+                    if let error = error {
+                        print("Error adding session: \(error)")
+                    } else if let sessionTemp = sessionTemp {
+                        self.sessionName = sessionTemp.sessionName
+                        self.endDate = sessionTemp.endGroupSessionTime
+                        
+                        print("Session successfully retrieved for joiniing with document ID: \(self.sessionID ?? "Value not set")")
+                    }
+                }
+                self.performSegue(withIdentifier: self.qToGroupJoinSegue, sender: self)
             }
         }
+        
         
         
     }
@@ -98,6 +158,28 @@ class QuestionnaireVC: UIViewController {
             destination.userID = self.userID
             destination.userProfileInfo = self.userProfileInfo
             destination.sessionID = self.sessionID
+        }
+        
+        if segue.identifier == qToGroupSegue,
+           let destination = segue.destination as? RegisterGroupSessionVC {
+            destination.userID = self.userID
+            destination.sessionID = self.sessionID
+        }
+        
+        if segue.identifier == qToGroupJoinSegue,
+           let destination = segue.destination as? ManageGroupSessionVC {
+            firestoreManager.getSessionInfo(userID:self.userID!,
+                                            sessionDocumentID: self.sessionID!) { sessionTemp, error in
+                if let error = error {
+                    print("Error checking if this user is the manager session: \(error)")
+                } else if let sessionTemp = sessionTemp {
+                    destination.sessionName = sessionTemp.sessionName!
+                    destination.endDate = sessionTemp.endGroupSessionTime!
+                }
+            }
+            destination.userID = self.userID
+            destination.sessionID = self.sessionID
+            destination.isManager = false
         }
     }
     

@@ -13,24 +13,24 @@ class InviteCodeVC: UIViewController {
     @IBOutlet weak var sessionEndDateTimeLabel: UILabel!
     @IBOutlet weak var inviteCodeImageView: UIImageView!
     
-    var currentSession: SessionInfo?
+    var sessionName: String = ""
+    var endDate: Date = Date()
+    
     var groupQRCode: UIImage?
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        inviteCodeImageView.image = groupQRCode
+        
+        self.sessionNameTextLabel.text = sessionName
 
         // Display current session name and end date/time
         let dateFormatter = DateFormatter()
         dateFormatter.dateStyle = .long
         dateFormatter.timeStyle = .short
-        let formattedDate = dateFormatter.string(from: currentSession!.endGroupSessionTime!)
-        
-        sessionNameTextLabel.text = currentSession?.sessionName
-        sessionEndDateTimeLabel.text = formattedDate
-        
-        inviteCodeImageView.image = groupQRCode
+        let formattedDate = dateFormatter.string(from: endDate)
+        self.sessionEndDateTimeLabel.text = formattedDate
     }
     
     //TODO: make QR image bigger when clicked on?
-    
 }
