@@ -603,5 +603,119 @@ class FirestoreManager {
             }
         }
     }
+    
+    /* ------------     Polls      ------------*/
+    
+    // Create a poll. Return poll ID on sucess. Otherwise error.
+    func createPoll(userID: String, prompt: String, options: [String: Int], multipleVotes: Bool, votersAddOptions: Bool, expiration: Date, completion: @escaping (String?, Error?) -> Void) {
+        let pollsCollectionRef = db.collection("polls")
+        
+        let pollData: [String: Any] = [
+            "Prompt": prompt,
+            "Options": options,
+            "MultipleVotes": multipleVotes,
+            "VotersAddOptions": votersAddOptions,
+            "Expiration": Timestamp(date: expiration),
+            "CreatedBy": userID
+        ]
+        
+        var addedDocumentRef: DocumentReference?
+
+        addedDocumentRef = pollsCollectionRef.addDocument(data: pollData) { error in
+            if let error = error {
+                completion(nil, error)
+            } else {
+                if let documentID = addedDocumentRef?.documentID {
+                    completion(documentID, nil)
+                } else {
+                    completion(nil, NSError(domain: "", code: 0, userInfo: ["message": "Document ID not found"]))
+                }
+            }
+        }
+    }
+    
+    // Get a poll by ID. Returns a Poll object or error
+    func getPoll(pollID: String, completion: @escaping (Poll?, Error?) -> Void) {
+        let pollRef = db.collection("polls").document(pollID)
+        
+        pollRef.getDocument { (document, error) in
+            if let error = error {
+                completion(nil, error)
+            } else if let document = document, document.exists {
+                if let poll = Poll(document: document) {
+                    completion(poll, nil)
+                } else {
+                    completion(nil, NSError(domain: "", code: 0, userInfo: ["message": "Poll data not found or is invalid"]))
+                }
+            } else {
+                completion(nil, NSError(domain: "", code: 0, userInfo: ["message": "Poll document not found"]))
+            }
+        }
+    }
+    
+    // Retrieve all the polls given a list of poll IDs.
+    func getPolls(pollIDs: [String], completion: @escaping ([Poll]?, Error?) -> Void) {
+        let pollsCollectionRef = db.collection("polls")
+        
+        var polls: [Poll] = []
+        var errors: [Error] = []
+        let dispatchGroup = DispatchGroup()
+        
+        for pollID in pollIDs {
+            let pollRef = pollsCollectionRef.document(pollID)
+            dispatchGroup.enter()
+            
+            pollRef.getDocument { (document, error) in
+                if let error = error {
+                    errors.append(error)
+                } else if let document = document, document.exists {
+                    if let poll = Poll(document: document) {
+                        polls.append(poll)
+                    } else {
+                        errors.append(NSError(domain: "", code: 0, userInfo: ["message": "Poll data not found or is invalid"]))
+                    }
+                }
+                
+                dispatchGroup.leave()
+            }
+        }
+        
+        dispatchGroup.notify(queue: .main) {
+            if errors.isEmpty {
+                completion(polls, nil)
+            } else {
+                let compositeError = NSError(domain: "Poll Retrieval Error", code: 0, userInfo: ["errors": errors])
+                completion(nil, compositeError)
+            }
+        }
+    }
+
+    func updatePoll(pollID: String, updatedData: [String: Any], completion: @escaping (Error?) -> Void) {
+        let pollRef = db.collection("polls").document(pollID)
+        
+        // Update the poll document in Firestore
+        pollRef.updateData(updatedData) { error in
+            if let error = error {
+                completion(error)
+            } else {
+                completion(nil)
+            }
+        }
+    }
+
+    func deletePoll(pollID: String, completion: @escaping (Error?) -> Void) {
+        let pollRef = db.collection("polls").document(pollID)
+        
+        // Delete the poll document from Firestore
+        pollRef.delete { error in
+            if let error = error {
+                completion(error)
+            } else {
+                completion(nil)
+            }
+        }
+        // TODO: Remove reference from session
+    }
+
 
 }
