@@ -21,12 +21,11 @@ class DayViewController: UIViewController, updateSymptoms, ChartViewDelegate {
                 "Slurred speech" : "Drinking on an empty stomach can cause the alcohol to be absorbed in blood stream faster, make sure to eat before!",
                 "Vomiting" : "Drinking in moderation can help prevent adverse effects"]
 
+    @IBOutlet weak var noDrinksLabel: UILabel!
     @IBOutlet weak var tipsLabel: UILabel!
     @IBOutlet weak var symptomsLabel: UILabel!
     @IBOutlet weak var logsLabel: UILabel!
     
-    let logTextCellIdentifier = "LogCell"
-    let symptomsTextCellIdentifier = "SymptomsCell"
     let firestoreManager = FirestoreManager.shared
     
     var session:SessionInfo = SessionInfo()
@@ -69,35 +68,41 @@ class DayViewController: UIViewController, updateSymptoms, ChartViewDelegate {
     // Draws pie chart
     override func viewDidLayoutSubviews() {
         
-        pieChart.frame = CGRect(x: 0, y: 25, width: self.view.frame.size.width, height: 350)
-        
-        view2.addSubview(pieChart)
-        
-        var entries = [PieChartDataEntry]()
-        
-        // add data entries
-        entries.append(PieChartDataEntry(value: Double(beer), label: "Beers"))
-        entries.append(PieChartDataEntry(value: Double(seltzer), label: "Seltzers"))
-        entries.append(PieChartDataEntry(value: Double(wine), label: "Wine"))
-        entries.append(PieChartDataEntry(value: Double(shots), label: "Shots"))
-        entries.append(PieChartDataEntry(value: Double(cocktails), label: "Cocktails"))
-        
-        // set colors
-        let set = PieChartDataSet(entries: entries)
-        let colorString = [NSUIColor(cgColor: UIColor(hex: "#3634A3").cgColor),
-                               NSUIColor(cgColor: UIColor(hex: "#D70015").cgColor),
-                               NSUIColor(cgColor: UIColor(hex: "#7D7AFF").cgColor),
-                               NSUIColor(cgColor: UIColor(hex: "#FF6961").cgColor),
-                               NSUIColor(cgColor: UIColor(hex: "#ffb861").cgColor)]
-        set.colors = colorString
-        
-        let data = PieChartData(dataSet: set)
-        pieChart.data = data
+        if beer + seltzer + wine + shots + cocktails != 0 {
+            noDrinksLabel.isHidden = true
+            
+            pieChart.frame = CGRect(x: 0, y: 25, width: self.view.frame.size.width, height: 350)
+            
+            view2.addSubview(pieChart)
+            
+            var entries = [PieChartDataEntry]()
+            
+            // add data entries
+            entries.append(PieChartDataEntry(value: Double(beer), label: "Beers"))
+            entries.append(PieChartDataEntry(value: Double(seltzer), label: "Seltzers"))
+            entries.append(PieChartDataEntry(value: Double(wine), label: "Wine"))
+            entries.append(PieChartDataEntry(value: Double(shots), label: "Shots"))
+            entries.append(PieChartDataEntry(value: Double(cocktails), label: "Cocktails"))
+            
+            // set colors
+            let set = PieChartDataSet(entries: entries)
+            let colorString = [NSUIColor(cgColor: UIColor(hex: "#3634A3").cgColor),
+                                   NSUIColor(cgColor: UIColor(hex: "#D70015").cgColor),
+                                   NSUIColor(cgColor: UIColor(hex: "#7D7AFF").cgColor),
+                                   NSUIColor(cgColor: UIColor(hex: "#FF6961").cgColor),
+                                   NSUIColor(cgColor: UIColor(hex: "#ffb861").cgColor)]
+            set.colors = colorString
+            
+            let data = PieChartData(dataSet: set)
+            pieChart.data = data
+        }
     }
     
     func populateDrinks() {
-        // getting count for each type of drink
-        session.getSessionDrinks().forEach { drink in
+        
+        let drinks = session.getSessionDrinks().reversed()
+        
+        drinks.forEach { drink in
             if drink.getType() == "Beer" {
                 beer += 1
             } else if drink.getType() == "Seltzer" {
@@ -162,7 +167,7 @@ class DayViewController: UIViewController, updateSymptoms, ChartViewDelegate {
                let nextVC = segue.destination as? SymptomsViewController // typecasting
             {
                 nextVC.delegate = self
-                nextVC.sessionSymptoms = symptoms // beta release add to firebase
+                nextVC.sessionSymptoms = symptoms
             }
     }
     

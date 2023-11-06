@@ -15,7 +15,7 @@ class GroupListViewController: UIViewController {
     let firestoreManager = FirestoreManager.shared
     
     var userID:String?
-    var session:SessionInfo?
+    var sessionID:String?
     var users:[String: [String: Any]]?
     var keys:[String] = []
     var textCellIdentifier = "TextCell"
@@ -25,13 +25,8 @@ class GroupListViewController: UIViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        if let userID = Auth.auth().currentUser?.uid {
-            self.userID = userID
-        } else {
-            print("Error fetching user ID from currentUser")
-        }
         
-        firestoreManager.pullGroupMembers(userID: userID!, sessionID: (session?.getSessionDocID())!) {
+        firestoreManager.pullGroupMembers(userID: userID!, sessionID: sessionID!) {
             users, error in
             if let error = error {
                 print("Error updating symptoms: \(error)")
@@ -56,7 +51,7 @@ class GroupListViewController: UIViewController {
     
         let row = indexPath.row
         
-        var user = users![keys[row]]
+        let user = users![keys[row]]
         
         cell.textLabel?.text = user!["name"] as? String
         

@@ -115,8 +115,8 @@
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9YR-I9-ffA">
                                 <rect key="frame" x="0.0" y="103" width="430" height="795"/>
                                 <subviews>
-                                    <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="cvT-nJ-vOS" userLabel="ScrollableView">
-                                        <rect key="frame" x="0.0" y="60" width="430" height="1000"/>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cvT-nJ-vOS" userLabel="ScrollableView">
+                                        <rect key="frame" x="0.0" y="0.0" width="430" height="1500"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Logs" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2na-F7-ZDB">
                                                 <rect key="frame" x="22.000000000000004" y="400" width="44.333333333333343" height="24"/>
@@ -198,11 +198,18 @@
                                                     <segue destination="hlF-po-1B8" kind="show" identifier="SymptomsSegueIdentifier" id="Aix-D6-bTp"/>
                                                 </connections>
                                             </button>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No drinks logged this session :)" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="20U-Pw-h5k">
+                                                <rect key="frame" x="55.666666666666657" y="184" width="319" height="26.333333333333343"/>
+                                                <fontDescription key="fontDescription" type="boldSystem" pointSize="22"/>
+                                                <color key="textColor" red="0.34509804840000002" green="0.33725491169999999" blue="0.81176471709999998" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
                                         </subviews>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                         <constraints>
                                             <constraint firstItem="AEa-ZQ-3Lc" firstAttribute="leading" secondItem="cvT-nJ-vOS" secondAttribute="leading" constant="24" id="6Te-c8-EQQ"/>
                                             <constraint firstItem="Z1H-cE-JZr" firstAttribute="leading" secondItem="cvT-nJ-vOS" secondAttribute="leading" constant="20" symbolic="YES" id="8gr-0P-FCX"/>
+                                            <constraint firstItem="20U-Pw-h5k" firstAttribute="centerX" secondItem="cvT-nJ-vOS" secondAttribute="centerX" id="Mrq-ay-v8S"/>
                                             <constraint firstItem="Z1H-cE-JZr" firstAttribute="top" secondItem="c9g-tK-tfC" secondAttribute="bottom" constant="25" id="Mt8-aG-Rvv"/>
                                             <constraint firstAttribute="height" constant="1500" id="NQ4-yJ-YNw"/>
                                             <constraint firstItem="2na-F7-ZDB" firstAttribute="top" secondItem="cvT-nJ-vOS" secondAttribute="top" constant="400" id="QV3-KP-U0f"/>
@@ -217,6 +224,7 @@
                                             <constraint firstItem="EYX-Df-gHv" firstAttribute="top" secondItem="2na-F7-ZDB" secondAttribute="bottom" constant="19" id="lbF-YU-I68"/>
                                             <constraint firstItem="2na-F7-ZDB" firstAttribute="leading" secondItem="cvT-nJ-vOS" secondAttribute="leading" constant="22" id="naF-Ri-L2Z"/>
                                             <constraint firstItem="1vX-Oi-xH4" firstAttribute="centerX" secondItem="cvT-nJ-vOS" secondAttribute="centerX" constant="2.5" id="ngG-ER-tV9"/>
+                                            <constraint firstItem="20U-Pw-h5k" firstAttribute="top" secondItem="cvT-nJ-vOS" secondAttribute="top" constant="184" id="ohr-aq-iq1"/>
                                             <constraint firstItem="c9g-tK-tfC" firstAttribute="leading" secondItem="cvT-nJ-vOS" secondAttribute="leading" constant="22" id="q2b-jb-cUg"/>
                                             <constraint firstItem="1vX-Oi-xH4" firstAttribute="top" secondItem="AEa-ZQ-3Lc" secondAttribute="bottom" constant="25" id="q4N-Js-exC"/>
                                             <constraint firstItem="c9g-tK-tfC" firstAttribute="top" secondItem="1vX-Oi-xH4" secondAttribute="bottom" constant="45" id="wnA-BG-hw9"/>
@@ -248,6 +256,7 @@
                     <navigationItem key="navigationItem" id="P4m-Ec-nyF"/>
                     <connections>
                         <outlet property="logsLabel" destination="yiS-lM-BHK" id="bFi-fL-Vmg"/>
+                        <outlet property="noDrinksLabel" destination="20U-Pw-h5k" id="kDo-af-4MI"/>
                         <outlet property="symptomsLabel" destination="1vX-Oi-xH4" id="DEV-tN-fcH"/>
                         <outlet property="tipsLabel" destination="Z1H-cE-JZr" id="onh-oJ-4W1"/>
                         <outlet property="view2" destination="cvT-nJ-vOS" id="dxU-U1-cGi"/>

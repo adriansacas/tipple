@@ -41,7 +41,7 @@ class MemberInfoViewController: UIViewController, UITableViewDelegate, UITableVi
     
         let row = indexPath.row
         
-        var key = String(keys[row])
+        let key = String(keys[row])
         
         cell.keyField.text = key
         cell.valueField.text = user![key] as? String
