@@ -98,8 +98,8 @@ class ManageGroupSessionVC: UIViewController, EditSession {
             destination.sessionName = self.sessionName
             destination.endDate = self.endDate
         } else if segue.identifier == activeSessionSegue, let destination = segue.destination as? ShowActiveVC {
-            destination.sessionID = self.sessionID
             destination.userID = self.userID
+            destination.sessionID = self.sessionID
         }
     }
 

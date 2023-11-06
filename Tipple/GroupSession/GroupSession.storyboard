@@ -231,10 +231,10 @@
             </objects>
             <point key="canvasLocation" x="2995" y="1527"/>
         </scene>
-        <!--manageSessionGroupVC-->
+        <!--Manage Group SessionVC-->
         <scene sceneID="WsK-Lu-gt0">
             <objects>
-                <viewController storyboardIdentifier="manageSessionGroupVC" title="manageSessionGroupVC" id="eDn-wV-OIN" customClass="ManageGroupSessionVC" customModule="Tipple" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="eDn-wV-OIN" customClass="ManageGroupSessionVC" customModule="Tipple" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="H2i-eL-gm8">
                         <rect key="frame" x="0.0" y="0.0" width="430" height="932"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -332,7 +332,7 @@
         <!--Navigation Controller-->
         <scene sceneID="rug-AD-fAq">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="RBp-77-4TQ" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="manageSessionGroupVC" automaticallyAdjustsScrollViewInsets="NO" id="RBp-77-4TQ" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="ggg-Io-86B">
                         <rect key="frame" x="0.0" y="0.0" width="430" height="44"/>

@@ -418,7 +418,7 @@
                     </view>
                     <navigationItem key="navigationItem" id="MUJ-Es-wYy"/>
                     <connections>
-                        <segue destination="V2S-uN-EC2" kind="presentation" identifier="individualToQASegue" id="Zhh-Sg-Ty8"/>
+                        <segue destination="V2S-uN-EC2" kind="presentation" identifier="individualToQASegue" modalPresentationStyle="automatic" id="Zhh-Sg-Ty8"/>
                         <segue destination="STg-b5-a0C" kind="presentation" identifier="groupSessionSegue" modalPresentationStyle="automatic" id="avd-V3-8XS"/>
                     </connections>
                 </viewController>
