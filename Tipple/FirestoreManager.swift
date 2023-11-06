@@ -155,7 +155,7 @@ class FirestoreManager {
                             if let sessionDocument = sessionDocument, sessionDocument.exists,
                                let sessionData = sessionDocument.data(){
                                 let sessionTemp = SessionInfo()
-                                sessionTemp.sessionDocID = sessionDocument.documentID                                
+                                sessionTemp.sessionDocID = sessionDocument.documentID
                                 if let createdBy = sessionData["createdBy"] as? String {
                                     sessionTemp.createdBy = createdBy
                                 }
@@ -246,7 +246,7 @@ class FirestoreManager {
             }
         }
     }
-            
+    
     
     // Adds a member to a given session document
     func addMembersToSession(sessionID: String, userID: String, session: SessionInfo, completion: @escaping (Error?) -> Void) {
@@ -276,7 +276,7 @@ class FirestoreManager {
                 ]
             }
         ]
-
+        
         // Create a reference to the new member document with the specified userID
         let newMemberRef = membersListRef.document(userID)
         
@@ -295,7 +295,7 @@ class FirestoreManager {
                     } else if let document = document, document.exists {
                         // Get the existing array
                         var currentSessions = document.data()?["sessionIDS"] as? [String] ?? []
-                                        
+                        
                         currentSessions.append(sessionID)
                         
                         userDBREF.updateData(["sessionIDS": currentSessions]) { updateError in
@@ -327,7 +327,7 @@ class FirestoreManager {
             "sessionName": session.sessionName ?? "",
             "sessionType": session.sessionType,
         ]
-
+        
         // Add optional properties if they exist
         if let shareSession = session.shareSession {
             sessionData["shareSession"] = shareSession
@@ -336,10 +336,10 @@ class FirestoreManager {
         if let endSession = session.endGroupSessionTime {
             sessionData["endTime"] = endSession
         }
-
+        
         // Add the session data to the "Sessions" collection
         var addedDocumentRef: DocumentReference?
-
+        
         // Add the document and get its reference
         addedDocumentRef = sessionsCollectionRef.addDocument(data: sessionData) { error in
             if let error = error {
@@ -373,7 +373,7 @@ class FirestoreManager {
                 // Get the existing drinksInSession array
                 var drinksInSession = document.data()?["drinksInSession"] as? [[String: Any]] ?? []
                 
-
+                
                 // Convert the DrinkInfo objects to dictionary representations
                 let drinkInfoData = drinksToAdd.map { drink in
                     return [
@@ -416,7 +416,7 @@ class FirestoreManager {
             } else if let document = document, document.exists {
                 // Get the existing symptoms array
                 var currentSymptoms = document.data()?["symptomsList"] as? [String] ?? []
-            
+                
                 
                 // Append the new symptoms to the symptoms array
                 currentSymptoms = symptoms
@@ -455,14 +455,14 @@ class FirestoreManager {
                 if createdBy != userID {
                     print("This should not happen. Non group leader attempting to edit session")
                 }
-            
+                
                 
                 var fieldCopy = fields
                 
                 if let endTime = fields["endTime"] {
                     fieldCopy["endTime"] = Timestamp(date: fields["endTime"] as! Date)
                 }
-
+                
                 sessionDocRef.updateData(fields) { updateError in
                     if let updateError = updateError {
                         completion(updateError)
@@ -478,12 +478,40 @@ class FirestoreManager {
         }
     }
     
+    // Function to edit group session details (if you are the main person
+    func isUserGroupManager(userID: String, sessionID: String,  completion: @escaping (Bool, SessionInfo?, Error?) -> Void) {
+        print("Attempting to update group session with IDS\n\t-- USERID: \(userID), sessionID: \(sessionID)")
+        
+        
+        let sessionDocRef = db.collection(sessionCollection).document(sessionID)
+        
+        sessionDocRef.getDocument { (document, error) in
+            if let error = error {
+                completion(false, nil, error)
+            } else if let document = document, document.exists {
+                let sessionData = document.data()
+                
+                var createdBy = sessionData!["createdBy"] as? String
+                
+                if createdBy == userID {
+                    completion(true, nil, nil)
+                }
+                
+                
+            } else {
+                // Handle the case where the session document doesn't exist
+                let notFoundError = NSError(domain: "Document Not Found", code: 404, userInfo: nil)
+                completion(false, nil, notFoundError)
+            }
+        }
+    }
+    
     // Function to pull information for group members list tableview
     func pullGroupMembers(userID: String, sessionID: String, completion: @escaping ([String: [String: Any]]?, Error?) -> Void) {
         let sessionDocRef = db.collection(sessionCollection).document(sessionID).collection(memberColInSess)
         
         var dictOfMembers: [String: [String: Any]] = [:]
-
+        
         
         sessionDocRef.getDocuments { (querySnapshot, error) in
             if let error = error {
@@ -539,7 +567,7 @@ class FirestoreManager {
                         } else if let tempProfile = profileInfo {
                             memberDict["contactInfo"] = tempProfile.phoneNumber
                             memberDict["name"] = tempProfile.firstName + " " + tempProfile.lastName
-
+                            
                         } else {
                             memberDict["contactInfo"] = ""
                             memberDict["name"] = ""
@@ -552,101 +580,112 @@ class FirestoreManager {
             }
         }
     }
-
+    
     func getSessionInfo(userID: String, sessionDocumentID: String, completion: @escaping (SessionInfo?, Error?) -> Void){
         let sessionDBRef = db.collection(sessionCollection)
         let sessionRef = sessionDBRef.document(sessionDocumentID)
-
+        
         sessionRef.getDocument { (sessionDocument, sessionError) in
             if let sessionError = sessionError {
                 completion(nil, sessionError)
                 return
             }
-
+            
             if let sessionDocument = sessionDocument, sessionDocument.exists,
                let sessionData = sessionDocument.data() {
-                let sessionTemp = SessionInfo()
-                sessionTemp.sessionDocID = sessionDocumentID
-
-                if let createdBy = sessionData["createdBy"] as? String {
-                    sessionTemp.createdBy = createdBy
-                }
-
-                if let endTimeTimestamp = sessionData["endTime"] as? Timestamp {
-                    sessionTemp.endGroupSessionTime = endTimeTimestamp.dateValue()
-                }
-
-                if let sessionName = sessionData["sessionName"] as? String {
-                    sessionTemp.sessionName = sessionName
-                }
-
-                if let sessionType = sessionData["sessionType"] as? String {
-                    sessionTemp.sessionType = sessionType
-                }
-                
-                var membersList = [String]()
-                let membersCollection = sessionRef.collection(self.memberColInSess)
-                membersCollection.getDocuments { (memberDocuments, memberError) in
-                    if let memberError = memberError {
-                        completion(nil, memberError)
-                        return
-                    }
-                    
-                    for doc in memberDocuments!.documents {
-                        let memberID = doc.documentID
-                        let memberDoc = doc.data()
-                        if memberID == userID {
-                            if let activeSession = memberDoc["activeSession"] as? Bool {
-                                sessionTemp.stillActive = activeSession
-                            }
-                            
-                            if let ateBefore = memberDoc["ateBefore"] as? Bool {
-                                sessionTemp.ateBefore = ateBefore
-                            }
-                            
-                            if let endLocation = memberDoc["endLocation"] as? String {
-                                sessionTemp.endLocation = endLocation
-                            }
-                            
-                            if let startLocation = memberDoc["startLocation"] as? String {
-                                sessionTemp.startLocation = startLocation
-                            }
-                            var drinksInSession: [DrinkInfo] = []
-                            
-                            if let drinksInSessionData = memberDoc["drinksInSession"] as? [[String: Any]] {
-                                for drinkData in drinksInSessionData {
-                                    if let type = drinkData["type"] as? String,
-                                       let timeAtTimestamp = drinkData["timeAt"] as? Timestamp,
-                                       let drinkNum = drinkData["drinkNum"] as? Int,
-                                       let bacAtTime = drinkData["bacAtTime"] as? Float {
-                                        let timeAt = timeAtTimestamp.dateValue()
-                                        let drinkInfo = DrinkInfo(drinkType: type, drinkNum: drinkNum, bacAtTime: bacAtTime, timeAt: timeAt)
-                                        drinksInSession.append(drinkInfo)
-                                    }
-                                }
-                            }
-                            
-                            if let startTimeTimestamp = memberDoc["startTime"] as? Timestamp {
-                                sessionTemp.startTime = startTimeTimestamp.dateValue()
-                            }
-                            var currentSymptoms = [String]()
-                            if let symptomsList = memberDoc["symptomsList"] as? [String]{
-                                currentSymptoms.append(contentsOf: symptomsList)
-                            }
-                            
-                            sessionTemp.symptomsList = currentSymptoms
-                            sessionTemp.drinksInSession = drinksInSession
-                            
-                        }
-                        membersList.append(memberID)
-                    }
-                    sessionTemp.membersList = membersList
+                self.sessionParser(userID: userID, 
+                              sessionID: sessionDocumentID,
+                              sessionData: sessionData) { sessionTemp in
                     completion(sessionTemp, nil) // Return the sessionTemp object upon completion
                 }
+
             } else {
                 completion(nil, NSError(domain: "", code: 0, userInfo: ["message": "Session data not found or is invalid"]))
             }
         }
     }
-
+    
+    func sessionParser(userID: String, sessionID: String, sessionData: [String: Any], completion: @escaping (SessionInfo) -> Void) {
+        let sessionTemp = SessionInfo()
+        sessionTemp.sessionDocID = sessionID
+        
+        if let createdBy = sessionData["createdBy"] as? String {
+            sessionTemp.createdBy = createdBy
+        }
+        
+        if let endTimeTimestamp = sessionData["endTime"] as? Timestamp {
+            sessionTemp.endGroupSessionTime = endTimeTimestamp.dateValue()
+        }
+        
+        if let sessionName = sessionData["sessionName"] as? String {
+            sessionTemp.sessionName = sessionName
+        }
+        
+        if let sessionType = sessionData["sessionType"] as? String {
+            sessionTemp.sessionType = sessionType
+        }
+        
+        var membersList = [String]()
+        let membersCollection = db.collection(sessionCollection).document(sessionID).collection(self.memberColInSess)
+        membersCollection.getDocuments { (memberDocuments, memberError) in
+            if let memberError = memberError {
+                // Handle the error if needed
+                return
+            }
+            
+            for doc in memberDocuments!.documents {
+                let memberID = doc.documentID
+                let memberDoc = doc.data()
+                if memberID == userID {
+                    if let activeSession = memberDoc["activeSession"] as? Bool {
+                        sessionTemp.stillActive = activeSession
+                    }
+                    
+                    if let ateBefore = memberDoc["ateBefore"] as? Bool {
+                        sessionTemp.ateBefore = ateBefore
+                    }
+                    
+                    if let endLocation = memberDoc["endLocation"] as? String {
+                        sessionTemp.endLocation = endLocation
+                    }
+                    
+                    if let startLocation = memberDoc["startLocation"] as? String {
+                        sessionTemp.startLocation = startLocation
+                    }
+                    var drinksInSession: [DrinkInfo] = []
+                    
+                    if let drinksInSessionData = memberDoc["drinksInSession"] as? [[String: Any]] {
+                        for drinkData in drinksInSessionData {
+                            if let type = drinkData["type"] as? String,
+                               let timeAtTimestamp = drinkData["timeAt"] as? Timestamp,
+                               let drinkNum = drinkData["drinkNum"] as? Int,
+                               let bacAtTime = drinkData["bacAtTime"] as? Float {
+                                let timeAt = timeAtTimestamp.dateValue()
+                                let drinkInfo = DrinkInfo(drinkType: type, drinkNum: drinkNum, bacAtTime: bacAtTime, timeAt: timeAt)
+                                drinksInSession.append(drinkInfo)
+                            }
+                        }
+                    }
+                    
+                    if let startTimeTimestamp = memberDoc["startTime"] as? Timestamp {
+                        sessionTemp.startTime = startTimeTimestamp.dateValue()
+                    }
+                    var currentSymptoms = [String]()
+                    if let symptomsList = memberDoc["symptomsList"] as? [String] {
+                        currentSymptoms.append(contentsOf: symptomsList)
+                    }
+                    
+                    sessionTemp.symptomsList = currentSymptoms
+                    sessionTemp.drinksInSession = drinksInSession
+                }
+                membersList.append(memberID)
+            }
+            sessionTemp.membersList = membersList
+            
+            // Call the completion handler when all data is collected
+            completion(sessionTemp)
+        }
+    }
+    
 }
+

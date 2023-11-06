@@ -110,10 +110,10 @@ class QuestionnaireVC: UIViewController {
                 }
             }
         } else if self.sessionType == "Join" {
-            /* HARDCODED SESSION TO JOIN ATM --> ITS ADRIANS INDIVIDUAL SESSION
+            /* HARDCODED SESSION TO JOIN ATM 
                 TODO: MAKE SURE THE SESSION YOU"RE JOINING IS A GROUP SESSION
              */
-            self.sessionID = "NDdEZi8x0wWOLVfWXv8x"
+            self.sessionID = "zkSnlUbzMdye6nFwFRy6"
             let session = SessionInfo()
             session.startTime = Date.now
             session.drinksInSession = []
@@ -168,8 +168,18 @@ class QuestionnaireVC: UIViewController {
         
         if segue.identifier == qToGroupJoinSegue,
            let destination = segue.destination as? ManageGroupSessionVC {
+            firestoreManager.getSessionInfo(userID:self.userID!,
+                                            sessionDocumentID: self.sessionID!) { sessionTemp, error in
+                if let error = error {
+                    print("Error checking if this user is the manager session: \(error)")
+                } else if let sessionTemp = sessionTemp {
+                    destination.sessionName = sessionTemp.sessionName!
+                    destination.endDate = sessionTemp.endGroupSessionTime!
+                }
+            }
             destination.userID = self.userID
             destination.sessionID = self.sessionID
+            destination.isManager = false
         }
     }
     

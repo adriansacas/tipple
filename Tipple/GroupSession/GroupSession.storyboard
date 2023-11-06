@@ -322,6 +322,7 @@
                     <connections>
                         <outlet property="sessionEndDateTimeLabel" destination="GfJ-9A-K7m" id="Dbd-8k-EVo"/>
                         <outlet property="sessionNameTextLabel" destination="ibf-rN-wT1" id="kzL-PF-y7P"/>
+                        <outlet property="settingsButton" destination="d6P-PY-1Q9" id="1vl-rf-f3i"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hmg-BC-sr3" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

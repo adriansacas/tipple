@@ -17,6 +17,7 @@ class ManageGroupSessionVC: UIViewController, EditSession {
     
     @IBOutlet weak var sessionNameTextLabel: UILabel!
     @IBOutlet weak var sessionEndDateTimeLabel: UILabel!
+    @IBOutlet weak var settingsButton: UIButton!
     let firestoreManager = FirestoreManager.shared
 
     var groupQRCode: UIImage?
@@ -24,6 +25,7 @@ class ManageGroupSessionVC: UIViewController, EditSession {
     var userID: String?
     var sessionName: String = ""
     var endDate: Date = Date()
+    var isManager: Bool = true
     
     let inviteCodeSegue = "inviteCodeSegue"
     let sessionSettingSegue = "sessionSettingSegue"
@@ -31,11 +33,18 @@ class ManageGroupSessionVC: UIViewController, EditSession {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
+        print(self.isManager)
+        if !isManager {
+            settingsButton.isHidden = true
+            settingsButton.isEnabled = false
+        }
         
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        
         
         // Redundant first setting
         setLabelFields(nameField: self.sessionName, dateField: self.endDate)
