@@ -20,10 +20,13 @@ class QuestionnaireVC: UIViewController {
     var sessionType: String?
     var userID: String?
     var sessionID: String?
-    var userProfileInfo: ProfileInfo?    
+    var sessionName: String?
+    var endDate: Date?
+    var userProfileInfo: ProfileInfo?
     let firestoreManager = FirestoreManager.shared
     let qToActiveSegue = "questionToActiveSegue"
     let qToGroupSegue  = "questionToGroupManage"
+    let qToGroupJoinSegue = "questionsToGroupJoin"
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -106,6 +109,39 @@ class QuestionnaireVC: UIViewController {
                     
                 }
             }
+        } else if self.sessionType == "Join" {
+            /* HARDCODED SESSION TO JOIN ATM --> ITS ADRIANS INDIVIDUAL SESSION
+                TODO: MAKE SURE THE SESSION YOU"RE JOINING IS A GROUP SESSION
+             */
+            self.sessionID = "NDdEZi8x0wWOLVfWXv8x"
+            let session = SessionInfo()
+            session.startTime = Date.now
+            session.drinksInSession = []
+            session.stillActive = true
+            session.startLocation = partyLocation.text ?? ""
+            session.endLocation = endLocation.text ?? ""
+            session.ateBefore = eatenToggle.isOn
+            session.shareSession = shareSession.isOn
+            
+            
+            firestoreManager.addMembersToSession(sessionID: self.sessionID!, 
+                                                 userID: self.userID!,
+                                                 session: session) { error in
+                if let error = error {
+                    print("Error adding member to session: \(error)")
+                }
+                self.firestoreManager.getSessionInfo(userID: self.userID!, sessionDocumentID: self.sessionID!) { sessionTemp, error in
+                    if let error = error {
+                        print("Error adding session: \(error)")
+                    } else if let sessionTemp = sessionTemp {
+                        self.sessionName = sessionTemp.sessionName
+                        self.endDate = sessionTemp.endGroupSessionTime
+                        
+                        print("Session successfully retrieved for joiniing with document ID: \(self.sessionID ?? "Value not set")")
+                    }
+                }
+                self.performSegue(withIdentifier: self.qToGroupJoinSegue, sender: self)
+            }
         }
         
         
@@ -126,6 +162,12 @@ class QuestionnaireVC: UIViewController {
         
         if segue.identifier == qToGroupSegue,
            let destination = segue.destination as? RegisterGroupSessionVC {
+            destination.userID = self.userID
+            destination.sessionID = self.sessionID
+        }
+        
+        if segue.identifier == qToGroupJoinSegue,
+           let destination = segue.destination as? ManageGroupSessionVC {
             destination.userID = self.userID
             destination.sessionID = self.sessionID
         }

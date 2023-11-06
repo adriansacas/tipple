@@ -37,16 +37,24 @@
                     <navigationItem key="navigationItem" title="Scan QR Code" id="dNk-Tj-JD0"/>
                     <connections>
                         <outlet property="messageLabel" destination="26f-Ib-F1f" id="aBy-Ig-9GT"/>
+                        <segue destination="A3g-No-PyR" kind="presentation" identifier="qrToQuestionSegue" id="p6b-HQ-cUK"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="iWK-Qg-K8x" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1402.2900763358778" y="129.57746478873241"/>
+            <point key="canvasLocation" x="1472" y="167"/>
+        </scene>
+        <!--PreQuestions-->
+        <scene sceneID="dqj-9n-bfw">
+            <objects>
+                <viewControllerPlaceholder storyboardName="PreQuestions" id="A3g-No-PyR" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="xgB-si-DJO" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2298" y="-14"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="Eup-b6-eFT">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="h7i-fq-Uny" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="doj-60-Ral" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="Pzv-30-Nbq">
@@ -58,6 +66,7 @@
                         <segue destination="Q0v-2v-aj4" kind="relationship" relationship="rootViewController" id="Idp-Ja-VIY"/>
                     </connections>
                 </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="h7i-fq-Uny" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="475.57251908396944" y="129.57746478873241"/>
         </scene>

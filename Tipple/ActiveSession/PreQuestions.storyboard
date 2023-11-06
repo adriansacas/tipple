@@ -107,6 +107,7 @@
                         <outlet property="startButton" destination="iWb-yq-aEA" id="Ywc-e4-wjA"/>
                         <segue destination="Ihk-EC-1BL" kind="presentation" identifier="questionToActiveSegue" modalPresentationStyle="fullScreen" id="QdS-Vy-eLC"/>
                         <segue destination="XvX-ls-xI3" kind="presentation" identifier="questionToGroupManage" modalPresentationStyle="fullScreen" id="ig5-MW-Ls2"/>
+                        <segue destination="a7X-Th-a1J" kind="presentation" identifier="questionsToGroupJoin" modalPresentationStyle="fullScreen" id="EqE-ao-WjC"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xM8-pF-R1d" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -128,6 +129,14 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="N1h-TJ-oEJ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="757" y="64"/>
+        </scene>
+        <!--manageSessionGroupVC-->
+        <scene sceneID="gKB-py-c5F">
+            <objects>
+                <viewControllerPlaceholder storyboardName="GroupSession" referencedIdentifier="manageSessionGroupVC" id="a7X-Th-a1J" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="WRT-hF-A9A" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="744" y="168"/>
         </scene>
     </scenes>
     <resources>
