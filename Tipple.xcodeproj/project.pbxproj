@@ -43,6 +43,9 @@
 		49593C3B2AF71BBD00B37653 /* DGChartsDynamic in Frameworks */ = {isa = PBXBuildFile; productRef = 49593C3A2AF71BBD00B37653 /* DGChartsDynamic */; };
 		49B2C1372ADEF9BA0025E38C /* SessionsListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49B2C1362ADEF9BA0025E38C /* SessionsListViewController.swift */; };
 		49B2C1432ADF08360025E38C /* SymptomsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49B2C1422ADF08360025E38C /* SymptomsViewController.swift */; };
+		49B79CB82AF86ECB008654CB /* GroupListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49B79CB72AF86ECB008654CB /* GroupListViewController.swift */; };
+		49B79CBA2AF86EFE008654CB /* MemberInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49B79CB92AF86EFE008654CB /* MemberInfoViewController.swift */; };
+		49C1DB6E2AF865ED0090337E /* MembersList.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 49C1DB6D2AF865ED0090337E /* MembersList.storyboard */; };
 		49F26E202ADF27B900FF70A7 /* SessionsTracker.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 49F26E1F2ADF27B900FF70A7 /* SessionsTracker.storyboard */; };
 		49F26E222ADF287900FF70A7 /* DayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49F26E212ADF287900FF70A7 /* DayViewController.swift */; };
 		52B510182AF8542B00BDEB82 /* PreQuestions.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 52B510172AF8542B00BDEB82 /* PreQuestions.storyboard */; };
@@ -99,6 +102,9 @@
 		494A451D2AF5F38300B54542 /* ShowActiveVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShowActiveVC.swift; sourceTree = "<group>"; };
 		49B2C1362ADEF9BA0025E38C /* SessionsListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SessionsListViewController.swift; sourceTree = "<group>"; };
 		49B2C1422ADF08360025E38C /* SymptomsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SymptomsViewController.swift; sourceTree = "<group>"; };
+		49B79CB72AF86ECB008654CB /* GroupListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupListViewController.swift; sourceTree = "<group>"; };
+		49B79CB92AF86EFE008654CB /* MemberInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberInfoViewController.swift; sourceTree = "<group>"; };
+		49C1DB6D2AF865ED0090337E /* MembersList.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = MembersList.storyboard; sourceTree = "<group>"; };
 		49F26E1F2ADF27B900FF70A7 /* SessionsTracker.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = SessionsTracker.storyboard; sourceTree = "<group>"; };
 		49F26E212ADF287900FF70A7 /* DayViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DayViewController.swift; sourceTree = "<group>"; };
 		52B510172AF8542B00BDEB82 /* PreQuestions.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = PreQuestions.storyboard; sourceTree = "<group>"; };
@@ -168,6 +174,7 @@
 				344830102AEB64B100039FAD /* HexUIColor.swift */,
 				340DDEA42AD6243D00217F2D /* Info.plist */,
 				340DDE9C2AD6243A00217F2D /* Tipple.xcdatamodeld */,
+				49B79CB62AF86D61008654CB /* GroupList */,
 				494A45142AF5F26200B54542 /* QRCode */,
 				494A450F2AF5A51C00B54542 /* ActiveSession */,
 				344830122AEB65F100039FAD /* LoginRegistrationHome */,
@@ -236,6 +243,16 @@
 				49B2C1362ADEF9BA0025E38C /* SessionsListViewController.swift */,
 			);
 			path = PrevSessions;
+			sourceTree = "<group>";
+		};
+		49B79CB62AF86D61008654CB /* GroupList */ = {
+			isa = PBXGroup;
+			children = (
+				49C1DB6D2AF865ED0090337E /* MembersList.storyboard */,
+				49B79CB72AF86ECB008654CB /* GroupListViewController.swift */,
+				49B79CB92AF86EFE008654CB /* MemberInfoViewController.swift */,
+			);
+			path = GroupList;
 			sourceTree = "<group>";
 		};
 		B3329D352ADB654D00F23531 /* Frameworks */ = {
@@ -345,6 +362,7 @@
 				349A6F7D2AD62DAE002A707B /* LoginRegistrationHome.storyboard in Resources */,
 				34F604142ADF4B0C00E331A2 /* Tipple_Yellow_Status.png in Resources */,
 				34F78C3A2ADF181300A238A3 /* Tipple_aLogo.png in Resources */,
+				49C1DB6E2AF865ED0090337E /* MembersList.storyboard in Resources */,
 				348821D22AD7932E00B677F3 /* GoogleService-Info.plist in Resources */,
 				340DDEA32AD6243D00217F2D /* LaunchScreen.storyboard in Resources */,
 				340DDEA02AD6243D00217F2D /* Assets.xcassets in Resources */,
@@ -372,6 +390,7 @@
 				B341BF752AD8C11A00505C37 /* ProfileInfoNameVC.swift in Sources */,
 				344830172AEB67B700039FAD /* RegisterGroupSessionViewController.swift in Sources */,
 				B3329D392ADB71D900F23531 /* ProfileInfo.swift in Sources */,
+				49B79CB82AF86ECB008654CB /* GroupListViewController.swift in Sources */,
 				494A451A2AF5F37500B54542 /* QuestionnaireVC.swift in Sources */,
 				B341BF792AD9094300505C37 /* ProfileInfoBirthdayVC.swift in Sources */,
 				B34377182ADE71BB003B1D96 /* AlertUtils.swift in Sources */,
@@ -387,6 +406,7 @@
 				494A451C2AF5F37B00B54542 /* SessionInfo.swift in Sources */,
 				B36E61E42AD88C2300AFF50E /* SettingsVC.swift in Sources */,
 				49B2C1372ADEF9BA0025E38C /* SessionsListViewController.swift in Sources */,
+				49B79CBA2AF86EFE008654CB /* MemberInfoViewController.swift in Sources */,
 				494A451E2AF5F38300B54542 /* ShowActiveVC.swift in Sources */,
 				3411E5112AD8BC5800297E01 /* LoginViewController.swift in Sources */,
 				49F26E222ADF287900FF70A7 /* DayViewController.swift in Sources */,
