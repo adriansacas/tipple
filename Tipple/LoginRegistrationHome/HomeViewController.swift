@@ -47,10 +47,6 @@ class HomeViewController: UIViewController {
         present(controller, animated: true)
     }
     
-    @IBAction func joinSessionButtonPressed(_ sender: Any) {
-        
-    }
-    
     @IBAction func previousSessionButtonPressed(_ sender: Any) {
         performSegue(withIdentifier: "homeToPrevSession", sender: nil)
     }
