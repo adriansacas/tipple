@@ -18,24 +18,43 @@ class ManageGroupSessionVC: UIViewController, EditSession {
     
     @IBOutlet weak var sessionNameTextLabel: UILabel!
     @IBOutlet weak var sessionEndDateTimeLabel: UILabel!
+    let firestoreManager = FirestoreManager.shared
 
     var currentSession: SessionInfo?
     var groupQRCode: UIImage?
+    var sessionID: String?
+    var userID: String?
+    
     
     var inviteCodeSegue = "inviteCodeSegue"
     var sessionSettingSegue = "sessionSettingSegue"
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+        
+        firestoreManager.getSessionInfo(userID: self.userID!, sessionDocumentID: self.sessionID!) { sessionTemp, error in
+            if let error = error {
+                print("Error retrieving session: \(error)")
+            } else if let sessionTemp = sessionTemp {
+                self.currentSession = sessionTemp
+                
+                // Display current session name and end date/time
+                let dateFormatter = DateFormatter()
+                dateFormatter.dateStyle = .long
+                dateFormatter.timeStyle = .short
+                let formattedDate = dateFormatter.string(from: self.currentSession!.endGroupSessionTime!)
+                
+                self.sessionNameTextLabel.text = self.currentSession?.sessionName
+                self.sessionEndDateTimeLabel.text = formattedDate
+                
+                print("Session successfully retrieved before view appearing with document ID: \(self.sessionID ?? "Value not set")")
+            }
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Display current session name and end date/time
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateStyle = .long
-        dateFormatter.timeStyle = .short
-        let formattedDate = dateFormatter.string(from: currentSession!.endGroupSessionTime!)
-        
-        sessionNameTextLabel.text = currentSession?.sessionName
-        sessionEndDateTimeLabel.text = formattedDate
     }
     
     func changeSessionName(newSessionName: String) {

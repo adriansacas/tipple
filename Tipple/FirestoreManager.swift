@@ -332,6 +332,10 @@ class FirestoreManager {
         if let shareSession = session.shareSession {
             sessionData["shareSession"] = shareSession
         }
+        
+        if let endSession = session.endGroupSessionTime {
+            sessionData["endTime"] = endSession
+        }
 
         // Add the session data to the "Sessions" collection
         var addedDocumentRef: DocumentReference?
@@ -419,6 +423,47 @@ class FirestoreManager {
                 
                 // Update the "drinksInSession" field in the document
                 userDocRef.updateData(["symptomsList": currentSymptoms]) { updateError in
+                    if let updateError = updateError {
+                        completion(updateError)
+                    } else {
+                        completion(nil) // Successfully updated the field
+                    }
+                }
+            } else {
+                // Handle the case where the session document doesn't exist
+                let notFoundError = NSError(domain: "Document Not Found", code: 404, userInfo: nil)
+                completion(notFoundError)
+            }
+        }
+    }
+    
+    // Function to edit group session details (if you are the main person
+    func updateGroupSession(userID: String, sessionID: String, fields: [String: Any], completion: @escaping (Error?) -> Void) {
+        print("Attempting to update group session with IDS\n\t-- USERID: \(userID), sessionID: \(sessionID)")
+        
+        
+        let sessionDocRef = db.collection(sessionCollection).document(sessionID)
+        
+        sessionDocRef.getDocument { (document, error) in
+            if let error = error {
+                completion(error)
+            } else if let document = document, document.exists {
+                let sessionData = document.data()
+                
+                var createdBy = sessionData!["createdBy"] as? String
+                
+                if createdBy != userID {
+                    print("This should not happen. Non group leader attempting to edit session")
+                }
+            
+                
+                var fieldCopy = fields
+                
+                if let endTime = fields["endTime"] {
+                    fieldCopy["endTime"] = Timestamp(date: fields["endTime"] as! Date)
+                }
+
+                sessionDocRef.updateData(fields) { updateError in
                     if let updateError = updateError {
                         completion(updateError)
                     } else {

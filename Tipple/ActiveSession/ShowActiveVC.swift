@@ -196,6 +196,7 @@ class ShowActiveVC: UIViewController {
         alertController.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
 
         // Add a "Finish" action
+        // TODO: Mark a session as finished one they exit to the main page.
         alertController.addAction(UIAlertAction(title: "Finish", style: .destructive) { _ in
             self.performSegue(withIdentifier: self.endSessionSegue, sender: self)
         })
