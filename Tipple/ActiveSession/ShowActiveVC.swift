@@ -39,8 +39,6 @@ class ShowActiveVC: UIViewController {
         
         // Ensure that the status segmented controller is always disabled for users (for now)
         statusSegmented.isUserInteractionEnabled = false
-        updateStatusInfo(bacValue: runningBAC, status: runningStatus, drinks: runningDrinkCounter)
-        
     }
 
     
@@ -58,6 +56,7 @@ class ShowActiveVC: UIViewController {
                             print("Error fetching user data: \(error.localizedDescription)")
                         } else if let profileInfo = profileInfo {
                             self?.userProfileInfo = profileInfo
+                            self?.setStatusInfo()
                         }
                     }
                 }
@@ -127,6 +126,24 @@ class ShowActiveVC: UIViewController {
         } else {
             mainGlassIV.image = UIImage(named: "Tipple_Red_Status")
         }
+    }
+    
+    
+    func setStatusInfo(){
+        let drinks: [DrinkInfo] = self.currentSession!.drinksInSession
+        var tempBAC: Float = 0
+        if !drinks.isEmpty{
+            let latestDrink = drinks.max(by: { $0.timeAt < $1.timeAt })
+            tempBAC = latestDrink!.bacAtTime
+        }
+        
+        self.runningDrinkCounter = drinks.count
+        self.runningBAC = tempBAC
+        self.runningStatus = calculateStatus()
+        
+        updateStatusInfo(bacValue: self.runningBAC,
+                         status: self.runningStatus,
+                         drinks: self.runningDrinkCounter)
     }
     
     func updateDrinks(drinkType: String, amount: Int) {
