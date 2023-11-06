@@ -69,8 +69,6 @@ class DayViewController: UIViewController, updateSymptoms, ChartViewDelegate {
     // Draws pie chart
     override func viewDidLayoutSubviews() {
         
-        var totalDrinks = Double(beer + seltzer + wine + shots + cocktails)
-        
         pieChart.frame = CGRect(x: 0, y: 25, width: self.view.frame.size.width, height: 350)
         
         view2.addSubview(pieChart)
@@ -125,13 +123,15 @@ class DayViewController: UIViewController, updateSymptoms, ChartViewDelegate {
     }
     
     func populateSympAndTips() {
+        var count = 1
         var sympTemp = ""
-        var tipsTemp = "- Drink responsibly!\n\n"
+        var tipsTemp = "Tip #\(count): Drink responsibly!\n\n"
         for symp in symptoms {
             sympTemp += "\(symp)\n"
             let temp = tips[symp, default:""]
             if temp != "" {
-                tipsTemp += "- \(temp)\n\n"
+                count += 1
+                tipsTemp += "Tip #\(count): \(temp)\n\n"
             }
         }
         
