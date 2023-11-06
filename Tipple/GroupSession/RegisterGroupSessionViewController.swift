@@ -33,7 +33,7 @@ class RegisterGroupSessionVC: UIViewController {
         if(sessionNameTextField.text != ""){
             //update current session list and group end time
             
-            var newSessionFields = ["sessionName" : (sessionNameTextField.text ?? "") as String,
+            let newSessionFields = ["sessionName" : (sessionNameTextField.text ?? "") as String,
                                     "endTime" : endSessionDateTimePicker.date] as [String : Any]
             
             firestoreManager.updateGroupSession(userID: self.userID!, sessionID: self.sessionID!, fields: newSessionFields) { error in

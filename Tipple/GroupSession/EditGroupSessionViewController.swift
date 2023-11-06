@@ -29,8 +29,10 @@ class EditGroupSessionVC: UIViewController {
         if(editSessionNameTextField.text != "") {
             //call protocol functions
             let mainVC = delegate as? EditSession
-            mainVC?.changeSessionName(newSessionName: editSessionNameTextField.text!)
-            mainVC?.changeEndSessionDateTime(newEndDateTime: editEndSessionDateTimePicker.date)
+            let newSessionFields = ["sessionName" : (editSessionNameTextField.text ?? "") as String,
+                                    "endTime" : editEndSessionDateTimePicker.date] as [String : Any]
+            
+            mainVC?.updateSessionInfo(sessionFields: newSessionFields)
         }
     }
     

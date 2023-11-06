@@ -10,8 +10,7 @@ import Foundation
 
 //protocol to update session name
 protocol EditSession {
-    func changeSessionName(newSessionName:String)
-    func changeEndSessionDateTime(newEndDateTime:Date)
+    func updateSessionInfo(sessionFields: [String : Any])
 }
 
 class ManageGroupSessionVC: UIViewController, EditSession {
@@ -57,22 +56,42 @@ class ManageGroupSessionVC: UIViewController, EditSession {
 
     }
     
-    func changeSessionName(newSessionName: String) {
-        currentSession?.sessionName = newSessionName
-        sessionNameTextLabel.text = newSessionName
+    func updateSessionInfo(sessionFields: [String : Any]){
+        firestoreManager.updateGroupSession(userID: self.userID!, sessionID: self.sessionID!, fields: sessionFields) { error in
+            if let error = error {
+                print("Error adding session: \(error)")
+            } else {
+                if let sessionName = sessionFields["sessionName"] as? String {
+                    self.sessionNameTextLabel.text = sessionName
+                }
+                
+                if let endTime = sessionFields["endTime"] as? Date {
+                    // Update end session date and time label
+                    let dateFormatter = DateFormatter()
+                    dateFormatter.dateStyle = .long
+                    dateFormatter.timeStyle = .short
+                    let formattedDate = dateFormatter.string(from: endTime)
+                    self.sessionEndDateTimeLabel.text = formattedDate
+                }
+                
+                self.updateSessionObjectStored()
+                print("Successfully updated the session fields")
+            }
+        }
     }
     
-    func changeEndSessionDateTime(newEndDateTime: Date) {
-        currentSession?.endGroupSessionTime = newEndDateTime
-        
-        // Update end session date and time label
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateStyle = .long
-        dateFormatter.timeStyle = .short
-        let formattedDate = dateFormatter.string(from: currentSession!.endGroupSessionTime!)
-        sessionEndDateTimeLabel.text = formattedDate
-    }
     
+    func updateSessionObjectStored() {
+        firestoreManager.getSessionInfo(userID: self.userID!, sessionDocumentID: self.sessionID!) { sessionTemp, error in
+            if let error = error {
+                print("Error retrieving session: \(error)")
+            } else if let sessionTemp = sessionTemp {
+                self.currentSession = sessionTemp
+                print("Session successfully retrieved again")
+            }
+        }
+    }
+
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
