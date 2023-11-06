@@ -42,8 +42,6 @@ class QuestionnaireVC: UIViewController {
         
         // Do any additional setup after loading the view.
         getUserID()
-        
-
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -137,10 +135,11 @@ class QuestionnaireVC: UIViewController {
                         self.sessionName = sessionTemp.sessionName
                         self.endDate = sessionTemp.endGroupSessionTime
                         
-                        print("Session successfully retrieved for joiniing with document ID: \(self.sessionID ?? "Value not set")")
+                        print("Session successfully retrieved for joiniing with document ID: \(self.sessionID ?? "Value not set") UserID: \(self.userID ?? "No User")")
+                        self.performSegue(withIdentifier: self.qToGroupJoinSegue, sender: nil)
+
                     }
                 }
-                self.performSegue(withIdentifier: self.qToGroupJoinSegue, sender: self)
             }
         }
         
@@ -166,20 +165,24 @@ class QuestionnaireVC: UIViewController {
             destination.sessionID = self.sessionID
         }
         
-        if segue.identifier == qToGroupJoinSegue,
-           let destination = segue.destination as? ManageGroupSessionVC {
-            firestoreManager.getSessionInfo(userID:self.userID!,
-                                            sessionDocumentID: self.sessionID!) { sessionTemp, error in
-                if let error = error {
-                    print("Error checking if this user is the manager session: \(error)")
-                } else if let sessionTemp = sessionTemp {
-                    destination.sessionName = sessionTemp.sessionName!
-                    destination.endDate = sessionTemp.endGroupSessionTime!
-                }
+        if segue.identifier == qToGroupJoinSegue{
+           
+            guard let destination = segue.destination as? UINavigationController else {
+                return
             }
-            destination.userID = self.userID
-            destination.sessionID = self.sessionID
-            destination.isManager = false
+            
+            guard let finalDestination = destination.viewControllers.first as? ManageGroupSessionVC? else {
+                return
+            }
+            
+            print("Attempting to set", self.userID!)
+
+            finalDestination!.sessionName = self.sessionName!
+            finalDestination!.endDate = self.endDate!
+            finalDestination!.userID = self.userID
+            finalDestination!.sessionID = self.sessionID
+            finalDestination!.isManager = false
+
         }
     }
     

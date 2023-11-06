@@ -34,6 +34,7 @@ class ManageGroupSessionVC: UIViewController, EditSession {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
         print(self.isManager)
+        print("About to load manage page: \(self.userID ?? "noUserID")")
         if !isManager {
             settingsButton.isHidden = true
             settingsButton.isEnabled = false
