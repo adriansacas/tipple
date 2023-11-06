@@ -58,6 +58,7 @@
 		B341BF812AD92F7500505C37 /* ProfileInfoEmailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B341BF802AD92F7500505C37 /* ProfileInfoEmailVC.swift */; };
 		B34377162ADE21B4003B1D96 /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = B34377152ADE21B4003B1D96 /* FirebaseStorage */; };
 		B34377182ADE71BB003B1D96 /* AlertUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = B34377172ADE71BA003B1D96 /* AlertUtils.swift */; };
+		B3571DE22AF8619E00095EF9 /* Polls.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B3571DE12AF8619E00095EF9 /* Polls.storyboard */; };
 		B36E61E42AD88C2300AFF50E /* SettingsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B36E61E32AD88C2300AFF50E /* SettingsVC.swift */; };
 		B3CE37622AD62FF1004FB1A1 /* Settings.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B3CE37612AD62FF1004FB1A1 /* Settings.storyboard */; };
 /* End PBXBuildFile section */
@@ -111,6 +112,7 @@
 		B341BF7E2AD92E6100505C37 /* ProfileInfoPhoneVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileInfoPhoneVC.swift; sourceTree = "<group>"; };
 		B341BF802AD92F7500505C37 /* ProfileInfoEmailVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileInfoEmailVC.swift; sourceTree = "<group>"; };
 		B34377172ADE71BA003B1D96 /* AlertUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertUtils.swift; sourceTree = "<group>"; };
+		B3571DE12AF8619E00095EF9 /* Polls.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Polls.storyboard; sourceTree = "<group>"; };
 		B36E61E32AD88C2300AFF50E /* SettingsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsVC.swift; sourceTree = "<group>"; };
 		B3CE37612AD62FF1004FB1A1 /* Settings.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Settings.storyboard; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -172,6 +174,7 @@
 				496B2CAC2AF59B4400F8EE21 /* PrevSessions */,
 				B33F29462AEB115300B10CF7 /* Settings */,
 				344830152AEB678C00039FAD /* GroupSession */,
+				B3571DE02AF8613E00095EF9 /* Polls */,
 				348821D12AD7932E00B677F3 /* GoogleService-Info.plist */,
 				B3329D332ADB53A300F23531 /* FirestoreManager.swift */,
 				349B1F732ADDDF3F00588DCF /* MOCKScrollViewController.swift */,
@@ -268,6 +271,14 @@
 			path = ProfileInfo;
 			sourceTree = "<group>";
 		};
+		B3571DE02AF8613E00095EF9 /* Polls */ = {
+			isa = PBXGroup;
+			children = (
+				B3571DE12AF8619E00095EF9 /* Polls.storyboard */,
+			);
+			path = Polls;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -348,6 +359,7 @@
 				344830142AEB676A00039FAD /* GroupSession.storyboard in Resources */,
 				49F26E202ADF27B900FF70A7 /* SessionsTracker.storyboard in Resources */,
 				B3CE37622AD62FF1004FB1A1 /* Settings.storyboard in Resources */,
+				B3571DE22AF8619E00095EF9 /* Polls.storyboard in Resources */,
 				340DDE9B2AD6243A00217F2D /* Main.storyboard in Resources */,
 				34F604132ADF4B0C00E331A2 /* Tipple_Red_Status.png in Resources */,
 				34F604152ADF4B0C00E331A2 /* Tipple_Green_Status.png in Resources */,
