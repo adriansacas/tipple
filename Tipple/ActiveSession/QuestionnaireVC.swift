@@ -16,11 +16,11 @@ class QuestionnaireVC: UIViewController {
     @IBOutlet weak var partyLocation: UISearchBar!
     @IBOutlet weak var endLocation: UISearchBar!
     
+    
+    var sessionType: String?
     var userID: String?
     var sessionID: String?
-    var userProfileInfo: ProfileInfo?
-    var currentSession: SessionInfo?
-    
+    var userProfileInfo: ProfileInfo?    
     let firestoreManager = FirestoreManager.shared
     let qToActiveSegue = "questionToActiveSegue"
     
@@ -29,6 +29,8 @@ class QuestionnaireVC: UIViewController {
 
         // Do any additional setup after loading the view.
         getUserID()
+        
+        print(sessionType ?? "No Session Type Passed")
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -60,7 +62,7 @@ class QuestionnaireVC: UIViewController {
     
     @IBAction func startSessionButton(_ sender: Any) {
         let session = SessionInfo(createdBy: self.userID!,
-                                  membersList: [],
+                                  membersList: [self.userID!],
                                   sessionType: "Individual",
                                   startTime: Date.now,
                                   drinksInSession: [],
@@ -71,9 +73,19 @@ class QuestionnaireVC: UIViewController {
                                   sessionName: "My Session",
                                   shareSession: shareSession.isOn)
         
-        self.currentSession = session
-        self.currentSession?.membersList.append(userID!)
-        self.performSegue(withIdentifier: qToActiveSegue, sender: self)
+        
+        
+        firestoreManager.addSessionInfo(userID: self.userID!, session: session) { documentID, error in
+            if let error = error {
+                print("Error adding session: \(error)")
+            } else if let documentID = documentID {
+                self.sessionID = documentID
+                print("Session added successfully with document ID: \(self.sessionID ?? "Value not set")")
+                self.performSegue(withIdentifier: self.qToActiveSegue, sender: self)
+            }
+        }
+        
+        
     }
     
     
@@ -85,7 +97,7 @@ class QuestionnaireVC: UIViewController {
            let destination = segue.destination as? ShowActiveVC {
             destination.userID = self.userID
             destination.userProfileInfo = self.userProfileInfo
-            destination.currentSession = self.currentSession
+            destination.sessionID = self.sessionID
         }
     }
     
