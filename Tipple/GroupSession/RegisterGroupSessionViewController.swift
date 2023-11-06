@@ -40,7 +40,6 @@ class RegisterGroupSessionVC: UIViewController {
                 if let error = error {
                     print("Error adding session: \(error)")
                 } else {
-                    print("Successfully added updated the session group")
                     //generate and save group session's QR code using the sessionID
                     self.generatedQR = self.generateQRCode(from: self.sessionID!)
                 
@@ -73,16 +72,18 @@ class RegisterGroupSessionVC: UIViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
         guard let destination = segue.destination as? UINavigationController else {
-                return
+            return
         }
         
         guard let finalDestination = destination.viewControllers.first as? ManageGroupSessionVC else {
-                return
-            }
+            return
+        }
         
         finalDestination.groupQRCode = self.generatedQR
         finalDestination.userID = self.userID
         finalDestination.sessionID = self.sessionID
+        finalDestination.sessionName = self.sessionNameTextField.text!
+        finalDestination.endDate = endSessionDateTimePicker.date
     }
 
 }

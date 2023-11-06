@@ -19,41 +19,41 @@ class ManageGroupSessionVC: UIViewController, EditSession {
     @IBOutlet weak var sessionEndDateTimeLabel: UILabel!
     let firestoreManager = FirestoreManager.shared
 
-    var currentSession: SessionInfo?
     var groupQRCode: UIImage?
     var sessionID: String?
     var userID: String?
+    var sessionName: String = ""
+    var endDate: Date = Date()
     
-    
-    var inviteCodeSegue = "inviteCodeSegue"
-    var sessionSettingSegue = "sessionSettingSegue"
+    let inviteCodeSegue = "inviteCodeSegue"
+    let sessionSettingSegue = "sessionSettingSegue"
+    let activeSessionSegue = "manageToActiveSegue"
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
         
-        firestoreManager.getSessionInfo(userID: self.userID!, sessionDocumentID: self.sessionID!) { sessionTemp, error in
-            if let error = error {
-                print("Error retrieving session: \(error)")
-            } else if let sessionTemp = sessionTemp {
-                self.currentSession = sessionTemp
-                
-                // Display current session name and end date/time
-                let dateFormatter = DateFormatter()
-                dateFormatter.dateStyle = .long
-                dateFormatter.timeStyle = .short
-                let formattedDate = dateFormatter.string(from: self.currentSession!.endGroupSessionTime!)
-                
-                self.sessionNameTextLabel.text = self.currentSession?.sessionName
-                self.sessionEndDateTimeLabel.text = formattedDate
-                
-                print("Session successfully retrieved before view appearing with document ID: \(self.sessionID ?? "Value not set")")
-            }
-        }
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        // Redundant first setting
+        setLabelFields(nameField: self.sessionName, dateField: self.endDate)
+    }
+    
+    
+    func setLabelFields(nameField: String, dateField: Date) {
+        self.sessionNameTextLabel.text = sessionName
 
+        // Display current session name and end date/time
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateStyle = .long
+        dateFormatter.timeStyle = .short
+        let formattedDate = dateFormatter.string(from: dateField)
+        self.sessionEndDateTimeLabel.text = formattedDate
+        
+        self.sessionName = nameField
+        self.endDate = dateField
     }
     
     func updateSessionInfo(sessionFields: [String : Any]){
@@ -61,36 +61,17 @@ class ManageGroupSessionVC: UIViewController, EditSession {
             if let error = error {
                 print("Error adding session: \(error)")
             } else {
-                if let sessionName = sessionFields["sessionName"] as? String {
-                    self.sessionNameTextLabel.text = sessionName
+                if let sessionName = sessionFields["sessionName"] as? String,
+                   let endTime = sessionFields["endTime"] as? Date{
+                       self.setLabelFields(nameField: sessionName, dateField: endTime)
                 }
-                
-                if let endTime = sessionFields["endTime"] as? Date {
-                    // Update end session date and time label
-                    let dateFormatter = DateFormatter()
-                    dateFormatter.dateStyle = .long
-                    dateFormatter.timeStyle = .short
-                    let formattedDate = dateFormatter.string(from: endTime)
-                    self.sessionEndDateTimeLabel.text = formattedDate
-                }
-                
-                self.updateSessionObjectStored()
+            
                 print("Successfully updated the session fields")
             }
         }
     }
     
     
-    func updateSessionObjectStored() {
-        firestoreManager.getSessionInfo(userID: self.userID!, sessionDocumentID: self.sessionID!) { sessionTemp, error in
-            if let error = error {
-                print("Error retrieving session: \(error)")
-            } else if let sessionTemp = sessionTemp {
-                self.currentSession = sessionTemp
-                print("Session successfully retrieved again")
-            }
-        }
-    }
 
     // MARK: - Navigation
 
@@ -99,15 +80,17 @@ class ManageGroupSessionVC: UIViewController, EditSession {
         // Get the new view controller using segue.destination.
         // Pass the selected object to the new view controller.
         if segue.identifier == inviteCodeSegue, let destination = segue.destination as? InviteCodeVC {
-            
-            destination.currentSession = self.currentSession
             destination.groupQRCode = self.groupQRCode
+            destination.sessionName = self.sessionName
+            destination.endDate = self.endDate
             
         } else if segue.identifier == sessionSettingSegue, let destination = segue.destination as? EditGroupSessionVC {
-            
             destination.delegate = self
-            destination.currentSession = self.currentSession
-            
+            destination.sessionName = self.sessionName
+            destination.endDate = self.endDate
+        } else if segue.identifier == activeSessionSegue, let destination = segue.destination as? ShowActiveVC {
+            destination.sessionID = self.sessionID
+            destination.userID = self.userID
         }
     }
 

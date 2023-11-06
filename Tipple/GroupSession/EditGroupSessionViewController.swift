@@ -13,14 +13,15 @@ class EditGroupSessionVC: UIViewController {
     @IBOutlet weak var editEndSessionDateTimePicker: UIDatePicker!
     
     var delegate:UIViewController?
-    var currentSession: SessionInfo?
+    var sessionName: String = ""
+    var endDate: Date = Date()
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
         //Update text field to current session and time
-        editSessionNameTextField.text = currentSession?.sessionName
-        editEndSessionDateTimePicker.date = currentSession!.endGroupSessionTime!
+        editSessionNameTextField.text = sessionName
+        editEndSessionDateTimePicker.date = endDate
     }
     
     @IBAction func updateSessionButtonPressed(_ sender: Any) {

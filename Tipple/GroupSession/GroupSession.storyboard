@@ -287,6 +287,9 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="filled" title="Access Session"/>
+                                <connections>
+                                    <segue destination="al7-QM-VMx" kind="show" identifier="manageToActiveSegue" id="GCQ-Wo-vNf"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="84a-OK-c2o">
                                 <rect key="frame" x="138" y="538" width="117" height="35"/>
@@ -323,7 +326,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hmg-BC-sr3" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1973" y="1527"/>
+            <point key="canvasLocation" x="1973" y="1526"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="rug-AD-fAq">
@@ -342,6 +345,16 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cdh-vU-bVc" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1973" y="757"/>
+        </scene>
+        <!--ActiveSessions-->
+        <scene sceneID="kXX-1O-MkN">
+            <objects>
+                <viewControllerPlaceholder storyboardName="ActiveSessions" id="al7-QM-VMx" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="fpg-bj-E0e"/>
+                </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="igh-Fx-SPn" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2502" y="1416"/>
         </scene>
     </scenes>
     <resources>

@@ -25,7 +25,7 @@ class ShowActiveVC: UIViewController {
     let indicies = ["BAC": 0,
                     "STATUS": 1,
                     "NUMDRINK": 2]
-
+    
     @IBOutlet weak var drinkSelectorSegmented: UISegmentedControl!
     @IBOutlet weak var statusSegmented: UISegmentedControl!
     @IBOutlet weak var navItemTitle: UINavigationItem!
@@ -51,6 +51,17 @@ class ShowActiveVC: UIViewController {
             } else if let sessionTemp = sessionTemp {
                 self.currentSession = sessionTemp
                 self.navItemTitle.title = self.currentSession?.sessionName ?? ""
+                
+                if self.userProfileInfo == nil {
+                    self.firestoreManager.getUserData(userID: self.userID!) { [weak self] (profileInfo, error) in
+                        if let error = error {
+                            print("Error fetching user data: \(error.localizedDescription)")
+                        } else if let profileInfo = profileInfo {
+                            self?.userProfileInfo = profileInfo
+                        }
+                    }
+                }
+                
                 print("Session successfully retrieved before view appearing with document ID: \(self.sessionID ?? "Value not set")")
             }
         }
