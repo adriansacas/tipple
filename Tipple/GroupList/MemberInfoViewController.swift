@@ -6,28 +6,53 @@
 //
 
 import UIKit
+import FirebaseAuth
 
-class MemberInfoViewController: UIViewController {
+class MemberInfoViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
     @IBOutlet weak var nameField: UILabel!
     @IBOutlet weak var tableView: UITableView!
     
+    let firestoreManager = FirestoreManager.shared
+    let textCellIdentifier = "TextCell"
+    
+    var keys:[String] = []
+    var user:[String:Any]?
+    var delegate:UIViewController?
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
+        for key in user!.keys {
+            if(key != "name") {
+                keys.append(key)
+            }
+        }
+        nameField.text = user!["name"] as? String
     }
     
 
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        keys.count
     }
-    */
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: textCellIdentifier, for: indexPath as IndexPath) as! PersonCell
+    
+        let row = indexPath.row
+        
+        var key = String(keys[row])
+        
+        cell.keyField.text = key
+        cell.valueField.text = user![key] as? String
+        
+        return cell
+    }
 
+}
+
+class PersonCell: UITableViewCell {
+    @IBOutlet weak var keyField: UILabel!
+    @IBOutlet weak var valueField: UILabel!
+    
 }
