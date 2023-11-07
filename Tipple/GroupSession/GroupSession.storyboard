@@ -319,6 +319,9 @@
                                 <buttonConfiguration key="configuration" style="filled" title="End Session">
                                     <color key="baseBackgroundColor" systemColor="systemRedColor"/>
                                 </buttonConfiguration>
+                                <connections>
+                                    <action selector="stopSessionButtonPressed:" destination="eDn-wV-OIN" eventType="touchUpInside" id="PUg-eb-wNJ"/>
+                                </connections>
                             </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="eb9-nz-NZg"/>

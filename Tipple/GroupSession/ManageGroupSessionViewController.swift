@@ -86,6 +86,33 @@ class ManageGroupSessionVC: UIViewController, EditSession {
         }
     }
     
+    @IBAction func stopSessionButtonPressed(_ sender: Any) {
+        
+        let stopAlertController = UIAlertController(
+            title: isManager ? "Are you sure you want to end?" : "Are you sure you want to leave?",
+            message: 
+                isManager ? "It will end the session for all members." : "You will not receive new updates from this session.",
+            preferredStyle: .alert
+        )
+        
+        stopAlertController.addAction(UIAlertAction(
+            title: "Cancel",
+            style: .default)
+        )
+        
+        stopAlertController.addAction(UIAlertAction(
+            title: isManager ? "End" : "Leave",
+            style: .destructive,
+            handler: {
+                (action) in
+                
+                //TODO: assumes the user stayed logged in, find better solution
+                //self.performSegue(withIdentifier: "editSessionToHomeSegue", sender: nil)
+            })
+        )
+        
+        present(stopAlertController, animated: true)
+    }
     
     // Add @objc annotation to make the function accessible to Timer
     @objc func pollSessionInfo() {
