@@ -207,8 +207,10 @@ class ShowActiveVC: UIViewController {
         if self.runningBAC < 0.08 {
             return "😀"
         } else if (self.runningBAC < 0.12) {
+            AlertUtils.showAlert(title: "Slow down!", message: "You've had a few drinks, take a break and drink some water", viewController: self)
             return "🤢"
         } else {
+            AlertUtils.showAlert(title: "Tap out", message: "Time to stop drinking, make sure to hydrate!", viewController: self)
             return "💀"
         }
     }
