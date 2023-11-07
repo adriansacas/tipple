@@ -34,6 +34,7 @@ class ManageGroupSessionVC: UIViewController, EditSession {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
         print(self.isManager)
+        print("About to load manage page: \(self.userID ?? "noUserID")")
         if !isManager {
             settingsButton.isHidden = true
             settingsButton.isEnabled = false
@@ -98,8 +99,8 @@ class ManageGroupSessionVC: UIViewController, EditSession {
             destination.sessionName = self.sessionName
             destination.endDate = self.endDate
         } else if segue.identifier == activeSessionSegue, let destination = segue.destination as? ShowActiveVC {
-            destination.sessionID = self.sessionID
             destination.userID = self.userID
+            destination.sessionID = self.sessionID
         }
     }
 
