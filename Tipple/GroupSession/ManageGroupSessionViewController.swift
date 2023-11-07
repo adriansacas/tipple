@@ -18,6 +18,7 @@ class ManageGroupSessionVC: UIViewController, EditSession {
     @IBOutlet weak var sessionNameTextLabel: UILabel!
     @IBOutlet weak var sessionEndDateTimeLabel: UILabel!
     @IBOutlet weak var settingsButton: UIButton!
+    @IBOutlet weak var stopSessionButton: UIButton!
     let firestoreManager = FirestoreManager.shared
 
     var groupQRCode: UIImage?
@@ -40,6 +41,7 @@ class ManageGroupSessionVC: UIViewController, EditSession {
         if !isManager {
             settingsButton.isHidden = true
             settingsButton.isEnabled = false
+            stopSessionButton.setTitle("Leave Session", for: .normal)
         }
         
     }
