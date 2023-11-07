@@ -8,17 +8,20 @@
 import UIKit
 import FirebaseAuth
 
-class CreatePollVC: UITableViewController {
+class CreatePollVC: UITableViewController, PollsDelegateVC {
 
     var prompt: String = ""
     var options: [String: Int] = [:]
     var multipleVotes: Bool = false
     var votersAddOptions: Bool = false
     var expirationDate: Date = Date()
+    var voters: [String] = []
+    
     let firestoreManager = FirestoreManager.shared
     var sections: [[String]] = []
     var switchCellLabels: [String] = ["Multiple votes", "Voters can add options"]
     var session: SessionInfo?
+    var delegate: PollsDelegate?
     
     let promptCellIdentifier = "PromptCell"
     let optionCellIdentifier = "OptionCell"
@@ -162,7 +165,9 @@ class CreatePollVC: UITableViewController {
         
         let user = Auth.auth().currentUser
         
-        firestoreManager.createPoll(userID: user!.uid, prompt: "prompt", options: options, multipleVotes: multipleVotes, votersAddOptions: votersAddOptions, expiration: expirationDate) { pollID, error in
+        let poll = Poll(prompt: prompt, options: options, multipleVotes: multipleVotes, votersAddOptions: votersAddOptions, expiration: expirationDate, createdBy: user!.uid, voters: voters)
+        
+        firestoreManager.createPoll(userID: user!.uid, prompt: prompt, options: options, multipleVotes: multipleVotes, votersAddOptions: votersAddOptions, expiration: expirationDate, voters: voters) { pollID, error in
             if let error = error {
                 // Handle the error
                 print("Error creating poll: \(error)")
@@ -170,6 +175,8 @@ class CreatePollVC: UITableViewController {
                 // Poll created successfully
 //                TODO: add pollID to session.polls by calling firestoremanager.updatesession
                 self.updateSession(pollID: pollID)
+                
+                self.delegate?.didCreateNewPoll(poll)
                 self.navigationController?.popViewController(animated: true)
             }
         }
@@ -190,6 +197,7 @@ class CreatePollVC: UITableViewController {
         session.polls?.append(pollID)
         let fields = ["polls": session.polls as Any] as [String : Any]
         
+        // TODO: Consider using FieldValue.arrayUnion(valuesToAdd) instead of passing all the current pollIDs
         firestoreManager.updateGroupSession(userID: user!.uid, sessionID: sessionDocID, fields: fields) { error in
             if let error = error {
                 print("Error updating group session: \(error.localizedDescription)")

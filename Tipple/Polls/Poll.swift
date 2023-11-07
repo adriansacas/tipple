@@ -16,14 +16,16 @@ class Poll {
     var votersAddOptions: Bool
     var expiration: Date
     var createdBy: String
+    var voters: Set<String>
 
-    init(prompt: String, options: [String: Int], multipleVotes: Bool, votersAddOptions: Bool, expiration: Date, createdBy: String) {
+    init(prompt: String, options: [String: Int], multipleVotes: Bool, votersAddOptions: Bool, expiration: Date, createdBy: String, voters: [String]) {
         self.prompt = prompt
         self.options = options
         self.multipleVotes = multipleVotes
         self.votersAddOptions = votersAddOptions
         self.expiration = expiration
         self.createdBy = createdBy
+        self.voters = Set(voters)
     }
     
     // Additional initializer to create a Poll from a Firestore DocumentSnapshot
@@ -34,7 +36,8 @@ class Poll {
               let multipleVotes = data["multipleVotes"] as? Bool,
               let votersAddOptions = data["votersAddOptions"] as? Bool,
               let expirationTimestamp = data["expiration"] as? Timestamp,
-              let createdBy = data["createdBy"] as? String else {
+              let createdBy = data["createdBy"] as? String,
+              let voters = data["voters"] as? [String] else {
             return nil
         }
 
@@ -45,5 +48,6 @@ class Poll {
         self.votersAddOptions = votersAddOptions
         self.expiration = expirationTimestamp.dateValue()
         self.createdBy = createdBy
+        self.voters = Set(voters)
     }
 }

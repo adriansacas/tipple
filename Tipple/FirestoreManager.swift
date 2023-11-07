@@ -610,7 +610,7 @@ class FirestoreManager {
     /* ------------     Polls      ------------*/
     
     // Create a poll. Return poll ID on sucess. Otherwise error.
-    func createPoll(userID: String, prompt: String, options: [String: Int], multipleVotes: Bool, votersAddOptions: Bool, expiration: Date, completion: @escaping (String?, Error?) -> Void) {
+    func createPoll(userID: String, prompt: String, options: [String: Int], multipleVotes: Bool, votersAddOptions: Bool, expiration: Date, voters: [String], completion: @escaping (String?, Error?) -> Void) {
         let pollsCollectionRef = db.collection("polls")
         
         let pollData: [String: Any] = [
@@ -619,7 +619,8 @@ class FirestoreManager {
             "multipleVotes": multipleVotes,
             "votersAddOptions": votersAddOptions,
             "expiration": Timestamp(date: expiration),
-            "createdBy": userID
+            "createdBy": userID,
+            "voters": voters
         ]
         
         var addedDocumentRef: DocumentReference?

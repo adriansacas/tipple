@@ -8,7 +8,16 @@
 import UIKit
 import FirebaseAuth
 
-class PollsVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
+protocol PollsDelegate: AnyObject {
+    func didCreateNewPoll(_ newPoll: Poll)
+}
+
+protocol PollsDelegateVC: UIViewController {
+    var session: SessionInfo? { get set }
+    var delegate: PollsDelegate? { get set }
+}
+
+class PollsVC: UIViewController, UITableViewDataSource, UITableViewDelegate, PollsDelegate {
     
     @IBOutlet weak var tableView: UITableView!
     
@@ -29,6 +38,11 @@ class PollsVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
         tableView.dataSource = self
 
         getSession()
+    }
+    
+    func didCreateNewPoll(_ newPoll: Poll) {
+        polls.append(newPoll)
+        tableView.reloadData()
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -75,6 +89,7 @@ class PollsVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
             }
         } else if segue.identifier == createPollSegueIdentifier {
             if let createPollVC = segue.destination as? CreatePollVC {
+                createPollVC.delegate = self
                 createPollVC.session = self.session
             }
         }
