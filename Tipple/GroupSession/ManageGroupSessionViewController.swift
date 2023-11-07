@@ -45,27 +45,36 @@ class ManageGroupSessionVC: UIViewController, EditSession {
             settingsButton.isEnabled = false
             stopSessionButton.setTitle("Leave Session", for: .normal)
         }
-        
+        pollTimer = Timer.scheduledTimer(timeInterval: 5, target: self, selector: #selector(pollSessionInfo), userInfo: nil, repeats: true)
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Redundant first setting
         setLabelFields(nameField: self.sessionName, dateField: self.endDate)
-        pollTimer = Timer.scheduledTimer(timeInterval: 15, target: self, selector: #selector(pollSessionInfo), userInfo: nil, repeats: true)
-
     }
     
     
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        // Stop the timer when the view disappears
+        pollTimer?.invalidate()
+    }
+    
     func setLabelFields(nameField: String, dateField: Date) {
-        self.sessionNameTextLabel.text = sessionName
+        if nameField != self.sessionNameTextLabel.text {
+            self.sessionNameTextLabel.text = nameField
+        }
 
         // Display current session name and end date/time
         let dateFormatter = DateFormatter()
         dateFormatter.dateStyle = .long
         dateFormatter.timeStyle = .short
         let formattedDate = dateFormatter.string(from: dateField)
-        self.sessionEndDateTimeLabel.text = formattedDate
+        
+        if formattedDate != self.sessionEndDateTimeLabel.text {
+            self.sessionEndDateTimeLabel.text = formattedDate
+        }
         
         self.sessionName = nameField
         self.endDate = dateField
@@ -90,7 +99,7 @@ class ManageGroupSessionVC: UIViewController, EditSession {
         
         let stopAlertController = UIAlertController(
             title: isManager ? "Are you sure you want to end?" : "Are you sure you want to leave?",
-            message: 
+            message:
                 isManager ? "It will end the session for all members." : "You will not receive new updates from this session.",
             preferredStyle: .alert
         )
@@ -120,8 +129,9 @@ class ManageGroupSessionVC: UIViewController, EditSession {
             users, error in
             if let error = error {
                 print("Error updating symptoms: \(error)")
-            } else if let users = users {
-                print(users)
+            } else if let users = users,
+                      let sessionValues = users["SESSIONVALUES"] {
+                self.setLabelFields(nameField: sessionValues["sessionName"] as! String, dateField: sessionValues["endTime"] as! Date)
             }
         }
     }
