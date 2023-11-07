@@ -28,32 +28,45 @@ class RegisterGroupSessionVC: UIViewController {
     
     @IBAction func createSessionButtonPressed(_ sender: Any) {
         
-        //TODO: take in values from text field and save to firebase in session struct, discuss with Andrew on how to format group session with QuestionnaireVC
-        
-        if(sessionNameTextField.text != ""){
-            //update current session list and group end time
-            
-            let newSessionFields = ["sessionName" : (sessionNameTextField.text ?? "") as String,
-                                    "endTime" : endSessionDateTimePicker.date] as [String : Any]
-            
-            firestoreManager.updateGroupSession(userID: self.userID!, sessionID: self.sessionID!, fields: newSessionFields) { error in
-                if let error = error {
-                    print("Error adding session: \(error)")
-                } else {
-                    //generate and save group session's QR code using the sessionID
-                    self.generatedQR = self.generateQRCode(from: self.sessionID!)
-                
-                    //segue to new screen
-                    self.performSegue(withIdentifier: self.manageGroupSegue, sender: self)
-                }
-            }
-            
-
+        //display warning to fill all fields
+        if(sessionNameTextField.text == ""){
+            AlertUtils.showAlert(title: "Missing Information", message: "Complete all fields to register new account.", viewController: self)
+            return
         }
+        
+        //display warning if too much chars
+        if(sessionNameTextField.text!.count > 15){
+            AlertUtils.showAlert(title: "Max Characters Reached", message: "Session name can only contain at most 15 characters including spaces.", viewController: self)
+            return
+        }
+        
+        //check if new time is before current time
+        let currentDateTime = Date()
+        if(endSessionDateTimePicker.date < currentDateTime){
+            AlertUtils.showAlert(title: "Invalid Time Set", message: "End time must be after the current time.", viewController: self)
+            return
+        }
+        
+        //update current session list and group end time
+        let newSessionFields = ["sessionName" : (sessionNameTextField.text ?? "") as String,
+                                "endTime" : endSessionDateTimePicker.date] as [String : Any]
+        
+        firestoreManager.updateGroupSession(userID: self.userID!, sessionID: self.sessionID!, fields: newSessionFields) { error in
+            if let error = error {
+                print("Error adding session: \(error)")
+            } else {
+                //generate and save group session's QR code using the sessionID
+                self.generatedQR = self.generateQRCode(from: self.sessionID!)
+            
+                //segue to new screen
+                self.performSegue(withIdentifier: self.manageGroupSegue, sender: self)
+            }
+        }
+
     }
     
     //boiler plate code
-    //TODO: generate a QR code here using the sessionID string, connect QR code to add individual to group session (Andrew part)
+    //TODO: move code geenration to ManageViewControllerView!
     func generateQRCode(from string: String) -> UIImage? {
         let data = string.data(using: String.Encoding.ascii)
 

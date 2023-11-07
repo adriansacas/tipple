@@ -32,5 +32,5 @@ class InviteCodeVC: UIViewController {
         self.sessionEndDateTimeLabel.text = formattedDate
     }
     
-    //TODO: make QR image bigger when clicked on?
+    //TODO: make QR image bigger when clicked on
 }
