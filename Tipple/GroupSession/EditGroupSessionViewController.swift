@@ -26,15 +26,30 @@ class EditGroupSessionVC: UIViewController {
     
     @IBAction func updateSessionButtonPressed(_ sender: Any) {
         
-        //check if text field is filled
-        if(editSessionNameTextField.text != "") {
-            //call protocol functions
-            let mainVC = delegate as? EditSession
-            let newSessionFields = ["sessionName" : (editSessionNameTextField.text ?? "") as String,
-                                    "endTime" : editEndSessionDateTimePicker.date] as [String : Any]
-            
-            mainVC?.updateSessionInfo(sessionFields: newSessionFields)
+        //display warning to fill all fields
+        if(editSessionNameTextField.text == ""){
+            AlertUtils.showAlert(title: "Missing Information", message: "Complete all fields to register new account.", viewController: self)
+            return
         }
+        
+        //display warning if too much chars
+        if(editSessionNameTextField.text!.count > 15){
+            AlertUtils.showAlert(title: "Max Characters Reached", message: "Session name can only contain at most 15 characters including spaces.", viewController: self)
+            return
+        }
+        
+        //check if new time is before current time
+        let currentDateTime = Date()
+        if(editEndSessionDateTimePicker.date < currentDateTime){
+            AlertUtils.showAlert(title: "Invalid Time Set", message: "End time must be after the current time.", viewController: self)
+            return
+        }
+        
+        //call protocol functions to update session
+        let mainVC = delegate as? EditSession
+        let newSessionFields = ["sessionName" : (editSessionNameTextField.text ?? "") as String,
+                                "endTime" : editEndSessionDateTimePicker.date] as [String : Any]
+        mainVC?.updateSessionInfo(sessionFields: newSessionFields)
     }
     
     @IBAction func deleteSessionButtonPressed(_ sender: Any) {
