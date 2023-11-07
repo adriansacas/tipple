@@ -20,8 +20,8 @@ class CreatePollVC: UITableViewController, PollsDelegateVC {
     let firestoreManager = FirestoreManager.shared
     var sections: [[String]] = []
     var switchCellLabels: [String] = ["Multiple votes", "Voters can add options"]
-    var session: SessionInfo?
-    var delegate: PollsDelegate?
+    weak var session: SessionInfo?
+    weak var delegate: PollsDelegate?
     
     let promptCellIdentifier = "PromptCell"
     let optionCellIdentifier = "OptionCell"

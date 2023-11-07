@@ -509,11 +509,11 @@ class FirestoreManager {
     // Function to pull information for group members list tableview
     func pullGroupMembers(userID: String, sessionID: String, completion: @escaping ([String: [String: Any]]?, Error?) -> Void) {
         let dispatchGroup = DispatchGroup() // Create a Dispatch Group
-
+        
         var dictOfMembers: [String: [String: Any]] = [:]
-
+        
         let sessionDocRef = db.collection(sessionCollection).document(sessionID).collection(memberColInSess)
-
+        
         sessionDocRef.getDocuments { (querySnapshot, error) in
             if let error = error {
                 completion(nil, error)
@@ -526,22 +526,22 @@ class FirestoreManager {
                     } else {
                         dictOfMembers[memberID] = [:]
                     }
-
+                    
                     if let activeSession = memberDoc["activeSession"] as? Bool {
                         dictOfMembers[memberID]?["Still Active?"] = activeSession.description
                     }
-
+                    
                     var drinksInSession: [DrinkInfo] = []
                     if let drinksInSessionData = memberDoc["drinksInSession"] as? [[String: Any]] {
                         for drinkData in drinksInSessionData {
-                                if let type = drinkData["type"] as? String,
-                                   let timeAtTimestamp = drinkData["timeAt"] as? Timestamp,
-                                   let drinkNum = drinkData["drinkNum"] as? Int,
-                                   let bacAtTime = drinkData["bacAtTime"] as? Float {
-                                    let timeAt = timeAtTimestamp.dateValue()
-                                    let drinkInfo = DrinkInfo(drinkType: type, drinkNum: drinkNum, bacAtTime: bacAtTime, timeAt: timeAt)
-                                    drinksInSession.append(drinkInfo)
-                                }
+                            if let type = drinkData["type"] as? String,
+                               let timeAtTimestamp = drinkData["timeAt"] as? Timestamp,
+                               let drinkNum = drinkData["drinkNum"] as? Int,
+                               let bacAtTime = drinkData["bacAtTime"] as? Float {
+                                let timeAt = timeAtTimestamp.dateValue()
+                                let drinkInfo = DrinkInfo(drinkType: type, drinkNum: drinkNum, bacAtTime: bacAtTime, timeAt: timeAt)
+                                drinksInSession.append(drinkInfo)
+                            }
                         }
                     }
                     
@@ -556,11 +556,11 @@ class FirestoreManager {
                     } else {
                         dictOfMembers[memberID]?["BAC"] = "0.00"
                     }
-
-
+                    
+                    
                     // Enter the Dispatch Group before calling self.getUserData
                     dispatchGroup.enter()
-
+                    
                     self.getUserData(userID: memberID) { (profileInfo, someError) in
                         if someError != nil {
                             // Handle error
@@ -574,7 +574,7 @@ class FirestoreManager {
                         dispatchGroup.leave()
                     }
                 }
-
+                
                 // Notify the completion block when all tasks are complete
                 dispatchGroup.notify(queue: .main) {
                     completion(dictOfMembers, nil)
@@ -595,12 +595,12 @@ class FirestoreManager {
             
             if let sessionDocument = sessionDocument, sessionDocument.exists,
                let sessionData = sessionDocument.data() {
-                self.sessionParser(userID: userID, 
-                              sessionID: sessionDocumentID,
-                              sessionData: sessionData) { sessionTemp in
+                self.sessionParser(userID: userID,
+                                   sessionID: sessionDocumentID,
+                                   sessionData: sessionData) { sessionTemp in
                     completion(sessionTemp, nil) // Return the sessionTemp object upon completion
                 }
-
+                
             } else {
                 completion(nil, NSError(domain: "", code: 0, userInfo: ["message": "Session data not found or is invalid"]))
             }
@@ -624,7 +624,7 @@ class FirestoreManager {
         ]
         
         var addedDocumentRef: DocumentReference?
-
+        
         addedDocumentRef = pollsCollectionRef.addDocument(data: pollData) { error in
             if let error = error {
                 completion(nil, error)
@@ -693,7 +693,7 @@ class FirestoreManager {
             }
         }
     }
-
+    
     func updatePoll(pollID: String, updatedData: [String: Any], completion: @escaping (Error?) -> Void) {
         let pollRef = db.collection("polls").document(pollID)
         
@@ -702,6 +702,28 @@ class FirestoreManager {
             if let error = error {
                 completion(error)
             } else {
+                completion(nil)
+            }
+        }
+    }
+    
+    func updateVotes(pollID: String, userID: String, votes: [String], completion: @escaping (Error?) -> Void) {
+        let pollRef = db.collection("polls").document(pollID)
+        var increment: [String: FieldValue] = [:]
+
+        for option in votes {
+            increment[option] = FieldValue.increment(Int64(1))
+        }
+
+        let updateData = [
+            "options": increment
+        ]
+
+        pollRef.updateData(updateData) { error in
+            if let error = error {
+                print("Error updating document: \(error.localizedDescription)")
+            } else {
+                print("Document updated successfully.")
                 completion(nil)
             }
         }

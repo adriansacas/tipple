@@ -41,8 +41,7 @@ class PollsVC: UIViewController, UITableViewDataSource, UITableViewDelegate, Pol
     }
     
     func didCreateNewPoll(_ newPoll: Poll) {
-        polls.append(newPoll)
-        tableView.reloadData()
+        getPolls()
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -82,9 +81,10 @@ class PollsVC: UIViewController, UITableViewDataSource, UITableViewDelegate, Pol
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == pollDetailsSegueIdentifier {
-            if let pollVC = segue.destination as? PollVC,
+            if let pollVC = segue.destination as? PollVoteVC,
                let pollIndex = tableView.indexPathForSelectedRow?.row {
 //                pollVC.delegate = self
+//                TODO: Consider sendint the pollID instead so that the PollVote and PollResults are forced to retrieve the poll from Firestore and get the latests data
                 pollVC.poll = polls[pollIndex]
             }
         } else if segue.identifier == createPollSegueIdentifier {
