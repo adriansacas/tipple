@@ -614,12 +614,12 @@ class FirestoreManager {
         let pollsCollectionRef = db.collection("polls")
         
         let pollData: [String: Any] = [
-            "Prompt": prompt,
-            "Options": options,
-            "MultipleVotes": multipleVotes,
-            "VotersAddOptions": votersAddOptions,
-            "Expiration": Timestamp(date: expiration),
-            "CreatedBy": userID
+            "prompt": prompt,
+            "options": options,
+            "multipleVotes": multipleVotes,
+            "votersAddOptions": votersAddOptions,
+            "expiration": Timestamp(date: expiration),
+            "createdBy": userID
         ]
         
         var addedDocumentRef: DocumentReference?
@@ -739,6 +739,10 @@ class FirestoreManager {
         
         if let sessionType = sessionData["sessionType"] as? String {
             sessionTemp.sessionType = sessionType
+        }
+        
+        if let polls = sessionData["polls"] as? [String] {
+            sessionTemp.polls = polls
         }
         
         var membersList = [String]()

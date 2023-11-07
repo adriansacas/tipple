@@ -29,7 +29,7 @@ class SessionInfo {
     var sessionName: String?            // String on firebase
     var shareSession: Bool?             // Bool on firebase
     var endGroupSessionTime: Date?      // Endtime on firebase
-    //var polls: [PollInfo]?
+    var polls: [String]?
     
     init() {
         self.createdBy = ""
@@ -48,11 +48,12 @@ class SessionInfo {
         self.sessionName = ""
         self.shareSession = false
         self.endGroupSessionTime = Date()
+        self.polls = []
     }
     
     init (createdBy: String, sessionDocID: String? = nil, membersList: [String], sessionType: String, startTime: Date, drinksInSession: [DrinkInfo], stillActive: Bool,
         startLocation: String? = nil, endLocation: String? = nil, ateBefore: Bool? = nil, symptomsList: [String]? = nil,
-        sessionName: String? = nil, shareSession: Bool? = nil, endGroupSessionTime: Date? = nil) {
+          sessionName: String? = nil, shareSession: Bool? = nil, endGroupSessionTime: Date? = nil, polls: [String]? = nil) {
             self.createdBy = createdBy
             self.sessionDocID = sessionDocID
             self.membersList = membersList
@@ -67,6 +68,7 @@ class SessionInfo {
             self.sessionName = sessionName
             self.shareSession = shareSession
             self.endGroupSessionTime = endGroupSessionTime
+            self.polls = polls
     }
     
     func isSessionHost(userID: String) -> Bool {

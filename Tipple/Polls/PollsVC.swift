@@ -18,7 +18,8 @@ class PollsVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
     let firestoreManager = FirestoreManager.shared
     var polls: [Poll] = []
 //    TODO: change to sessionID, get the session info, pass the session id from the parent view
-    var sessionID = "uyvaVnIENbZHo00Q3ZBR"
+//    var sessionID = "uyvaVnIENbZHo00Q3ZBR"
+    var sessionID: String?
     var session: SessionInfo?
     
     override func viewDidLoad() {
@@ -80,6 +81,9 @@ class PollsVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
     }
     
     func getSession() {
+        guard let sessionID = sessionID else {
+            return
+        }
         let user = Auth.auth().currentUser
         
         firestoreManager.getSessionInfo(userID: user!.uid, sessionDocumentID: sessionID) { sessionInfo, error in
@@ -93,13 +97,14 @@ class PollsVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
     }
     
     func getPolls() {
-        guard session != nil else {
+        guard let session = session,
+              let pollsIDs = session.polls else {
             return
         }
         
         //TODO: modify sessionInfo and getSessionInfo to get polls
-//        firestoreManager.getPolls(pollIDs: sessionInfo.polls) { [weak self] (polls, error) in
-        firestoreManager.getPolls(pollIDs: ["nrHqbeHG62CiCZKMsF9v"]) { [weak self] (polls, error) in
+        firestoreManager.getPolls(pollIDs: pollsIDs) { [weak self] (polls, error) in
+//        firestoreManager.getPolls(pollIDs: ["nrHqbeHG62CiCZKMsF9v"]) { [weak self] (polls, error) in
             if let error = error {
                 print("Error fetching polls: \(error)")
             } else if let polls = polls {

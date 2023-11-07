@@ -31,6 +31,7 @@ class ManageGroupSessionVC: UIViewController, EditSession {
     let sessionSettingSegue = "sessionSettingSegue"
     let activeSessionSegue = "manageToActiveSegue"
     let groupListSegue = "groupListSegue"
+    let pollsSegue = "PollsSegueIdentifier"
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
@@ -105,6 +106,11 @@ class ManageGroupSessionVC: UIViewController, EditSession {
         }  else if segue.identifier == groupListSegue, let destination = segue.destination as? GroupListViewController {
             destination.sessionID = self.sessionID
             destination.userID = self.userID
+        } else if segue.identifier == pollsSegue {
+            if let navController = segue.destination as? UINavigationController,
+               let destination = navController.topViewController as? PollsVC {
+                destination.sessionID = self.sessionID
+            }
         }
     }
 

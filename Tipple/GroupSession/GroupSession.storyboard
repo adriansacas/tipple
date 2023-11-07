@@ -299,6 +299,9 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="filled" title="Manage Poll"/>
+                                <connections>
+                                    <segue destination="rXU-pA-EA3" kind="show" identifier="PollsSegueIdentifier" id="xui-UC-kZJ"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="d6P-PY-1Q9">
                                 <rect key="frame" x="140" y="617" width="151" height="35"/>
@@ -369,6 +372,16 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="OfG-bK-MQO" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2503" y="1593"/>
+        </scene>
+        <!--Polls-->
+        <scene sceneID="jBC-z1-89S">
+            <objects>
+                <viewControllerPlaceholder storyboardName="Polls" id="rXU-pA-EA3" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="TjZ-a2-W2o"/>
+                </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="PnX-su-zbN" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2485" y="1700"/>
         </scene>
     </scenes>
     <resources>
