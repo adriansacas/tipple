@@ -8,7 +8,7 @@
 import UIKit
 import FirebaseAuth
 
-class GroupListViewController: UIViewController {
+class GroupListViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
     @IBOutlet weak var tableView: UITableView!
     
@@ -25,6 +25,8 @@ class GroupListViewController: UIViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        tableView.delegate = self
+        tableView.dataSource = self
         
         firestoreManager.pullGroupMembers(userID: userID!, sessionID: sessionID!) {
             users, error in
