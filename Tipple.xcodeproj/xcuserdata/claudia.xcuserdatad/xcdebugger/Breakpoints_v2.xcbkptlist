@@ -3,4 +3,114 @@
    uuid = "E8A2DCD5-D07D-4B71-8E49-FC49B1E32E83"
    type = "1"
    version = "2.0">
+   <Breakpoints>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "90657BEE-CAD1-4DC1-8256-56A02EB3C256"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Tipple/GroupList/GroupListViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "16"
+            endingLineNumber = "16"
+            landmarkName = "GroupListViewController"
+            landmarkType = "3">
+            <Locations>
+               <Location
+                  uuid = "90657BEE-CAD1-4DC1-8256-56A02EB3C256 - 53eeb6497e4d901d"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Tipple.GroupListViewController.userID.getter : Swift.Optional&lt;Swift.String&gt;"
+                  moduleName = "Tipple"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/claudia/Fall_23/CS_371L/cs371l-tipple/Tipple/GroupList/GroupListViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "0"
+                  endingLineNumber = "0"
+                  offsetFromSymbolStart = "16">
+               </Location>
+               <Location
+                  uuid = "90657BEE-CAD1-4DC1-8256-56A02EB3C256 - 7ff656c043576230"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Tipple.GroupListViewController.userID.setter : Swift.Optional&lt;Swift.String&gt;"
+                  moduleName = "Tipple"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/claudia/Fall_23/CS_371L/cs371l-tipple/Tipple/GroupList/GroupListViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "17"
+                  endingLineNumber = "17"
+                  offsetFromSymbolStart = "0">
+               </Location>
+               <Location
+                  uuid = "90657BEE-CAD1-4DC1-8256-56A02EB3C256 - 25ad43cb43551e23"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Tipple.GroupListViewController.userID.modify : Swift.Optional&lt;Swift.String&gt;"
+                  moduleName = "Tipple"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/claudia/Fall_23/CS_371L/cs371l-tipple/Tipple/GroupList/GroupListViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "17"
+                  endingLineNumber = "17"
+                  offsetFromSymbolStart = "0">
+               </Location>
+               <Location
+                  uuid = "90657BEE-CAD1-4DC1-8256-56A02EB3C256 - 86a4e4720362deb6"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Tipple.GroupListViewController.userID.modify : Swift.Optional&lt;Swift.String&gt; with unmangled suffix &quot;.resume.0&quot;"
+                  moduleName = "Tipple"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/claudia/Fall_23/CS_371L/cs371l-tipple/%3Ccompiler-generated%3E"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "0"
+                  endingLineNumber = "0"
+                  offsetFromSymbolStart = "16">
+               </Location>
+               <Location
+                  uuid = "90657BEE-CAD1-4DC1-8256-56A02EB3C256 - 442b03c2d0486c66"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Tipple.GroupListViewController.init(nibName: Swift.Optional&lt;Swift.String&gt;, bundle: Swift.Optional&lt;__C.NSBundle&gt;) -&gt; Tipple.GroupListViewController"
+                  moduleName = "Tipple"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/claudia/Fall_23/CS_371L/cs371l-tipple/Tipple/GroupList/GroupListViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "17"
+                  endingLineNumber = "17"
+                  offsetFromSymbolStart = "228">
+               </Location>
+               <Location
+                  uuid = "90657BEE-CAD1-4DC1-8256-56A02EB3C256 - 9d7b9209d7d3d76d"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Tipple.GroupListViewController.init(coder: __C.NSCoder) -&gt; Swift.Optional&lt;Tipple.GroupListViewController&gt;"
+                  moduleName = "Tipple"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/claudia/Fall_23/CS_371L/cs371l-tipple/Tipple/GroupList/GroupListViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "17"
+                  endingLineNumber = "17"
+                  offsetFromSymbolStart = "204">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+   </Breakpoints>
 </Bucket>
