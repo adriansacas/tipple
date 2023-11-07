@@ -29,6 +29,8 @@ class ManageGroupSessionVC: UIViewController, EditSession {
     var isManager: Bool = true
     var pollTimer: Timer?
 
+    var lastUpdate: [String: [String: Any]]?
+    
     let inviteCodeSegue = "inviteCodeSegue"
     let sessionSettingSegue = "sessionSettingSegue"
     let activeSessionSegue = "manageToActiveSegue"
@@ -131,6 +133,7 @@ class ManageGroupSessionVC: UIViewController, EditSession {
                 print("Error updating symptoms: \(error)")
             } else if let users = users,
                       let sessionValues = users["SESSIONVALUES"] {
+                self.lastUpdate = users
                 self.setLabelFields(nameField: sessionValues["sessionName"] as! String, dateField: sessionValues["endTime"] as! Date)
             }
         }
@@ -157,6 +160,7 @@ class ManageGroupSessionVC: UIViewController, EditSession {
             destination.userID = self.userID
             destination.sessionID = self.sessionID
         }  else if segue.identifier == groupListSegue, let destination = segue.destination as? GroupListViewController {
+            destination.users = self.lastUpdate
             destination.sessionID = self.sessionID
             destination.userID = self.userID
         } else if segue.identifier == pollsSegue {
