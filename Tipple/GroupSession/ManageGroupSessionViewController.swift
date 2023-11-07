@@ -30,6 +30,7 @@ class ManageGroupSessionVC: UIViewController, EditSession {
     let inviteCodeSegue = "inviteCodeSegue"
     let sessionSettingSegue = "sessionSettingSegue"
     let activeSessionSegue = "manageToActiveSegue"
+    let groupListSegue = "groupListSegue"
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
@@ -101,6 +102,9 @@ class ManageGroupSessionVC: UIViewController, EditSession {
         } else if segue.identifier == activeSessionSegue, let destination = segue.destination as? ShowActiveVC {
             destination.userID = self.userID
             destination.sessionID = self.sessionID
+        }  else if segue.identifier == groupListSegue, let destination = segue.destination as? GroupListViewController {
+            destination.sessionID = self.sessionID
+            destination.userID = self.userID
         }
     }
 

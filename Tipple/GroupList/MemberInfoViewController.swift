@@ -22,6 +22,9 @@ class MemberInfoViewController: UIViewController, UITableViewDelegate, UITableVi
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        tableView.delegate = self
+        tableView.dataSource = self
 
         for key in user!.keys {
             if(key != "name") {
