@@ -55,6 +55,7 @@ class GroupListViewController: UIViewController, UITableViewDelegate, UITableVie
         let row = indexPath.row
         
         let user = users![keys[row]]
+        print(user!)
         cell.textLabel?.text = user!["name"] as? String
         
         return cell

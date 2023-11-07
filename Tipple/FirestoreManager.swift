@@ -528,7 +528,7 @@ class FirestoreManager {
                     }
 
                     if let activeSession = memberDoc["activeSession"] as? Bool {
-                        dictOfMembers[memberID]?["status"] = activeSession
+                        dictOfMembers[memberID]?["Still Active?"] = activeSession.description
                     }
 
                     var drinksInSession: [DrinkInfo] = []
@@ -544,6 +544,19 @@ class FirestoreManager {
                                 }
                         }
                     }
+                    
+                    if !drinksInSession.isEmpty {
+                        if let mostRecentDrink = drinksInSession.max(by: { $0.timeAt < $1.timeAt }) {
+                            // `mostRecentDrink` now contains the `DrinkInfo` with the most recent timestamp
+                            dictOfMembers[memberID]?["BAC"] = mostRecentDrink.getBAC()
+                        } else {
+                            // The `drinksInSession` array is empty
+                            dictOfMembers[memberID]?["BAC"] = "0.00"
+                        }
+                    } else {
+                        dictOfMembers[memberID]?["BAC"] = "0.00"
+                    }
+
 
                     // Enter the Dispatch Group before calling self.getUserData
                     dispatchGroup.enter()
@@ -552,7 +565,7 @@ class FirestoreManager {
                         if someError != nil {
                             // Handle error
                         } else if let tempProfile = profileInfo {
-                            dictOfMembers[memberID]?["contactInfo"] = tempProfile.phoneNumber
+                            dictOfMembers[memberID]?["Contact Info"] = tempProfile.phoneNumber
                             dictOfMembers[memberID]?["name"] = tempProfile.firstName + " " + tempProfile.lastName
                         } else {
                             // Handle the case where profileInfo is nil
