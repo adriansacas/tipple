@@ -508,75 +508,64 @@ class FirestoreManager {
     
     // Function to pull information for group members list tableview
     func pullGroupMembers(userID: String, sessionID: String, completion: @escaping ([String: [String: Any]]?, Error?) -> Void) {
-        let sessionDocRef = db.collection(sessionCollection).document(sessionID).collection(memberColInSess)
-        
+        let dispatchGroup = DispatchGroup() // Create a Dispatch Group
+
         var dictOfMembers: [String: [String: Any]] = [:]
-        
-        
+
+        let sessionDocRef = db.collection(sessionCollection).document(sessionID).collection(memberColInSess)
+
         sessionDocRef.getDocuments { (querySnapshot, error) in
             if let error = error {
-                completion(nil, error) // Handle the error and pass it to the completion block
+                completion(nil, error)
             } else {
                 for document in querySnapshot!.documents {
                     let memberDoc = document.data()
                     let memberID = document.documentID
                     if memberID == userID {
                         continue
+                    } else {
+                        dictOfMembers[memberID] = [:]
                     }
-                    
-                    var memberDict = ["status" : false,
-                                      "contactInfo" : "",
-                                      "BAC" : "",
-                                      "name": ""]
-                    
-                    /* Store whether this user is still active or not */
+
                     if let activeSession = memberDoc["activeSession"] as? Bool {
-                        memberDict["status"] = activeSession
+                        dictOfMembers[memberID]?["status"] = activeSession
                     }
-                    
-                    /* Pull and the current drinks in order to calculate the BAC for the user */
+
                     var drinksInSession: [DrinkInfo] = []
                     if let drinksInSessionData = memberDoc["drinksInSession"] as? [[String: Any]] {
                         for drinkData in drinksInSessionData {
-                            if let type = drinkData["type"] as? String,
-                               let timeAtTimestamp = drinkData["timeAt"] as? Timestamp,
-                               let drinkNum = drinkData["drinkNum"] as? Int,
-                               let bacAtTime = drinkData["bacAtTime"] as? Float {
-                                let timeAt = timeAtTimestamp.dateValue()
-                                let drinkInfo = DrinkInfo(drinkType: type, drinkNum: drinkNum, bacAtTime: bacAtTime, timeAt: timeAt)
-                                drinksInSession.append(drinkInfo)
-                            }
+                                if let type = drinkData["type"] as? String,
+                                   let timeAtTimestamp = drinkData["timeAt"] as? Timestamp,
+                                   let drinkNum = drinkData["drinkNum"] as? Int,
+                                   let bacAtTime = drinkData["bacAtTime"] as? Float {
+                                    let timeAt = timeAtTimestamp.dateValue()
+                                    let drinkInfo = DrinkInfo(drinkType: type, drinkNum: drinkNum, bacAtTime: bacAtTime, timeAt: timeAt)
+                                    drinksInSession.append(drinkInfo)
+                                }
                         }
                     }
-                    if !drinksInSession.isEmpty {
-                        if let mostRecentDrink = drinksInSession.max(by: { $0.timeAt < $1.timeAt }) {
-                            // `mostRecentDrink` now contains the `DrinkInfo` with the most recent timestamp
-                            memberDict["BAC"] = mostRecentDrink.getBAC()
-                        } else {
-                            // The `drinksInSession` array is empty
-                            memberDict["BAC"] = "0.00"
-                        }
-                    } else {
-                        memberDict["BAC"] = "0.00"
-                    }
-                    
-                    self.getUserData(userID: memberID) { (profileInfo, error) in
-                        if let error = error {
-                            memberDict["contactInfo"] = ""
-                            memberDict["name"] = ""
+
+                    // Enter the Dispatch Group before calling self.getUserData
+                    dispatchGroup.enter()
+
+                    self.getUserData(userID: memberID) { (profileInfo, someError) in
+                        if someError != nil {
+                            // Handle error
                         } else if let tempProfile = profileInfo {
-                            memberDict["contactInfo"] = tempProfile.phoneNumber
-                            memberDict["name"] = tempProfile.firstName + " " + tempProfile.lastName
-                            
+                            dictOfMembers[memberID]?["contactInfo"] = tempProfile.phoneNumber
+                            dictOfMembers[memberID]?["name"] = tempProfile.firstName + " " + tempProfile.lastName
                         } else {
-                            memberDict["contactInfo"] = ""
-                            memberDict["name"] = ""
+                            // Handle the case where profileInfo is nil
                         }
+                        // Leave the Dispatch Group when self.getUserData is complete
+                        dispatchGroup.leave()
                     }
-                    // Append the memberDict to dictOfMembers
-                    dictOfMembers[memberID] = memberDict
                 }
-                completion(dictOfMembers, nil)
+
+                // Notify the completion block when all tasks are complete
+                dispatchGroup.notify(queue: .main) {
+                    completion(dictOfMembers, nil)
+                }
             }
         }
     }

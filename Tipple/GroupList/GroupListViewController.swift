@@ -27,21 +27,22 @@ class GroupListViewController: UIViewController, UITableViewDelegate, UITableVie
         // Do any additional setup after loading the view.
         tableView.delegate = self
         tableView.dataSource = self
-        
+
         firestoreManager.pullGroupMembers(userID: userID!, sessionID: sessionID!) {
             users, error in
             if let error = error {
                 print("Error updating symptoms: \(error)")
             } else {
-                self.tableView.beginUpdates()
                 self.users = users
+                self.keys.removeAll()
                 for user in users! {
                     self.keys.append(user.key)
                 }
-                self.tableView.endUpdates()
+                self.tableView.reloadData()
             }
         }
     }
+
     
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -54,7 +55,6 @@ class GroupListViewController: UIViewController, UITableViewDelegate, UITableVie
         let row = indexPath.row
         
         let user = users![keys[row]]
-        
         cell.textLabel?.text = user!["name"] as? String
         
         return cell
