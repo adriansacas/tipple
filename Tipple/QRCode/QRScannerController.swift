@@ -38,7 +38,7 @@ class QRScannerController: UIViewController {
         
         checkCameraAccess { granted in
             if granted {
-                self.performSegue(withIdentifier: "qrToQuestionSegue", sender: nil)
+                //self.performSegue(withIdentifier: "qrToQuestionSegue", sender: nil)
 
                 // Camera access is granted, proceed with your logic
                 // Get the back-facing camera for capturing videos
@@ -205,6 +205,7 @@ class QRScannerController: UIViewController {
         if segue.identifier == "qrToQuestionSegue",
            let destination = segue.destination as? QuestionnaireVC {
             destination.sessionType = "Join"
+            destination.sessionID = messageLabel.text!
         }
     }
 }
