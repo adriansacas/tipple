@@ -567,6 +567,103 @@ class FirestoreManager {
                         } else if let tempProfile = profileInfo {
                             dictOfMembers[memberID]?["Contact Info"] = tempProfile.phoneNumber
                             dictOfMembers[memberID]?["name"] = tempProfile.firstName + " " + tempProfile.lastName
+                            dictOfMembers[memberID]?["Profile Pic"] = tempProfile.profileImageURL
+                        } else {
+                            // Handle the case where profileInfo is nil
+                        }
+                        // Leave the Dispatch Group when self.getUserData is complete
+                        dispatchGroup.leave()
+                    }
+                }
+
+                // Notify the completion block when all tasks are complete
+                dispatchGroup.notify(queue: .main) {
+                    completion(dictOfMembers, nil)
+                }
+            }
+        }
+    }
+    
+    // Function to pull information for group members list tableview
+    func pollGroupSession(userID: String, sessionID: String, completion: @escaping ([String: [String: Any]]?, Error?) -> Void) {
+        let dispatchGroup = DispatchGroup() // Create a Dispatch Group
+
+        var dictOfMembers: [String: [String: Any]] = [:]
+        
+        let sessionDoc = db.collection(sessionCollection).document(sessionID)
+        
+        sessionDoc.getDocument { (document, error) in
+            if let error = error {
+                completion(nil, error)
+            } else if let document = document, document.exists {
+                let sessionData = document.data()
+                dictOfMembers["SESSIONVALUES"] = [:]
+                
+                if let endTimeTimestamp = sessionData!["endTime"] as? Timestamp {
+                    dictOfMembers["SESSIONVALUES"]!["endTime"] = endTimeTimestamp.dateValue()
+                }
+                
+                if let sessionName = sessionData!["sessionName"] as? String {
+                    dictOfMembers["SESSIONVALUES"]!["sessionName"] = sessionName
+                }
+            }
+        }
+
+        let sessionDocRef = sessionDoc.collection(memberColInSess)
+
+        sessionDocRef.getDocuments { (querySnapshot, error) in
+            if let error = error {
+                completion(nil, error)
+            } else {
+                for document in querySnapshot!.documents {
+                    let memberDoc = document.data()
+                    let memberID = document.documentID
+                    if memberID == userID {
+                        continue
+                    } else {
+                        dictOfMembers[memberID] = [:]
+                    }
+
+                    if let activeSession = memberDoc["activeSession"] as? Bool {
+                        dictOfMembers[memberID]?["Still Active?"] = activeSession.description
+                    }
+
+                    var drinksInSession: [DrinkInfo] = []
+                    if let drinksInSessionData = memberDoc["drinksInSession"] as? [[String: Any]] {
+                        for drinkData in drinksInSessionData {
+                                if let type = drinkData["type"] as? String,
+                                   let timeAtTimestamp = drinkData["timeAt"] as? Timestamp,
+                                   let drinkNum = drinkData["drinkNum"] as? Int,
+                                   let bacAtTime = drinkData["bacAtTime"] as? Float {
+                                    let timeAt = timeAtTimestamp.dateValue()
+                                    let drinkInfo = DrinkInfo(drinkType: type, drinkNum: drinkNum, bacAtTime: bacAtTime, timeAt: timeAt)
+                                    drinksInSession.append(drinkInfo)
+                                }
+                        }
+                    }
+                    
+                    if !drinksInSession.isEmpty {
+                        if let mostRecentDrink = drinksInSession.max(by: { $0.timeAt < $1.timeAt }) {
+                            // `mostRecentDrink` now contains the `DrinkInfo` with the most recent timestamp
+                            dictOfMembers[memberID]?["BAC"] = mostRecentDrink.getBAC()
+                        } else {
+                            // The `drinksInSession` array is empty
+                            dictOfMembers[memberID]?["BAC"] = "0.00"
+                        }
+                    } else {
+                        dictOfMembers[memberID]?["BAC"] = "0.00"
+                    }
+
+
+                    // Enter the Dispatch Group before calling self.getUserData
+                    dispatchGroup.enter()
+
+                    self.getUserData(userID: memberID) { (profileInfo, someError) in
+                        if someError != nil {
+                            // Handle error
+                        } else if let tempProfile = profileInfo {
+                            dictOfMembers[memberID]?["Contact Info"] = tempProfile.phoneNumber
+                            dictOfMembers[memberID]?["name"] = tempProfile.firstName + " " + tempProfile.lastName
                         } else {
                             // Handle the case where profileInfo is nil
                         }

@@ -27,12 +27,14 @@ class ManageGroupSessionVC: UIViewController, EditSession {
     var sessionName: String = ""
     var endDate: Date = Date()
     var isManager: Bool = true
-    
+    var pollTimer: Timer?
+
     let inviteCodeSegue = "inviteCodeSegue"
     let sessionSettingSegue = "sessionSettingSegue"
     let activeSessionSegue = "manageToActiveSegue"
     let groupListSegue = "groupListSegue"
     let pollsSegue = "PollsSegueIdentifier"
+    
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
@@ -48,11 +50,10 @@ class ManageGroupSessionVC: UIViewController, EditSession {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        
-        
         // Redundant first setting
         setLabelFields(nameField: self.sessionName, dateField: self.endDate)
+        pollTimer = Timer.scheduledTimer(timeInterval: 15, target: self, selector: #selector(pollSessionInfo), userInfo: nil, repeats: true)
+
     }
     
     
@@ -71,16 +72,29 @@ class ManageGroupSessionVC: UIViewController, EditSession {
     }
     
     func updateSessionInfo(sessionFields: [String : Any]){
+        if let sessionName = sessionFields["sessionName"] as? String,
+           let endTime = sessionFields["endTime"] as? Date{
+               self.setLabelFields(nameField: sessionName, dateField: endTime)
+        }
+        
         firestoreManager.updateGroupSession(userID: self.userID!, sessionID: self.sessionID!, fields: sessionFields) { error in
             if let error = error {
                 print("Error adding session: \(error)")
             } else {
-                if let sessionName = sessionFields["sessionName"] as? String,
-                   let endTime = sessionFields["endTime"] as? Date{
-                       self.setLabelFields(nameField: sessionName, dateField: endTime)
-                }
-            
                 print("Successfully updated the session fields")
+            }
+        }
+    }
+    
+    
+    // Add @objc annotation to make the function accessible to Timer
+    @objc func pollSessionInfo() {
+        firestoreManager.pollGroupSession(userID: userID!, sessionID: sessionID!) {
+            users, error in
+            if let error = error {
+                print("Error updating symptoms: \(error)")
+            } else if let users = users {
+                print(users)
             }
         }
     }
