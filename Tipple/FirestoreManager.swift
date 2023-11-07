@@ -664,6 +664,7 @@ class FirestoreManager {
                         } else if let tempProfile = profileInfo {
                             dictOfMembers[memberID]?["Contact Info"] = tempProfile.phoneNumber
                             dictOfMembers[memberID]?["name"] = tempProfile.firstName + " " + tempProfile.lastName
+                            dictOfMembers[memberID]?["Profile Pic"] = tempProfile.profileImageURL
                         } else {
                             // Handle the case where profileInfo is nil
                         }

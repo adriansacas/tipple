@@ -32,9 +32,9 @@ class MemberInfoViewController: UIViewController, UITableViewDelegate, UITableVi
         self.profilePic.clipsToBounds = true
 
         for key in user!.keys {
-            if(key == "Profile Pic") {
+            if key == "Profile Pic" {
                 setProfileImage(url: user![key] as? String)
-            } else if(key != "name") {
+            } else if key != "name" || key != "SESSIONVALUES" {
                 keys.append(key)
             }
         }
