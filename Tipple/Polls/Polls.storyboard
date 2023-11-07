@@ -54,7 +54,7 @@
                     <navigationItem key="navigationItem" title="Polls" id="xkE-RV-Bn4">
                         <barButtonItem key="rightBarButtonItem" title="Item" image="plus" catalog="system" id="cKR-8z-QAw">
                             <connections>
-                                <segue destination="rzK-lv-2C9" kind="show" id="eQc-is-Dd6"/>
+                                <segue destination="rzK-lv-2C9" kind="show" identifier="CreatePollSegueIdentifier" id="eQc-is-Dd6"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -136,18 +136,93 @@
         <!--New Poll-->
         <scene sceneID="FmW-vB-lPd">
             <objects>
-                <tableViewController id="rzK-lv-2C9" sceneMemberID="viewController">
+                <tableViewController id="rzK-lv-2C9" customClass="CreatePollVC" customModule="Tipple" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="insetGrouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" estimatedSectionHeaderHeight="-1" sectionFooterHeight="18" estimatedSectionFooterHeight="-1" id="ZUa-km-Gwx">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="cdB-xj-67f">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="PromptCell" id="cdB-xj-67f" customClass="PromptCell" customModule="Tipple" customModuleProvider="target">
                                 <rect key="frame" x="20" y="55.333332061767578" width="353" height="43.666667938232422"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="cdB-xj-67f" id="4wE-bP-sXF">
                                     <rect key="frame" x="0.0" y="0.0" width="353" height="43.666667938232422"/>
                                     <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Prompt" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="c6h-88-QO9">
+                                            <rect key="frame" x="20" y="5" width="313" height="34"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                            <textInputTraits key="textInputTraits"/>
+                                        </textField>
+                                    </subviews>
                                 </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="textField" destination="c6h-88-QO9" id="fNw-Pi-GgP"/>
+                                </connections>
+                            </tableViewCell>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="OptionCell" id="X2S-iW-RJN" customClass="OptionCell" customModule="Tipple" customModuleProvider="target">
+                                <rect key="frame" x="20" y="99" width="353" height="43.666667938232422"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="X2S-iW-RJN" id="E5h-eK-cnn">
+                                    <rect key="frame" x="0.0" y="0.0" width="353" height="43.666667938232422"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Option" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="VFO-Fc-tZp">
+                                            <rect key="frame" x="20" y="4" width="313" height="34"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                            <textInputTraits key="textInputTraits"/>
+                                        </textField>
+                                    </subviews>
+                                </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="textField" destination="VFO-Fc-tZp" id="opz-W1-WYt"/>
+                                </connections>
+                            </tableViewCell>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="AddOptionCell" id="uNI-qq-X2s">
+                                <rect key="frame" x="20" y="142.66666793823242" width="353" height="43.666667938232422"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="uNI-qq-X2s" id="cIF-or-Pm2">
+                                    <rect key="frame" x="0.0" y="0.0" width="353" height="43.666667938232422"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Add Option" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vq5-oc-SYH">
+                                            <rect key="frame" x="20" y="11" width="87" height="21"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="SwitchCell" id="uYO-qF-29B" customClass="SwitchCell" customModule="Tipple" customModuleProvider="target">
+                                <rect key="frame" x="20" y="186.33333587646484" width="353" height="43.666667938232422"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="uYO-qF-29B" id="n2L-8X-Y5u">
+                                    <rect key="frame" x="0.0" y="0.0" width="353" height="43.666667938232422"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" tag="1" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hTd-68-ZG4">
+                                            <rect key="frame" x="20" y="11" width="256" height="21"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <switch opaque="NO" tag="2" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="mrN-OG-DWx">
+                                            <rect key="frame" x="284" y="6.3333333333333321" width="51" height="30.999999999999996"/>
+                                        </switch>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstAttribute="trailing" secondItem="mrN-OG-DWx" secondAttribute="trailing" constant="20" id="3Lk-QI-N9H"/>
+                                        <constraint firstItem="mrN-OG-DWx" firstAttribute="centerY" secondItem="n2L-8X-Y5u" secondAttribute="centerY" id="m3T-Vr-T6n"/>
+                                    </constraints>
+                                </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="label" destination="hTd-68-ZG4" id="31a-a8-o5q"/>
+                                    <outlet property="switchSlider" destination="mrN-OG-DWx" id="g1h-fc-aMp"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <sections/>
@@ -157,12 +232,16 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="New Poll" id="Fck-jg-yM7">
-                        <barButtonItem key="rightBarButtonItem" title="Save" id="P6E-Qi-vpt"/>
+                        <barButtonItem key="rightBarButtonItem" title="Save" id="P6E-Qi-vpt">
+                            <connections>
+                                <action selector="saveButtonTapped:" destination="rzK-lv-2C9" id="LlD-OQ-duw"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="TvS-i7-qnJ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2451" y="-506"/>
+            <point key="canvasLocation" x="2449.6183206106871" y="-506.33802816901414"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="cFo-ed-Jbc">

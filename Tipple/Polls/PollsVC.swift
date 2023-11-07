@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import FirebaseAuth
 
 class PollsVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
@@ -13,18 +14,20 @@ class PollsVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
     let textCellIdentifier = "TextCell"
     let pollDetailsSegueIdentifier = "PollDetailsSegueIdentifier"
+    let createPollSegueIdentifier = "CreatePollSegueIdentifier"
     let firestoreManager = FirestoreManager.shared
     var polls: [Poll] = []
-//    TODO: pass the session info from the parent view
-    var sessionInfo: SessionInfo?
+//    TODO: change to sessionID, get the session info, pass the session id from the parent view
+    var sessionID = "uyvaVnIENbZHo00Q3ZBR"
+    var session: SessionInfo?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         tableView.delegate = self
         tableView.dataSource = self
-        
-        getPolls()
+
+        getSession()
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -69,16 +72,32 @@ class PollsVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
 //                pollVC.delegate = self
                 pollVC.poll = polls[pollIndex]
             }
+        } else if segue.identifier == createPollSegueIdentifier {
+            if let createPollVC = segue.destination as? CreatePollVC {
+                createPollVC.session = self.session
+            }
+        }
+    }
+    
+    func getSession() {
+        let user = Auth.auth().currentUser
+        
+        firestoreManager.getSessionInfo(userID: user!.uid, sessionDocumentID: sessionID) { sessionInfo, error in
+            if let error = error {
+                print("Error fetching session information: \(error.localizedDescription)")
+            } else if let sessionInfo = sessionInfo {
+                self.session = sessionInfo
+                self.getPolls()
+            }
         }
     }
     
     func getPolls() {
-//        TODO: Uncomment this after implementing passing sessioninfo from parent view
-//        guard let sessionInfo = sessionInfo else {
-//            // Handle the case where sessionInfo is nil
-//            return
-//        }
+        guard session != nil else {
+            return
+        }
         
+        //TODO: modify sessionInfo and getSessionInfo to get polls
 //        firestoreManager.getPolls(pollIDs: sessionInfo.polls) { [weak self] (polls, error) in
         firestoreManager.getPolls(pollIDs: ["nrHqbeHG62CiCZKMsF9v"]) { [weak self] (polls, error) in
             if let error = error {
