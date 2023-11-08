@@ -17,7 +17,7 @@ class MemberInfoViewController: UIViewController, UITableViewDelegate, UITableVi
     let firestoreManager = FirestoreManager.shared
     let textCellIdentifier = "TextCell"
     
-    var keys:[String] = ["BAC", "Contact Info", "Still Active?"]
+    var keys:[String] = ["BAC", "Still Active?", "Contact Info"]
     var user:[String:Any]?
     var delegate:UIViewController?
     
