@@ -834,6 +834,34 @@ class FirestoreManager {
             }
         }
     }
+    
+    func updateVote(pollID: String, vote: String, completion: @escaping (Error?) -> Void) {
+        let pollRef = db.collection("polls").document(pollID)
+        let updateData = ["options.\(vote)": FieldValue.increment(Int64(1))]
+
+        pollRef.updateData(updateData) { error in
+            if let error = error {
+                print("Error updating vote: \(error.localizedDescription)")
+            } else {
+                print("Vote updated successfully.")
+                completion(nil)
+            }
+        }
+    }
+    
+    func updateVoters(pollID: String, voter: String, completion: @escaping (Error?) -> Void) {
+        let pollRef = db.collection("polls").document(pollID)
+        let updateData = ["voters": FieldValue.arrayUnion([voter])]
+
+        pollRef.updateData(updateData) { error in
+            if let error = error {
+                print("Error updating voters: \(error.localizedDescription)")
+            } else {
+                print("Voters updated successfully.")
+                completion(nil)
+            }
+        }
+    }
 
     func deletePoll(pollID: String, completion: @escaping (Error?) -> Void) {
         let pollRef = db.collection("polls").document(pollID)
@@ -846,7 +874,6 @@ class FirestoreManager {
                 completion(nil)
             }
         }
-        // TODO: Remove reference from session
     }
 
 

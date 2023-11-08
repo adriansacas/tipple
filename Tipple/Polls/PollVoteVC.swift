@@ -7,6 +7,7 @@
 
 import UIKit
 import FirebaseAuth
+import FirebaseFirestore
 
 class PollVoteVC: UIViewController, UITableViewDataSource, UITableViewDelegate, PollsDelegateVC {
     
@@ -89,23 +90,37 @@ class PollVoteVC: UIViewController, UITableViewDataSource, UITableViewDelegate, 
     }
     
     @IBAction func submitVote(_ sender: Any) {
-        if let selectedOptionIndex = selectedOptionIndex {
-            let selectedOption = options[selectedOptionIndex]
-            let user = Auth.auth().currentUser
-            
-            firestoreManager.updateVotes(pollID: poll!.pollID!, userID: user!.uid, votes: [selectedOption]) { (error) in
-                if let error = error {
-                    print("Error submitting vote: \(error)")
-                } else {
-                    print("Vote saved successfully")
-                    
-                    self.delegate?.didVote()
-                    self.navigationController?.popViewController(animated: true)
+        guard let selectedOptionIndex = selectedOptionIndex else {
+            // Display an alert or a message to inform the user to select an option
+            AlertUtils.showAlert(title: "Invalid vote", message: "Please select at least one option", viewController: self)
+            return
+        }
+        
+        guard let poll = poll,
+              let pollID = poll.pollID,
+              let currentUserUID = Auth.auth().currentUser?.uid else {
+            return
+        }
+        
+        let selectedOption = options[selectedOptionIndex]
+        
+        firestoreManager.updateVote(pollID: pollID, vote: selectedOption) { (error) in
+            if let error = error {
+                print("Error submitting vote: \(error)")
+            } else {
+                print("Vote saved successfully")
+                
+                self.firestoreManager.updateVoters(pollID: pollID, voter: currentUserUID) { (error) in
+                    if let error = error {
+                        print("Error submitting voters: \(error)")
+                    } else {
+                        print("Voters saved successfully")
+
+                        self.delegate?.didVote()
+                        self.navigationController?.popViewController(animated: true)
+                    }
                 }
             }
-        } else {
-            // Display an error message to the user indicating they need to select an option.
-            AlertUtils.showAlert(title: "Invalid vote", message: "Please select at least one option", viewController: self)
         }
     }
 }
