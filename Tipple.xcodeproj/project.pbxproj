@@ -71,6 +71,8 @@
 		B3571DEE2AFA05F000095EF9 /* SwitchCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3571DED2AFA05F000095EF9 /* SwitchCell.swift */; };
 		B3571DF02AFA169100095EF9 /* OptionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3571DEF2AFA169100095EF9 /* OptionCell.swift */; };
 		B3571DF42AFADAEE00095EF9 /* VoteOptionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3571DF32AFADAEE00095EF9 /* VoteOptionCell.swift */; };
+		B3571DF62AFAF92700095EF9 /* PollResultsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3571DF52AFAF92700095EF9 /* PollResultsVC.swift */; };
+		B3571DF82AFB1A3400095EF9 /* ResultOptionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3571DF72AFB1A3400095EF9 /* ResultOptionCell.swift */; };
 		B36E61E42AD88C2300AFF50E /* SettingsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B36E61E32AD88C2300AFF50E /* SettingsVC.swift */; };
 		B3CE37622AD62FF1004FB1A1 /* Settings.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B3CE37612AD62FF1004FB1A1 /* Settings.storyboard */; };
 /* End PBXBuildFile section */
@@ -137,6 +139,8 @@
 		B3571DED2AFA05F000095EF9 /* SwitchCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwitchCell.swift; sourceTree = "<group>"; };
 		B3571DEF2AFA169100095EF9 /* OptionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptionCell.swift; sourceTree = "<group>"; };
 		B3571DF32AFADAEE00095EF9 /* VoteOptionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoteOptionCell.swift; sourceTree = "<group>"; };
+		B3571DF52AFAF92700095EF9 /* PollResultsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PollResultsVC.swift; sourceTree = "<group>"; };
+		B3571DF72AFB1A3400095EF9 /* ResultOptionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultOptionCell.swift; sourceTree = "<group>"; };
 		B36E61E32AD88C2300AFF50E /* SettingsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsVC.swift; sourceTree = "<group>"; };
 		B3CE37612AD62FF1004FB1A1 /* Settings.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Settings.storyboard; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -319,6 +323,8 @@
 				B3571DED2AFA05F000095EF9 /* SwitchCell.swift */,
 				B3571DEF2AFA169100095EF9 /* OptionCell.swift */,
 				B3571DF32AFADAEE00095EF9 /* VoteOptionCell.swift */,
+				B3571DF52AFAF92700095EF9 /* PollResultsVC.swift */,
+				B3571DF72AFB1A3400095EF9 /* ResultOptionCell.swift */,
 			);
 			path = Polls;
 			sourceTree = "<group>";
@@ -428,8 +434,10 @@
 				B3571DE82AF86F7D00095EF9 /* Poll.swift in Sources */,
 				344830172AEB67B700039FAD /* RegisterGroupSessionViewController.swift in Sources */,
 				B3329D392ADB71D900F23531 /* ProfileInfo.swift in Sources */,
+				B3571DF62AFAF92700095EF9 /* PollResultsVC.swift in Sources */,
 				49B79CB82AF86ECB008654CB /* GroupListViewController.swift in Sources */,
 				494A451A2AF5F37500B54542 /* QuestionnaireVC.swift in Sources */,
+				B3571DF82AFB1A3400095EF9 /* ResultOptionCell.swift in Sources */,
 				B341BF792AD9094300505C37 /* ProfileInfoBirthdayVC.swift in Sources */,
 				B34377182ADE71BB003B1D96 /* AlertUtils.swift in Sources */,
 				494A45182AF5F36F00B54542 /* DrinkInfo.swift in Sources */,

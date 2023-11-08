@@ -812,8 +812,9 @@ class FirestoreManager {
             increment[option] = FieldValue.increment(Int64(1))
         }
 
-        let updateData = [
-            "options": increment
+        let updateData: [String: Any] = [
+            "options": increment,
+            "voters": FieldValue.arrayUnion([userID])
         ]
 
         pollRef.updateData(updateData) { error in

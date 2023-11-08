@@ -8,17 +8,20 @@
 import UIKit
 import FirebaseAuth
 
-class PollVoteVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
+class PollVoteVC: UIViewController, UITableViewDataSource, UITableViewDelegate, PollsDelegateVC {
+    
+    var session: SessionInfo?
+    var delegate: PollsDelegate?
+    weak var poll: Poll?
     
     @IBOutlet weak var pollTitleLabel: UILabel!
     @IBOutlet weak var createdByLabel: UILabel!
     @IBOutlet weak var tableView: UITableView!
     let optionVoteCellIdentifier = "OptionVoteCell"
     
-    weak var poll: Poll?
     var createdByUser: ProfileInfo?
     let firestoreManager = FirestoreManager.shared
-//    weak var delegate: PollDelegate?
+    
     var selectedOptionIndex: Int?
     var options: [String] = []
 
@@ -95,6 +98,8 @@ class PollVoteVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
                     print("Error submitting vote: \(error)")
                 } else {
                     print("Vote saved successfully")
+                    
+                    self.delegate?.didVote()
                     self.navigationController?.popViewController(animated: true)
                 }
             }

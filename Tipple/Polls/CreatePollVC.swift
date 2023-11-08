@@ -173,7 +173,6 @@ class CreatePollVC: UITableViewController, PollsDelegateVC {
                 print("Error creating poll: \(error)")
             } else if let pollID = pollID {
                 // Poll created successfully
-//                TODO: add pollID to session.polls by calling firestoremanager.updatesession
                 self.updateSession(pollID: pollID)
                 
                 self.delegate?.didCreateNewPoll(poll)

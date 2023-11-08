@@ -10,6 +10,7 @@ import FirebaseAuth
 
 protocol PollsDelegate: AnyObject {
     func didCreateNewPoll(_ newPoll: Poll)
+    func didVote()
 }
 
 protocol PollsDelegateVC: UIViewController {
@@ -24,6 +25,7 @@ class PollsVC: UIViewController, UITableViewDataSource, UITableViewDelegate, Pol
     let textCellIdentifier = "TextCell"
     let pollDetailsSegueIdentifier = "PollDetailsSegueIdentifier"
     let createPollSegueIdentifier = "CreatePollSegueIdentifier"
+    let pollResultsSegueIdentifier = "PollResultsSegueIdentifier"
     let firestoreManager = FirestoreManager.shared
     var polls: [Poll] = []
 //    TODO: change to sessionID, get the session info, pass the session id from the parent view
@@ -41,6 +43,10 @@ class PollsVC: UIViewController, UITableViewDataSource, UITableViewDelegate, Pol
     }
     
     func didCreateNewPoll(_ newPoll: Poll) {
+        getPolls()
+    }
+    
+    func didVote() {
         getPolls()
     }
     
@@ -79,18 +85,34 @@ class PollsVC: UIViewController, UITableViewDataSource, UITableViewDelegate, Pol
         }
     }
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let poll = polls[indexPath.row]
+        let user = Auth.auth().currentUser
+        
+        if poll.voters.contains(user!.uid) { // has voted. show results
+            performSegue(withIdentifier: pollResultsSegueIdentifier, sender: self)
+        } else {
+            performSegue(withIdentifier: pollDetailsSegueIdentifier, sender: self)
+        }
+    }
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == pollDetailsSegueIdentifier {
-            if let pollVC = segue.destination as? PollVoteVC,
+            if let pollVoteVC = segue.destination as? PollVoteVC,
                let pollIndex = tableView.indexPathForSelectedRow?.row {
-//                pollVC.delegate = self
 //                TODO: Consider sendint the pollID instead so that the PollVote and PollResults are forced to retrieve the poll from Firestore and get the latests data
-                pollVC.poll = polls[pollIndex]
+                pollVoteVC.poll = polls[pollIndex]
+                pollVoteVC.delegate = self
             }
         } else if segue.identifier == createPollSegueIdentifier {
             if let createPollVC = segue.destination as? CreatePollVC {
                 createPollVC.delegate = self
                 createPollVC.session = self.session
+            }
+        } else if segue.identifier == pollResultsSegueIdentifier {
+            if let pollResultsVC = segue.destination as? PollResultsVC,
+                let pollIndex = tableView.indexPathForSelectedRow?.row {
+                    pollResultsVC.poll = polls[pollIndex]
             }
         }
     }
