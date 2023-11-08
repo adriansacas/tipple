@@ -70,14 +70,29 @@ class PollsVC: UIViewController, UITableViewDataSource, UITableViewDelegate, Pol
         if editingStyle == .delete {
             let pollToDelete = polls[indexPath.row]
             if let pollIDToDelete = pollToDelete.pollID {
-                firestoreManager.deletePoll(pollID: pollIDToDelete) { error in
-                    if let error = error {
-                        print("Error deleting poll: \(error)")
-                    } else {
-                        // Poll deleted successfully
-                        self.polls.remove(at: indexPath.row)
-                        tableView.deleteRows(at: [indexPath], with: .fade)
+                if let currentUserUID = Auth.auth().currentUser?.uid, currentUserUID == pollToDelete.createdBy {
+                    firestoreManager.deletePoll(pollID: pollIDToDelete) { error in
+                        if let error = error {
+                            print("Error deleting poll: \(error)")
+                        } else {
+                            // Poll deleted successfully
+                            self.polls.remove(at: indexPath.row)
+                            tableView.deleteRows(at: [indexPath], with: .fade)
+                            // TODO: do better checks for nil. Also consider keeping a list of ids handy
+                            self.session!.polls = self.polls.map{ $0.pollID! }
+                            let fields = ["polls": self.session?.polls as Any] as [String : Any]
+                            // TODO: Consider using FieldValue.arrayUnion(valuesToAdd) instead of passing all the current pollIDs
+                            self.firestoreManager.updateGroupSession(userID: currentUserUID, sessionID: self.sessionID!, fields: fields) { error in
+                                if let error = error {
+                                    print("Error updating group session: \(error.localizedDescription)")
+                                } else {
+                                    print("Group session updated successfully.")
+                                }
+                            }
+                        }
                     }
+                } else {
+                    print("Unauthorized to delete this poll. Current user's UID does not match createdBy.")
                 }
             } else {
                 print("Error retrieving poll ID")
