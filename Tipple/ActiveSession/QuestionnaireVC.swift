@@ -109,7 +109,7 @@ class QuestionnaireVC: UIViewController {
             /* HARDCODED SESSION TO JOIN ATM
                 TODO: MAKE SURE THE SESSION YOU"RE JOINING IS A GROUP SESSION
              */
-            self.sessionID = "gcCUtlRxKclzwhlYK8dW"
+            self.sessionID = "ZWkebdHlDOeE7w4RUa9U"
             let session = SessionInfo()
             session.startTime = Date.now
             session.drinksInSession = []
