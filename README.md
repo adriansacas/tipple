@@ -11,7 +11,20 @@ Adrian Sanchez (25%)
 
 Andrew White (25%)
 -
--
+- Firebase
+    - Redid schema for concurrent sessions between multiple users
+    - Jointly ensured symptoms were being stored in Firebase for a given user
+    - Wrote many methods for creating and updating fields within Firebase
+- QR Scanner
+    - Connected view controllers to pass in read in fields from QR Code
+    - Ensured to prompt user for camera access and set fields in plist.
+- Sessions
+    - Restructured view controllers to be repurposed no matter kind of session (indiv/group)
+    - Used UI made by Danica for group sessions and connected them with my ActiveSession/Questions pages
+    - Wrote methods to poll firebase for most up to date information for joint members of a group session (opposed to someone who created it)
+    - Wrote polling methods for memberslist and relevant fields for tableview displaying
+    - Used Danica's alerts to mark sessions as deleted on Firebase
+    - Made alerts to disallow users to join a session they've previously left
 
 Claudia Castillo (25%)
 -
