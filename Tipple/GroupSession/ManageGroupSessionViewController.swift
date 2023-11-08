@@ -11,6 +11,7 @@ import Foundation
 //protocol to update session name
 protocol EditSession {
     func updateSessionInfo(sessionFields: [String : Any])
+    func endSessionForUser()
 }
 
 class ManageGroupSessionVC: UIViewController, EditSession {
@@ -117,6 +118,16 @@ class ManageGroupSessionVC: UIViewController, EditSession {
         }
     }
     
+    func endSessionForUser() {
+        // handle firebase marking of end session
+        firestoreManager.endSessionForUser(userID: self.userID!,
+                                           sessionID: self.sessionID!) { error in
+            if let error = error {
+                print("Error ending session: \(error)")
+            }
+        }
+    }
+    
     @IBAction func stopSessionButtonPressed(_ sender: Any) {
         let stopAlertController = UIAlertController(
             title: isManager ? "Are you sure you want to end?" : "Are you sure you want to leave?",
@@ -187,13 +198,7 @@ class ManageGroupSessionVC: UIViewController, EditSession {
                 destination.sessionID = self.sessionID
             }
         } else if segue.identifier == manageHomeSegue {
-            // handle firebase marking of end session
-            firestoreManager.endSessionForUser(userID: self.userID!,
-                                               sessionID: self.sessionID!) { error in
-                if let error = error {
-                    print("Error ending session: \(error)")
-                }
-            }
+            endSessionForUser()
         }
     }
 
