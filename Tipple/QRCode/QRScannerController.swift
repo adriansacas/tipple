@@ -38,7 +38,7 @@ class QRScannerController: UIViewController {
         
         checkCameraAccess { granted in
             if granted {
-                //self.performSegue(withIdentifier: "qrToQuestionSegue", sender: nil)
+                self.performSegue(withIdentifier: "qrToQuestionSegue", sender: nil)
 
                 // Camera access is granted, proceed with your logic
                 // Get the back-facing camera for capturing videos

@@ -25,7 +25,7 @@ class ManageGroupSessionVC: UIViewController, EditSession {
     var sessionID: String?
     var userID: String?
     var sessionName: String = ""
-    var endDate: Date = Date()
+    var endDate: Date?
     var isManager: Bool = true
     var pollTimer: Timer?
 
@@ -40,7 +40,6 @@ class ManageGroupSessionVC: UIViewController, EditSession {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
-        print(self.isManager)
         print("About to load manage page: \(self.userID ?? "noUserID")")
         if !isManager {
             settingsButton.isHidden = true
@@ -53,7 +52,7 @@ class ManageGroupSessionVC: UIViewController, EditSession {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Redundant first setting
-        setLabelFields(nameField: self.sessionName, dateField: self.endDate)
+        setLabelFields(nameField: self.sessionName, dateField: self.endDate!)
     }
     
     
@@ -67,6 +66,28 @@ class ManageGroupSessionVC: UIViewController, EditSession {
         if nameField != self.sessionNameTextLabel.text {
             self.sessionNameTextLabel.text = nameField
         }
+        
+        if dateField <= Date() {
+            let stopAlertController = UIAlertController(
+                                                title: "End Session",
+                                                message: "Session has ended or no longer exists.",
+                                                preferredStyle: .alert
+            )
+            
+            stopAlertController.addAction(UIAlertAction(
+                                    title: "OK",
+                                    style: .destructive,
+                                    handler: {
+                                        (action) in
+                                        
+                                        self.performSegue(withIdentifier: "manageToHomeScreen", sender: nil)
+                                    })
+            )
+            
+            self.present(stopAlertController, animated: true)
+            print("Session has ended or is equal to the current time.")
+        }
+        
 
         // Display current session name and end date/time
         let dateFormatter = DateFormatter()
@@ -83,16 +104,15 @@ class ManageGroupSessionVC: UIViewController, EditSession {
     }
     
     func updateSessionInfo(sessionFields: [String : Any]){
-        if let sessionName = sessionFields["sessionName"] as? String,
-           let endTime = sessionFields["endTime"] as? Date{
-               self.setLabelFields(nameField: sessionName, dateField: endTime)
-        }
-        
         firestoreManager.updateGroupSession(userID: self.userID!, sessionID: self.sessionID!, fields: sessionFields) { error in
             if let error = error {
                 print("Error adding session: \(error)")
             } else {
                 print("Successfully updated the session fields")
+                if let sessionName = sessionFields["sessionName"] as? String,
+                   let endTime = sessionFields["endTime"] as? Date{
+                       self.setLabelFields(nameField: sessionName, dateField: endTime)
+                }
             }
         }
     }
@@ -125,19 +145,20 @@ class ManageGroupSessionVC: UIViewController, EditSession {
         present(stopAlertController, animated: true)
     }
     
-    // Add @objc annotation to make the function accessible to Timer
     @objc func pollSessionInfo() {
-        firestoreManager.pollGroupSession(userID: userID!, sessionID: sessionID!) {
-            users, error in
+        firestoreManager.pollGroupSession(userID: userID!, sessionID: sessionID!) { users, error in
             if let error = error {
                 print("Error updating symptoms: \(error)")
-            } else if let users = users,
-                      let sessionValues = users["SESSIONVALUES"] {
+            } else if let users = users, let sessionValues = users["SESSIONVALUES"] {
                 self.lastUpdate = users
-                self.setLabelFields(nameField: sessionValues["sessionName"] as! String, dateField: sessionValues["endTime"] as! Date)
+                if let sessionName = sessionValues["sessionName"] as? String,
+                   let endTime = sessionValues["endTime"] as? Date {
+                    self.setLabelFields(nameField: sessionName, dateField: endTime)
+                }
             }
         }
     }
+
     
     
 
@@ -150,12 +171,12 @@ class ManageGroupSessionVC: UIViewController, EditSession {
         if segue.identifier == inviteCodeSegue, let destination = segue.destination as? InviteCodeVC {
             destination.groupQRCode = self.groupQRCode
             destination.sessionName = self.sessionName
-            destination.endDate = self.endDate
+            destination.endDate = self.endDate!
             
         } else if segue.identifier == sessionSettingSegue, let destination = segue.destination as? EditGroupSessionVC {
             destination.delegate = self
             destination.sessionName = self.sessionName
-            destination.endDate = self.endDate
+            destination.endDate = self.endDate!
         } else if segue.identifier == activeSessionSegue, let destination = segue.destination as? ShowActiveVC {
             destination.userID = self.userID
             destination.sessionID = self.sessionID

@@ -76,7 +76,11 @@ class QuestionnaireVC: UIViewController {
             return
         }
         
+        let dispatchGroup = DispatchGroup()
+
+        
         if self.sessionType == "Individual" || self.sessionType == "Group" {
+            dispatchGroup.enter()
             let session = SessionInfo(createdBy: self.userID!,
                                       membersList: [self.userID!],
                                       sessionType: self.sessionType!,
@@ -97,21 +101,15 @@ class QuestionnaireVC: UIViewController {
                 } else if let documentID = documentID {
                     self.sessionID = documentID
                     print("Session added successfully with document ID: \(self.sessionID ?? "Value not set")")
-                    
-                    
-                    if self.sessionType == "Individual" {
-                        self.performSegue(withIdentifier: self.qToActiveSegue, sender: self)
-                    } else {
-                        self.performSegue(withIdentifier: self.qToGroupSegue, sender: self)
-                    }
-                    
+                    dispatchGroup.leave()
                 }
             }
         } else if self.sessionType == "Join" {
-            /* HARDCODED SESSION TO JOIN ATM 
+            dispatchGroup.enter()
+            /* HARDCODED SESSION TO JOIN ATM
                 TODO: MAKE SURE THE SESSION YOU"RE JOINING IS A GROUP SESSION
              */
-            //self.sessionID = "41pHryznA7pTsMYQj9v1"
+            self.sessionID = "MwRq5trckr8Zc3EbYQ0B"
             let session = SessionInfo()
             session.startTime = Date.now
             session.drinksInSession = []
@@ -134,17 +132,22 @@ class QuestionnaireVC: UIViewController {
                     } else if let sessionTemp = sessionTemp {
                         self.sessionName = sessionTemp.sessionName
                         self.endDate = sessionTemp.endGroupSessionTime
-                        
-                        print("Session successfully retrieved for joiniing with document ID: \(self.sessionID ?? "Value not set") UserID: \(self.userID ?? "No User")")
-                        self.performSegue(withIdentifier: self.qToGroupJoinSegue, sender: nil)
-
+                        dispatchGroup.leave()
                     }
                 }
             }
         }
         
-        
-        
+        dispatchGroup.notify(queue: .main) {
+            if self.sessionType == "Individual" {
+                self.performSegue(withIdentifier: self.qToActiveSegue, sender: self)
+            } else if self.sessionType == "Group"{
+                self.performSegue(withIdentifier: self.qToGroupSegue, sender: self)
+            } else if self.sessionType == "Join" {
+                print("Session successfully retrieved for joining with document ID: \(self.sessionID ?? "Value not set") \nUserID: \(self.userID ?? "No User")\nSessionEnd:\(self.endDate?.description ?? "no end")")
+                self.performSegue(withIdentifier: self.qToGroupJoinSegue, sender: nil)
+            }
+        }
     }
     
     
@@ -175,8 +178,6 @@ class QuestionnaireVC: UIViewController {
                 return
             }
             
-            print("Attempting to set", self.userID!)
-
             finalDestination!.sessionName = self.sessionName!
             finalDestination!.endDate = self.endDate!
             finalDestination!.userID = self.userID

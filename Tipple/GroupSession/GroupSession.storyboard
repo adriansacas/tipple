@@ -86,7 +86,7 @@
                 </viewControllerPlaceholder>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ffd-mD-7cy" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1111" y="1966"/>
+            <point key="canvasLocation" x="1523" y="2054"/>
         </scene>
         <!--Edit Group SessionVC-->
         <scene sceneID="ehd-oY-Szr">
@@ -333,6 +333,7 @@
                         <outlet property="sessionNameTextLabel" destination="ibf-rN-wT1" id="kzL-PF-y7P"/>
                         <outlet property="settingsButton" destination="d6P-PY-1Q9" id="1vl-rf-f3i"/>
                         <outlet property="stopSessionButton" destination="BgI-rs-1rz" id="OYU-1K-r0v"/>
+                        <segue destination="c2O-R1-5Vv" kind="presentation" identifier="manageToHomeScreen" modalPresentationStyle="fullScreen" id="ANj-LJ-Joa"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hmg-BC-sr3" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -388,6 +389,9 @@
             <point key="canvasLocation" x="2485" y="1700"/>
         </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="ANj-LJ-Joa"/>
+    </inferredMetricsTieBreakers>
     <resources>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
