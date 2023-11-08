@@ -8,13 +8,13 @@
 import UIKit
 import FirebaseAuth
 
-class QuestionnaireVC: UIViewController {
+class QuestionnaireVC: UIViewController, UITextFieldDelegate{
     
 
     @IBOutlet weak var eatenToggle: UISwitch!
     @IBOutlet weak var shareSession: UISwitch!
-    @IBOutlet weak var partyLocation: UISearchBar!
-    @IBOutlet weak var endLocation: UISearchBar!
+    @IBOutlet weak var partyLocation: UITextField!
+    @IBOutlet weak var endLocation: UITextField!
     @IBOutlet weak var startButton: UIButton!
     
     var sessionType: String?
@@ -31,7 +31,8 @@ class QuestionnaireVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         print(sessionType ?? "No Session Type Passed")
-
+        partyLocation.delegate = self
+        endLocation.delegate = self
         
         if self.sessionType == "Group" {
             startButton.setTitle("Continue", for: .normal)
@@ -70,6 +71,8 @@ class QuestionnaireVC: UIViewController {
             print("Error fetching user ID from currentUser")
         }
     }
+    
+    
     
     @IBAction func startSessionButton(_ sender: Any) {
         guard (self.sessionType != nil) else {
@@ -172,6 +175,17 @@ class QuestionnaireVC: UIViewController {
                 self.performSegue(withIdentifier: self.qToGroupJoinSegue, sender: nil)
             }
         }
+    }
+    
+    // Called when 'return' key pressed
+    func textFieldShouldReturn(_ textField:UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
+    }
+    
+    // Called when the user clicks on the view outside of the UITextField
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.view.endEditing(true)
     }
     
     

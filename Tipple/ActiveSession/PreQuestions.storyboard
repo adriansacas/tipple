@@ -45,14 +45,6 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <searchBar contentMode="redraw" fixedFrame="YES" searchBarStyle="minimal" placeholder="Where will you begin?" translatesAutoresizingMaskIntoConstraints="NO" id="T2e-83-Cyc">
-                                <rect key="frame" x="155" y="444" width="255" height="44"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
-                                <textInputTraits key="textInputTraits" textContentType="location"/>
-                                <connections>
-                                    <outlet property="delegate" destination="BbQ-8A-Jot" id="J70-Fb-DDd"/>
-                                </connections>
-                            </searchBar>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="End Location?" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="I4k-1g-b4v">
                                 <rect key="frame" x="20" y="551" width="107" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -60,14 +52,6 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <searchBar contentMode="redraw" fixedFrame="YES" searchBarStyle="minimal" placeholder="Where will you end?" translatesAutoresizingMaskIntoConstraints="NO" id="x1s-Hn-uqP">
-                                <rect key="frame" x="155" y="527" width="255" height="56"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
-                                <textInputTraits key="textInputTraits" textContentType="location"/>
-                                <connections>
-                                    <outlet property="delegate" destination="BbQ-8A-Jot" id="ax1-rz-YoX"/>
-                                </connections>
-                            </searchBar>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iWb-yq-aEA">
                                 <rect key="frame" x="153" y="703" width="125" height="35"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -95,14 +79,32 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Where will you begin?" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="gI0-oj-5Ed">
+                                <rect key="frame" x="155" y="449" width="255" height="34"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Where will you end?" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="eTe-bz-ip0">
+                                <rect key="frame" x="155" y="544" width="255" height="34"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Where will you end?" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="9WM-c3-oKL">
+                                <rect key="frame" x="153" y="544" width="255" height="34"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="sGT-0h-MG0"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
                     <connections>
                         <outlet property="eatenToggle" destination="0ey-T0-SHW" id="Kuo-7Q-5zM"/>
-                        <outlet property="endLocation" destination="x1s-Hn-uqP" id="CjW-Tf-wRk"/>
-                        <outlet property="partyLocation" destination="T2e-83-Cyc" id="bhj-La-Nbq"/>
+                        <outlet property="endLocation" destination="9WM-c3-oKL" id="oYe-Ec-5oP"/>
+                        <outlet property="partyLocation" destination="gI0-oj-5Ed" id="BbX-18-vVx"/>
                         <outlet property="shareSession" destination="Sc7-1c-nnn" id="ili-du-RiB"/>
                         <outlet property="startButton" destination="iWb-yq-aEA" id="Ywc-e4-wjA"/>
                         <segue destination="Ihk-EC-1BL" kind="presentation" identifier="questionToActiveSegue" modalPresentationStyle="fullScreen" id="QdS-Vy-eLC"/>
@@ -112,7 +114,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xM8-pF-R1d" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-7" y="-19"/>
+            <point key="canvasLocation" x="-8.3720930232558146" y="-19.313304721030043"/>
         </scene>
         <!--ActiveSessions-->
         <scene sceneID="fBC-c1-BUD">

@@ -11,13 +11,15 @@ import FirebaseAuth
 // Get a reference to the global user defaults object
 let defaults = UserDefaults.standard
 
-class LoginViewController: UIViewController {
+class LoginViewController: UIViewController, UITextFieldDelegate {
 
     @IBOutlet weak var emailAddressTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        emailAddressTextField.delegate = self
+        passwordTextField.delegate = self
 
         // Do any additional setup after loading the view.
         passwordTextField.isSecureTextEntry = true;
@@ -56,5 +58,14 @@ class LoginViewController: UIViewController {
         performSegue(withIdentifier: "signupSegue", sender: nil)
     }
     
+    // Called when 'return' key pressed
+    func textFieldShouldReturn(_ textField:UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
+    }
     
+    // Called when the user clicks on the view outside of the UITextField
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.view.endEditing(true)
+    }
 }

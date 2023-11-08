@@ -58,7 +58,9 @@
                                 <rect key="frame" x="153" y="486" width="125" height="35"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="filled" title="Start Session"/>
+                                <buttonConfiguration key="configuration" style="filled" title="Start Session">
+                                    <color key="baseBackgroundColor" systemColor="systemIndigoColor"/>
+                                </buttonConfiguration>
                                 <connections>
                                     <action selector="createSessionButtonPressed:" destination="Y6W-OH-hqX" eventType="touchUpInside" id="qdr-vG-Hg5"/>
                                 </connections>
@@ -100,7 +102,9 @@
                                 <rect key="frame" x="156" y="473" width="144" height="35"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="filled" title="Update Session"/>
+                                <buttonConfiguration key="configuration" style="filled" title="Update Session">
+                                    <color key="baseBackgroundColor" systemColor="systemIndigoColor"/>
+                                </buttonConfiguration>
                                 <connections>
                                     <action selector="updateSessionButtonPressed:" destination="e4D-kU-EB4" eventType="touchUpInside" id="JQc-4g-Uze"/>
                                 </connections>
@@ -271,7 +275,9 @@
                                 <rect key="frame" x="161" y="406" width="110" height="35"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="filled" title="Invite Code"/>
+                                <buttonConfiguration key="configuration" style="filled" title="Invite Code">
+                                    <color key="baseBackgroundColor" systemColor="systemIndigoColor"/>
+                                </buttonConfiguration>
                                 <connections>
                                     <segue destination="839-df-POO" kind="show" identifier="inviteCodeSegue" id="2NY-gF-cS3"/>
                                 </connections>
@@ -280,7 +286,9 @@
                                 <rect key="frame" x="164" y="472" width="103" height="35"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="filled" title="Group List"/>
+                                <buttonConfiguration key="configuration" style="filled" title="Group List">
+                                    <color key="baseBackgroundColor" systemColor="systemIndigoColor"/>
+                                </buttonConfiguration>
                                 <connections>
                                     <segue destination="zgN-Ez-Yr8" kind="show" identifier="groupListSegue" id="d1h-WG-6ZV"/>
                                 </connections>
@@ -289,7 +297,9 @@
                                 <rect key="frame" x="144" y="343" width="143" height="35"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="filled" title="Access Session"/>
+                                <buttonConfiguration key="configuration" style="filled" title="Access Session">
+                                    <color key="baseBackgroundColor" systemColor="systemIndigoColor"/>
+                                </buttonConfiguration>
                                 <connections>
                                     <segue destination="al7-QM-VMx" kind="show" identifier="manageToActiveSegue" id="GCQ-Wo-vNf"/>
                                 </connections>
@@ -298,7 +308,9 @@
                                 <rect key="frame" x="157" y="541" width="117" height="35"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="filled" title="Manage Poll"/>
+                                <buttonConfiguration key="configuration" style="filled" title="Manage Poll">
+                                    <color key="baseBackgroundColor" systemColor="systemIndigoColor"/>
+                                </buttonConfiguration>
                                 <connections>
                                     <segue destination="rXU-pA-EA3" kind="show" identifier="PollsSegueIdentifier" id="xui-UC-kZJ"/>
                                 </connections>
@@ -307,7 +319,9 @@
                                 <rect key="frame" x="140" y="617" width="151" height="35"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="filled" title="Session Settings"/>
+                                <buttonConfiguration key="configuration" style="filled" title="Session Settings">
+                                    <color key="baseBackgroundColor" systemColor="systemIndigoColor"/>
+                                </buttonConfiguration>
                                 <connections>
                                     <segue destination="e4D-kU-EB4" kind="show" identifier="sessionSettingSegue" id="4pb-z6-eZf"/>
                                 </connections>
@@ -396,8 +410,11 @@
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
+        <systemColor name="systemIndigoColor">
+            <color red="0.34509803919999998" green="0.33725490200000002" blue="0.83921568629999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
         <systemColor name="systemRedColor">
-            <color red="1" green="0.23137254901960785" blue="0.18823529411764706" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>
