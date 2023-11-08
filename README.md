@@ -15,7 +15,13 @@ Andrew White (25%)
 
 Claudia Castillo (25%)
 -
--
+- Helped ensure symptoms are stored in Firebase and updated properly in the previous session view
+- Generated tips based on logged symptoms when looking at a previous session
+- Added a pie chart to view drinks taken in a previous session
+- Created a view controller and implemented code for scanning a QR code to join a session
+- Created view controllers and implemented code to display list of members in a group and detailed information for each user
+- Created alerts during individual sessions for when a user should slow down/stop drinking based on BAC
+- Improved previous session's UI to match app theme
 
 Danica Padlan (25%)
 -
@@ -33,6 +39,9 @@ Danica Padlan (25%)
 ## Differences/Deviations
 - Currently cannot test if the QRScanner works with the Camera because XCode currently doesn't support iOS 17.1 (only goes up to 17.0 as of now) and crashes the app on Danica's phone.
 - Signing out of an account is a buggy since it always assumes the user will be signed in even after clicking the sign out button. Will fix in Final submission.
+- Originally planned notifications were turned into alerts due to having to pay for ADP, however, they still serve the same functionality
+    - Alerts to check on another user in a group session are still being worked on
+- Previous sessions will no longer be displayed as a calendar and stay as a tableview
 
 
 
