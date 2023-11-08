@@ -7,7 +7,18 @@
 
 Adrian Sanchez (25%)
 -
--
+- Firebase
+    - Created schema for polls
+    - Added methods to handle get / update / create / delete polls
+    - Logic to keep parity between groupSessions and polls references
+- Polls
+    - View controllers to view list of polls created in the session, create polls, vote in a poll, and see the results of a poll
+    - Custom prototype cell classes
+    - Inline add options to polls
+    - Swipe delete polls
+- UI
+    - Global navigation bar appearance
+    - Hex to UIColor tool
 
 Andrew White (25%)
 -
@@ -55,6 +66,7 @@ Danica Padlan (25%)
 - Originally planned notifications were turned into alerts due to having to pay for ADP, however, they still serve the same functionality
     - Alerts to check on another user in a group session are still being worked on
 - Previous sessions will no longer be displayed as a calendar and stay as a tableview
+- Poll expiration, allow multiple votes and change vote implementation moved to final release
 
 
 

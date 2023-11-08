@@ -100,14 +100,14 @@ class CreatePollVC: UITableViewController, PollsDelegateVC {
     }
 
     // Slide delete options
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            if indexPath.section == 1 && indexPath.row < sections[1].count - 1 {
-//                options.remove(at: indexPath.row)
-                tableView.deleteRows(at: [indexPath], with: .automatic)
-            }
-        }
-    }
+//    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+//        if editingStyle == .delete {
+//            if indexPath.section == 1 && indexPath.row < sections[1].count - 1 {
+////                options.remove(at: indexPath.row)
+//                tableView.deleteRows(at: [indexPath], with: .automatic)
+//            }
+//        }
+//    }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         // Insert a new OptionCell when the AddOptionCell is tapped
