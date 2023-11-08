@@ -7,7 +7,7 @@
 
 import UIKit
 
-class RegisterGroupSessionVC: UIViewController {
+class RegisterGroupSessionVC: UIViewController, UITextFieldDelegate {
 
     @IBOutlet weak var sessionNameTextField: UITextField!
     @IBOutlet weak var endSessionDateTimePicker: UIDatePicker!
@@ -20,7 +20,8 @@ class RegisterGroupSessionVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        sessionNameTextField.delegate = self
+        
         // Do any additional setup after loading the view.
     }
     
@@ -66,7 +67,7 @@ class RegisterGroupSessionVC: UIViewController {
     }
     
     //boiler plate code
-    //TODO: move code geenration to ManageViewControllerView!
+    //TODO: move code genration to ManageViewControllerView!
     func generateQRCode(from string: String) -> UIImage? {
         let data = string.data(using: String.Encoding.ascii)
 
@@ -79,6 +80,17 @@ class RegisterGroupSessionVC: UIViewController {
             }
         }
         return nil
+    }
+    
+    // Called when 'return' key pressed
+    func textFieldShouldReturn(_ textField:UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
+    }
+    
+    // Called when the user clicks on the view outside of the UITextField
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.view.endEditing(true)
     }
     
 

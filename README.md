@@ -56,27 +56,16 @@ Danica Padlan (25%)
 - Made sure the submitted session name was under a character limit and end time and date could not be set to anytime before the current time
 - Generated unique QR codes based on the sessionID String for group sessions
 - Cleaned up UI for Login, Registration, and Home VCs
+- Updated Group Session VCs UI to match Figma design
 - Helped Andrew with passing values from Questionnaire VC to Manage Sessions VC
 
 
 
 ## Differences/Deviations
 - Currently cannot test if the QRScanner works with the Camera because XCode currently doesn't support iOS 17.1 (only goes up to 17.0 as of now) and crashes the app on Danica's phone.
+- Registeration VC only dismisses the keyboard by pressing 'Return' key, touching in scroll view is currently not working. Will fix in Final Submission.
 - Signing out of an account is a buggy since it always assumes the user will be signed in even after clicking the sign out button. Will fix in Final submission.
 - Originally planned notifications were turned into alerts due to having to pay for ADP, however, they still serve the same functionality
     - Alerts to check on another user in a group session are still being worked on
 - Previous sessions will no longer be displayed as a calendar and stay as a tableview
 - Poll expiration, allow multiple votes and change vote implementation moved to final release
-
-
-
-##!!! Old Differences/Deviations (delete afterwards) !!!
-- In order for a user to update their email address they must re-authenticate and confirm their email first. However, can't seem to be able to send emails. Will investigate further. 
-- Previous sessions not presented as a calendar but rather a list view due to experiencing issues going from a selected date to the Day View
-- Symptoms not yet saved to a session in firebase as it would require to change many current working areas
-- Total drinks in Day View presented by a simple counter rather than a pie chart, will look into changing for beta
-- Notifications pushed to beta, still deciding the best approach to them
-- Drink increments are presented through an alert instead of a hidden/unhidden stepper. Experiencing issues on displaying stepper at appropriate time/place
-- No way to go to settings/previous sessions/friends list from a current running session. Will implement in beta.
-
-

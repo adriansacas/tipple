@@ -7,7 +7,7 @@
 
 import UIKit
 
-class EditGroupSessionVC: UIViewController {
+class EditGroupSessionVC: UIViewController, UITextFieldDelegate {
 
     @IBOutlet weak var editSessionNameTextField: UITextField!
     @IBOutlet weak var editEndSessionDateTimePicker: UIDatePicker!
@@ -19,7 +19,8 @@ class EditGroupSessionVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        editSessionNameTextField.delegate = self
+        
         //Update text field to current session and time
         editSessionNameTextField.text = sessionName
         editEndSessionDateTimePicker.date = endDate
@@ -78,6 +79,17 @@ class EditGroupSessionVC: UIViewController {
         )
         
         present(deleteAlertController, animated: true)
+    }
+    
+    // Called when 'return' key pressed
+    func textFieldShouldReturn(_ textField:UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
+    }
+    
+    // Called when the user clicks on the view outside of the UITextField
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.view.endEditing(true)
     }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
