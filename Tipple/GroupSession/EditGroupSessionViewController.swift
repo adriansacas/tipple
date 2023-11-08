@@ -13,6 +13,7 @@ class EditGroupSessionVC: UIViewController {
     @IBOutlet weak var editEndSessionDateTimePicker: UIDatePicker!
     
     var delegate:UIViewController?
+    var deleteToHomeSegue = "editSessionToHomeSegue"
     var sessionName: String = ""
     var endDate: Date = Date()
     
@@ -72,11 +73,21 @@ class EditGroupSessionVC: UIViewController {
                 (action) in
                 
                 //TODO: assumes the user stayed logged in, find better solution
-                self.performSegue(withIdentifier: "editSessionToHomeSegue", sender: nil)
+                self.performSegue(withIdentifier: self.deleteToHomeSegue, sender: nil)
             })
         )
         
         present(deleteAlertController, animated: true)
     }
 
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        // Get the new view controller using segue.destination.
+        // Pass the selected object to the new view controller.
+        if segue.identifier == deleteToHomeSegue {
+            // handle firebase marking of end session
+            //call protocol functions to update session
+            let mainVC = delegate as? EditSession
+            mainVC?.endSessionForUser()
+        }
+    }
 }

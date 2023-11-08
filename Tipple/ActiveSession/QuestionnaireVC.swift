@@ -76,7 +76,11 @@ class QuestionnaireVC: UIViewController {
             return
         }
         
+        let dispatchGroup = DispatchGroup()
+
+        
         if self.sessionType == "Individual" || self.sessionType == "Group" {
+            dispatchGroup.enter()
             let session = SessionInfo(createdBy: self.userID!,
                                       membersList: [self.userID!],
                                       sessionType: self.sessionType!,
@@ -97,21 +101,15 @@ class QuestionnaireVC: UIViewController {
                 } else if let documentID = documentID {
                     self.sessionID = documentID
                     print("Session added successfully with document ID: \(self.sessionID ?? "Value not set")")
-                    
-                    
-                    if self.sessionType == "Individual" {
-                        self.performSegue(withIdentifier: self.qToActiveSegue, sender: self)
-                    } else {
-                        self.performSegue(withIdentifier: self.qToGroupSegue, sender: self)
-                    }
-                    
+                    dispatchGroup.leave()
                 }
             }
         } else if self.sessionType == "Join" {
-            /* HARDCODED SESSION TO JOIN ATM 
+            dispatchGroup.enter()
+            /* HARDCODED SESSION TO JOIN ATM
                 TODO: MAKE SURE THE SESSION YOU"RE JOINING IS A GROUP SESSION
              */
-            self.sessionID = "41pHryznA7pTsMYQj9v1"
+            self.sessionID = "ZWkebdHlDOeE7w4RUa9U"
             let session = SessionInfo()
             session.startTime = Date.now
             session.drinksInSession = []
@@ -122,29 +120,58 @@ class QuestionnaireVC: UIViewController {
             session.shareSession = shareSession.isOn
             
             
-            firestoreManager.addMembersToSession(sessionID: self.sessionID!, 
-                                                 userID: self.userID!,
-                                                 session: session) { error in
+            self.firestoreManager.getSessionInfo(userID: self.userID!, sessionDocumentID: self.sessionID!) { sessionTemp, error in
                 if let error = error {
-                    print("Error adding member to session: \(error)")
-                }
-                self.firestoreManager.getSessionInfo(userID: self.userID!, sessionDocumentID: self.sessionID!) { sessionTemp, error in
-                    if let error = error {
-                        print("Error adding session: \(error)")
-                    } else if let sessionTemp = sessionTemp {
+                    print("Error adding session: \(error)")
+                } else if let sessionTemp = sessionTemp {
+                    if sessionTemp.membersList.contains(self.userID!){
+                        let stopAlertController = UIAlertController(
+                                                            title: "Cannot Rejoin Session",
+                                                            message: "Cannot Rejoin Session After Leaving",
+                                                            preferredStyle: .alert
+                        )
+                        
+                        stopAlertController.addAction(UIAlertAction(
+                                                title: "OK",
+                                                style: .destructive,
+                                                handler: {
+                                                    (action) in
+                                                    dispatchGroup.suspend()
+                                                    self.dismiss(animated: true)
+                                                })
+                        )
+                        
+                        self.present(stopAlertController, animated: true)
+                    } else {
                         self.sessionName = sessionTemp.sessionName
                         self.endDate = sessionTemp.endGroupSessionTime
-                        
-                        print("Session successfully retrieved for joiniing with document ID: \(self.sessionID ?? "Value not set") UserID: \(self.userID ?? "No User")")
-                        self.performSegue(withIdentifier: self.qToGroupJoinSegue, sender: nil)
+                        self.firestoreManager.addMembersToSession(sessionID: self.sessionID!,
+                                                             userID: self.userID!,
+                                                             session: session) { error in
+                            if let error = error {
+                                print("Error adding member to session: \(error)")
+                            } else {
+                                dispatchGroup.leave()
+                            }
 
+                        }
                     }
                 }
             }
+            
+
         }
         
-        
-        
+        dispatchGroup.notify(queue: .main) {
+            if self.sessionType == "Individual" {
+                self.performSegue(withIdentifier: self.qToActiveSegue, sender: self)
+            } else if self.sessionType == "Group"{
+                self.performSegue(withIdentifier: self.qToGroupSegue, sender: self)
+            } else if self.sessionType == "Join" {
+                print("Session successfully retrieved for joining with document ID: \(self.sessionID ?? "Value not set") \nUserID: \(self.userID ?? "No User")\nSessionEnd:\(self.endDate?.description ?? "no end")")
+                self.performSegue(withIdentifier: self.qToGroupJoinSegue, sender: nil)
+            }
+        }
     }
     
     
@@ -175,8 +202,6 @@ class QuestionnaireVC: UIViewController {
                 return
             }
             
-            print("Attempting to set", self.userID!)
-
             finalDestination!.sessionName = self.sessionName!
             finalDestination!.endDate = self.endDate!
             finalDestination!.userID = self.userID

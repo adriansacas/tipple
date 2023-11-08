@@ -45,8 +45,8 @@ class SignupViewController: UIViewController, UIPickerViewDataSource, UIPickerVi
 
         // Do any additional setup after loading the view.
         //TODO: Fix error "Cannot show Automatic Strong Passwords for app bundleID: CS371L.Tipple due to error: iCloud Keychain is disabled"
-        //passwordTextField.isSecureTextEntry = true
-        //confirmPasswordTextField.isSecureTextEntry = true
+        passwordTextField.isSecureTextEntry = true
+        confirmPasswordTextField.isSecureTextEntry = true
         
         //birthdayTextField.inputView = datePicker
         genderTextField.inputView = genderPicker
@@ -90,6 +90,9 @@ class SignupViewController: UIViewController, UIPickerViewDataSource, UIPickerVi
                     
                     //log in new user immediately and save data to firebase
                     if error == nil {
+                        //save tippleStayLoggedIn Boolean to core data
+                        defaults.set(true, forKey: "tippleStayLoggedIn")
+                        
                         Auth.auth().signIn(withEmail: self.emailAddressTextField.text!, password: self.passwordTextField.text!)
                         self.performSegue(withIdentifier: "signupToHomeSegue", sender: nil)
                         
@@ -222,4 +225,5 @@ class SignupViewController: UIViewController, UIPickerViewDataSource, UIPickerVi
             return
         }
     }
+    
 }

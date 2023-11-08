@@ -234,4 +234,18 @@ class ShowActiveVC: UIViewController {
         // Present the alert
         self.present(alertController, animated: true, completion: nil)
     }
+    
+    
+    // In a storyboard-based application, you will often want to do a little preparation before navigation
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == self.endSessionSegue {
+            // handle firebase marking of end session
+            firestoreManager.endSessionForUser(userID: self.userID!,
+                                               sessionID: self.sessionID!) { error in
+                if let error = error {
+                    print("Error ending session: \(error)")
+                }
+            }
+        }
+    }
 }

@@ -205,6 +205,7 @@ class QRScannerController: UIViewController {
         if segue.identifier == "qrToQuestionSegue",
            let destination = segue.destination as? QuestionnaireVC {
             destination.sessionType = "Join"
+            destination.sessionID = messageLabel.text!
         }
     }
 }

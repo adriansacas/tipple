@@ -77,7 +77,7 @@
                         <outlet property="mainGlassIV" destination="xgT-Eh-jLK" id="Iz7-Zl-0SQ"/>
                         <outlet property="navItemTitle" destination="NRG-4X-Ref" id="waB-3o-ao4"/>
                         <outlet property="statusSegmented" destination="W18-eh-qea" id="op0-kq-8lH"/>
-                        <segue destination="h9U-t8-eS0" kind="presentation" identifier="exitToMain" modalPresentationStyle="fullScreen" modalTransitionStyle="flipHorizontal" id="Jsx-39-VmU"/>
+                        <segue destination="h9U-t8-eS0" kind="presentation" identifier="exitToMain" modalPresentationStyle="fullScreen" modalTransitionStyle="coverVertical" id="Jsx-39-VmU"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="rDX-3C-zQi" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

@@ -1,49 +1,64 @@
 # CS371L Tipple
 
 
-## Alpha Doc
+## Beta Doc
 
 ## Contributions
 
 Adrian Sanchez (25%)
 -
-- Settings storyboard
-  - Update profile info view controllers to update name, dob, gender, height, weight, phone, email, profile picture
-- FirestoreManager class to manage create, update, and delete Firestore database operations
-- ProfileInfo class to manage profile operations
-- Fire Storage Setup
-- AlertUtils class
+-
 
 Andrew White (25%)
 -
-- Session/Drink Info Classes
-  - Wrote classes for a given session and different types of drinks
-  - Jointly defined data schema for Firebase storage of sessions
-  - Wrote & added FirestoreManager methods to create/retrieve/update sessions & drinks for a session
-- ActiveSessions storyboard
-  - Created views for inital questionnare for a session 
-  - Created session locally/firebase & displays information for session
-    - Updates firebase session as changes are made within view
-    - Keeps track of users drinks / runningBAC / and a status and updates view as changes are inputed
+- Firebase
+    - Redid schema for concurrent sessions between multiple users
+    - Jointly ensured symptoms were being stored in Firebase for a given user
+    - Wrote many methods for creating and updating fields within Firebase
+- QR Scanner
+    - Connected view controllers to pass in read in fields from QR Code
+    - Ensured to prompt user for camera access and set fields in plist.
+- Sessions
+    - Restructured view controllers to be repurposed no matter kind of session (indiv/group)
+    - Used UI made by Danica for group sessions and connected them with my ActiveSession/Questions pages
+    - Wrote methods to poll firebase for most up to date information for joint members of a group session (opposed to someone who created it)
+    - Wrote polling methods for memberslist and relevant fields for tableview displaying
+    - Used Danica's alerts to mark sessions as deleted on Firebase
+    - Made alerts to disallow users to join a session they've previously left
 
 Claudia Castillo (25%)
 -
-- All of Previous Sessions list view, Day view, and Symptoms updater
-- Minor changes to SessionInfo and DrinkInfo
-- Some contribution in designing the data schema to tailor to what my screens needed
+- Helped ensure symptoms are stored in Firebase and updated properly in the previous session view
+- Generated tips based on logged symptoms when looking at a previous session
+- Added a pie chart to view drinks taken in a previous session
+- Created a view controller and implemented code for scanning a QR code to join a session
+- Created view controllers and implemented code to display list of members in a group and detailed information for each user
+- Created alerts during individual sessions for when a user should slow down/stop drinking based on BAC
+- Improved previous session's UI to match app theme
 
 Danica Padlan (25%)
 -
-- Initial Firebase setup
-- All of Login, Registration, and Home page
-- Checked and saved user's email, password, and personal data to Firebase
-- Connect some segues from Home page to other storyboards
+- Fixed Password and Confirm Password text field in Register page to hide text
+- Handled basic functionality and UI for Group Session VCs (Register/Manage/Edit Group Session VC and Invite Code VC)
+- Created and triggered alerts and segues for when a Group session will be end or be deleted
+- Registered and updated session name labels and end time and date in the Manage/Edit Group Sessions and Invite Code VCs
+- Made sure the submitted session name was under a character limit and end time and date could not be set to anytime before the current time
+- Generated unique QR codes based on the sessionID String for group sessions
+- Cleaned up UI for Login, Registration, and Home VCs
+- Helped Andrew with passing values from Questionnaire VC to Manage Sessions VC
 
 
 
 ## Differences/Deviations
-- Password and Confirm Password text field in Register page has a 
-'Cannot show Automatic Strong Passwords' error when setting isSecureTextEntry to true, will work on finding the solution to this by Beta
+- Currently cannot test if the QRScanner works with the Camera because XCode currently doesn't support iOS 17.1 (only goes up to 17.0 as of now) and crashes the app on Danica's phone.
+- Signing out of an account is a buggy since it always assumes the user will be signed in even after clicking the sign out button. Will fix in Final submission.
+- Originally planned notifications were turned into alerts due to having to pay for ADP, however, they still serve the same functionality
+    - Alerts to check on another user in a group session are still being worked on
+- Previous sessions will no longer be displayed as a calendar and stay as a tableview
+
+
+
+##!!! Old Differences/Deviations (delete afterwards) !!!
 - In order for a user to update their email address they must re-authenticate and confirm their email first. However, can't seem to be able to send emails. Will investigate further. 
 - Previous sessions not presented as a calendar but rather a list view due to experiencing issues going from a selected date to the Day View
 - Symptoms not yet saved to a session in firebase as it would require to change many current working areas

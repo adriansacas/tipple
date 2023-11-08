@@ -17,7 +17,7 @@ class MemberInfoViewController: UIViewController, UITableViewDelegate, UITableVi
     let firestoreManager = FirestoreManager.shared
     let textCellIdentifier = "TextCell"
     
-    var keys:[String] = []
+    var keys:[String] = ["BAC", "Still Active?", "Contact Info"]
     var user:[String:Any]?
     var delegate:UIViewController?
     
@@ -31,13 +31,7 @@ class MemberInfoViewController: UIViewController, UITableViewDelegate, UITableVi
         self.profilePic.layer.cornerRadius = profilePic.frame.size.height / 2
         self.profilePic.clipsToBounds = true
 
-        for key in user!.keys {
-            if(key == "Profile Pic") {
-                setProfileImage(url: user![key] as? String)
-            } else if(key != "name") {
-                keys.append(key)
-            }
-        }
+        setProfileImage(url: user!["Profile Pic"] as? String)
         nameField.text = user!["name"] as? String
     }
     

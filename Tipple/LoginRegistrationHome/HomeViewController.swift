@@ -52,9 +52,9 @@ class HomeViewController: UIViewController {
     }
     
     @IBAction func signOutButtonPressed(_ sender: Any) {
+        defaults.set(false, forKey: "tippleStayLoggedIn")
         performSegue(withIdentifier: "homeToLoginSegue", sender: nil)
     }
-    
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Get the new view controller using segue.destination.

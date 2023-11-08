@@ -450,18 +450,12 @@ class FirestoreManager {
             } else if let document = document, document.exists {
                 let sessionData = document.data()
                 
-                var createdBy = sessionData!["createdBy"] as? String
+                let createdBy = sessionData!["createdBy"] as? String
                 
                 if createdBy != userID {
                     print("This should not happen. Non group leader attempting to edit session")
                 }
                 
-                
-                var fieldCopy = fields
-                
-                if let endTime = fields["endTime"] {
-                    fieldCopy["endTime"] = Timestamp(date: fields["endTime"] as! Date)
-                }
                 
                 sessionDocRef.updateData(fields) { updateError in
                     if let updateError = updateError {
@@ -479,29 +473,42 @@ class FirestoreManager {
     }
     
     // Function to edit group session details (if you are the main person
-    func isUserGroupManager(userID: String, sessionID: String,  completion: @escaping (Bool, SessionInfo?, Error?) -> Void) {
-        print("Attempting to update group session with IDS\n\t-- USERID: \(userID), sessionID: \(sessionID)")
-        
-        
+    func endSessionForUser(userID: String, sessionID: String,  completion: @escaping (Error?) -> Void) {
         let sessionDocRef = db.collection(sessionCollection).document(sessionID)
         
         sessionDocRef.getDocument { (document, error) in
             if let error = error {
-                completion(false, nil, error)
+                completion(error)
             } else if let document = document, document.exists {
                 let sessionData = document.data()
                 
-                var createdBy = sessionData!["createdBy"] as? String
-                
-                if createdBy == userID {
-                    completion(true, nil, nil)
+                if sessionData!["createdBy"] as? String == userID {
+                    sessionDocRef.updateData(["endTime" : Date()]) { updateError in
+                        if let updateError = updateError {
+                            completion(updateError)
+                        }
+                    }
                 }
                 
-                
+                let userDocRef = sessionDocRef.collection(self.memberColInSess).document(userID)
+                userDocRef.getDocument { (document, error) in
+                    if let error = error {
+                        completion(error)
+                    } else if let document = document, document.exists {
+                        userDocRef.updateData(["endTime" : Date(),
+                                               "activeSession" : false]) { updateError in
+                            if let updateError = updateError {
+                                completion(updateError)
+                            } else {
+                                completion(nil)
+                            }
+                        }
+                    }
+                }
             } else {
                 // Handle the case where the session document doesn't exist
                 let notFoundError = NSError(domain: "Document Not Found", code: 404, userInfo: nil)
-                completion(false, nil, notFoundError)
+                completion(notFoundError)
             }
         }
     }
@@ -664,6 +671,7 @@ class FirestoreManager {
                         } else if let tempProfile = profileInfo {
                             dictOfMembers[memberID]?["Contact Info"] = tempProfile.phoneNumber
                             dictOfMembers[memberID]?["name"] = tempProfile.firstName + " " + tempProfile.lastName
+                            dictOfMembers[memberID]?["Profile Pic"] = tempProfile.profileImageURL
                         } else {
                             // Handle the case where profileInfo is nil
                         }
