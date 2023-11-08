@@ -105,6 +105,7 @@ class PollVoteVC: UIViewController, UITableViewDataSource, UITableViewDelegate, 
             }
         } else {
             // Display an error message to the user indicating they need to select an option.
+            AlertUtils.showAlert(title: "Invalid vote", message: "Please select at least one option", viewController: self)
         }
     }
 }
