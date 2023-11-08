@@ -19,12 +19,21 @@ class ProfileInfoPhoneVC: UITableViewController, UITextFieldDelegate, ProfileInf
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        dismissKeyboardGesture()
+        
         phoneTextField.borderStyle = .none
         phoneTextField.keyboardType = .numberPad
         
         phoneTextField.delegate = self
         
         setInitialPhone()
+    }
+    
+    // Add a gesture recognizer to dismiss the keyboard when the user
+    // taps outside of any text field.
+    func dismissKeyboardGesture() {
+        let tap = UITapGestureRecognizer(target: view, action: #selector(UIView.endEditing))
+        view.addGestureRecognizer(tap)
     }
     
     func setInitialPhone() {

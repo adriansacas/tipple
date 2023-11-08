@@ -8,7 +8,7 @@
 import UIKit
 import FirebaseAuth
 
-class CreatePollVC: UITableViewController, PollsDelegateVC {
+class CreatePollVC: UITableViewController, PollsDelegateVC, UITextFieldDelegate {
 
     var prompt: String = ""
     var options: [String: Int] = [:]
@@ -35,10 +35,17 @@ class CreatePollVC: UITableViewController, PollsDelegateVC {
         sections = buildSections()
     }
     
-    enum CellType {
-        case cell(identifier: String)
-        case addOptionCell(identifier: String)
-        case switchCell(identifier: String)
+    // Called when 'return' key pressed
+
+    func textFieldShouldReturn(_ textField:UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
+    }
+    
+    // Called when the user clicks on the view outside of the UITextField
+
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.view.endEditing(true)
     }
     
     func buildSections() -> [[String]] {
@@ -79,9 +86,11 @@ class CreatePollVC: UITableViewController, PollsDelegateVC {
         switch cellIdentifier {
         case promptCellIdentifier:
             let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as! PromptCell
+            cell.textField.delegate = self
             return cell
         case optionCellIdentifier:
-            let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath)
+            let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as! OptionCell
+            cell.textField.delegate = self
             return cell
         case addOptionCellIdentifier:
             let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath)

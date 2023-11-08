@@ -21,6 +21,8 @@ class ProfileInfoEmailVC: UITableViewController, ProfileInfoDelegateSettingVC {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        dismissKeyboardGesture()
+        
         currentEmailLabel.textColor = UIColor.gray
         newEmailTextField.borderStyle = .none
         passwordTextField.borderStyle = .none
@@ -29,6 +31,13 @@ class ProfileInfoEmailVC: UITableViewController, ProfileInfoDelegateSettingVC {
         if let userEmail = Auth.auth().currentUser?.email {
             currentEmailLabel.text = userEmail
         }
+    }
+    
+    // Add a gesture recognizer to dismiss the keyboard when the user
+    // taps outside of any text field.
+    func dismissKeyboardGesture() {
+        let tap = UITapGestureRecognizer(target: view, action: #selector(UIView.endEditing))
+        view.addGestureRecognizer(tap)
     }
     
     @IBAction func saveChanges(_ sender: Any) {

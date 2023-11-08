@@ -20,11 +20,20 @@ class ProfileInfoNameVC: UITableViewController, ProfileInfoDelegateSettingVC {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        dismissKeyboardGesture()
+        
         firstNameTextField.borderStyle = .none
         lastNameTextField.borderStyle = .none
         
         firstNameTextField.text = userProfileInfo?.firstName
         lastNameTextField.text = userProfileInfo?.lastName
+    }
+    
+    // Add a gesture recognizer to dismiss the keyboard when the user
+    // taps outside of any text field.
+    func dismissKeyboardGesture() {
+        let tap = UITapGestureRecognizer(target: view, action: #selector(UIView.endEditing))
+        view.addGestureRecognizer(tap)
     }
 
     @IBAction func saveChanges(_ sender: Any) {

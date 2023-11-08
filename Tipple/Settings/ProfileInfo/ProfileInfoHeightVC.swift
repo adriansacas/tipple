@@ -20,6 +20,8 @@ class ProfileInfoHeightVC: UITableViewController, ProfileInfoDelegateSettingVC {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        dismissKeyboardGesture()
+        
         feetTextField.borderStyle = .none
         inchesTextField.borderStyle  = .none
         
@@ -27,6 +29,13 @@ class ProfileInfoHeightVC: UITableViewController, ProfileInfoDelegateSettingVC {
         inchesTextField.keyboardType = .numberPad
         
         setInitialHeight()
+    }
+    
+    // Add a gesture recognizer to dismiss the keyboard when the user
+    // taps outside of any text field.
+    func dismissKeyboardGesture() {
+        let tap = UITapGestureRecognizer(target: view, action: #selector(UIView.endEditing))
+        view.addGestureRecognizer(tap)
     }
     
     func setInitialHeight() {

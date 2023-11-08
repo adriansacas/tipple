@@ -19,10 +19,19 @@ class ProfileInfoWeightVC: UITableViewController, ProfileInfoDelegateSettingVC {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        dismissKeyboardGesture()
+        
         weightTextField.borderStyle = .none
         weightTextField.keyboardType = .numberPad
         
         setInitialWeight()
+    }
+    
+    // Add a gesture recognizer to dismiss the keyboard when the user
+    // taps outside of any text field.
+    func dismissKeyboardGesture() {
+        let tap = UITapGestureRecognizer(target: view, action: #selector(UIView.endEditing))
+        view.addGestureRecognizer(tap)
     }
     
     func setInitialWeight() {
