@@ -109,7 +109,7 @@ class QuestionnaireVC: UIViewController {
             /* HARDCODED SESSION TO JOIN ATM
                 TODO: MAKE SURE THE SESSION YOU"RE JOINING IS A GROUP SESSION
              */
-            self.sessionID = "MwRq5trckr8Zc3EbYQ0B"
+            self.sessionID = "gcCUtlRxKclzwhlYK8dW"
             let session = SessionInfo()
             session.startTime = Date.now
             session.drinksInSession = []
@@ -120,22 +120,46 @@ class QuestionnaireVC: UIViewController {
             session.shareSession = shareSession.isOn
             
             
-            firestoreManager.addMembersToSession(sessionID: self.sessionID!, 
-                                                 userID: self.userID!,
-                                                 session: session) { error in
+            self.firestoreManager.getSessionInfo(userID: self.userID!, sessionDocumentID: self.sessionID!) { sessionTemp, error in
                 if let error = error {
-                    print("Error adding member to session: \(error)")
-                }
-                self.firestoreManager.getSessionInfo(userID: self.userID!, sessionDocumentID: self.sessionID!) { sessionTemp, error in
-                    if let error = error {
-                        print("Error adding session: \(error)")
-                    } else if let sessionTemp = sessionTemp {
+                    print("Error adding session: \(error)")
+                } else if let sessionTemp = sessionTemp {
+                    if sessionTemp.membersList.contains(self.userID!){
+                        let stopAlertController = UIAlertController(
+                                                            title: "Cannot Rejoin Session",
+                                                            message: "Cannot Rejoin Session After Leaving",
+                                                            preferredStyle: .alert
+                        )
+                        
+                        stopAlertController.addAction(UIAlertAction(
+                                                title: "OK",
+                                                style: .destructive,
+                                                handler: {
+                                                    (action) in
+                                                    dispatchGroup.suspend()
+                                                    self.dismiss(animated: true)
+                                                })
+                        )
+                        
+                        self.present(stopAlertController, animated: true)
+                    } else {
                         self.sessionName = sessionTemp.sessionName
                         self.endDate = sessionTemp.endGroupSessionTime
-                        dispatchGroup.leave()
+                        self.firestoreManager.addMembersToSession(sessionID: self.sessionID!,
+                                                             userID: self.userID!,
+                                                             session: session) { error in
+                            if let error = error {
+                                print("Error adding member to session: \(error)")
+                            } else {
+                                dispatchGroup.leave()
+                            }
+
+                        }
                     }
                 }
             }
+            
+
         }
         
         dispatchGroup.notify(queue: .main) {

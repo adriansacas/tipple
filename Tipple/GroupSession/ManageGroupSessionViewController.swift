@@ -36,6 +36,7 @@ class ManageGroupSessionVC: UIViewController, EditSession {
     let activeSessionSegue = "manageToActiveSegue"
     let groupListSegue = "groupListSegue"
     let pollsSegue = "PollsSegueIdentifier"
+    let manageHomeSegue = "manageToHomeScreen"
     
     
     override func viewWillAppear(_ animated: Bool) {
@@ -44,9 +45,10 @@ class ManageGroupSessionVC: UIViewController, EditSession {
         if !isManager {
             settingsButton.isHidden = true
             settingsButton.isEnabled = false
-            stopSessionButton.setTitle("Leave Session", for: .normal)
+        } else {
+            stopSessionButton.setTitle("End Session", for: .normal)
         }
-        pollTimer = Timer.scheduledTimer(timeInterval: 5, target: self, selector: #selector(pollSessionInfo), userInfo: nil, repeats: true)
+        pollTimer = Timer.scheduledTimer(timeInterval: 2, target: self, selector: #selector(pollSessionInfo), userInfo: nil, repeats: true)
     }
     
     override func viewDidLoad() {
@@ -69,7 +71,7 @@ class ManageGroupSessionVC: UIViewController, EditSession {
         
         if dateField <= Date() {
             let stopAlertController = UIAlertController(
-                                                title: "End Session",
+                                                title: "Session Finished",
                                                 message: "Session has ended or no longer exists.",
                                                 preferredStyle: .alert
             )
@@ -79,13 +81,11 @@ class ManageGroupSessionVC: UIViewController, EditSession {
                                     style: .destructive,
                                     handler: {
                                         (action) in
-                                        
-                                        self.performSegue(withIdentifier: "manageToHomeScreen", sender: nil)
+                                        self.performSegue(withIdentifier: self.manageHomeSegue, sender: nil)
                                     })
             )
             
             self.present(stopAlertController, animated: true)
-            print("Session has ended or is equal to the current time.")
         }
         
 
@@ -118,7 +118,6 @@ class ManageGroupSessionVC: UIViewController, EditSession {
     }
     
     @IBAction func stopSessionButtonPressed(_ sender: Any) {
-        
         let stopAlertController = UIAlertController(
             title: isManager ? "Are you sure you want to end?" : "Are you sure you want to leave?",
             message:
@@ -136,9 +135,7 @@ class ManageGroupSessionVC: UIViewController, EditSession {
             style: .destructive,
             handler: {
                 (action) in
-                
-                //TODO: assumes the user stayed logged in, find better solution
-                //self.performSegue(withIdentifier: "editSessionToHomeSegue", sender: nil)
+                self.performSegue(withIdentifier: self.manageHomeSegue, sender: nil)
             })
         )
         
@@ -188,6 +185,14 @@ class ManageGroupSessionVC: UIViewController, EditSession {
             if let navController = segue.destination as? UINavigationController,
                let destination = navController.topViewController as? PollsVC {
                 destination.sessionID = self.sessionID
+            }
+        } else if segue.identifier == manageHomeSegue {
+            // handle firebase marking of end session
+            firestoreManager.endSessionForUser(userID: self.userID!,
+                                               sessionID: self.sessionID!) { error in
+                if let error = error {
+                    print("Error ending session: \(error)")
+                }
             }
         }
     }
