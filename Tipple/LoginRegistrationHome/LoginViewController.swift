@@ -8,6 +8,9 @@
 import UIKit
 import FirebaseAuth
 
+// Get a reference to the global user defaults object
+let defaults = UserDefaults.standard
+
 class LoginViewController: UIViewController {
 
     @IBOutlet weak var emailAddressTextField: UITextField!
@@ -19,11 +22,14 @@ class LoginViewController: UIViewController {
         // Do any additional setup after loading the view.
         passwordTextField.isSecureTextEntry = true;
         
-        //TODO: uncomment after testing
-        // Auto login user if they didn't log out
-        Auth.auth().addStateDidChangeListener() { (auth, user) in
-            if user != nil {
-                self.performSegue(withIdentifier: "loginToHomeSegue", sender: nil)
+        //check if user wants to stay logged in
+        if(defaults.bool(forKey: "tippleStayLoggedIn") == true){
+            
+            // Auto login user if they didn't log out
+            Auth.auth().addStateDidChangeListener() { (auth, user) in
+                if user != nil {
+                    self.performSegue(withIdentifier: "loginToHomeSegue", sender: nil)
+                }
             }
         }
     }
@@ -38,6 +44,8 @@ class LoginViewController: UIViewController {
                 if (error as NSError?) != nil {
                     AlertUtils.showAlert(title: "Login Error", message: "Email may not exist or password is incorrect.", viewController: self)
                 } else {
+                    //save that the user wants to stay logged in
+                    defaults.set(true, forKey: "tippleStayLoggedIn")
                     self.performSegue(withIdentifier: "loginToHomeSegue", sender: nil)
                 }
             }
@@ -47,4 +55,6 @@ class LoginViewController: UIViewController {
     @IBAction func signupTextButtonPressed(_ sender: Any){
         performSegue(withIdentifier: "signupSegue", sender: nil)
     }
+    
+    
 }
