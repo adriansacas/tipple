@@ -28,6 +28,7 @@
 		348821E72AD793AE00B677F3 /* FirebaseDatabase in Frameworks */ = {isa = PBXBuildFile; productRef = 348821E62AD793AE00B677F3 /* FirebaseDatabase */; };
 		349A6F7D2AD62DAE002A707B /* LoginRegistrationHome.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 349A6F7C2AD62DAE002A707B /* LoginRegistrationHome.storyboard */; };
 		349B1F742ADDDF3F00588DCF /* MOCKScrollViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 349B1F732ADDDF3F00588DCF /* MOCKScrollViewController.swift */; };
+		34A0CBBE2AFEDCCF00B84CFF /* DGChartsDynamic in Frameworks */ = {isa = PBXBuildFile; productRef = 34ED53682AFAFD6B00E76986 /* DGChartsDynamic */; };
 		34ED536B2AFAFD6B00E76986 /* DGChartsDynamic in Embed Frameworks */ = {isa = PBXBuildFile; productRef = 34ED53682AFAFD6B00E76986 /* DGChartsDynamic */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		34ED536D2AFAFD8D00E76986 /* DGCharts in Frameworks */ = {isa = PBXBuildFile; productRef = 34ED536C2AFAFD8D00E76986 /* DGCharts */; };
 		34F604132ADF4B0C00E331A2 /* Tipple_Red_Status.png in Resources */ = {isa = PBXBuildFile; fileRef = 34F604102ADF4B0B00E331A2 /* Tipple_Red_Status.png */; };
@@ -164,6 +165,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				34A0CBBE2AFEDCCF00B84CFF /* DGChartsDynamic in Frameworks */,
 				348821E72AD793AE00B677F3 /* FirebaseDatabase in Frameworks */,
 				B34377162ADE21B4003B1D96 /* FirebaseStorage in Frameworks */,
 				34ED536D2AFAFD8D00E76986 /* DGCharts in Frameworks */,
