@@ -83,10 +83,12 @@ class ShowActiveVC: UIViewController {
 
             // Create all the drinks and add them to the session
             if let drinkType = sender.titleForSegment(at: sender.selectedSegmentIndex){
-                self.updateDrinks(drinkType: drinkType, amount: self.incrementDrinkBy)
-                self.incrementDrinkBy = 0
-                // Update fields in the status bar
-                self.updateStatusInfo(bacValue: self.runningBAC, status: self.runningStatus, drinks: self.runningDrinkCounter)
+                if self.incrementDrinkBy > 0{
+                    self.updateDrinks(drinkType: drinkType, amount: self.incrementDrinkBy)
+                    self.incrementDrinkBy = 0
+                    // Update fields in the status bar
+                    self.updateStatusInfo(bacValue: self.runningBAC, status: self.runningStatus, drinks: self.runningDrinkCounter)
+                }
             }
             
 
