@@ -247,7 +247,6 @@ class FirestoreManager {
         }
     }
     
-    
     // Adds a member to a given session document
     func addMembersToSession(sessionID: String, userID: String, session: SessionInfo, completion: @escaping (Error?) -> Void) {
         let sessionDBRef = db.collection(sessionCollection)
@@ -711,6 +710,43 @@ class FirestoreManager {
             }
         }
     }
+    
+    func validateSession(sessionID: String, completion: @escaping (Bool, Error?) -> Void) {
+        let sessionDocRef = db.collection(sessionCollection).document(sessionID)
+
+        sessionDocRef.getDocument { (document, error) in
+            if let error = error {
+                completion(false, error)
+            } else if let document = document, document.exists {
+                let sessionData = document.data()
+
+                // Check if the sessionID exists within the collection
+                guard let _ = sessionData else {
+                    completion(false, nil)
+                    return
+                }
+
+                // Check if sessionType is set to "Group"
+                guard let sessionType = sessionData?["sessionType"] as? String, sessionType == "Group" else {
+                    completion(false, nil)
+                    return
+                }
+
+                // Check if endTime is after the current time
+                if let endTimeTimestamp = sessionData?["endTime"] as? Timestamp,
+                   endTimeTimestamp.dateValue() > Date() {
+                    completion(true, nil)
+                } else {
+                    completion(false, nil)
+                }
+            } else {
+                // Handle the case where the session document doesn't exist
+                let notFoundError = NSError(domain: "Document Not Found", code: 404, userInfo: nil)
+                completion(false, notFoundError)
+            }
+        }
+    }
+
     
     /* ------------     Polls      ------------*/
     

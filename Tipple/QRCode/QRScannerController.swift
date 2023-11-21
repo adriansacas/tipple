@@ -8,6 +8,7 @@
 
 import UIKit
 import AVFoundation
+import FirebaseAuth
 
 class QRScannerController: UIViewController {
     
@@ -17,7 +18,8 @@ class QRScannerController: UIViewController {
     
     var videoPreviewLayer: AVCaptureVideoPreviewLayer?
     var qrCodeFrameView: UIView?
-    
+    let firestoreManager = FirestoreManager.shared
+
     
     private let supportedCodeTypes = [AVMetadataObject.ObjectType.upce,
                                       AVMetadataObject.ObjectType.code39,
@@ -38,8 +40,6 @@ class QRScannerController: UIViewController {
         
         checkCameraAccess { granted in
             if granted {
-                self.performSegue(withIdentifier: "qrToQuestionSegue", sender: nil)
-
                 // Camera access is granted, proceed with your logic
                 // Get the back-facing camera for capturing videos
                 guard let captureDevice = AVCaptureDevice.default(for: AVMediaType.video) else {
@@ -228,11 +228,20 @@ extension QRScannerController: AVCaptureMetadataOutputObjectsDelegate {
             let barCodeObject = videoPreviewLayer?.transformedMetadataObject(for: metadataObj)
             qrCodeFrameView?.frame = barCodeObject!.bounds
             
-            if metadataObj.stringValue != nil {
-                messageLabel.text = metadataObj.stringValue
-                self.performSegue(withIdentifier: "qrToQuestionSegue", sender: nil)
+            if let sessionID = metadataObj.stringValue {
+                firestoreManager.validateSession(sessionID: sessionID) { isValid, error in
+                    if isValid {
+                        // Session is valid, perform the segue
+                        self.messageLabel.text = sessionID
+                        self.performSegue(withIdentifier: "qrToQuestionSegue", sender: nil)
+                    } else {
+                        // Session is not valid, show an alert with the reason
+                        let alert = UIAlertController(title: "Invalid Session", message: "The QR code does not correspond to a valid session.", preferredStyle: .alert)
+                        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                        self.present(alert, animated: true, completion: nil)
+                    }
+                }
             }
         }
     }
-    
 }
