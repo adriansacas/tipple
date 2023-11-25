@@ -94,6 +94,7 @@ class PollsVC: UIViewController, UITableViewDataSource, UITableViewDelegate, Pol
                         }
                     }
                 } else {
+                    AlertUtils.showAlert(title: "Cannot Delete", message: "Only the author can delete this poll.", viewController: self)
                     print("Unauthorized to delete this poll. Current user's UID does not match createdBy.")
                 }
             } else {
