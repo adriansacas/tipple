@@ -38,10 +38,6 @@ class PollVoteVC: UIViewController, UITableViewDataSource, UITableViewDelegate, 
         createdByLabel.text = poll?.createdBy
         
         getPoll()
-        
-        if let poll = poll {
-            options = Array(poll.options.keys)
-        }
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -138,9 +134,20 @@ class PollVoteVC: UIViewController, UITableViewDataSource, UITableViewDelegate, 
                 print("Error: \(error.localizedDescription)")
             } else if let poll = poll {
                 self.poll = poll
+                self.continueAfterPollFetched()
             } else {
                 print("No poll data and no error were returned.")
             }
         }
+    }
+    
+    func continueAfterPollFetched() {
+        guard let poll = poll else {
+            return
+        }
+        
+        options = Array(poll.options.keys)
+        // Reload the table view to display the data
+        tableView.reloadData()
     }
 }

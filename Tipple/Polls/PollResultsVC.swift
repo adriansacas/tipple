@@ -15,7 +15,8 @@ class PollResultsVC: UIViewController, UITableViewDataSource, UITableViewDelegat
     @IBOutlet weak var totalVotesLabel: UILabel!
     let optionResultCellIdentifier = "OptionResultCell"
     
-    var poll: Poll?
+    weak var poll: Poll?
+    var pollID: String?
     var optionsWithVoteCounts: [(String, Int)] = []  // Array to store options with vote counts
     
     var createdByUser: ProfileInfo?
@@ -26,28 +27,8 @@ class PollResultsVC: UIViewController, UITableViewDataSource, UITableViewDelegat
 
         tableView.delegate = self
         tableView.dataSource = self
-
-        if let poll = poll {
-            getCreatedByUser()
-            pollTitleLabel.text = poll.prompt
-            
-            // Prepare the options with vote counts
-            optionsWithVoteCounts = poll.options.map { ($0.key, $0.value) }
-
-            // Sort the options by vote count (you can change the sorting order as needed)
-            optionsWithVoteCounts.sort { $0.1 > $1.1 }
-            
-            var totalVotes = 0
-
-            for (_, voteCount) in optionsWithVoteCounts {
-                totalVotes += voteCount
-            }
-            
-            totalVotesLabel.text = "Total votes: \(totalVotes)"
-
-            // Reload the table view to display the data
-            tableView.reloadData()
-        }
+        
+        getPoll()
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -77,6 +58,49 @@ class PollResultsVC: UIViewController, UITableViewDataSource, UITableViewDelegat
                 self?.createdByLabel.text = "Asked by \(self?.createdByUser?.firstName ?? "")"
             }
         }
+    }
+    
+    func getPoll() {
+        guard let pollID = pollID else {
+            return
+        }
+        
+        firestoreManager.getPoll(pollID: pollID) { (poll, error) in
+            if let error = error {
+                print("Error: \(error.localizedDescription)")
+            } else if let poll = poll {
+                self.poll = poll
+                self.continueAfterPollFetched()
+            } else {
+                print("No poll data and no error were returned.")
+            }
+        }
+    }
+    
+    func continueAfterPollFetched() {
+        guard let poll = poll else {
+            return
+        }
+
+        getCreatedByUser()
+        pollTitleLabel.text = poll.prompt
+        
+        // Prepare the options with vote counts
+        optionsWithVoteCounts = poll.options.map { ($0.key, $0.value) }
+
+        // Sort the options by vote count
+        optionsWithVoteCounts.sort { $0.1 > $1.1 }
+        
+        var totalVotes = 0
+
+        for (_, voteCount) in optionsWithVoteCounts {
+            totalVotes += voteCount
+        }
+        
+        totalVotesLabel.text = "Total votes: \(totalVotes)"
+
+        // Reload the table view to display the data
+        tableView.reloadData()
     }
 }
 

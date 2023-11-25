@@ -117,7 +117,6 @@ class PollsVC: UIViewController, UITableViewDataSource, UITableViewDelegate, Pol
         if segue.identifier == pollDetailsSegueIdentifier {
             if let pollVoteVC = segue.destination as? PollVoteVC,
                let pollIndex = tableView.indexPathForSelectedRow?.row {
-//                TODO: Consider sendint the pollID instead so that the PollVote and PollResults are forced to retrieve the poll from Firestore and get the latests data
                 pollVoteVC.pollID = polls[pollIndex].pollID
                 pollVoteVC.delegate = self
             }
@@ -129,7 +128,7 @@ class PollsVC: UIViewController, UITableViewDataSource, UITableViewDelegate, Pol
         } else if segue.identifier == pollResultsSegueIdentifier {
             if let pollResultsVC = segue.destination as? PollResultsVC,
                 let pollIndex = tableView.indexPathForSelectedRow?.row {
-                    pollResultsVC.poll = polls[pollIndex]
+                    pollResultsVC.pollID = polls[pollIndex].pollID
             }
         }
     }
