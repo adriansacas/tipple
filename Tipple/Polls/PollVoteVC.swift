@@ -14,6 +14,7 @@ class PollVoteVC: UIViewController, UITableViewDataSource, UITableViewDelegate, 
     var session: SessionInfo?
     var delegate: PollsDelegate?
     weak var poll: Poll?
+    var pollID: String?
     
     @IBOutlet weak var pollTitleLabel: UILabel!
     @IBOutlet weak var createdByLabel: UILabel!
@@ -35,6 +36,9 @@ class PollVoteVC: UIViewController, UITableViewDataSource, UITableViewDelegate, 
         getCreatedByUser()
         pollTitleLabel.text = poll?.prompt
         createdByLabel.text = poll?.createdBy
+        
+        getPoll()
+        
         if let poll = poll {
             options = Array(poll.options.keys)
         }
@@ -120,6 +124,22 @@ class PollVoteVC: UIViewController, UITableViewDataSource, UITableViewDelegate, 
                         self.navigationController?.popViewController(animated: true)
                     }
                 }
+            }
+        }
+    }
+    
+    func getPoll() {
+        guard let pollID = pollID else {
+            return
+        }
+        
+        firestoreManager.getPoll(pollID: pollID) { (poll, error) in
+            if let error = error {
+                print("Error: \(error.localizedDescription)")
+            } else if let poll = poll {
+                self.poll = poll
+            } else {
+                print("No poll data and no error were returned.")
             }
         }
     }

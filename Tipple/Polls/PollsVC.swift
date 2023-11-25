@@ -29,7 +29,6 @@ class PollsVC: UIViewController, UITableViewDataSource, UITableViewDelegate, Pol
     let firestoreManager = FirestoreManager.shared
     var polls: [Poll] = []
 //    TODO: change to sessionID, get the session info, pass the session id from the parent view
-//    var sessionID = "uyvaVnIENbZHo00Q3ZBR"
     var sessionID: String?
     var session: SessionInfo?
     
@@ -38,6 +37,9 @@ class PollsVC: UIViewController, UITableViewDataSource, UITableViewDelegate, Pol
         
         tableView.delegate = self
         tableView.dataSource = self
+        
+        //TODO: Comment out after testing
+        sessionID = "FzLEUfD3lCIFowiLTTe0"
 
         getSession()
     }
@@ -116,7 +118,7 @@ class PollsVC: UIViewController, UITableViewDataSource, UITableViewDelegate, Pol
             if let pollVoteVC = segue.destination as? PollVoteVC,
                let pollIndex = tableView.indexPathForSelectedRow?.row {
 //                TODO: Consider sendint the pollID instead so that the PollVote and PollResults are forced to retrieve the poll from Firestore and get the latests data
-                pollVoteVC.poll = polls[pollIndex]
+                pollVoteVC.pollID = polls[pollIndex].pollID
                 pollVoteVC.delegate = self
             }
         } else if segue.identifier == createPollSegueIdentifier {
@@ -154,7 +156,6 @@ class PollsVC: UIViewController, UITableViewDataSource, UITableViewDelegate, Pol
             return
         }
         
-        //TODO: modify sessionInfo and getSessionInfo to get polls
         firestoreManager.getPolls(pollIDs: pollsIDs) { [weak self] (polls, error) in
 //        firestoreManager.getPolls(pollIDs: ["nrHqbeHG62CiCZKMsF9v"]) { [weak self] (polls, error) in
             if let error = error {
