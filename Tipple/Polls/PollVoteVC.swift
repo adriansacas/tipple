@@ -13,7 +13,7 @@ class PollVoteVC: UIViewController, UITableViewDataSource, UITableViewDelegate, 
     
     var session: SessionInfo?
     var delegate: PollsDelegate?
-    weak var poll: Poll?
+    var poll: Poll?
     var pollID: String?
     
     @IBOutlet weak var pollTitleLabel: UILabel!
@@ -24,7 +24,7 @@ class PollVoteVC: UIViewController, UITableViewDataSource, UITableViewDelegate, 
     var createdByUser: ProfileInfo?
     let firestoreManager = FirestoreManager.shared
     
-    var selectedOptionIndex: Int?
+    var selectedOptionsIndex = Set<Int>()
     var options: [String] = []
 
     override func viewDidLoad() {
@@ -50,26 +50,40 @@ class PollVoteVC: UIViewController, UITableViewDataSource, UITableViewDelegate, 
         cell.optionLabel.text = option
         
         // Check if this cell corresponds to the selected option
-        cell.isSelectedOption = selectedOptionIndex == indexPath.row
+        cell.isSelectedOption = selectedOptionsIndex.contains(indexPath.row)
         cell.accessoryType = cell.isSelectedOption ? .checkmark : .none
         
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        // Deselect the previously selected option if there was one
-        if let previousSelectedIndex = selectedOptionIndex {
-            let previousSelectedIndexPath = IndexPath(row: previousSelectedIndex, section: 0)
-            if let previousSelectedCell = tableView.cellForRow(at: previousSelectedIndexPath) as? VoteOptionCell {
-                previousSelectedCell.toggleSelection()
+        guard let poll = poll, 
+            let selectedCell = tableView.cellForRow(at: indexPath) as? VoteOptionCell else {
+            print("Error: No poll or selected cell cant be processed.")
+            return
+        }
+        
+        // Deselect the selected row if it has been selected already.
+        if selectedOptionsIndex.contains(indexPath.row) {
+            selectedOptionsIndex.remove(indexPath.row)
+            selectedCell.toggleSelection()
+            return
+        }
+        
+        if !poll.multipleVotes {
+            // Deselect the previously selected row if there was one
+            if let previousSelectedIndex = selectedOptionsIndex.first {
+                let previousSelectedIndexPath = IndexPath(row: previousSelectedIndex, section: 0)
+                if let previousSelectedCell = tableView.cellForRow(at: previousSelectedIndexPath) as? VoteOptionCell {
+                    previousSelectedCell.toggleSelection()
+                    selectedOptionsIndex.remove(previousSelectedIndex)
+                }
             }
         }
         
-        // Select the new option
-        if let cell = tableView.cellForRow(at: indexPath) as? VoteOptionCell {
-            cell.toggleSelection()
-            selectedOptionIndex = indexPath.row
-        }
+        // Select the new row
+        selectedCell.toggleSelection()
+        selectedOptionsIndex.insert(indexPath.row)
     }
     
     func getCreatedByUser() {
@@ -90,7 +104,7 @@ class PollVoteVC: UIViewController, UITableViewDataSource, UITableViewDelegate, 
     }
     
     @IBAction func submitVote(_ sender: Any) {
-        guard let selectedOptionIndex = selectedOptionIndex else {
+        guard !selectedOptionsIndex.isEmpty else {
             // Display an alert or a message to inform the user to select an option
             AlertUtils.showAlert(title: "Invalid vote", message: "Please select at least one option", viewController: self)
             return
@@ -99,12 +113,23 @@ class PollVoteVC: UIViewController, UITableViewDataSource, UITableViewDelegate, 
         guard let poll = poll,
               let pollID = poll.pollID,
               let currentUserUID = Auth.auth().currentUser?.uid else {
+            print("Error: no poll, pollID or currentUserUID")
             return
         }
         
-        let selectedOption = options[selectedOptionIndex]
+        // Create a list of selected options based on the row index
+        var selectedOptions: [String] = []
+
+        for index in selectedOptionsIndex {
+            if index < options.count {
+                selectedOptions.append(options[index])
+            } else {
+                print("Index \(index) is out of bounds")
+            }
+        }
         
-        firestoreManager.updateVote(pollID: pollID, vote: selectedOption) { (error) in
+        // Register the votes in the database
+        firestoreManager.updateVotes(pollID: pollID, votes: selectedOptions) { (error) in
             if let error = error {
                 print("Error submitting vote: \(error)")
             } else {

@@ -848,24 +848,19 @@ class FirestoreManager {
         }
     }
     
-    func updateVotes(pollID: String, userID: String, votes: [String], completion: @escaping (Error?) -> Void) {
+    func updateVotes(pollID: String, votes: [String], completion: @escaping (Error?) -> Void) {
         let pollRef = db.collection("polls").document(pollID)
-        var increment: [String: FieldValue] = [:]
+        var updateData: [String: Any] = [:]
 
-        for option in votes {
-            increment[option] = FieldValue.increment(Int64(1))
+        for vote in votes {
+            updateData["options.\(vote)"] = FieldValue.increment(Int64(1))
         }
-
-        let updateData: [String: Any] = [
-            "options": increment,
-            "voters": FieldValue.arrayUnion([userID])
-        ]
 
         pollRef.updateData(updateData) { error in
             if let error = error {
-                print("Error updating document: \(error.localizedDescription)")
+                print("FirestoreManager: Error updating vote: \(error.localizedDescription)")
             } else {
-                print("Document updated successfully.")
+                print("FirestoreManger: Votes updated successfully.")
                 completion(nil)
             }
         }

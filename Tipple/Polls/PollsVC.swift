@@ -156,7 +156,6 @@ class PollsVC: UIViewController, UITableViewDataSource, UITableViewDelegate, Pol
         }
         
         firestoreManager.getPolls(pollIDs: pollsIDs) { [weak self] (polls, error) in
-//        firestoreManager.getPolls(pollIDs: ["nrHqbeHG62CiCZKMsF9v"]) { [weak self] (polls, error) in
             if let error = error {
                 print("Error fetching polls: \(error)")
             } else if let polls = polls {
