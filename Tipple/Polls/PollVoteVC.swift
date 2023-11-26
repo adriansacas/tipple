@@ -11,6 +11,7 @@ import FirebaseFirestore
 
 class PollVoteVC: UIViewController, UITableViewDataSource, UITableViewDelegate, PollsDelegateVC {
     
+    let firestoreManager = FirestoreManager.shared
     var session: SessionInfo?
     var delegate: PollsDelegate?
     var poll: Poll?
@@ -19,10 +20,11 @@ class PollVoteVC: UIViewController, UITableViewDataSource, UITableViewDelegate, 
     @IBOutlet weak var pollTitleLabel: UILabel!
     @IBOutlet weak var createdByLabel: UILabel!
     @IBOutlet weak var tableView: UITableView!
+    
     let optionVoteCellIdentifier = "OptionVoteCell"
+    let addOptionCellIdentifier = "AddOptionCell"
     
     var createdByUser: ProfileInfo?
-    let firestoreManager = FirestoreManager.shared
     
     var selectedOptionsIndex = Set<Int>()
     var options: [String] = []
@@ -33,10 +35,6 @@ class PollVoteVC: UIViewController, UITableViewDataSource, UITableViewDelegate, 
         tableView.delegate = self
         tableView.dataSource = self
         
-        getCreatedByUser()
-        pollTitleLabel.text = poll?.prompt
-        createdByLabel.text = poll?.createdBy
-        
         getPoll()
     }
     
@@ -45,8 +43,15 @@ class PollVoteVC: UIViewController, UITableViewDataSource, UITableViewDelegate, 
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: optionVoteCellIdentifier, for: indexPath) as! VoteOptionCell
         let option = options[indexPath.row]
+        
+        // Add option cell
+        if option == addOptionCellIdentifier {
+            let cell = tableView.dequeueReusableCell(withIdentifier: addOptionCellIdentifier, for: indexPath)
+            return cell
+        }
+        
+        let cell = tableView.dequeueReusableCell(withIdentifier: optionVoteCellIdentifier, for: indexPath) as! VoteOptionCell
         cell.optionLabel.text = option
         
         // Check if this cell corresponds to the selected option
@@ -60,6 +65,12 @@ class PollVoteVC: UIViewController, UITableViewDataSource, UITableViewDelegate, 
         guard let poll = poll, 
             let selectedCell = tableView.cellForRow(at: indexPath) as? VoteOptionCell else {
             print("Error: No poll or selected cell cant be processed.")
+            return
+        }
+        
+        // Insert a new OptionCell when the AddOptionCell is tapped
+        if indexPath.row == options.count - 1 && poll.votersAddOptions {
+            showAddOptionPopUp()
             return
         }
         
@@ -84,6 +95,49 @@ class PollVoteVC: UIViewController, UITableViewDataSource, UITableViewDelegate, 
         // Select the new row
         selectedCell.toggleSelection()
         selectedOptionsIndex.insert(indexPath.row)
+    }
+    
+    // Insert a new OptionCell in the second to last position
+    func insertNewOptionCell(option: String) {
+        // Create a new option cell and add it to the second-to-last position\
+        options.insert(option, at: options.count - 1)
+
+        // Insert the cell in the table view
+        let newCellIndexPath = IndexPath(row: options.count - 2, section: 0)
+        tableView.insertRows(at: [newCellIndexPath], with: .automatic)
+    }
+    
+    func showAddOptionPopUp() {
+        let controller = UIAlertController(
+            title: "Add New Option",
+            message: nil,
+            preferredStyle: .alert
+        )
+        
+        // Add a text field to the alert
+        controller.addTextField { textField in
+            textField.placeholder = "Option"
+        }
+
+        // The "OK" action
+        let saveAction = UIAlertAction(title: "OK", style: .default) { [weak self] _ in
+            // Retrieve the first text field in the alert
+            if let textField = controller.textFields?.first,
+               let text = textField.text, !text.isEmpty {
+                // Insert the new option cell
+                self?.insertNewOptionCell(option: text)
+            }
+        }
+
+        // The "Cancel" action
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+
+        // Add actions to the alert controller
+        controller.addAction(saveAction)
+        controller.addAction(cancelAction)
+
+        // Present the alert
+        self.present(controller, animated: true)
     }
     
     func getCreatedByUser() {
@@ -171,7 +225,14 @@ class PollVoteVC: UIViewController, UITableViewDataSource, UITableViewDelegate, 
             return
         }
         
+        getCreatedByUser()
+        
+        pollTitleLabel.text = poll.prompt
+        
         options = Array(poll.options.keys)
+        if poll.votersAddOptions {
+            options.append(addOptionCellIdentifier)
+        }
         // Reload the table view to display the data
         tableView.reloadData()
     }

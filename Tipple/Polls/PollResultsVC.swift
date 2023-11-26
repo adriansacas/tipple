@@ -83,6 +83,7 @@ class PollResultsVC: UIViewController, UITableViewDataSource, UITableViewDelegat
         }
 
         getCreatedByUser()
+        
         pollTitleLabel.text = poll.prompt
         
         // Prepare the options with vote counts
@@ -92,7 +93,6 @@ class PollResultsVC: UIViewController, UITableViewDataSource, UITableViewDelegat
         optionsWithVoteCounts.sort { $0.1 > $1.1 }
         
         var totalVotes = 0
-
         for (_, voteCount) in optionsWithVoteCounts {
             totalVotes += voteCount
         }

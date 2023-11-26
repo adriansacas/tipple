@@ -39,7 +39,7 @@ class PollsVC: UIViewController, UITableViewDataSource, UITableViewDelegate, Pol
         tableView.dataSource = self
         
         //TODO: Comment out after testing
-        sessionID = "FzLEUfD3lCIFowiLTTe0"
+        sessionID = "7cuNiTanSGvGqkfXVpBe"
 
         getSession()
     }
