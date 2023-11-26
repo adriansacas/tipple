@@ -12,18 +12,21 @@ class PollResultsVC: UIViewController, UITableViewDataSource, UITableViewDelegat
     @IBOutlet weak var pollTitleLabel: UILabel!
     @IBOutlet weak var createdByLabel: UILabel!
     @IBOutlet weak var tableView: UITableView!
-    @IBOutlet weak var totalVotesLabel: UILabel!
     let optionResultCellIdentifier = "OptionResultCell"
     
     weak var poll: Poll?
     var pollID: String?
     var optionsWithVoteCounts: [(String, Int)] = []  // Array to store options with vote counts
+    var totalVotes = 0
     
     var createdByUser: ProfileInfo?
     let firestoreManager = FirestoreManager.shared
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        pollTitleLabel.numberOfLines = 0
+        pollTitleLabel.lineBreakMode = .byWordWrapping
 
         tableView.delegate = self
         tableView.dataSource = self
@@ -41,6 +44,24 @@ class PollResultsVC: UIViewController, UITableViewDataSource, UITableViewDelegat
         cell.optionLabel.text = optionWithVoteCount.0  // Option
         cell.countLabel.text = "\(optionWithVoteCount.1)"  // Vote count
         return cell
+    }
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 1
+    }
+    
+    func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {
+        return "Total votes: \(totalVotes)"
+    }
+    
+    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        return 50
+    }
+    
+    func tableView(_ tableView: UITableView, willDisplayFooterView view: UIView, forSection section: Int) {
+        if let footerView = view as? UITableViewHeaderFooterView {
+            footerView.textLabel?.font = UIFont.systemFont(ofSize: 17.0)
+        }
     }
     
     func getCreatedByUser() {
@@ -88,16 +109,12 @@ class PollResultsVC: UIViewController, UITableViewDataSource, UITableViewDelegat
         
         // Prepare the options with vote counts
         optionsWithVoteCounts = poll.options.map { ($0.key, $0.value) }
-
         // Sort the options by vote count
         optionsWithVoteCounts.sort { $0.1 > $1.1 }
         
-        var totalVotes = 0
         for (_, voteCount) in optionsWithVoteCounts {
             totalVotes += voteCount
         }
-        
-        totalVotesLabel.text = "Total votes: \(totalVotes)"
 
         // Reload the table view to display the data
         tableView.reloadData()

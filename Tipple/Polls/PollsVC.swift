@@ -22,7 +22,7 @@ class PollsVC: UIViewController, UITableViewDataSource, UITableViewDelegate, Pol
     
     @IBOutlet weak var tableView: UITableView!
     
-    let textCellIdentifier = "TextCell"
+    let pollCellIdentifier = "PollCell"
     let pollDetailsSegueIdentifier = "PollDetailsSegueIdentifier"
     let createPollSegueIdentifier = "CreatePollSegueIdentifier"
     let pollResultsSegueIdentifier = "PollResultsSegueIdentifier"
@@ -58,11 +58,11 @@ class PollsVC: UIViewController, UITableViewDataSource, UITableViewDelegate, Pol
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         // Configure each cell in the table view.
-        let cell = tableView.dequeueReusableCell(withIdentifier: textCellIdentifier, for: indexPath as IndexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: pollCellIdentifier, for: indexPath as IndexPath) as! PollCell
         
         let row = indexPath.row
         let poll = polls[row]
-        cell.textLabel?.text = poll.prompt
+        cell.pollLabel.text = poll.prompt
         
         return cell
     }
@@ -161,7 +161,7 @@ class PollsVC: UIViewController, UITableViewDataSource, UITableViewDelegate, Pol
                 print("Error fetching polls: \(error)")
             } else if let polls = polls {
                 // Update the polls array and refresh the table view
-                self?.polls = polls
+                self?.polls = polls.sorted { $0.prompt < $1.prompt }
                 self?.tableView.reloadData()
 //                DispatchQueue.main.async {
 //                    self?.tableView.reloadData()

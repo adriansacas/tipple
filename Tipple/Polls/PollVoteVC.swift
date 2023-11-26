@@ -32,6 +32,9 @@ class PollVoteVC: UIViewController, UITableViewDataSource, UITableViewDelegate, 
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        pollTitleLabel.numberOfLines = 0
+        pollTitleLabel.lineBreakMode = .byWordWrapping
+        
         tableView.delegate = self
         tableView.dataSource = self
         

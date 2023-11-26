@@ -82,6 +82,7 @@
 		B3571DF62AFAF92700095EF9 /* PollResultsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3571DF52AFAF92700095EF9 /* PollResultsVC.swift */; };
 		B3571DF82AFB1A3400095EF9 /* ResultOptionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3571DF72AFB1A3400095EF9 /* ResultOptionCell.swift */; };
 		B36E61E42AD88C2300AFF50E /* SettingsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B36E61E32AD88C2300AFF50E /* SettingsVC.swift */; };
+		B3720A232B133BB2004C8A58 /* PollCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3720A222B133BB2004C8A58 /* PollCell.swift */; };
 		B3CE37622AD62FF1004FB1A1 /* Settings.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B3CE37612AD62FF1004FB1A1 /* Settings.storyboard */; };
 /* End PBXBuildFile section */
 
@@ -171,6 +172,7 @@
 		B3571DF52AFAF92700095EF9 /* PollResultsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PollResultsVC.swift; sourceTree = "<group>"; };
 		B3571DF72AFB1A3400095EF9 /* ResultOptionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultOptionCell.swift; sourceTree = "<group>"; };
 		B36E61E32AD88C2300AFF50E /* SettingsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsVC.swift; sourceTree = "<group>"; };
+		B3720A222B133BB2004C8A58 /* PollCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PollCell.swift; sourceTree = "<group>"; };
 		B3CE37612AD62FF1004FB1A1 /* Settings.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Settings.storyboard; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -369,6 +371,7 @@
 				B3571DF32AFADAEE00095EF9 /* VoteOptionCell.swift */,
 				B3571DF52AFAF92700095EF9 /* PollResultsVC.swift */,
 				B3571DF72AFB1A3400095EF9 /* ResultOptionCell.swift */,
+				B3720A222B133BB2004C8A58 /* PollCell.swift */,
 			);
 			path = Polls;
 			sourceTree = "<group>";
@@ -506,6 +509,7 @@
 				344830192AEB67DA00039FAD /* ManageGroupSessionViewController.swift in Sources */,
 				494A451C2AF5F37B00B54542 /* SessionInfo.swift in Sources */,
 				B36E61E42AD88C2300AFF50E /* SettingsVC.swift in Sources */,
+				B3720A232B133BB2004C8A58 /* PollCell.swift in Sources */,
 				49B2C1372ADEF9BA0025E38C /* SessionsListViewController.swift in Sources */,
 				49B79CBA2AF86EFE008654CB /* MemberInfoViewController.swift in Sources */,
 				494A451E2AF5F38300B54542 /* ShowActiveVC.swift in Sources */,

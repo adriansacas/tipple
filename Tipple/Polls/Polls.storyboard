@@ -19,22 +19,25 @@
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="insetGrouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" estimatedSectionHeaderHeight="-1" sectionFooterHeight="18" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="hpL-bR-8ej">
                                 <rect key="frame" x="0.0" y="103" width="393" height="715"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="TextCell" textLabel="T9y-R5-w19" style="IBUITableViewCellStyleDefault" id="7EO-QI-uG5">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="PollCell" id="7EO-QI-uG5" customClass="PollCell" customModule="Tipple" customModuleProvider="target">
                                         <rect key="frame" x="20" y="55.333332061767578" width="353" height="43.666667938232422"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="7EO-QI-uG5" id="yIK-OU-bWc">
                                             <rect key="frame" x="0.0" y="0.0" width="322.66666666666669" height="43.666667938232422"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Poll title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="T9y-R5-w19">
-                                                    <rect key="frame" x="20" y="0.0" width="294.66666666666669" height="43.666667938232422"/>
-                                                    <autoresizingMask key="autoresizingMask"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="0.0"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Poll Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RJ3-G7-pGL">
+                                                    <rect key="frame" x="20" y="12" width="295" height="21"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
                                         </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="pollLabel" destination="RJ3-G7-pGL" id="Djs-HA-ZIm"/>
+                                        </connections>
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
@@ -86,10 +89,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="insetGrouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" estimatedSectionHeaderHeight="-1" sectionFooterHeight="18" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="wfH-48-eI2">
-                                <rect key="frame" x="0.0" y="195" width="393" height="300"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="300" id="3cf-pR-Ao6"/>
-                                </constraints>
+                                <rect key="frame" x="0.0" y="195" width="393" height="623"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="OptionResultCell" id="tHO-ge-LeD" customClass="ResultOptionCell" customModule="Tipple" customModuleProvider="target">
                                         <rect key="frame" x="20" y="55.333332061767578" width="353" height="43.666667938232422"/>
@@ -98,11 +98,8 @@
                                             <rect key="frame" x="0.0" y="0.0" width="353" height="43.666667938232422"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Option" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7Z2-Ve-PRd">
-                                                    <rect key="frame" x="20" y="11.333333333333336" width="230" height="21"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="width" constant="230" id="pjm-qO-4PE"/>
-                                                    </constraints>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="Option" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7Z2-Ve-PRd">
+                                                    <rect key="frame" x="20" y="11.333333333333336" width="246" height="21"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
@@ -119,6 +116,7 @@
                                                 <constraint firstItem="7Z2-Ve-PRd" firstAttribute="leading" secondItem="zvl-C6-h0a" secondAttribute="leadingMargin" id="UJQ-nR-mBz"/>
                                                 <constraint firstItem="7Z2-Ve-PRd" firstAttribute="centerY" secondItem="zvl-C6-h0a" secondAttribute="centerY" id="YH7-0C-ePh"/>
                                                 <constraint firstItem="29F-he-vhU" firstAttribute="centerY" secondItem="zvl-C6-h0a" secondAttribute="centerY" id="YgA-pM-zEB"/>
+                                                <constraint firstItem="29F-he-vhU" firstAttribute="leading" secondItem="7Z2-Ve-PRd" secondAttribute="trailing" constant="20" id="sCG-Ep-Lko"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
@@ -128,12 +126,6 @@
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Total votes: 1000" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Px7-8J-R3J">
-                                <rect key="frame" x="30" y="515" width="130" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="0ga-Wf-kYF"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -145,8 +137,7 @@
                             <constraint firstItem="Oai-gy-sRG" firstAttribute="centerX" secondItem="X5f-By-RkI" secondAttribute="centerX" id="5XV-VZ-Qpi"/>
                             <constraint firstItem="dpq-0a-dGm" firstAttribute="leading" secondItem="0ga-Wf-kYF" secondAttribute="leading" constant="30" id="7Om-w0-338"/>
                             <constraint firstItem="0ga-Wf-kYF" firstAttribute="trailing" secondItem="dpq-0a-dGm" secondAttribute="trailing" constant="30" id="8Ic-rm-DNo"/>
-                            <constraint firstItem="Px7-8J-R3J" firstAttribute="leading" secondItem="0ga-Wf-kYF" secondAttribute="leading" constant="30" id="EI5-dx-oqb"/>
-                            <constraint firstItem="Px7-8J-R3J" firstAttribute="top" secondItem="wfH-48-eI2" secondAttribute="bottom" constant="20" id="XdK-hg-b5n"/>
+                            <constraint firstItem="0ga-Wf-kYF" firstAttribute="bottom" secondItem="wfH-48-eI2" secondAttribute="bottom" id="DtF-xo-S18"/>
                             <constraint firstItem="dpq-0a-dGm" firstAttribute="centerX" secondItem="X5f-By-RkI" secondAttribute="centerX" id="cYQ-CK-OoQ"/>
                             <constraint firstItem="wfH-48-eI2" firstAttribute="leading" secondItem="0ga-Wf-kYF" secondAttribute="leading" id="nL1-Kj-iCw"/>
                         </constraints>
@@ -156,7 +147,6 @@
                         <outlet property="createdByLabel" destination="Oai-gy-sRG" id="IfT-ac-oN8"/>
                         <outlet property="pollTitleLabel" destination="dpq-0a-dGm" id="hEJ-2D-6cb"/>
                         <outlet property="tableView" destination="wfH-48-eI2" id="Vsy-Dm-gIa"/>
-                        <outlet property="totalVotesLabel" destination="Px7-8J-R3J" id="eq3-s3-Vum"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="JV4-gO-sWN" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -172,10 +162,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="insetGrouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" estimatedSectionHeaderHeight="-1" sectionFooterHeight="18" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="OME-Vu-Dhb">
-                                <rect key="frame" x="0.0" y="194.33333333333337" width="393" height="300"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="300" id="MXM-Ly-XSI"/>
-                                </constraints>
+                                <rect key="frame" x="0.0" y="194.33333333333331" width="393" height="623.66666666666674"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="OptionVoteCell" id="G88-To-zhX" customClass="VoteOptionCell" customModule="Tipple" customModuleProvider="target">
                                         <rect key="frame" x="20" y="55.333332061767578" width="353" height="43.666667938232422"/>
@@ -225,8 +212,8 @@
                                 <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Poll Title" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LRI-LM-MoE">
-                                <rect key="frame" x="164.33333333333334" y="122.99999999999999" width="64.666666666666657" height="20.333333333333329"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Poll Title" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LRI-LM-MoE">
+                                <rect key="frame" x="30" y="122.99999999999999" width="333" height="20.333333333333329"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -235,15 +222,16 @@
                         <viewLayoutGuide key="safeArea" id="egO-P0-iao"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
+                            <constraint firstItem="OME-Vu-Dhb" firstAttribute="top" secondItem="JAT-9r-UqL" secondAttribute="bottom" constant="20" id="9Lg-KJ-BsY"/>
                             <constraint firstItem="JAT-9r-UqL" firstAttribute="centerX" secondItem="aMf-J8-32P" secondAttribute="centerX" id="B1o-vZ-U8Z"/>
-                            <constraint firstItem="OME-Vu-Dhb" firstAttribute="top" secondItem="JAT-9r-UqL" secondAttribute="bottom" constant="20" id="D4N-cY-N3Y"/>
                             <constraint firstItem="LRI-LM-MoE" firstAttribute="centerX" secondItem="aMf-J8-32P" secondAttribute="centerX" id="EoN-6T-w5t"/>
                             <constraint firstItem="egO-P0-iao" firstAttribute="trailing" secondItem="OME-Vu-Dhb" secondAttribute="trailing" id="Gi8-yO-uXa"/>
-                            <constraint firstItem="LRI-LM-MoE" firstAttribute="centerX" secondItem="aMf-J8-32P" secondAttribute="centerX" id="Idb-AU-oiQ"/>
                             <constraint firstItem="LRI-LM-MoE" firstAttribute="top" secondItem="egO-P0-iao" secondAttribute="top" constant="20" id="Ioh-59-Rle"/>
+                            <constraint firstItem="egO-P0-iao" firstAttribute="trailing" secondItem="LRI-LM-MoE" secondAttribute="trailing" constant="30" id="PL8-Zo-Dp9"/>
+                            <constraint firstItem="egO-P0-iao" firstAttribute="bottom" secondItem="OME-Vu-Dhb" secondAttribute="bottom" id="Q7t-hf-TCV"/>
                             <constraint firstItem="OME-Vu-Dhb" firstAttribute="leading" secondItem="egO-P0-iao" secondAttribute="leading" id="XX3-UK-Z6t"/>
-                            <constraint firstItem="JAT-9r-UqL" firstAttribute="centerX" secondItem="aMf-J8-32P" secondAttribute="centerX" id="iRL-Y7-dig"/>
                             <constraint firstItem="JAT-9r-UqL" firstAttribute="top" secondItem="LRI-LM-MoE" secondAttribute="bottom" constant="10" id="sUz-RH-So7"/>
+                            <constraint firstItem="LRI-LM-MoE" firstAttribute="leading" secondItem="egO-P0-iao" secondAttribute="leading" constant="30" id="wnn-j5-L5g"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Vote" id="JkI-aJ-AS7">
