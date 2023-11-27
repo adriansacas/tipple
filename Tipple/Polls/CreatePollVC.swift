@@ -99,8 +99,6 @@ class CreatePollVC: UITableViewController, PollsDelegateVC, UITextFieldDelegate 
             let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as! SwitchCell
             // Set the label text for the switch cell
             cell.label.text = switchCellLabels[indexPath.row]
-            // Set the color of the switch
-            cell.switchSlider.onTintColor = UIColor(hex: "#3634A3")
             return cell
         default:
             let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath)
