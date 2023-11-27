@@ -24,8 +24,9 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         // Do any additional setup after loading the view.
         passwordTextField.isSecureTextEntry = true;
         
+        //TODO: comment out for the demo presentation/final project
         //check if user wants to stay logged in
-        if(defaults.bool(forKey: "tippleStayLoggedIn") == true){
+        //if(defaults.bool(forKey: "tippleStayLoggedIn") == true){
             
             // Auto login user if they didn't log out
             Auth.auth().addStateDidChangeListener() { (auth, user) in
@@ -33,7 +34,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
                     self.performSegue(withIdentifier: "loginToHomeSegue", sender: nil)
                 }
             }
-        }
+        //}
     }
     
     @IBAction func loginButtonPressed(_ sender: Any) {
@@ -46,8 +47,9 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
                 if (error as NSError?) != nil {
                     AlertUtils.showAlert(title: "Login Error", message: "Email may not exist or password is incorrect.", viewController: self)
                 } else {
+                    //TODO: take out for demo presentation/final submission
                     //save that the user wants to stay logged in
-                    defaults.set(true, forKey: "tippleStayLoggedIn")
+//                    defaults.set(true, forKey: "tippleStayLoggedIn")
                     self.performSegue(withIdentifier: "loginToHomeSegue", sender: nil)
                 }
             }

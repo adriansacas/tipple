@@ -585,10 +585,6 @@
                                     <constraint firstAttribute="height" constant="200" id="tLr-KI-U17"/>
                                 </constraints>
                             </imageView>
-                            <navigationBar contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="pTI-Gh-d0P">
-                                <rect key="frame" x="-1" y="59" width="430" height="44"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
-                            </navigationBar>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cu2-B5-0z6">
                                 <rect key="frame" x="115" y="550" width="200" height="35"/>
                                 <constraints>
@@ -621,7 +617,6 @@
                             <constraint firstItem="hHh-fL-FSh" firstAttribute="top" secondItem="cu2-B5-0z6" secondAttribute="bottom" constant="40" id="wC2-A4-NtR"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="MUJ-Es-wYy"/>
                     <connections>
                         <segue destination="V2S-uN-EC2" kind="presentation" identifier="individualToQASegue" modalPresentationStyle="automatic" id="Zhh-Sg-Ty8"/>
                         <segue destination="STg-b5-a0C" kind="presentation" identifier="groupSessionSegue" modalPresentationStyle="automatic" id="avd-V3-8XS"/>
@@ -679,7 +674,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="lE3-FY-89B"/>
+        <segue reference="X0c-9F-Ju1"/>
         <segue reference="hlQ-b1-GlN"/>
     </inferredMetricsTieBreakers>
     <resources>
@@ -688,10 +683,10 @@
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
         <systemColor name="systemIndigoColor">
-            <color red="0.34509803919999998" green="0.33725490200000002" blue="0.83921568629999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.34509803921568627" green="0.33725490196078434" blue="0.83921568627450982" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemRedColor">
-            <color red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="1" green="0.23137254901960785" blue="0.18823529411764706" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>
