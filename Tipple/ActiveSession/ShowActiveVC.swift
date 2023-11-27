@@ -240,7 +240,11 @@ class ShowActiveVC: UIViewController {
     
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == self.endSessionSegue {
+        if segue.identifier == self.endSessionSegue, let nextVC = segue.destination as? HomeViewController{
+            nextVC.saveOnKeychain = false
+            nextVC.saveEmail = ""
+            nextVC.savePassword = ""
+            
             // handle firebase marking of end session
             firestoreManager.endSessionForUser(userID: self.userID!,
                                                sessionID: self.sessionID!) { error in
