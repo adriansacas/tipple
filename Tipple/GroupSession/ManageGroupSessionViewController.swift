@@ -197,7 +197,12 @@ class ManageGroupSessionVC: UIViewController, EditSession {
                let destination = navController.topViewController as? PollsVC {
                 destination.sessionID = self.sessionID
             }
-        } else if segue.identifier == manageHomeSegue {
+        } else if segue.identifier == manageHomeSegue, let destination = segue.destination as? HomeViewController{
+            
+            destination.saveOnKeychain = false
+            destination.saveEmail = ""
+            destination.savePassword = ""
+            
             endSessionForUser()
         }
     }
