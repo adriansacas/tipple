@@ -51,28 +51,35 @@ class ProfileInfoHeightVC: UITableViewController, ProfileInfoDelegateSettingVC {
     @IBAction func saveChanges(_ sender: Any) {
         guard let userID = Auth.auth().currentUser?.uid,
               let feetText = feetTextField.text,
-              let inchesText = inchesTextField.text,
-              let feet = Int(feetText),
-              let inches = Int(inchesText) else {
-            // Handle invalid input or user not authenticated
+              let inchesText = inchesTextField.text else {
+            // Handle user not authenticated
             return
         }
-
-        let updatedData: [String: Any] = [
-            "heightFeet": feet,
-            "heightInches": inches
-        ]
         
-        firestoreManager.updateUserDocument(userID: userID, updatedData: updatedData)
-        
-        userProfileInfo?.heightFeet = feet
-        userProfileInfo?.heightInches = inches
-        
-        if let updatedProfileInfo = userProfileInfo {
-            delegate?.didUpdateProfileInfo(updatedProfileInfo)
+        if let feet = Int(feetText), let inches = Int(inchesText) {
+            if inches > 12 {
+                AlertUtils.showAlert(title: "Invalid Height", message: "Inches cannot be greater than 12.", viewController: self)
+                return
+            }
+            
+            let updatedData: [String: Any] = [
+                "heightFeet": feet,
+                "heightInches": inches
+            ]
+            
+            firestoreManager.updateUserDocument(userID: userID, updatedData: updatedData)
+            
+            userProfileInfo?.heightFeet = feet
+            userProfileInfo?.heightInches = inches
+            
+            if let updatedProfileInfo = userProfileInfo {
+                delegate?.didUpdateProfileInfo(updatedProfileInfo)
+            }
+            
+            navigationController?.popViewController(animated: true)
+        } else {
+            AlertUtils.showAlert(title: "Invalid Height", message: "Please enter a valid number.", viewController: self)
         }
-        
-        navigationController?.popViewController(animated: true)
     }
     
 }
