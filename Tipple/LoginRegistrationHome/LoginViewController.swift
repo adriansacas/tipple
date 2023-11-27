@@ -37,7 +37,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         
         //TODO: for keychain cleaning purposes
         //print("deleting keychain credentials")
-        deleteKeychain()
+        //deleteKeychain()
         
     }
     
