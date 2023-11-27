@@ -62,6 +62,11 @@ class ProfileInfoHeightVC: UITableViewController, ProfileInfoDelegateSettingVC {
                 return
             }
             
+            if inches < 0 || feet < 0 {
+                AlertUtils.showAlert(title: "Invalid Height", message: "No negative values allowed.", viewController: self)
+                return
+            }
+            
             let updatedData: [String: Any] = [
                 "heightFeet": feet,
                 "heightInches": inches
