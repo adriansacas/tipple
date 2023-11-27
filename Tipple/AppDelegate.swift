@@ -18,10 +18,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         FirebaseApp.configure()
         
         // Customize the navigation bar appearance for the entire app
+        //comment back in after testing
         let navigationBarAppearace = UINavigationBar.appearance()
         navigationBarAppearace.tintColor = UIColor(hex: "#FFFFFF")
         navigationBarAppearace.backgroundColor = UIColor(hex: "#3634A3")
         navigationBarAppearace.titleTextAttributes = [NSAttributedString.Key.foregroundColor:UIColor.white]
+        
         
         return true
     }

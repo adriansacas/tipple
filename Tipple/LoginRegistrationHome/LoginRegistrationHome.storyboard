@@ -95,12 +95,23 @@
                                     <constraint firstAttribute="height" constant="170" id="tR5-R0-jsb"/>
                                 </constraints>
                             </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DKr-pZ-XGn">
+                                <rect key="frame" x="136" y="531" width="159" height="35"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" title="Login with FaceID">
+                                    <color key="baseForegroundColor" systemColor="systemIndigoColor"/>
+                                </buttonConfiguration>
+                                <connections>
+                                    <action selector="faceIDLoginButtonPressed:" destination="Y6W-OH-hqX" eventType="touchUpInside" id="05E-6k-mPC"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="vDu-zF-Fre"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="tqw-w7-1Sw" firstAttribute="top" secondItem="cvV-pU-Vji" secondAttribute="bottom" constant="20" id="2ML-pZ-7RQ"/>
                             <constraint firstItem="ETj-6G-n9w" firstAttribute="centerX" secondItem="5EZ-qb-Rvc" secondAttribute="centerX" id="8uZ-FK-Roy"/>
+                            <constraint firstItem="DKr-pZ-XGn" firstAttribute="top" secondItem="IMK-fo-Q2O" secondAttribute="bottom" constant="8" symbolic="YES" id="Cot-Km-CkJ"/>
                             <constraint firstItem="qzL-cO-eIy" firstAttribute="centerX" secondItem="5EZ-qb-Rvc" secondAttribute="centerX" id="DlQ-l6-06e"/>
                             <constraint firstItem="qzL-cO-eIy" firstAttribute="top" secondItem="ETj-6G-n9w" secondAttribute="bottom" id="DuQ-xE-S7m"/>
                             <constraint firstItem="PGJ-vM-djQ" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" constant="35" id="IdU-Qk-Ote"/>
@@ -110,6 +121,7 @@
                             <constraint firstItem="fTU-t0-6dt" firstAttribute="centerX" secondItem="5EZ-qb-Rvc" secondAttribute="centerX" id="P7a-c4-Yog"/>
                             <constraint firstItem="IMK-fo-Q2O" firstAttribute="centerX" secondItem="5EZ-qb-Rvc" secondAttribute="centerX" id="PXk-Wk-zTC"/>
                             <constraint firstItem="ETj-6G-n9w" firstAttribute="top" secondItem="vDu-zF-Fre" secondAttribute="top" constant="50" id="Piy-w5-ADE"/>
+                            <constraint firstItem="DKr-pZ-XGn" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" constant="136" id="SF6-zr-rkv"/>
                             <constraint firstItem="TQk-dA-YcV" firstAttribute="top" secondItem="IMK-fo-Q2O" secondAttribute="bottom" constant="71" id="Xab-Mz-Cvo"/>
                             <constraint firstItem="tqw-w7-1Sw" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" constant="35" id="Zci-hz-XV9"/>
                             <constraint firstItem="vDu-zF-Fre" firstAttribute="trailing" secondItem="tqw-w7-1Sw" secondAttribute="trailing" constant="321" id="Zci-pg-327"/>
@@ -126,7 +138,7 @@
                     <connections>
                         <outlet property="emailAddressTextField" destination="cvV-pU-Vji" id="bmo-Ow-aqd"/>
                         <outlet property="passwordTextField" destination="fTU-t0-6dt" id="5Ok-Zg-lV3"/>
-                        <segue destination="ICB-pa-paD" kind="presentation" identifier="loginToHomeSegue" animates="NO" modalPresentationStyle="fullScreen" id="lE3-FY-89B"/>
+                        <segue destination="ICB-pa-paD" kind="presentation" identifier="loginToHomeSegue" modalPresentationStyle="fullScreen" modalTransitionStyle="flipHorizontal" id="lE3-FY-89B"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ief-a0-LHa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -504,7 +516,7 @@
                         <outlet property="passwordTextField" destination="k7w-Lq-X2Y" id="kwg-hy-WOd"/>
                         <outlet property="phoneNumberTextField" destination="CkY-1B-3h7" id="GKb-pI-tBG"/>
                         <outlet property="weightTextField" destination="LSk-sp-ps6" id="RwB-0L-w4I"/>
-                        <segue destination="ICB-pa-paD" kind="presentation" identifier="signupToHomeSegue" animates="NO" modalPresentationStyle="fullScreen" id="X0c-9F-Ju1"/>
+                        <segue destination="ICB-pa-paD" kind="presentation" identifier="signupToHomeSegue" modalPresentationStyle="fullScreen" modalTransitionStyle="flipHorizontal" id="X0c-9F-Ju1"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="CYp-pu-vkh" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -575,7 +587,7 @@
                                 </buttonConfiguration>
                                 <connections>
                                     <action selector="signOutButtonPressed:" destination="ICB-pa-paD" eventType="touchUpInside" id="GKL-Uj-vUa"/>
-                                    <segue destination="Y6W-OH-hqX" kind="presentation" identifier="homeToLoginSegue" animates="NO" modalPresentationStyle="fullScreen" id="hlQ-b1-GlN"/>
+                                    <segue destination="Y6W-OH-hqX" kind="presentation" identifier="homeToLoginSegue" modalPresentationStyle="fullScreen" modalTransitionStyle="flipHorizontal" id="hlQ-b1-GlN"/>
                                 </connections>
                             </button>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Tipple_aLogo.png" translatesAutoresizingMaskIntoConstraints="NO" id="W9U-ur-0X4">
@@ -585,10 +597,6 @@
                                     <constraint firstAttribute="height" constant="200" id="tLr-KI-U17"/>
                                 </constraints>
                             </imageView>
-                            <navigationBar contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="pTI-Gh-d0P">
-                                <rect key="frame" x="-1" y="59" width="430" height="44"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
-                            </navigationBar>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cu2-B5-0z6">
                                 <rect key="frame" x="115" y="550" width="200" height="35"/>
                                 <constraints>
@@ -621,7 +629,6 @@
                             <constraint firstItem="hHh-fL-FSh" firstAttribute="top" secondItem="cu2-B5-0z6" secondAttribute="bottom" constant="40" id="wC2-A4-NtR"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="MUJ-Es-wYy"/>
                     <connections>
                         <segue destination="V2S-uN-EC2" kind="presentation" identifier="individualToQASegue" modalPresentationStyle="automatic" id="Zhh-Sg-Ty8"/>
                         <segue destination="STg-b5-a0C" kind="presentation" identifier="groupSessionSegue" modalPresentationStyle="automatic" id="avd-V3-8XS"/>
@@ -679,7 +686,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="lE3-FY-89B"/>
+        <segue reference="X0c-9F-Ju1"/>
         <segue reference="hlQ-b1-GlN"/>
     </inferredMetricsTieBreakers>
     <resources>
@@ -688,10 +695,10 @@
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
         <systemColor name="systemIndigoColor">
-            <color red="0.34509803919999998" green="0.33725490200000002" blue="0.83921568629999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.34509803921568627" green="0.33725490196078434" blue="0.83921568627450982" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemRedColor">
-            <color red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="1" green="0.23137254901960785" blue="0.18823529411764706" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>
