@@ -39,6 +39,7 @@ class QRScannerController: UIViewController {
         super.viewDidLoad()
         
         checkCameraAccess { granted in
+            print(granted)
             if granted {
                 // Camera access is granted, proceed with your logic
                 // Get the back-facing camera for capturing videos
@@ -132,28 +133,40 @@ class QRScannerController: UIViewController {
         case .denied:
             print("Denied, request permission from settings")
             presentCameraSettings()
-            completion(false)
+            DispatchQueue.main.async {
+                completion(false)
+            }
         case .restricted:
             print("Restricted, device owner must approve")
-            completion(false)
+            DispatchQueue.main.async {
+                completion(false)
+            }
         case .authorized:
             print("Authorized, proceed")
-            completion(true)
+            DispatchQueue.main.async {
+                completion(true)
+            }
         case .notDetermined:
             AVCaptureDevice.requestAccess(for: .video) { success in
                 if success {
                     print("Permission granted, proceed")
-                    completion(true)
+                    DispatchQueue.main.async {
+                        completion(true)
+                    }
                 } else {
                     print("Permission denied")
-                    completion(false)
+                    DispatchQueue.main.async {
+                        completion(false)
+                    }
                 }
             }
         @unknown default:
-            completion(false)
+            DispatchQueue.main.async {
+                completion(false)
+            }
         }
     }
-    
+
     
     func presentCameraSettings() {
         let alertController = UIAlertController(title: "Error",
