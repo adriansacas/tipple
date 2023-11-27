@@ -8,6 +8,7 @@
 import UIKit
 import CoreData
 import FirebaseCore
+import GooglePlaces
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -24,6 +25,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         navigationBarAppearace.backgroundColor = UIColor(hex: "#3634A3")
         navigationBarAppearace.titleTextAttributes = [NSAttributedString.Key.foregroundColor:UIColor.white]
         
+
+        // Adding the API Key for Google Places Lookup
+        // This is listed under Andrew's Google Cloud Project using Funds from Cloud Computing that I had left over
+        GMSPlacesClient.provideAPIKey("AIzaSyC3XwrQEPx0dA2n5jrNL9Mazomzl8FGGDw")
         
         return true
     }

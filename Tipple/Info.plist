@@ -2,10 +2,10 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>NSFaceIDUsageDescription</key>
-	<string>Use Face ID instead of a password to access your account.</string>
-	<key>NSCameraUsageDescription</key>
-	<string>This app requires camera access to take photos for your profile picture.</string>
+	<key>NSLocationAlwaysAndWhenInUseUsagDescription</key>
+	<string>The app requests Always authorization.</string>
+	<key>Privacy - Location Temporary Usage Description</key>
+	<string>Used when you want to temporary extend the precision of your authorization level</string>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
 		<key>UIApplicationSupportsMultipleScenes</key>

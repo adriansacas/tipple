@@ -229,13 +229,14 @@ extension QRScannerController: AVCaptureMetadataOutputObjectsDelegate {
             qrCodeFrameView?.frame = barCodeObject!.bounds
             
             if let sessionID = metadataObj.stringValue {
+                self.messageLabel.text = metadataObj.stringValue
                 firestoreManager.validateSession(sessionID: sessionID) { isValid, error in
                     if isValid {
                         // Session is valid, perform the segue
-                        self.messageLabel.text = sessionID
                         self.performSegue(withIdentifier: "qrToQuestionSegue", sender: nil)
                     } else {
                         // Session is not valid, show an alert with the reason
+                        self.messageLabel.text = "No QR code is detected"
                         let alert = UIAlertController(title: "Invalid Session", message: "The QR code does not correspond to a valid session.", preferredStyle: .alert)
                         alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
                         self.present(alert, animated: true, completion: nil)

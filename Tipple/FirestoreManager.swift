@@ -6,8 +6,10 @@
 //
 
 import Foundation
+import CoreLocation
 import Firebase
 import FirebaseFirestore
+
 
 
 /*
@@ -35,6 +37,7 @@ import FirebaseFirestore
 class FirestoreManager {
     
     static let shared = FirestoreManager()
+    static let location = CLLocationManager()
     
     private let db = Firestore.firestore()
     private let usersCollection = "users"
@@ -48,7 +51,7 @@ class FirestoreManager {
     // Function to add a new user document
     func createUserDocument(userID: String, firstName: String, lastName: String, phoneNumber: String, birthday: Date, gender: String, heightFeet: Int, heightInches: Int, weight: Int, email: String, profileImageURL: String, sessionIDS: [String]) {
         let userRef = db.collection(usersCollection).document(userID)
-        var userData: [String: Any] = [
+        let userData: [String: Any] = [
             "firstName": firstName,
             "lastName": lastName,
             "phoneNumber": phoneNumber,
@@ -192,12 +195,16 @@ class FirestoreManager {
                                                 sessionTemp.ateBefore = ateBefore
                                             }
                                             
-                                            if let endLocation = memberDoc["endLocation"] as? String {
-                                                sessionTemp.endLocation = endLocation
+                                            if let endLocationGeoPoint = memberDoc["endLocation"] as? GeoPoint {
+                                                let endLocation = ["latitude": endLocationGeoPoint.latitude,
+                                                                   "longitude": endLocationGeoPoint.longitude]
+                                                    sessionTemp.endLocation = endLocation
                                             }
                                             
-                                            if let startLocation = memberDoc["startLocation"] as? String {
-                                                sessionTemp.startLocation = startLocation
+                                            if let startLocationGeoPoint = memberDoc["startLocation"] as? GeoPoint {
+                                                let startLocation = ["latitude": startLocationGeoPoint.latitude,
+                                                                         "longitude": startLocationGeoPoint.longitude]
+                                                    sessionTemp.startLocation = startLocation
                                             }
                                             var drinksInSession: [DrinkInfo] = []
                                             
@@ -258,11 +265,9 @@ class FirestoreManager {
         let membersListRef = sessionRef.collection(memberColInSess)
         
         // Extract the member data from the SessionInfo object
-        let memberData: [String: Any] = [
+        var memberData: [String: Any] = [
             "startTime": Timestamp(date: session.startTime),
             "activeSession": session.stillActive,
-            "startLocation": session.startLocation ?? "",
-            "endLocation": session.endLocation ?? "",
             "ateBefore": session.ateBefore ?? false,
             "symptomsList": session.symptomsList ?? [],
             // Maps all current drinks to a dictionary
@@ -275,6 +280,23 @@ class FirestoreManager {
                 ]
             }
         ]
+        
+        // Add optional properties if they exist
+        if let shareSession = session.shareSession {
+            memberData["shareSession"] = shareSession
+        }
+        
+        // Add startLocation to memberData if it exists
+        if let startLocation = session.startLocation {
+            memberData["startLocation"] = GeoPoint(latitude: startLocation["latitude"]!, 
+                                                   longitude: startLocation["longitude"]!)
+        }
+
+        // Add endLocation to memberData if it exists
+        if let endLocation = session.endLocation {
+            memberData["endLocation"] = GeoPoint(latitude: endLocation["latitude"]!, 
+                                                 longitude: endLocation["longitude"]!)
+        }
         
         // Create a reference to the new member document with the specified userID
         let newMemberRef = membersListRef.document(userID)
@@ -327,10 +349,6 @@ class FirestoreManager {
             "sessionType": session.sessionType,
         ]
         
-        // Add optional properties if they exist
-        if let shareSession = session.shareSession {
-            sessionData["shareSession"] = shareSession
-        }
         
         if let endSession = session.endGroupSessionTime {
             sessionData["endTime"] = endSession
@@ -513,84 +531,6 @@ class FirestoreManager {
     }
     
     // Function to pull information for group members list tableview
-    func pullGroupMembers(userID: String, sessionID: String, completion: @escaping ([String: [String: Any]]?, Error?) -> Void) {
-        let dispatchGroup = DispatchGroup() // Create a Dispatch Group
-        
-        var dictOfMembers: [String: [String: Any]] = [:]
-        
-        let sessionDocRef = db.collection(sessionCollection).document(sessionID).collection(memberColInSess)
-        
-        sessionDocRef.getDocuments { (querySnapshot, error) in
-            if let error = error {
-                completion(nil, error)
-            } else {
-                for document in querySnapshot!.documents {
-                    let memberDoc = document.data()
-                    let memberID = document.documentID
-                    if memberID == userID {
-                        continue
-                    } else {
-                        dictOfMembers[memberID] = [:]
-                    }
-                    
-                    if let activeSession = memberDoc["activeSession"] as? Bool {
-                        dictOfMembers[memberID]?["Still Active?"] = activeSession.description
-                    }
-                    
-                    var drinksInSession: [DrinkInfo] = []
-                    if let drinksInSessionData = memberDoc["drinksInSession"] as? [[String: Any]] {
-                        for drinkData in drinksInSessionData {
-                            if let type = drinkData["type"] as? String,
-                               let timeAtTimestamp = drinkData["timeAt"] as? Timestamp,
-                               let drinkNum = drinkData["drinkNum"] as? Int,
-                               let bacAtTime = drinkData["bacAtTime"] as? Float {
-                                let timeAt = timeAtTimestamp.dateValue()
-                                let drinkInfo = DrinkInfo(drinkType: type, drinkNum: drinkNum, bacAtTime: bacAtTime, timeAt: timeAt)
-                                drinksInSession.append(drinkInfo)
-                            }
-                        }
-                    }
-                    
-                    if !drinksInSession.isEmpty {
-                        if let mostRecentDrink = drinksInSession.max(by: { $0.timeAt < $1.timeAt }) {
-                            // `mostRecentDrink` now contains the `DrinkInfo` with the most recent timestamp
-                            dictOfMembers[memberID]?["BAC"] = mostRecentDrink.getBAC()
-                        } else {
-                            // The `drinksInSession` array is empty
-                            dictOfMembers[memberID]?["BAC"] = "0.00"
-                        }
-                    } else {
-                        dictOfMembers[memberID]?["BAC"] = "0.00"
-                    }
-                    
-                    
-                    // Enter the Dispatch Group before calling self.getUserData
-                    dispatchGroup.enter()
-                    
-                    self.getUserData(userID: memberID) { (profileInfo, someError) in
-                        if someError != nil {
-                            // Handle error
-                        } else if let tempProfile = profileInfo {
-                            dictOfMembers[memberID]?["Contact Info"] = tempProfile.phoneNumber
-                            dictOfMembers[memberID]?["name"] = tempProfile.firstName + " " + tempProfile.lastName
-                            dictOfMembers[memberID]?["Profile Pic"] = tempProfile.profileImageURL
-                        } else {
-                            // Handle the case where profileInfo is nil
-                        }
-                        // Leave the Dispatch Group when self.getUserData is complete
-                        dispatchGroup.leave()
-                    }
-                }
-
-                // Notify the completion block when all tasks are complete
-                dispatchGroup.notify(queue: .main) {
-                    completion(dictOfMembers, nil)
-                }
-            }
-        }
-    }
-    
-    // Function to pull information for group members list tableview
     func pollGroupSession(userID: String, sessionID: String, completion: @escaping ([String: [String: Any]]?, Error?) -> Void) {
         let dispatchGroup = DispatchGroup() // Create a Dispatch Group
 
@@ -624,15 +564,29 @@ class FirestoreManager {
                 for document in querySnapshot!.documents {
                     let memberDoc = document.data()
                     let memberID = document.documentID
-                    if memberID == userID {
-                        continue
-                    } else {
+                
+                    
+                    let sessionShareBool = memberDoc["shareSession"] as? Bool
+                    if sessionShareBool == true {
+                        // Update Users Location For All Users
+                        dispatchGroup.enter()
+                        self.updateLastLocation(sessionID: sessionID,
+                                                userID: memberID)
+                        dispatchGroup.leave()
+                        if memberID == userID {
+                            continue
+                        }
                         dictOfMembers[memberID] = [:]
+
+                    } else {
+                        continue
                     }
+                    
 
                     if let activeSession = memberDoc["activeSession"] as? Bool {
                         dictOfMembers[memberID]?["Still Active?"] = activeSession.description
                     }
+                    
 
                     var drinksInSession: [DrinkInfo] = []
                     if let drinksInSessionData = memberDoc["drinksInSession"] as? [[String: Any]] {
@@ -706,7 +660,7 @@ class FirestoreManager {
                 }
                 
             } else {
-                completion(nil, NSError(domain: "", code: 0, userInfo: ["message": "Session data not found or is invalid"]))
+                completion(nil, NSError(domain: "", code: 0, userInfo: ["message": "Session data not found or is invalid: \(sessionDocumentID)"]))
             }
         }
     }
@@ -747,6 +701,41 @@ class FirestoreManager {
         }
     }
 
+    func updateLastLocation(sessionID: String, userID: String) {
+            guard CLLocationManager.locationServicesEnabled() else {
+                print("Location services are not enabled.")
+                return
+            }
+
+        let authorizationStatus = Self.location.authorizationStatus
+
+            guard authorizationStatus == .authorizedAlways || authorizationStatus == .authorizedWhenInUse else {
+                print("Location access is not authorized.")
+                // Handle not authorized case (e.g., prompt the user to enable location services)
+                return
+            }
+
+            guard let currentLocation = Self.location.location else {
+                print("Unable to get current location.")
+                return
+            }
+
+            let userDocRef = db.collection(sessionCollection)
+                .document(sessionID)
+                .collection(memberColInSess)
+                .document(userID)
+
+        let locationData = GeoPoint(latitude: currentLocation.coordinate.latitude,
+                                    longitude: currentLocation.coordinate.longitude)
+
+            userDocRef.setData(["lastLocation": locationData], merge: true) { error in
+                if let error = error {
+                    print("Error updating last location: \(error.localizedDescription)")
+                } else {
+                    print("Last location updated successfully.")
+                }
+            }
+        }
     
     /* ------------     Polls      ------------*/
     
@@ -935,8 +924,9 @@ class FirestoreManager {
         var membersList = [String]()
         let membersCollection = db.collection(sessionCollection).document(sessionID).collection(self.memberColInSess)
         membersCollection.getDocuments { (memberDocuments, memberError) in
-            if let memberError = memberError {
+            if memberError != nil {
                 // Handle the error if needed
+                print("Unable to parse session data: \(userID), \(sessionID)")
                 return
             }
             
@@ -952,13 +942,17 @@ class FirestoreManager {
                         sessionTemp.ateBefore = ateBefore
                     }
                     
-                    if let endLocation = memberDoc["endLocation"] as? String {
+                    if let endLocationGeoPoint = memberDoc["endLocation"] as? GeoPoint {
+                        let endLocation = ["latitude": endLocationGeoPoint.latitude, 
+                                           "longitude": endLocationGeoPoint.longitude]
                         sessionTemp.endLocation = endLocation
                     }
                     
-                    if let startLocation = memberDoc["startLocation"] as? String {
+                    if let startLocationGeoPoint = memberDoc["startLocation"] as? GeoPoint {
+                        let startLocation = ["latitude": startLocationGeoPoint.latitude, "longitude": startLocationGeoPoint.longitude]
                         sessionTemp.startLocation = startLocation
                     }
+                    
                     var drinksInSession: [DrinkInfo] = []
                     
                     if let drinksInSessionData = memberDoc["drinksInSession"] as? [[String: Any]] {
@@ -995,4 +989,5 @@ class FirestoreManager {
     }
     
 }
+
 

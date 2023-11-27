@@ -7,13 +7,17 @@
 
 import UIKit
 import FirebaseAuth
+import GooglePlaces
+import CoreLocation
 
-class QuestionnaireVC: UIViewController, UITextFieldDelegate{
-    
+
+class QuestionnaireVC: UIViewController, UITextFieldDelegate, GMSAutocompleteViewControllerDelegate, CLLocationManagerDelegate{
 
     @IBOutlet weak var eatenToggle: UISwitch!
     @IBOutlet weak var shareSession: UISwitch!
+    @IBOutlet weak var partyLabel: UILabel!
     @IBOutlet weak var partyLocation: UITextField!
+    @IBOutlet weak var endLabel: UILabel!
     @IBOutlet weak var endLocation: UITextField!
     @IBOutlet weak var startButton: UIButton!
     
@@ -22,8 +26,12 @@ class QuestionnaireVC: UIViewController, UITextFieldDelegate{
     var sessionID: String?
     var sessionName: String?
     var endDate: Date?
+    var activeTextField: UITextField?
     var userProfileInfo: ProfileInfo?
+    var startCoord: [String: Double]?
+    var endCoord: [String: Double]?
     let firestoreManager = FirestoreManager.shared
+    let locationManager = FirestoreManager.location
     let qToActiveSegue = "questionToActiveSegue"
     let qToGroupSegue  = "questionToGroupManage"
     let qToGroupJoinSegue = "questionsToGroupJoin"
@@ -38,6 +46,12 @@ class QuestionnaireVC: UIViewController, UITextFieldDelegate{
             startButton.setTitle("Continue", for: .normal)
         } else if self.sessionType == "Join" {
             startButton.setTitle("Join Session", for: .normal)
+            
+            partyLocation.isEnabled = false
+            partyLabel.isHidden = true
+            partyLocation.isHidden = true
+            endLabel.frame = partyLabel.frame
+            endLocation.frame = partyLocation.frame
         }
         
         
@@ -50,7 +64,6 @@ class QuestionnaireVC: UIViewController, UITextFieldDelegate{
         partyLocation.text = nil
         endLocation.text = nil
     }
-    
     
     func getUserProfileData(user: String) {
         firestoreManager.getUserData(userID: user) { [weak self] (profileInfo, error) in
@@ -71,7 +84,7 @@ class QuestionnaireVC: UIViewController, UITextFieldDelegate{
             print("Error fetching user ID from currentUser")
         }
     }
-    
+
     
     
     @IBAction func startSessionButton(_ sender: Any) {
@@ -79,6 +92,7 @@ class QuestionnaireVC: UIViewController, UITextFieldDelegate{
             return
         }
         
+        let defaultCoordinates = ["latitude": 30.2850, "longitude": -97.7335]
         let dispatchGroup = DispatchGroup()
 
         
@@ -90,8 +104,8 @@ class QuestionnaireVC: UIViewController, UITextFieldDelegate{
                                       startTime: Date.now,
                                       drinksInSession: [],
                                       stillActive: true,
-                                      startLocation: partyLocation.text ?? "",
-                                      endLocation: endLocation.text ?? "",
+                                      startLocation: startCoord ?? defaultCoordinates,
+                                      endLocation: endCoord ?? defaultCoordinates,
                                       ateBefore: eatenToggle.isOn,
                                       sessionName: "My Session",
                                       shareSession: shareSession.isOn)
@@ -109,16 +123,12 @@ class QuestionnaireVC: UIViewController, UITextFieldDelegate{
             }
         } else if self.sessionType == "Join" {
             dispatchGroup.enter()
-            /* HARDCODED SESSION TO JOIN ATM
-                TODO: MAKE SURE THE SESSION YOU"RE JOINING IS A GROUP SESSION
-             */
-//            self.sessionID = "ZWkebdHlDOeE7w4RUa9U"
             let session = SessionInfo()
             session.startTime = Date.now
             session.drinksInSession = []
             session.stillActive = true
-            session.startLocation = partyLocation.text ?? ""
-            session.endLocation = endLocation.text ?? ""
+            session.startLocation = startCoord ?? defaultCoordinates
+            session.endLocation = endCoord ?? defaultCoordinates
             session.ateBefore = eatenToggle.isOn
             session.shareSession = shareSession.isOn
             
@@ -177,6 +187,7 @@ class QuestionnaireVC: UIViewController, UITextFieldDelegate{
         }
     }
     
+    
     // Called when 'return' key pressed
     func textFieldShouldReturn(_ textField:UITextField) -> Bool {
         textField.resignFirstResponder()
@@ -225,4 +236,75 @@ class QuestionnaireVC: UIViewController, UITextFieldDelegate{
         }
     }
     
+    // -------- location Stuff --------- /
+    
+    func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
+        activeTextField = textField
+        let autocompleteController = GMSAutocompleteViewController()
+        autocompleteController.delegate = self
+        present(autocompleteController, animated: true, completion: nil)
+        return false  // Prevent the default keyboard from appearing
+    }
+    
+    func viewController(_ viewController: GMSAutocompleteViewController, didAutocompleteWith place: GMSPlace) {
+        activeTextField?.text = place.name
+        
+        let coordinates = ["latitude": place.coordinate.latitude,
+                           "longitude": place.coordinate.longitude]
+        
+        if activeTextField == endLocation {
+            endCoord = coordinates
+        } else {
+            startCoord = coordinates
+        }
+        dismiss(animated: true, completion: nil)
+    }
+
+
+    func viewController(_ viewController: GMSAutocompleteViewController, didFailAutocompleteWithError error: Error) {
+        print("Autocomplete error: \(error.localizedDescription)")
+    }
+
+    func wasCancelled(_ viewController: GMSAutocompleteViewController) {
+        activeTextField?.text = nil
+        if activeTextField == endLocation {
+            endCoord = nil
+        } else {
+            startCoord = nil
+        }
+        dismiss(animated: true, completion: nil)
+    }
+    
+    @IBAction func sessionDetailsToggled(_ sender: Any) {
+        guard shareSession.isOn else {
+            return
+        }
+        
+        guard sessionType == "Group" || sessionType == "Join" else {
+            return
+        }
+        
+        let status = locationManager.authorizationStatus
+        switch status {
+        case .authorizedAlways, .authorizedWhenInUse:
+            print("Location access is authorized.")
+        case .denied:
+            print("Location access is denied. Please enable it in Settings.")
+        case .notDetermined:
+            print("Location access is not determined. Requesting permission...")
+            locationManager.requestWhenInUseAuthorization()
+        case .restricted:
+            print("Location access is restricted. User cannot change the authorization status.")
+        @unknown default:
+            fatalError("New case added in CLLocationManager authorization status. Update the code.")
+        }
+    }
+}
+
+
+extension ViewController: CLLocationManagerDelegate {
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+           guard let locValue: CLLocationCoordinate2D = manager.location?.coordinate else { return }
+           print("locations = \(locValue.latitude) \(locValue.longitude)")
+    }
 }

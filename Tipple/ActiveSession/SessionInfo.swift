@@ -20,10 +20,10 @@ class SessionInfo {
     var stillActive:     Bool           // Partof Memberslist doc --> Boolean on firebase
     
     // Optional Values for both Session Types
-    var startLocation:  String?         // Partof MembersList doc --> String rn but Geolocation later
-    var endLocation:    String?         // Partof MembersList doc --> String rn but Geolocation later
-    var ateBefore:      Bool?           // Partof MembersList doc --> Boolean on firebase
-    var symptomsList:   [String]?       // Partof MembersList doc --> Array of strings on firebase
+    var startLocation: [String: Double]?  // Partof MembersList doc --> Geolocation on Firebase
+    var endLocation:   [String: Double]?  // Partof MembersList doc --> Geolocation on Firebase
+    var ateBefore:     Bool?              // Partof MembersList doc --> Boolean on firebase
+    var symptomsList:  [String]?          // Partof MembersList doc --> Array of strings on firebase
     
     // Optional Group Session Fields
     var sessionName: String?            // String on firebase
@@ -40,8 +40,8 @@ class SessionInfo {
         self.drinksInSession = []
         self.stillActive = false
        
-        self.startLocation = ""
-        self.endLocation = ""
+        self.startLocation = nil
+        self.endLocation = nil
         self.ateBefore = false
         self.symptomsList = []
         
@@ -51,9 +51,10 @@ class SessionInfo {
         self.polls = []
     }
     
-    init (createdBy: String, sessionDocID: String? = nil, membersList: [String], sessionType: String, startTime: Date, drinksInSession: [DrinkInfo], stillActive: Bool,
-        startLocation: String? = nil, endLocation: String? = nil, ateBefore: Bool? = nil, symptomsList: [String]? = nil,
-          sessionName: String? = nil, shareSession: Bool? = nil, endGroupSessionTime: Date? = nil, polls: [String]? = nil) {
+    init(createdBy: String, sessionDocID: String? = nil, membersList: [String], sessionType: String, startTime: Date, drinksInSession: [DrinkInfo], stillActive: Bool,
+             startLocation: [String: Double]? = nil, endLocation: [String: Double]? = nil, ateBefore: Bool? = nil, symptomsList: [String]? = nil,
+             sessionName: String? = nil, shareSession: Bool? = nil, endGroupSessionTime: Date? = nil, polls: [String]? = nil) {
+
             self.createdBy = createdBy
             self.sessionDocID = sessionDocID
             self.membersList = membersList

@@ -28,7 +28,7 @@ class GroupListViewController: UIViewController, UITableViewDelegate, UITableVie
         tableView.delegate = self
         tableView.dataSource = self
 
-        firestoreManager.pullGroupMembers(userID: userID!, sessionID: sessionID!) {
+        firestoreManager.pollGroupSession(userID: userID!, sessionID: sessionID!) {
             users, error in
             if let error = error {
                 print("Error updating symptoms: \(error)")
