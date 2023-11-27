@@ -30,6 +30,7 @@
 		344830192AEB67DA00039FAD /* ManageGroupSessionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 344830182AEB67DA00039FAD /* ManageGroupSessionViewController.swift */; };
 		3448301B2AEB684000039FAD /* EditGroupSessionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3448301A2AEB684000039FAD /* EditGroupSessionViewController.swift */; };
 		3448301D2AEB685B00039FAD /* InviteCodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3448301C2AEB685B00039FAD /* InviteCodeViewController.swift */; };
+		347C92F92B15551300A1E3FE /* Tipple_Icon.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 347C92F82B15551300A1E3FE /* Tipple_Icon.jpeg */; };
 		348821D22AD7932E00B677F3 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 348821D12AD7932E00B677F3 /* GoogleService-Info.plist */; };
 		348821E12AD793AE00B677F3 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 348821E02AD793AE00B677F3 /* FirebaseAuth */; };
 		348821E72AD793AE00B677F3 /* FirebaseDatabase in Frameworks */ = {isa = PBXBuildFile; productRef = 348821E62AD793AE00B677F3 /* FirebaseDatabase */; };
@@ -119,6 +120,7 @@
 		344830182AEB67DA00039FAD /* ManageGroupSessionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManageGroupSessionViewController.swift; sourceTree = "<group>"; };
 		3448301A2AEB684000039FAD /* EditGroupSessionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditGroupSessionViewController.swift; sourceTree = "<group>"; };
 		3448301C2AEB685B00039FAD /* InviteCodeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InviteCodeViewController.swift; sourceTree = "<group>"; };
+		347C92F82B15551300A1E3FE /* Tipple_Icon.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Tipple_Icon.jpeg; sourceTree = "<group>"; };
 		348821D12AD7932E00B677F3 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		349A6F7C2AD62DAE002A707B /* LoginRegistrationHome.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LoginRegistrationHome.storyboard; sourceTree = "<group>"; };
 		349B1F732ADDDF3F00588DCF /* MOCKScrollViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MOCKScrollViewController.swift; sourceTree = "<group>"; };
@@ -222,6 +224,7 @@
 				524D4E6E2B12F860008F878A /* GooglePlaces.xcframework */,
 				524D4E6D2B12F860008F878A /* GooglePlacesResources */,
 				3411E5122AD8BDE700297E01 /* TippleRelease.entitlements */,
+				347C92F82B15551300A1E3FE /* Tipple_Icon.jpeg */,
 				3417C9FF2B0EA7550096D08E /* DrinkingStatus */,
 				34F604122ADF4B0C00E331A2 /* Tipple_Green_Status.png */,
 				34F604102ADF4B0B00E331A2 /* Tipple_Red_Status.png */,
@@ -477,6 +480,7 @@
 				B3571DE22AF8619E00095EF9 /* Polls.storyboard in Resources */,
 				340DDE9B2AD6243A00217F2D /* Main.storyboard in Resources */,
 				3417C9F82B0EA7460096D08E /* TippleStatus_1.png in Resources */,
+				347C92F92B15551300A1E3FE /* Tipple_Icon.jpeg in Resources */,
 				3417C9FB2B0EA7460096D08E /* TippleStatus_2.png in Resources */,
 				34F604132ADF4B0C00E331A2 /* Tipple_Red_Status.png in Resources */,
 				34F604152ADF4B0C00E331A2 /* Tipple_Green_Status.png in Resources */,
