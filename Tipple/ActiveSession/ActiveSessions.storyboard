@@ -37,7 +37,7 @@
                                     <segment title="shot"/>
                                 </segments>
                             </segmentedControl>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="Tipple_Green_Status.png" translatesAutoresizingMaskIntoConstraints="NO" id="xgT-Eh-jLK">
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="TippleStatus_0.png" translatesAutoresizingMaskIntoConstraints="NO" id="xgT-Eh-jLK">
                                 <rect key="frame" x="40" y="286" width="350" height="350"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
@@ -86,7 +86,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="Tipple_Green_Status.png" width="1375" height="1320"/>
+        <image name="TippleStatus_0.png" width="1080" height="1080"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

@@ -115,19 +115,40 @@ class ShowActiveVC: UIViewController {
     }
     
     
-    // Function to update the segmented control status field at top of view
+    // Function to update the segmented control status field at the top of the view with animation
     func updateStatusInfo(bacValue: Float, status: String, drinks: Int) {
+        // Set new titles for segmented control
         statusSegmented.setTitle(String(format: "%.2f", bacValue), forSegmentAt: indicies["BAC"]!)
         statusSegmented.setTitle(status, forSegmentAt: indicies["STATUS"]!)
         statusSegmented.setTitle(String(drinks), forSegmentAt: indicies["NUMDRINK"]!)
-        
-        if bacValue < 0.08 {
-            mainGlassIV.image = UIImage(named: "Tipple_Green_Status")
-        } else if (bacValue < 0.12) {
-            mainGlassIV.image = UIImage(named: "Tipple_Yellow_Status")
+
+        // Determine the new image based on bacValue
+        var newImageName: String
+
+        if bacValue < 0.04 {
+            newImageName = "TippleStatus_0"
+        } else if bacValue < 0.06 {
+            newImageName = "TippleStatus_1"
+        } else if bacValue < 0.08 {
+            newImageName = "TippleStatus_2"
+        } else if bacValue < 0.1 {
+            newImageName = "TippleStatus_3"
+        } else if bacValue < 0.12 {
+            newImageName = "TippleStatus_4"
+        } else if bacValue < 0.14 {
+            newImageName = "TippleStatus_5"
         } else {
-            mainGlassIV.image = UIImage(named: "Tipple_Red_Status")
+            newImageName = "TippleStatus_6"
         }
+
+        // Perform animation
+        UIView.transition(with: mainGlassIV,
+                          duration: 0.3, // You can adjust the duration as needed
+                          options: .transitionCrossDissolve,
+                          animations: {
+                              self.mainGlassIV.image = UIImage(named: newImageName)
+                          },
+                          completion: nil)
     }
     
     
