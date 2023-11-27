@@ -28,27 +28,32 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         passwordTextField.isSecureTextEntry = true;
         
         //TODO: comment out for the demo presentation/final project
-        //check if user wants to stay logged in
-        //if(defaults.bool(forKey: "tippleStayLoggedIn") == true){
-            
-            // Auto login user if they didn't log out
-            //Auth.auth().addStateDidChangeListener() { (auth, user) in
-                //if user != nil {
-                    //self.performSegue(withIdentifier: "loginToHomeSegue", sender: nil)
-                //}
+        // Auto login user if they didn't log out
+        //Auth.auth().addStateDidChangeListener() { (auth, user) in
+            //if user != nil {
+                //self.performSegue(withIdentifier: "loginToHomeSegue", sender: nil)
             //}
         //}
         
+        //TODO: for keychain cleaning purposes
+        //print("deleting keychain credentials")
+        deleteKeychain()
         
-        //testing facial recognition
-//        var error: NSError?
-//        var canEvaluateBool = context.canEvaluatePolicy(.deviceOwnerAuthentication, error: &error)
-//        
-//        print("canEvaluatePolicy? \(canEvaluateBool)")
-//        print("error message: \(error?.localizedDescription)")
+    }
+    
+    //DEMO/TESTING purposes: for deleting key on xcode simulator!
+    func deleteKeychain(){
         
+        let query: [String: Any] = [kSecClass as String: kSecClassInternetPassword,
+                                    kSecAttrServer as String: "www.tipple.com"]
         
+        let status = SecItemDelete(query as CFDictionary)
         
+        if (status == errSecSuccess || status == errSecItemNotFound) {
+            print("successfully deleted off keychain")
+        } else {
+            print("something went wrong!!!")
+        }
         
     }
     
@@ -57,14 +62,12 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         if(emailAddressTextField.text! == "" || passwordTextField.text! == ""){
             AlertUtils.showAlert(title: "Incomplete Fields", message: "Complete all fields to login.", viewController: self)
         } else {
+            
             Auth.auth().signIn(withEmail: emailAddressTextField.text! , password: passwordTextField.text!) {
                 (authResult, error) in
                 if (error as NSError?) != nil {
                     AlertUtils.showAlert(title: "Login Error", message: "Email may not exist or password is incorrect.", viewController: self)
                 } else {
-                    //TODO: take out for demo presentation/final submission
-                    //save that the user wants to stay logged in
-//                    defaults.set(true, forKey: "tippleStayLoggedIn")
                     self.performSegue(withIdentifier: "loginToHomeSegue", sender: nil)
                 }
             }
@@ -80,7 +83,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         
         if(context.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: &error)){
             
-            print("faceID allowed")
+            //print("faceID allowed")
             let reason = "Log in to app"
         
             context.evaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, 
@@ -89,12 +92,39 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
                     
                     if success {
                         //login with appropriate email and password, then segue into home page
-                        print("authentication possible and should log in successfully")
+                        //retrieve keychain
+                        let query: [String: Any] = [kSecClass as String: kSecClassInternetPassword,
+                                                    kSecAttrServer as String: "www.tipple.com",
+                                                    kSecMatchLimit as String: kSecMatchLimitOne,
+                                                    kSecReturnAttributes as String: true,
+                                                    kSecReturnData as String: true]
                         
+                        var item: CFTypeRef?
+                        let status = SecItemCopyMatching(query as CFDictionary, &item)
                         
-                        //TODO: figure out how to save and retrieve email and password to keychain
-                        //testing with account that's already been made
-                        Auth.auth().signIn(withEmail: "test@tipple.com" , password: "testing") {
+                        //there's an error, don't allow login and exit
+                        if status == errSecItemNotFound {
+                            
+                            AlertUtils.showAlert(title: "Login Error", message: "Login credentials do not exist in the Keychain. Please login manually", viewController: self!)
+                            return
+                        }
+                        
+                        //extract login info and pass into
+                        guard let keychainLogin = item as? [String: Any],
+                              let passwordData = keychainLogin[kSecValueData as String] as? Data,
+                              let password = String(data: passwordData, encoding: String.Encoding.utf8),
+                              let email = keychainLogin[kSecAttrAccount as String] as? String
+                                
+                        else {
+                            AlertUtils.showAlert(title: "Login Error", message: "Error getting login credentials. Please login manually", viewController: self!)
+                            return
+                        }
+                        
+                        print("email from keychain: \(email)")
+                        print("password from keychain: \(password)")
+                        
+                        //login with keychain login info
+                        Auth.auth().signIn(withEmail: email , password: password) {
                             (authResult, error) in
                             if (error as NSError?) != nil {
                                 AlertUtils.showAlert(title: "Login Error", message: "Email may not exist or password is incorrect.", viewController: self!)
@@ -103,12 +133,8 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
                             }
                         }
                         
-                        
-                        
-                        
                     } else {
                         
-                        print("authentication possible but NO MATCH")
                         let alert = UIAlertController(
                             title: "Authentication failed",
                             message: "You could not be verfied, please try again",
@@ -125,17 +151,8 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
                         self?.present(alert, animated: true)
                         
                     }
-                    
                 }
-                
             }
-            
-            
-            
-            
-            
-            
-            
             
         } else {
             let alert = UIAlertController(
@@ -153,8 +170,6 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
             
             present(alert, animated: true)
         }
-        
-        
     }
     
     @IBAction func signupTextButtonPressed(_ sender: Any){
@@ -171,4 +186,17 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.view.endEditing(true)
     }
+
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
+        if segue.identifier == "loginToHomeSegue", let nextVC = segue.destination as? HomeViewController {
+            
+            //only send values isOnKeychain returns true
+            nextVC.saveOnKeychain = false
+            nextVC.saveEmail = ""
+            nextVC.savePassword = ""
+        }
+        
+    }
+    
 }

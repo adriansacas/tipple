@@ -75,7 +75,7 @@
                                 <connections>
                                     <action selector="signupTextButtonPressed:" destination="iX1-1O-wfe" eventType="touchUpInside" id="6Oz-gA-TkK"/>
                                     <action selector="signupTextButtonPressed:" destination="Y6W-OH-hqX" eventType="touchUpInside" id="pnV-up-r7i"/>
-                                    <segue destination="jCp-x6-jLb" kind="presentation" identifier="signupSegue" animates="NO" modalPresentationStyle="fullScreen" id="Pwi-UE-Ud4"/>
+                                    <segue destination="jCp-x6-jLb" kind="presentation" identifier="signupSegue" modalPresentationStyle="fullScreen" modalTransitionStyle="flipHorizontal" id="Pwi-UE-Ud4"/>
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tipple" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qzL-cO-eIy">
@@ -378,7 +378,7 @@
                                                 </buttonConfiguration>
                                                 <connections>
                                                     <action selector="loginTextButtonPressed:" destination="jCp-x6-jLb" eventType="touchUpInside" id="r2Z-B6-yeB"/>
-                                                    <segue destination="Y6W-OH-hqX" kind="presentation" identifier="loginSegue" animates="NO" modalPresentationStyle="fullScreen" id="cGE-tr-5Qm"/>
+                                                    <segue destination="Y6W-OH-hqX" kind="presentation" identifier="loginSegue" modalPresentationStyle="fullScreen" modalTransitionStyle="flipHorizontal" id="cGE-tr-5Qm"/>
                                                 </connections>
                                             </button>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Enter accurate data for best results" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5gC-oV-bLM">
@@ -687,7 +687,7 @@
     </scenes>
     <inferredMetricsTieBreakers>
         <segue reference="X0c-9F-Ju1"/>
-        <segue reference="hlQ-b1-GlN"/>
+        <segue reference="cGE-tr-5Qm"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="Tipple_aLogo.png" width="1455" height="1412"/>
@@ -695,10 +695,10 @@
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
         <systemColor name="systemIndigoColor">
-            <color red="0.34509803921568627" green="0.33725490196078434" blue="0.83921568627450982" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.34509803919999998" green="0.33725490200000002" blue="0.83921568629999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemRedColor">
-            <color red="1" green="0.23137254901960785" blue="0.18823529411764706" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

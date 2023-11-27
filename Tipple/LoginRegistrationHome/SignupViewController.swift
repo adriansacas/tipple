@@ -101,7 +101,7 @@ class SignupViewController: UIViewController, UIPickerViewDataSource, UIPickerVi
                         
                         Auth.auth().signIn(withEmail: self.emailAddressTextField.text!, password: self.passwordTextField.text!)
                         self.performSegue(withIdentifier: "signupToHomeSegue", sender: nil)
-                        
+                                                
                         //add information to fire base
                         if let userId = Auth.auth().currentUser?.uid, let email = Auth.auth().currentUser?.email {
                             self.firestoreManager.createUserDocument(
@@ -127,6 +127,28 @@ class SignupViewController: UIViewController, UIPickerViewDataSource, UIPickerVi
                 AlertUtils.showAlert(title: "Missing Information", message: "Complete all fields to register new account.", viewController: self)
             }
         }
+    }
+    
+    //query the keychain and check if login information exists on this device already
+    func canSaveOnKeychain() -> Bool {
+        
+        let query: [String: Any] = [kSecClass as String: kSecClassInternetPassword,
+                                    kSecAttrServer as String: "www.tipple.com",
+                                    kSecMatchLimit as String: kSecMatchLimitOne,
+                                    kSecReturnAttributes as String: true,
+                                    kSecReturnData as String: true]
+        
+        var item: CFTypeRef?
+        
+        let status = SecItemCopyMatching(query as CFDictionary, &item)
+        
+        //if no info was found, return true
+        if status == errSecItemNotFound {
+            return true
+        }
+        
+        //else we found one, so we can't add another one
+        return false
     }
     
     
@@ -241,5 +263,20 @@ class SignupViewController: UIViewController, UIPickerViewDataSource, UIPickerVi
     // Called when the user clicks on the view outside of the UITextField
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.view.endEditing(true)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
+        if segue.identifier == "signupToHomeSegue", let nextVC = segue.destination as? HomeViewController {
+            
+            //only send values isOnKeychain returns true
+            nextVC.saveOnKeychain = canSaveOnKeychain()
+            
+            if(nextVC.saveOnKeychain!){
+                nextVC.saveEmail = emailAddressTextField.text!
+                nextVC.savePassword = passwordTextField.text!
+            }
+        }
+        
     }
 }
