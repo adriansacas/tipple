@@ -582,6 +582,14 @@ class FirestoreManager {
                         continue
                     }
                     
+                    
+
+                    
+                    if let lastKnownLoc = memberDoc["lastLocation"] as? GeoPoint {
+                        let lastKnownLocDict = ["latitude": lastKnownLoc.latitude,
+                                                "longitude": lastKnownLoc.longitude]
+                        dictOfMembers[memberID]?["Last Known Location"] = lastKnownLocDict
+                    }
 
                     if let activeSession = memberDoc["activeSession"] as? Bool {
                         dictOfMembers[memberID]?["Still Active?"] = activeSession.description
