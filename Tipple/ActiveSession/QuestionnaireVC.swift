@@ -237,11 +237,11 @@ class QuestionnaireVC: UIViewController, UITextFieldDelegate, GMSAutocompleteVie
     }
     
     // -------- location Stuff --------- /
-    
     func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
         activeTextField = textField
         let autocompleteController = GMSAutocompleteViewController()
         autocompleteController.delegate = self
+        UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self]).defaultTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
         present(autocompleteController, animated: true, completion: nil)
         return false  // Prevent the default keyboard from appearing
     }
