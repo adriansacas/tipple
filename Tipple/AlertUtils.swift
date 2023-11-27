@@ -16,7 +16,11 @@ import UIKit
 class AlertUtils {
     static func showAlert(title: String, message: String, viewController: UIViewController) {
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+        
+        let action = UIAlertAction(title: "OK", style: .default, handler: nil)
+        
+        action.setValue(UIColor.okay, forKey:"titleTextColor")
+        alert.addAction(action)
         viewController.present(alert, animated: true, completion: nil)
     }
 }

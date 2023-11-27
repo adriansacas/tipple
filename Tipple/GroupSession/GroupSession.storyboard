@@ -119,10 +119,10 @@
             </objects>
             <point key="canvasLocation" x="1973.0232558139535" y="3.218884120171674"/>
         </scene>
-        <!--LoginRegistrationHome-->
+        <!--HomeViewController-->
         <scene sceneID="ApS-Gl-Y5X">
             <objects>
-                <viewControllerPlaceholder storyboardName="LoginRegistrationHome" id="c2O-R1-5Vv" sceneMemberID="viewController">
+                <viewControllerPlaceholder storyboardName="LoginRegistrationHome" referencedIdentifier="HomeViewController" id="c2O-R1-5Vv" sceneMemberID="viewController">
                     <navigationItem key="navigationItem" id="mhY-Gd-3Lb"/>
                 </viewControllerPlaceholder>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ffd-mD-7cy" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -572,17 +572,17 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="6hP-V1-Vwe"/>
+        <segue reference="ANj-LJ-Joa"/>
     </inferredMetricsTieBreakers>
     <resources>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
         <systemColor name="systemIndigoColor">
-            <color red="0.34509803919999998" green="0.33725490200000002" blue="0.83921568629999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.34509803921568627" green="0.33725490196078434" blue="0.83921568627450982" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemRedColor">
-            <color red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="1" green="0.23137254901960785" blue="0.18823529411764706" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>
