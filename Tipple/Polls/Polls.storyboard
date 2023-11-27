@@ -17,6 +17,12 @@
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="There are no polls." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hys-dJ-urv">
+                                <rect key="frame" x="126" y="415.66666666666669" width="141" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="insetGrouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" estimatedSectionHeaderHeight="-1" sectionFooterHeight="18" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="hpL-bR-8ej">
                                 <rect key="frame" x="0.0" y="103" width="393" height="715"/>
                                 <prototypes>
@@ -48,7 +54,9 @@
                         <constraints>
                             <constraint firstItem="hpL-bR-8ej" firstAttribute="top" secondItem="vDu-zF-Fre" secondAttribute="top" id="E7H-7k-Fmj"/>
                             <constraint firstItem="vDu-zF-Fre" firstAttribute="bottom" secondItem="hpL-bR-8ej" secondAttribute="bottom" id="E7O-kX-xtf"/>
+                            <constraint firstItem="hys-dJ-urv" firstAttribute="centerY" secondItem="5EZ-qb-Rvc" secondAttribute="centerY" id="HTV-Yd-j2h"/>
                             <constraint firstItem="hpL-bR-8ej" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" id="Xki-tO-MMz"/>
+                            <constraint firstItem="hys-dJ-urv" firstAttribute="centerX" secondItem="5EZ-qb-Rvc" secondAttribute="centerX" id="Y2R-7Y-fYD"/>
                             <constraint firstItem="vDu-zF-Fre" firstAttribute="trailing" secondItem="hpL-bR-8ej" secondAttribute="trailing" id="kHn-1f-JU3"/>
                         </constraints>
                     </view>
@@ -60,6 +68,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="noPollsLabel" destination="hys-dJ-urv" id="xH5-Q3-5GD"/>
                         <outlet property="tableView" destination="hpL-bR-8ej" id="pNg-PQ-ZCl"/>
                         <segue destination="rIO-aM-jZq" kind="show" identifier="PollResultsSegueIdentifier" id="AFS-p7-3QH"/>
                         <segue destination="iea-Nl-dC1" kind="show" identifier="PollDetailsSegueIdentifier" id="mby-Jd-PXS"/>

@@ -21,6 +21,7 @@ protocol PollsDelegateVC: UIViewController {
 class PollsVC: UIViewController, UITableViewDataSource, UITableViewDelegate, PollsDelegate {
     
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var noPollsLabel: UILabel!
     
     let pollCellIdentifier = "PollCell"
     let pollDetailsSegueIdentifier = "PollDetailsSegueIdentifier"
@@ -39,7 +40,7 @@ class PollsVC: UIViewController, UITableViewDataSource, UITableViewDelegate, Pol
         tableView.dataSource = self
         
         //TODO: Comment out after testing
-        sessionID = "7cuNiTanSGvGqkfXVpBe"
+//        sessionID = "7cuNiTanSGvGqkfXVpBe"
 
         getSession()
     }
@@ -53,17 +54,17 @@ class PollsVC: UIViewController, UITableViewDataSource, UITableViewDelegate, Pol
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return polls.count
+        let count = polls.count
+        tableView.isHidden = count == 0 // Hide tableView if no polls
+        noPollsLabel.isHidden = count != 0 // Show noPollsLabel if no polls
+        return count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         // Configure each cell in the table view.
         let cell = tableView.dequeueReusableCell(withIdentifier: pollCellIdentifier, for: indexPath as IndexPath) as! PollCell
-        
-        let row = indexPath.row
-        let poll = polls[row]
+        let poll = polls[indexPath.row]
         cell.pollLabel.text = poll.prompt
-        
         return cell
     }
     
