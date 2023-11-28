@@ -438,7 +438,7 @@
                                     <color key="baseBackgroundColor" systemColor="systemIndigoColor"/>
                                 </buttonConfiguration>
                                 <connections>
-                                    <segue destination="al7-QM-VMx" kind="show" identifier="manageToActiveSegue" id="GCQ-Wo-vNf"/>
+                                    <segue destination="al7-QM-VMx" kind="presentation" identifier="manageToActiveSegue" modalPresentationStyle="fullScreen" id="GCQ-Wo-vNf"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="84a-OK-c2o">
