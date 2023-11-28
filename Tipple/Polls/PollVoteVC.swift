@@ -131,9 +131,11 @@ class PollVoteVC: UIViewController, UITableViewDataSource, UITableViewDelegate, 
                 self?.insertNewOptionCell(option: text)
             }
         }
+        saveAction.setValue(UIColor.okay, forKey:"titleTextColor")
 
         // The "Cancel" action
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        cancelAction.setValue(UIColor.cancel, forKey:"titleTextColor")
 
         // Add actions to the alert controller
         controller.addAction(saveAction)
