@@ -16,9 +16,9 @@ protocol updateSymptoms {
 class DayViewController: UIViewController, updateSymptoms, ChartViewDelegate {
     
     let tips = ["Headache" : "Taking Aspirin or Ibuprofen can help alieviate headaches, but stay away from Tylenol!",
-                "Dehydration" : "Acohol promotes urination, so make sure to drink plenty of water before, during, and after drinking",
-                "Nausea" : "Eat some bread or cracker! Carbs help absorb any alcohol left in the stomach to combat nausea",
-                "Slurred speech" : "Drinking on an empty stomach can cause the alcohol to be absorbed in blood stream faster, make sure to eat before!",
+                "Dehydration" : "Alcohol promotes urination, so make sure to drink plenty of water before, during, and after drinking",
+                "Nausea" : "Eat some bread or crackers! Carbs help absorb any alcohol left in the stomach to combat nausea",
+                "Slurred speech" : "Drinking on an empty stomach can cause the alcohol to be absorbed in bloodstream faster, make sure to eat before!",
                 "Vomiting" : "Drinking in moderation can help prevent adverse effects"]
 
     @IBOutlet weak var noDrinksLabel: UILabel!

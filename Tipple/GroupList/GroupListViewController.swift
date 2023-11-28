@@ -10,6 +10,7 @@ import FirebaseAuth
 
 class GroupListViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
+    @IBOutlet weak var initialLabel: UILabel!
     @IBOutlet weak var tableView: UITableView!
     
     let firestoreManager = FirestoreManager.shared
@@ -46,7 +47,10 @@ class GroupListViewController: UIViewController, UITableViewDelegate, UITableVie
     
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        keys.count
+        let count = keys.count
+        self.tableView.isHidden = count == 0 // Hide tableView if no polls
+        self.initialLabel.isHidden = count != 0 // Show noPollsLabel if no polls
+        return count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

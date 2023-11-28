@@ -16,6 +16,12 @@
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Nobody has joined the session :(" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sde-iU-4de">
+                                <rect key="frame" x="64.666666666666686" y="415.66666666666669" width="264" height="21"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                <color key="textColor" red="0.34509804840000002" green="0.33725491169999999" blue="0.81176471709999998" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="zcM-WY-au6">
                                 <rect key="frame" x="0.0" y="59" width="393" height="759"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -36,11 +42,14 @@
                         <constraints>
                             <constraint firstItem="zcM-WY-au6" firstAttribute="top" secondItem="vDu-zF-Fre" secondAttribute="top" id="0kA-Kv-Vyi"/>
                             <constraint firstItem="zcM-WY-au6" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" id="KCC-aN-5og"/>
+                            <constraint firstItem="sde-iU-4de" firstAttribute="centerY" secondItem="5EZ-qb-Rvc" secondAttribute="centerY" id="SUu-nw-7Kt"/>
                             <constraint firstItem="vDu-zF-Fre" firstAttribute="bottom" secondItem="zcM-WY-au6" secondAttribute="bottom" id="Yq7-Fu-HMA"/>
+                            <constraint firstItem="sde-iU-4de" firstAttribute="centerX" secondItem="5EZ-qb-Rvc" secondAttribute="centerX" id="bQi-X0-VFL"/>
                             <constraint firstItem="vDu-zF-Fre" firstAttribute="trailing" secondItem="zcM-WY-au6" secondAttribute="trailing" id="dKW-6b-qv2"/>
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="initialLabel" destination="sde-iU-4de" id="hLw-cs-DZb"/>
                         <outlet property="tableView" destination="zcM-WY-au6" id="b1c-39-pyl"/>
                         <segue destination="TGO-YG-W7d" kind="show" identifier="UserInfoSegue" id="fhe-5O-0C7"/>
                     </connections>

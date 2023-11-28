@@ -19,6 +19,7 @@ class SessionsListViewController: UIViewController, UITableViewDelegate, UITable
     var sessionRow:Int?
     let firestoreManager = FirestoreManager.shared
     
+    @IBOutlet weak var initialLabel: UILabel!
     @IBOutlet weak var tableView: UITableView!
     
     let textCellIdentifier = "TextCell"
@@ -42,6 +43,9 @@ class SessionsListViewController: UIViewController, UITableViewDelegate, UITable
             if let error = error {
                 print("Error retrieving session: \(error)")
             } else {
+                if list!.isEmpty {
+                    self.initialLabel.text = "No previously logged activity"
+                }
                 self.tableView.beginUpdates()
                 var count = 0
                 for sesh in list! {
@@ -52,12 +56,24 @@ class SessionsListViewController: UIViewController, UITableViewDelegate, UITable
                 }
                 self.sessions = self.sessions!.sorted(by: { $0.startTime.compare($1.startTime) == .orderedDescending })
                 self.tableView.endUpdates()
+                
+                // Update the polls array and refresh the table view
+//                self.sessions! = list!.sorted(by: { $0.startTime.compare($1.startTime) == .orderedDescending })
+//                self.tableView.reloadData()
+//                DispatchQueue.main.async {
+//                    self?.tableView.reloadData()
+//                }
+                
             }
         }
+        
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return sessions!.count
+        let count = sessions!.count
+//        self.tableView.isHidden = count == 0 // Hide tableView if no polls
+//        self.initialLabel.isHidden = count != 0 // Show noPollsLabel if no polls
+        return count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -70,9 +86,20 @@ class SessionsListViewController: UIViewController, UITableViewDelegate, UITable
         let date = dateFormatter.string(from: sessions![row].getStartTime())
         
         cell.textLabel?.text = "\(date)  \(sessions![row].getName())"
+    
+        updateVisibility()
 
         return cell
     }
+    
+    private func updateVisibility() {
+       DispatchQueue.main.async {
+           let hasSessions = !self.sessions!.isEmpty
+           self.tableView.isHidden = !hasSessions
+           self.initialLabel.isHidden = hasSessions
+       }
+   }
+
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         sessionRow = indexPath.row
