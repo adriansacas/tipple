@@ -22,7 +22,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         //comment back in after testing
         let navigationBarAppearace = UINavigationBar.appearance()
         navigationBarAppearace.tintColor = UIColor(hex: "#FFFFFF")
-        navigationBarAppearace.backgroundColor = UIColor(hex: "#3634A3")
+        navigationBarAppearace.backgroundColor = UIColor.okay
         navigationBarAppearace.titleTextAttributes = [NSAttributedString.Key.foregroundColor:UIColor.white]
         
 

@@ -24,6 +24,8 @@ class EditGroupSessionVC: UIViewController, UITextFieldDelegate {
         //Update text field to current session and time
         editSessionNameTextField.text = sessionName
         editEndSessionDateTimePicker.date = endDate
+        
+        editEndSessionDateTimePicker.datePickerMode = .dateAndTime
     }
     
     @IBAction func updateSessionButtonPressed(_ sender: Any) {
@@ -95,11 +97,15 @@ class EditGroupSessionVC: UIViewController, UITextFieldDelegate {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Get the new view controller using segue.destination.
         // Pass the selected object to the new view controller.
-        if segue.identifier == deleteToHomeSegue {
+        if segue.identifier == deleteToHomeSegue,  let destination = segue.destination as? HomeViewController {
             // handle firebase marking of end session
             //call protocol functions to update session
             let mainVC = delegate as? EditSession
             mainVC?.endSessionForUser()
+            
+            destination.saveOnKeychain = false
+            destination.saveEmail = ""
+            destination.savePassword = ""
         }
     }
 }

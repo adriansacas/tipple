@@ -23,6 +23,7 @@ class RegisterGroupSessionVC: UIViewController, UITextFieldDelegate {
         sessionNameTextField.delegate = self
         
         // Do any additional setup after loading the view.
+        endSessionDateTimePicker.datePickerMode = .dateAndTime
     }
     
 
