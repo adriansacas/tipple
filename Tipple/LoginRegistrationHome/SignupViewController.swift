@@ -8,6 +8,12 @@
 import UIKit
 import FirebaseAuth
 
+extension String {
+   var isNumeric: Bool {
+     return !(self.isEmpty) && self.allSatisfy { $0.isNumber }
+   }
+}
+
 class SignupViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate, UITextFieldDelegate {
 
     @IBOutlet weak var emailAddressTextField: UITextField!
@@ -168,7 +174,7 @@ class SignupViewController: UIViewController, UIPickerViewDataSource, UIPickerVi
            confirmPasswordTextField.text! != "" &&
            firstName != "" &&
            lastName != "" &&
-           phoneNumber != "" &&
+           phoneNumber != "" && phoneNumber.isNumeric && //also checks if phone number is valid format
            gender != "" &&
            heightFeet != -1 &&
            heightInch != -1 &&

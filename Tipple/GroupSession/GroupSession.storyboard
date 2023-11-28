@@ -3,6 +3,7 @@
     <device id="retina6_72" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22131"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -65,13 +66,6 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="dateAndTime" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="ocy-jF-s1j">
-                                <rect key="frame" x="62" y="362" width="217" height="45"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="45" id="YSy-e3-H3T"/>
-                                    <constraint firstAttribute="width" constant="217" id="oO0-gI-Kdz"/>
-                                </constraints>
-                            </datePicker>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="z6W-GD-d8D">
                                 <rect key="frame" x="152.66666666666666" y="486" width="124.99999999999997" height="35"/>
                                 <constraints>
@@ -86,6 +80,13 @@
                                     <action selector="createSessionButtonPressed:" destination="Y6W-OH-hqX" eventType="touchUpInside" id="qdr-vG-Hg5"/>
                                 </connections>
                             </button>
+                            <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="dateAndTime" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="ocy-jF-s1j">
+                                <rect key="frame" x="40" y="362" width="250" height="45"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="45" id="YSy-e3-H3T"/>
+                                    <constraint firstAttribute="width" constant="250" id="oO0-gI-Kdz"/>
+                                </constraints>
+                            </datePicker>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="vDu-zF-Fre"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -93,13 +94,13 @@
                             <constraint firstItem="50X-KF-OgX" firstAttribute="top" secondItem="vq1-ph-xVL" secondAttribute="bottom" constant="46" id="05e-gK-bX3"/>
                             <constraint firstItem="C35-N7-DmY" firstAttribute="top" secondItem="AUr-dj-Gj6" secondAttribute="bottom" constant="26" id="0I5-6j-BpB"/>
                             <constraint firstItem="50X-KF-OgX" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" constant="67" id="6dx-h3-R78"/>
-                            <constraint firstItem="ocy-jF-s1j" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" constant="62" id="99d-ZJ-9xN"/>
                             <constraint firstItem="vDu-zF-Fre" firstAttribute="trailing" secondItem="50X-KF-OgX" secondAttribute="trailing" constant="254" id="CKM-3e-ibB"/>
                             <constraint firstItem="z6W-GD-d8D" firstAttribute="centerX" secondItem="5EZ-qb-Rvc" secondAttribute="centerX" id="JBy-XA-zMt"/>
                             <constraint firstItem="AUr-dj-Gj6" firstAttribute="centerX" secondItem="5EZ-qb-Rvc" secondAttribute="centerX" id="MOI-K9-kqk"/>
                             <constraint firstItem="eCd-Uf-nkJ" firstAttribute="top" secondItem="vDu-zF-Fre" secondAttribute="top" constant="43" id="OVP-va-ZZZ"/>
                             <constraint firstItem="C35-N7-DmY" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" constant="67" id="YDJ-8A-Jot"/>
                             <constraint firstItem="vq1-ph-xVL" firstAttribute="centerX" secondItem="5EZ-qb-Rvc" secondAttribute="centerX" id="YKq-Pa-9FV"/>
+                            <constraint firstItem="ocy-jF-s1j" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" constant="40" id="Yuj-xi-WR9"/>
                             <constraint firstItem="vq1-ph-xVL" firstAttribute="top" secondItem="eCd-Uf-nkJ" secondAttribute="bottom" constant="8" symbolic="YES" id="eE4-gO-0e0"/>
                             <constraint firstItem="eCd-Uf-nkJ" firstAttribute="centerX" secondItem="5EZ-qb-Rvc" secondAttribute="centerX" id="jgF-nw-bNa"/>
                             <constraint firstItem="z6W-GD-d8D" firstAttribute="top" secondItem="ocy-jF-s1j" secondAttribute="bottom" constant="79" id="rRx-2W-1GD"/>
@@ -215,12 +216,18 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="dateAndTime" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="5tg-fb-kGU">
-                                <rect key="frame" x="59" y="364" width="217" height="31"/>
+                                <rect key="frame" x="40" y="364" width="250" height="31"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="217" id="SXo-j0-fIp"/>
+                                    <constraint firstAttribute="width" constant="250" id="SXo-j0-fIp"/>
                                     <constraint firstAttribute="height" constant="31" id="e8H-me-G84"/>
                                 </constraints>
                             </datePicker>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="zCh-Z4-KOH">
+                                <rect key="frame" x="-11" y="-10" width="441" height="68"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" name="Okay"/>
+                                <color key="tintColor" name="Okay"/>
+                            </imageView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="1t7-ai-uFE"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -236,13 +243,13 @@
                             <constraint firstItem="tUp-F5-54G" firstAttribute="centerX" secondItem="nHv-GS-dk0" secondAttribute="centerX" id="XNb-uh-lgj"/>
                             <constraint firstItem="tUp-F5-54G" firstAttribute="top" secondItem="XQO-Cj-nCF" secondAttribute="bottom" constant="8" symbolic="YES" id="d7h-vM-sya"/>
                             <constraint firstItem="1t7-ai-uFE" firstAttribute="trailing" secondItem="RVZ-PV-Suc" secondAttribute="trailing" constant="237" id="dJd-2o-y8U"/>
+                            <constraint firstItem="5tg-fb-kGU" firstAttribute="leading" secondItem="1t7-ai-uFE" secondAttribute="leading" constant="40" id="ewD-hZ-fhc"/>
                             <constraint firstItem="6il-Ft-eyo" firstAttribute="centerX" secondItem="nHv-GS-dk0" secondAttribute="centerX" id="fdo-Lx-0HF"/>
                             <constraint firstItem="6il-Ft-eyo" firstAttribute="top" secondItem="5g2-3p-wLh" secondAttribute="bottom" constant="20" id="lxM-Md-ma2"/>
                             <constraint firstItem="XQO-Cj-nCF" firstAttribute="centerX" secondItem="nHv-GS-dk0" secondAttribute="centerX" id="n8F-Ej-sZZ"/>
                             <constraint firstItem="5g2-3p-wLh" firstAttribute="top" secondItem="5tg-fb-kGU" secondAttribute="bottom" constant="81" id="q6R-qx-Ggd"/>
                             <constraint firstItem="YqR-F9-qGh" firstAttribute="centerX" secondItem="nHv-GS-dk0" secondAttribute="centerX" id="qRg-jw-qHp"/>
                             <constraint firstItem="5tg-fb-kGU" firstAttribute="top" secondItem="RVZ-PV-Suc" secondAttribute="bottom" constant="-2" id="u1W-07-sNa"/>
-                            <constraint firstItem="5tg-fb-kGU" firstAttribute="leading" secondItem="1t7-ai-uFE" secondAttribute="leading" constant="59" id="vhc-5K-3Lw"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="YvU-iZ-GFa"/>
@@ -321,6 +328,12 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="x3S-w5-EB7">
+                                <rect key="frame" x="-9" y="-18" width="439" height="73"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" name="Okay"/>
+                                <color key="tintColor" name="Okay"/>
+                            </imageView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="rZK-Sg-9GL"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -482,6 +495,12 @@
                                     <action selector="stopSessionButtonPressed:" destination="eDn-wV-OIN" eventType="touchUpInside" id="PUg-eb-wNJ"/>
                                 </connections>
                             </button>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="RSl-16-kqn">
+                                <rect key="frame" x="0.0" y="-18" width="430" height="73"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" name="Okay"/>
+                                <color key="tintColor" name="Okay"/>
+                            </imageView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="eb9-nz-NZg"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -520,7 +539,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hmg-BC-sr3" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1973" y="1526"/>
+            <point key="canvasLocation" x="1971.6279069767443" y="1525.7510729613734"/>
         </scene>
         <!--manageSessionGroupVC-->
         <scene sceneID="rug-AD-fAq">
@@ -530,6 +549,7 @@
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="ggg-Io-86B">
                         <rect key="frame" x="0.0" y="0.0" width="430" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
+                        <color key="backgroundColor" name="Okay"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
@@ -572,9 +592,12 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="ANj-LJ-Joa"/>
+        <segue reference="6hP-V1-Vwe"/>
     </inferredMetricsTieBreakers>
     <resources>
+        <namedColor name="Okay">
+            <color red="0.21176470588235294" green="0.20392156862745098" blue="0.63921568627450975" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

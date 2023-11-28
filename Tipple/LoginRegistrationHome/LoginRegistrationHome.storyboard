@@ -402,11 +402,11 @@
                                                 <color key="textColor" systemColor="systemIndigoColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="date" style="compact" translatesAutoresizingMaskIntoConstraints="NO" id="TP5-5b-0ZU">
-                                                <rect key="frame" x="30" y="689" width="127" height="44"/>
+                                            <datePicker contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" datePickerMode="date" style="compact" translatesAutoresizingMaskIntoConstraints="NO" id="TP5-5b-0ZU">
+                                                <rect key="frame" x="10" y="689" width="150" height="44"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="44" id="5mR-ck-4yn"/>
-                                                    <constraint firstAttribute="width" constant="127" id="MxV-RU-mK2"/>
+                                                    <constraint firstAttribute="width" constant="150" id="MxV-RU-mK2"/>
                                                 </constraints>
                                             </datePicker>
                                             <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Add weight" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="LSk-sp-ps6">
@@ -444,7 +444,6 @@
                                             <constraint firstItem="fn1-uw-ocw" firstAttribute="top" secondItem="zpV-tv-Gf2" secondAttribute="top" constant="34" id="O4L-Q9-Erw"/>
                                             <constraint firstItem="cJ6-sT-XNQ" firstAttribute="top" secondItem="TP5-5b-0ZU" secondAttribute="bottom" constant="31" id="OB9-PR-hx1"/>
                                             <constraint firstItem="7i7-vD-fDn" firstAttribute="leading" secondItem="zpV-tv-Gf2" secondAttribute="leading" constant="39" id="OXj-0P-WNS"/>
-                                            <constraint firstItem="TP5-5b-0ZU" firstAttribute="leading" secondItem="zpV-tv-Gf2" secondAttribute="leading" constant="30" id="Ofr-9Z-19q"/>
                                             <constraint firstItem="wd4-Pu-Lu7" firstAttribute="top" secondItem="Cov-NH-JGW" secondAttribute="bottom" constant="42" id="PPt-5y-H1r"/>
                                             <constraint firstItem="ysu-8K-OMV" firstAttribute="centerX" secondItem="zpV-tv-Gf2" secondAttribute="centerX" id="PwQ-Ng-iJ8"/>
                                             <constraint firstItem="cJ6-sT-XNQ" firstAttribute="leading" secondItem="zpV-tv-Gf2" secondAttribute="leading" constant="39" id="S4m-O1-1BJ"/>
@@ -469,6 +468,7 @@
                                             <constraint firstItem="C6X-Vq-BGG" firstAttribute="top" secondItem="hgY-x4-BfN" secondAttribute="bottom" constant="8" symbolic="YES" id="kwr-pK-bsF"/>
                                             <constraint firstItem="kBv-NW-pNV" firstAttribute="top" secondItem="9pc-US-P8k" secondAttribute="bottom" id="mNx-ha-qGL"/>
                                             <constraint firstAttribute="trailing" secondItem="9pc-US-P8k" secondAttribute="trailing" constant="272" id="meE-Da-oUy"/>
+                                            <constraint firstItem="TP5-5b-0ZU" firstAttribute="leading" secondItem="zpV-tv-Gf2" secondAttribute="leading" constant="10" id="oFY-TU-dHU"/>
                                             <constraint firstItem="hJN-jg-hva" firstAttribute="leading" secondItem="zpV-tv-Gf2" secondAttribute="leading" constant="39" id="rOg-6R-qjV"/>
                                             <constraint firstItem="eDv-Jg-ul8" firstAttribute="leading" secondItem="zpV-tv-Gf2" secondAttribute="leading" constant="39" id="s8u-e5-k6L"/>
                                             <constraint firstItem="dfk-cY-dfY" firstAttribute="top" secondItem="b3o-oV-sdr" secondAttribute="bottom" constant="-1" id="t2h-3V-dDC"/>
@@ -702,7 +702,7 @@
     </scenes>
     <inferredMetricsTieBreakers>
         <segue reference="X0c-9F-Ju1"/>
-        <segue reference="hlQ-b1-GlN"/>
+        <segue reference="cGE-tr-5Qm"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="Tipple_aLogo.png" width="1455" height="1412"/>
