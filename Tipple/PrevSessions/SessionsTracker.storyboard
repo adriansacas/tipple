@@ -125,7 +125,7 @@
                                 <rect key="frame" x="0.0" y="103" width="430" height="795"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cvT-nJ-vOS" userLabel="ScrollableView">
-                                        <rect key="frame" x="0.0" y="0.0" width="430" height="1500"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="430" height="3000"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Logs" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2na-F7-ZDB">
                                                 <rect key="frame" x="22.000000000000004" y="400" width="44.333333333333343" height="24"/>
@@ -220,7 +220,7 @@
                                             <constraint firstItem="Z1H-cE-JZr" firstAttribute="leading" secondItem="cvT-nJ-vOS" secondAttribute="leading" constant="20" symbolic="YES" id="8gr-0P-FCX"/>
                                             <constraint firstItem="20U-Pw-h5k" firstAttribute="centerX" secondItem="cvT-nJ-vOS" secondAttribute="centerX" id="Mrq-ay-v8S"/>
                                             <constraint firstItem="Z1H-cE-JZr" firstAttribute="top" secondItem="c9g-tK-tfC" secondAttribute="bottom" constant="25" id="Mt8-aG-Rvv"/>
-                                            <constraint firstAttribute="height" constant="1500" id="NQ4-yJ-YNw"/>
+                                            <constraint firstAttribute="height" constant="3000" id="NQ4-yJ-YNw"/>
                                             <constraint firstItem="2na-F7-ZDB" firstAttribute="top" secondItem="cvT-nJ-vOS" secondAttribute="top" constant="400" id="QV3-KP-U0f"/>
                                             <constraint firstItem="yiS-lM-BHK" firstAttribute="centerX" secondItem="cvT-nJ-vOS" secondAttribute="centerX" constant="69" id="QnX-eP-cqV"/>
                                             <constraint firstItem="yiS-lM-BHK" firstAttribute="leading" secondItem="cvT-nJ-vOS" secondAttribute="leading" constant="20" symbolic="YES" id="ULB-ac-put"/>

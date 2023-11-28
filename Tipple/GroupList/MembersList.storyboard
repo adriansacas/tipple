@@ -3,6 +3,7 @@
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22130"/>
+        <capability name="Map view configurations" minToolsVersion="14.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -79,8 +80,8 @@
                                     <constraint firstAttribute="height" constant="80" id="oCR-Uc-IvO"/>
                                 </constraints>
                             </imageView>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" scrollEnabled="NO" dataMode="prototypes" style="insetGrouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" estimatedSectionHeaderHeight="-1" sectionFooterHeight="18" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="33p-tR-9gV">
-                                <rect key="frame" x="0.0" y="189" width="393" height="653"/>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" alwaysBounceVertical="YES" scrollEnabled="NO" dataMode="prototypes" style="insetGrouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" estimatedSectionHeaderHeight="-1" sectionFooterHeight="18" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="33p-tR-9gV">
+                                <rect key="frame" x="0.0" y="189" width="393" height="240"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="TextCell" rowHeight="168" id="ukh-eX-viS" customClass="PersonCell" customModule="Tipple" customModuleProvider="target">
@@ -113,14 +114,24 @@
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="TIg-eO-75V">
+                                <rect key="frame" x="16" y="480" width="361" height="312"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="312" id="gSn-Vs-YCH"/>
+                                    <constraint firstAttribute="width" constant="393" id="gYj-Gu-Mqm"/>
+                                </constraints>
+                                <standardMapConfiguration key="preferredConfiguration"/>
+                            </mapView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="3Kd-sw-E6W"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
+                            <constraint firstItem="TIg-eO-75V" firstAttribute="centerX" secondItem="I3a-Wq-3gr" secondAttribute="centerX" id="3o4-aR-nJZ"/>
                             <constraint firstItem="Szk-Vv-wcU" firstAttribute="top" secondItem="3Kd-sw-E6W" secondAttribute="top" constant="63" id="6VI-ik-c8B"/>
                             <constraint firstItem="33p-tR-9gV" firstAttribute="leading" secondItem="3Kd-sw-E6W" secondAttribute="leading" id="Jt4-Gb-F7l"/>
                             <constraint firstItem="3Kd-sw-E6W" firstAttribute="trailing" secondItem="33p-tR-9gV" secondAttribute="trailing" id="Mya-rR-0Qt"/>
                             <constraint firstItem="rTR-1z-txG" firstAttribute="centerX" secondItem="I3a-Wq-3gr" secondAttribute="centerX" id="kxV-uA-44x"/>
+                            <constraint firstItem="3Kd-sw-E6W" firstAttribute="bottom" secondItem="TIg-eO-75V" secondAttribute="bottom" constant="50" id="lgj-GV-7sh"/>
                             <constraint firstItem="33p-tR-9gV" firstAttribute="top" secondItem="rTR-1z-txG" secondAttribute="bottom" constant="7.3333333333333428" id="mXn-jy-RPt"/>
                             <constraint firstItem="3Kd-sw-E6W" firstAttribute="bottom" secondItem="33p-tR-9gV" secondAttribute="bottom" id="rKO-Ka-TCf"/>
                             <constraint firstItem="rTR-1z-txG" firstAttribute="top" secondItem="Szk-Vv-wcU" secondAttribute="bottom" constant="11" id="uUn-Qf-Fpr"/>
@@ -129,6 +140,7 @@
                     </view>
                     <navigationItem key="navigationItem" id="LpZ-rs-Jio"/>
                     <connections>
+                        <outlet property="map" destination="TIg-eO-75V" id="c27-1m-naX"/>
                         <outlet property="nameField" destination="rTR-1z-txG" id="nng-oi-3B7"/>
                         <outlet property="profilePic" destination="Szk-Vv-wcU" id="qce-Hg-YYx"/>
                         <outlet property="tableView" destination="33p-tR-9gV" id="vVa-oU-teg"/>

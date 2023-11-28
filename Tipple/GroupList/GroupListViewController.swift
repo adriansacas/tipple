@@ -34,10 +34,17 @@ class GroupListViewController: UIViewController, UITableViewDelegate, UITableVie
             if let error = error {
                 print("Error updating symptoms: \(error)")
             } else {
+//                for key in users!.keys {
+//                    if key != "SESSIONVALUES" {
+//                        self.users![key] = users![key]
+//                    }
+//                }
                 self.users = users
                 self.keys.removeAll()
                 for user in users! {
-                    self.keys.append(user.key)
+                    if user.key != "SESSIONVALUES" {
+                        self.keys.append(user.key)
+                    }
                 }
                 self.tableView.reloadData()
             }

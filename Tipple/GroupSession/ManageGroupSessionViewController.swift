@@ -119,6 +119,7 @@ class ManageGroupSessionVC: UIViewController, EditSession {
     }
     
     func endSessionForUser() {
+        pollTimer?.invalidate()
         // handle firebase marking of end session
         firestoreManager.endSessionForUser(userID: self.userID!,
                                            sessionID: self.sessionID!) { error in

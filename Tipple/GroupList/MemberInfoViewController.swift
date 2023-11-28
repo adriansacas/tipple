@@ -7,9 +7,11 @@
 
 import UIKit
 import FirebaseAuth
+import MapKit
 
 class MemberInfoViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
+    @IBOutlet weak var map: MKMapView!
     @IBOutlet weak var profilePic: UIImageView!
     @IBOutlet weak var nameField: UILabel!
     @IBOutlet weak var tableView: UITableView!
@@ -33,6 +35,26 @@ class MemberInfoViewController: UIViewController, UITableViewDelegate, UITableVi
 
         setProfileImage(url: user!["Profile Pic"] as? String)
         nameField.text = user!["name"] as? String
+        
+        // Set the initial location (latitude and longitude)
+        if let location = user!["Last Known Location"] as? [String:Double] {
+            let initialLocation = CLLocation(latitude: location["latitude"]!, longitude: location["longitude"]!)
+
+            // Set a region around the initial location
+            let regionRadius: CLLocationDistance = 1000 // in meters
+            let coordinateRegion = MKCoordinateRegion(center: initialLocation.coordinate,
+                                                      latitudinalMeters: regionRadius, longitudinalMeters: regionRadius)
+            map.setRegion(coordinateRegion, animated: true)
+
+            // Add a pin for the location
+            let annotation = MKPointAnnotation()
+            annotation.coordinate = initialLocation.coordinate
+            annotation.title = "Last Known Location"
+            map.addAnnotation(annotation)
+        } else {
+            map.isHidden = true
+        }
+        
     }
     
 
