@@ -77,6 +77,7 @@ class PollsVC: UIViewController, UITableViewDataSource, UITableViewDelegate, Pol
                         } else {
                             // Poll deleted successfully
                             self.polls.remove(at: indexPath.row)
+                            self.updatePollsVisibility()
                             tableView.deleteRows(at: [indexPath], with: .fade)
                             // TODO: do better checks for nil. Also consider keeping a list of ids handy
                             self.session!.polls = self.polls.map{ $0.pollID! }
@@ -166,7 +167,7 @@ class PollsVC: UIViewController, UITableViewDataSource, UITableViewDelegate, Pol
         }
     }
     
-    private func updatePollsVisibility() {
+    func updatePollsVisibility() {
         DispatchQueue.main.async {
             let hasPolls = !self.polls.isEmpty
             self.tableView.isHidden = !hasPolls
