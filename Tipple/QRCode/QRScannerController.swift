@@ -248,8 +248,6 @@ extension QRScannerController: AVCaptureMetadataOutputObjectsDelegate {
                         // Session is valid, perform the segue
                         self.performSegue(withIdentifier: "qrToQuestionSegue", sender: nil)
                     } else {
-                        // Session is not valid, show an alert with the reason
-                        self.messageLabel.text = "No QR code is detected"
                         let alert = UIAlertController(title: "Invalid Session", message: "The QR code does not correspond to a valid session.", preferredStyle: .alert)
                         alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
                         self.present(alert, animated: true, completion: nil)
