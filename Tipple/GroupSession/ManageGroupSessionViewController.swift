@@ -77,14 +77,17 @@ class ManageGroupSessionVC: UIViewController, EditSession {
                                                 preferredStyle: .alert
             )
             
-            stopAlertController.addAction(UIAlertAction(
-                                    title: "OK",
-                                    style: .destructive,
-                                    handler: {
-                                        (action) in
-                                        self.performSegue(withIdentifier: self.manageHomeSegue, sender: nil)
-                                    })
-            )
+            let action = UIAlertAction(
+                title: "OK",
+                style: .destructive,
+                handler: {
+                    (action) in
+                    self.performSegue(withIdentifier: self.manageHomeSegue, sender: nil)
+                })
+            
+            action.setValue(UIColor.okay, forKey:"titleTextColor")
+            
+            stopAlertController.addAction(action)
             
             self.present(stopAlertController, animated: true)
         }
@@ -137,10 +140,14 @@ class ManageGroupSessionVC: UIViewController, EditSession {
             preferredStyle: .alert
         )
         
-        stopAlertController.addAction(UIAlertAction(
+        
+        let action = UIAlertAction(
             title: "Cancel",
             style: .default)
-        )
+        
+        action.setValue(UIColor.okay, forKey:"titleTextColor")
+        
+        stopAlertController.addAction(action)
         
         stopAlertController.addAction(UIAlertAction(
             title: isManager ? "End" : "Leave",

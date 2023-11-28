@@ -46,21 +46,24 @@ class HomeViewController: UIViewController {
                 preferredStyle: .actionSheet
             )
             
-            keychainAlert.addAction(
-                UIAlertAction(
-                    title: "Save Login Info",
-                    style: .default,
-                    handler: {
-                        action in self.saveLoginToKeychain()
-                    }
-                )
+            
+            var action = UIAlertAction(
+                title: "Save Login Info",
+                style: .default,
+                handler: {
+                    action in self.saveLoginToKeychain()
+                }
             )
             
-            keychainAlert.addAction(
-                UIAlertAction(
-                    title: "Not Now",
-                    style: .cancel)
-            )
+            action.setValue(UIColor.okay, forKey:"titleTextColor")
+            
+            keychainAlert.addAction(action)
+            
+            action = UIAlertAction(title: "Not Now", style: .cancel)
+            
+            action.setValue(UIColor.okay, forKey:"titleTextColor")
+            
+            keychainAlert.addAction(action)
             self.present(keychainAlert, animated: true)
         }
     }
@@ -104,18 +107,29 @@ class HomeViewController: UIViewController {
             self.sessionType = "Individual"
             self.performSegue(withIdentifier: "individualToQASegue", sender: self)
         }
-
+        individualSessionAction.setValue(UIColor.okay, forKey:"titleTextColor")
+        
         controller.addAction(individualSessionAction)
         
-        controller.addAction(UIAlertAction(
+        let groupSessionAction = UIAlertAction(
             title: "Group Session",
             style: .default
         ) { (action) in
             self.sessionType = "Group"
             self.performSegue(withIdentifier: "individualToQASegue", sender: self)
         }
-                             
+        groupSessionAction.setValue(UIColor.okay, forKey:"titleTextColor")
+        
+        controller.addAction(groupSessionAction)
+        
+        let cancelAction = UIAlertAction(
+            title: "Cancel",
+            style: .default
         )
+        cancelAction.setValue(UIColor.okay, forKey:"titleTextColor")
+        
+        controller.addAction(cancelAction)
+        
         present(controller, animated: true)
     }
     

@@ -74,13 +74,16 @@ class ShowActiveVC: UIViewController {
 
 
 
-        drinkIncreaseAlert?.addAction(UIAlertAction(title: "cancel", style: .default, handler: { (action: UIAlertAction!) in
+        var action = UIAlertAction(title: "Cancel", style: .default, handler: { (action: UIAlertAction!) in
             self.incrementDrinkBy = 0
             sender.selectedSegmentIndex = -1
-        }))
+        })
+        action.setValue(UIColor.okay, forKey:"titleTextColor")
+        drinkIncreaseAlert?.addAction(action)
         
-        drinkIncreaseAlert?.addAction(UIAlertAction(title: "Ok", style: .default, handler: { (action: UIAlertAction!) in
-
+        
+        action = UIAlertAction(title: "Ok", style: .default, handler: { (action: UIAlertAction!) in
+            
             // Create all the drinks and add them to the session
             if let drinkType = sender.titleForSegment(at: sender.selectedSegmentIndex){
                 if self.incrementDrinkBy > 0{
@@ -90,11 +93,11 @@ class ShowActiveVC: UIViewController {
                     self.updateStatusInfo(bacValue: self.runningBAC, status: self.runningStatus, drinks: self.runningDrinkCounter)
                 }
             }
-            
-
-            
             sender.selectedSegmentIndex = -1
-        }))
+        })
+        action.setValue(UIColor.okay, forKey:"titleTextColor")
+        
+        drinkIncreaseAlert?.addAction(action)
 
         // Add a stepper to the alert controller
         drinkIncreaseAlert?.addTextField { textField in
@@ -245,8 +248,11 @@ class ShowActiveVC: UIViewController {
             preferredStyle: .alert
         )
 
+        let action = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        action.setValue(UIColor.okay, forKey:"titleTextColor")
+        
         // Add a "Cancel" action
-        alertController.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        alertController.addAction(action)
 
         // Add a "Finish" action
         // TODO: Mark a session as finished one they exit to the main page.

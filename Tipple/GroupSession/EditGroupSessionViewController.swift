@@ -64,10 +64,10 @@ class EditGroupSessionVC: UIViewController, UITextFieldDelegate {
             preferredStyle: .alert
         )
         
-        deleteAlertController.addAction(UIAlertAction(
-            title: "Cancel",
-            style: .default)
-        )
+        let action = UIAlertAction(title: "Cancel", style: .default)
+        action.setValue(UIColor.okay, forKey:"titleTextColor")
+        
+        deleteAlertController.addAction(action)
         
         deleteAlertController.addAction(UIAlertAction(
             title: "Delete",
