@@ -56,6 +56,7 @@ class SessionsListViewController: UIViewController, UITableViewDelegate, UITable
                 }
                 self.sessions = self.sessions!.sorted(by: { $0.startTime.compare($1.startTime) == .orderedDescending })
                 self.tableView.endUpdates()
+                self.tableView.reloadData()
                 
                 // Update the polls array and refresh the table view
 //                self.sessions! = list!.sorted(by: { $0.startTime.compare($1.startTime) == .orderedDescending })
@@ -70,10 +71,10 @@ class SessionsListViewController: UIViewController, UITableViewDelegate, UITable
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        let count = sessions!.count
+        // let count = sessions!.count
 //        self.tableView.isHidden = count == 0 // Hide tableView if no polls
 //        self.initialLabel.isHidden = count != 0 // Show noPollsLabel if no polls
-        return count
+        return sessions!.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -114,7 +115,7 @@ class SessionsListViewController: UIViewController, UITableViewDelegate, UITable
             if let error = error {
                 print("Error retrieving session: \(error)")
             } else {
-                self.sessions![self.sessionRow!] = list![self.sessionRow!]
+                self.sessions![self.sessionRow!] = list!.sorted(by: { $0.startTime.compare($1.startTime) == .orderedDescending })[self.sessionRow!]
                 self.tableView.reloadData()
             }
         }
