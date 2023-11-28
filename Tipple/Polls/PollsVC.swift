@@ -54,10 +54,7 @@ class PollsVC: UIViewController, UITableViewDataSource, UITableViewDelegate, Pol
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        let count = polls.count
-        tableView.isHidden = count == 0 // Hide tableView if no polls
-        noPollsLabel.isHidden = count != 0 // Show noPollsLabel if no polls
-        return count
+        return polls.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -164,10 +161,16 @@ class PollsVC: UIViewController, UITableViewDataSource, UITableViewDelegate, Pol
                 // Update the polls array and refresh the table view
                 self?.polls = polls.sorted { $0.prompt < $1.prompt }
                 self?.tableView.reloadData()
-//                DispatchQueue.main.async {
-//                    self?.tableView.reloadData()
-//                }
+                self?.updatePollsVisibility()
             }
+        }
+    }
+    
+    private func updatePollsVisibility() {
+        DispatchQueue.main.async {
+            let hasPolls = !self.polls.isEmpty
+            self.tableView.isHidden = !hasPolls
+            self.noPollsLabel.isHidden = hasPolls
         }
     }
 }
