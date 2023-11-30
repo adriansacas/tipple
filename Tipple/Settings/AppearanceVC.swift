@@ -11,6 +11,7 @@ class AppearanceVC: UITableViewController {
 
     @IBOutlet weak var darkModeSwitch: UISwitch!
     @IBOutlet weak var partyModeSwitch: UISwitch!
+    let partyModeView = PartyModeAnimationView()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -42,9 +43,11 @@ class AppearanceVC: UITableViewController {
     
     @IBAction func togglePartyMode(_ sender: UISwitch) {
         if sender.isOn {
-            startPartyMode()
+            partyModeView.frame = self.view.bounds
+            self.view.addSubview(partyModeView)
+            partyModeView.startAnimation()
         } else {
-            stopPartyMode()
+            partyModeView.stopPartyMode()
         }
         UserDefaults.standard.set(sender.isOn, forKey: "partyModeEnabled")
     }
@@ -53,43 +56,5 @@ class AppearanceVC: UITableViewController {
         darkModeSwitch.isOn = UserDefaults.standard.bool(forKey: "darkModeEnabled")
         partyModeSwitch.isOn = UserDefaults.standard.bool(forKey: "partyModeEnabled")
     }
-    
-    func startPartyMode() {
-        let emitter = CAEmitterLayer()
-        emitter.emitterPosition = CGPoint(x: view.center.x, y: -10)
-        emitter.emitterShape = .line
-        emitter.emitterSize = CGSize(width: view.frame.size.width, height: 1)
-
-        let cell = CAEmitterCell()
-        cell.birthRate = 10
-        cell.lifetime = 20.0
-        cell.velocity = 300
-        cell.velocityRange = 100
-        cell.emissionLongitude = CGFloat.pi
-        cell.spinRange = 5
-        cell.scale = 0.05
-        cell.scaleRange = 0.3
-        cell.contents = UIImage(named: "confetti")?.cgImage
-
-        emitter.emitterCells = [cell]
-
-        view.layer.addSublayer(emitter)
-    }
-    
-    func stopPartyMode() {
-        view.layer.sublayers?.filter { $0 is CAEmitterLayer }.forEach { $0.removeFromSuperlayer() }
-    }
-    
-    func imageFromEmoji(_ emoji: String, size: CGSize) -> UIImage? {
-        let size = size
-        UIGraphicsBeginImageContextWithOptions(size, false, 0)
-        UIColor.clear.set()
-        let rect = CGRect(origin: CGPoint(), size: size)
-        emoji.draw(in: rect, withAttributes: [.font: UIFont.systemFont(ofSize: size.height)])
-        let image = UIGraphicsGetImageFromCurrentImageContext()
-        UIGraphicsEndImageContext()
-        return image
-    }
-
 
 }

@@ -91,6 +91,7 @@
 		B3571DF82AFB1A3400095EF9 /* ResultOptionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3571DF72AFB1A3400095EF9 /* ResultOptionCell.swift */; };
 		B36E61E42AD88C2300AFF50E /* SettingsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B36E61E32AD88C2300AFF50E /* SettingsVC.swift */; };
 		B3720A232B133BB2004C8A58 /* PollCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3720A222B133BB2004C8A58 /* PollCell.swift */; };
+		B388C6402B181184002321B1 /* PartyMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = B388C63F2B181184002321B1 /* PartyMode.swift */; };
 		B3CE37622AD62FF1004FB1A1 /* Settings.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B3CE37612AD62FF1004FB1A1 /* Settings.storyboard */; };
 /* End PBXBuildFile section */
 
@@ -177,6 +178,7 @@
 		B3571DF72AFB1A3400095EF9 /* ResultOptionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultOptionCell.swift; sourceTree = "<group>"; };
 		B36E61E32AD88C2300AFF50E /* SettingsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsVC.swift; sourceTree = "<group>"; };
 		B3720A222B133BB2004C8A58 /* PollCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PollCell.swift; sourceTree = "<group>"; };
+		B388C63F2B181184002321B1 /* PartyMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PartyMode.swift; sourceTree = "<group>"; };
 		B3CE37612AD62FF1004FB1A1 /* Settings.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Settings.storyboard; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -357,6 +359,7 @@
 				B36E61E32AD88C2300AFF50E /* SettingsVC.swift */,
 				B33F29472AEB11C200B10CF7 /* ProfileInfo */,
 				B32D02F32B1659DE0072B5DE /* AppearanceVC.swift */,
+				B388C63F2B181184002321B1 /* PartyMode.swift */,
 			);
 			path = Settings;
 			sourceTree = "<group>";
@@ -548,6 +551,7 @@
 				B3329D342ADB53A300F23531 /* FirestoreManager.swift in Sources */,
 				494A45132AF5D7FD00B54542 /* QRScannerController.swift in Sources */,
 				B341BF7F2AD92E6200505C37 /* ProfileInfoPhoneVC.swift in Sources */,
+				B388C6402B181184002321B1 /* PartyMode.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

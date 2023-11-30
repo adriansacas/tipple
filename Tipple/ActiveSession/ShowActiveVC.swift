@@ -31,6 +31,9 @@ class ShowActiveVC: UIViewController {
     @IBOutlet weak var navItemTitle: UINavigationItem!
     @IBOutlet weak var mainGlassIV: UIImageView!
     
+    let partyModeView = PartyModeAnimationView()
+    let partyModeEnabled = UserDefaults.standard.bool(forKey: "partyModeEnabled")
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -83,6 +86,12 @@ class ShowActiveVC: UIViewController {
         
         
         action = UIAlertAction(title: "Ok", style: .default, handler: { (action: UIAlertAction!) in
+            // Show party mode animation if the user is taking a shot
+            if sender.titleForSegment(at: sender.selectedSegmentIndex) == "shot" && self.partyModeEnabled {
+                self.partyModeView.frame = self.view.bounds
+                self.view.addSubview(self.partyModeView)
+                self.partyModeView.startAnimation()
+            }
             
             // Create all the drinks and add them to the session
             if let drinkType = sender.titleForSegment(at: sender.selectedSegmentIndex){
