@@ -29,6 +29,7 @@ class ManageGroupSessionVC: UIViewController, EditSession {
     var endDate: Date?
     var isManager: Bool = true
     var pollTimer: Timer?
+    var prevBAC: [String: Double]?
 
     var lastUpdate: [String: [String: Any]]?
     
@@ -171,6 +172,22 @@ class ManageGroupSessionVC: UIViewController, EditSession {
                 if let sessionName = sessionValues["sessionName"] as? String,
                    let endTime = sessionValues["endTime"] as? Date {
                     self.setLabelFields(nameField: sessionName, dateField: endTime)
+                }
+                
+                for user in users {
+                    if let curr = user.value["BAC"] as? Double {
+                        if let prev = self.prevBAC![user.key] {
+                            if prev < curr && curr > 0.12 {
+                                let name = user.value["Name"] as? String
+                                AlertUtils.showAlert(title: "Check on \(name ?? "your friends")", message: "\(name ?? "someone")'s BAC is at \(curr)", viewController: self)
+                            }
+                        } else if curr > 0.12 { // if no prev BAC existed
+                            let name = user.value["Name"] as? String
+                            AlertUtils.showAlert(title: "Check on \(name ?? "your friends")", message: "\(name ?? "someone")'s BAC is at \(curr)", viewController: self)
+                        }
+                        //set prev to current whether prev existed or not
+                        self.prevBAC![user.key]  = curr
+                    }
                 }
             }
         }
