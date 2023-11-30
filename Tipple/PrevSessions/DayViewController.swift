@@ -148,7 +148,9 @@ class DayViewController: UIViewController, updateSymptoms, ChartViewDelegate {
             }
         }
         
-        if sympTemp != "" {
+        if sympTemp == "" {
+            symptomsLabel.text = "No symptoms logged"
+        } else {
             symptomsLabel.text = sympTemp
         }
         
