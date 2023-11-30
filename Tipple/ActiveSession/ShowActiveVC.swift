@@ -283,7 +283,8 @@ class ShowActiveVC: UIViewController {
             
             // handle firebase marking of end session
             firestoreManager.endSessionForUser(userID: self.userID!,
-                                               sessionID: self.sessionID!) { error in
+                                               sessionID: self.sessionID!,
+                                               markForDeletion: false) { error in
                 if let error = error {
                     print("Error ending session: \(error)")
                 }

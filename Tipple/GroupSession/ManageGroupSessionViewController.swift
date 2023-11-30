@@ -11,7 +11,7 @@ import Foundation
 //protocol to update session name
 protocol EditSession {
     func updateSessionInfo(sessionFields: [String : Any])
-    func endSessionForUser()
+    func endSessionForUser(markForDeletion: Bool)
 }
 
 class ManageGroupSessionVC: UIViewController, EditSession {
@@ -121,11 +121,12 @@ class ManageGroupSessionVC: UIViewController, EditSession {
         }
     }
     
-    func endSessionForUser() {
+    func endSessionForUser(markForDeletion: Bool = false) {
         pollTimer?.invalidate()
         // handle firebase marking of end session
         firestoreManager.endSessionForUser(userID: self.userID!,
-                                           sessionID: self.sessionID!) { error in
+                                           sessionID: self.sessionID!,
+                                           markForDeletion: markForDeletion) { error in
             if let error = error {
                 print("Error ending session: \(error)")
             }

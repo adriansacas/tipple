@@ -122,6 +122,8 @@ class QuestionnaireVC: UIViewController, UITextFieldDelegate, GMSAutocompleteVie
                 }
             }
         } else if self.sessionType == "Join" {
+            // UNCOMMENT THE FOLLOWING IF YOU ARE HARDCODING A SESSION ID
+            // self.sessionID = <sessionID You Want To Join>
             dispatchGroup.enter()
             let session = SessionInfo()
             session.startTime = Date.now

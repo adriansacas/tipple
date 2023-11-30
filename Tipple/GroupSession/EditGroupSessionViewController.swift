@@ -102,7 +102,7 @@ class EditGroupSessionVC: UIViewController, UITextFieldDelegate {
             // handle firebase marking of end session
             //call protocol functions to update session
             let mainVC = delegate as? EditSession
-            mainVC?.endSessionForUser()
+            mainVC?.endSessionForUser(markForDeletion: true)
             
             destination.saveOnKeychain = false
             destination.saveEmail = ""

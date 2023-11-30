@@ -157,6 +157,7 @@ class FirestoreManager {
                             
                             if let sessionDocument = sessionDocument, sessionDocument.exists,
                                let sessionData = sessionDocument.data(){
+                                
                                 let sessionTemp = SessionInfo()
                                 sessionTemp.sessionDocID = sessionDocument.documentID
                                 if let createdBy = sessionData["createdBy"] as? String {
@@ -236,7 +237,15 @@ class FirestoreManager {
                                         memberList.append(memberID)
                                     }
                                     sessionTemp.membersList = memberList
-                                    sessions.append(sessionTemp)
+                                    
+                                    //** Checking if this session was marked for deletion **//
+                                    if let markForDeletion = sessionData["markForDeletion"] as? Bool {
+                                        if !markForDeletion {
+                                            sessions.append(sessionTemp)
+                                        }
+                                    } else {
+                                        sessions.append(sessionTemp)
+                                    }
                                     sessionsFetched += 1
                                     
                                     if sessionsFetched == sessionIDS.count {
@@ -490,7 +499,7 @@ class FirestoreManager {
     }
     
     // Function to edit group session details (if you are the main person
-    func endSessionForUser(userID: String, sessionID: String,  completion: @escaping (Error?) -> Void) {
+    func endSessionForUser(userID: String, sessionID: String, markForDeletion: Bool, completion: @escaping (Error?) -> Void) {
         let sessionDocRef = db.collection(sessionCollection).document(sessionID)
         
         sessionDocRef.getDocument { (document, error) in
@@ -499,8 +508,18 @@ class FirestoreManager {
             } else if let document = document, document.exists {
                 let sessionData = document.data()
                 
+                
+                
                 if sessionData!["createdBy"] as? String == userID {
-                    sessionDocRef.updateData(["endTime" : Date()]) { updateError in
+                    var dataBeingUpdated: [String: Any]
+                    if markForDeletion {
+                        dataBeingUpdated = ["endTime" : Date(),
+                                            "markForDeletion": markForDeletion]
+                    } else {
+                        dataBeingUpdated = ["endTime" : Date()]
+                    }
+                        
+                    sessionDocRef.updateData(dataBeingUpdated) { updateError in
                         if let updateError = updateError {
                             completion(updateError)
                         }
