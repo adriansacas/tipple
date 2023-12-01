@@ -29,11 +29,11 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         
         //TODO: comment out for the demo presentation/final project
         //Auto login user if they didn't log out
-        Auth.auth().addStateDidChangeListener() { (auth, user) in
-            if user != nil {
-                self.performSegue(withIdentifier: "loginToHomeSegue", sender: nil)
-            }
-        }
+//        Auth.auth().addStateDidChangeListener() { (auth, user) in
+//            if user != nil {
+//                self.performSegue(withIdentifier: "loginToHomeSegue", sender: nil)
+//            }
+//        }
         
         //TODO: for keychain cleaning purposes
         //print("deleting keychain credentials")
