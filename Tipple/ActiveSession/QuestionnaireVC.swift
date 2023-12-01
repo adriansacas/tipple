@@ -140,23 +140,31 @@ class QuestionnaireVC: UIViewController, UITextFieldDelegate, GMSAutocompleteVie
                     print("Error adding session: \(error)")
                 } else if let sessionTemp = sessionTemp {
                     if sessionTemp.membersList.contains(self.userID!){
-                        let stopAlertController = UIAlertController(
-                                                            title: "Cannot Rejoin Session",
-                                                            message: "Cannot Rejoin Session After Leaving",
-                                                            preferredStyle: .alert
-                        )
-                        
-                        stopAlertController.addAction(UIAlertAction(
-                                                title: "OK",
-                                                style: .destructive,
-                                                handler: {
-                                                    (action) in
-                                                    dispatchGroup.suspend()
-                                                    self.dismiss(animated: true)
-                                                })
-                        )
-                        
-                        self.present(stopAlertController, animated: true)
+                        self.firestoreManager.setStatusActive(sessionID: self.sessionID!, userID: self.userID!, session: session) { error in
+                            if error != nil {
+                                let stopAlertController = UIAlertController(
+                                                                    title: "Unable to Rejoin Session",
+                                                                    message: "Issue when rejoining session after leaving",
+                                                                    preferredStyle: .alert
+                                )
+        
+                                stopAlertController.addAction(UIAlertAction(
+                                                        title: "OK",
+                                                        style: .destructive,
+                                                        handler: {
+                                                            (action) in
+                                                            dispatchGroup.suspend()
+                                                            self.dismiss(animated: true)
+                                                        })
+                                )
+        
+                                self.present(stopAlertController, animated: true)
+                            } else {
+                                self.sessionName = sessionTemp.sessionName
+                                self.endDate = sessionTemp.endGroupSessionTime
+                                dispatchGroup.leave()
+                            }
+                        }
                     } else {
                         self.sessionName = sessionTemp.sessionName
                         self.endDate = sessionTemp.endGroupSessionTime

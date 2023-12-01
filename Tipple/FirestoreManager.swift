@@ -764,6 +764,44 @@ class FirestoreManager {
             }
         }
     
+    func setStatusActive(sessionID: String, userID: String, session: SessionInfo, completion: @escaping (Error?) -> Void) {
+        let userDocRef = db.collection(sessionCollection)
+            .document(sessionID)
+            .collection(memberColInSess)
+            .document(userID)
+        
+        var memberDataToUpdate: [String : Any] = [:]
+        
+        memberDataToUpdate["activeSession"] = true
+        
+        // Add optional properties if they exist
+        if let shareSession = session.shareSession {
+            memberDataToUpdate["shareSession"] = shareSession
+        }
+        
+        // Add endLocation to memberData if it exists
+        if let endLocation = session.endLocation {
+            memberDataToUpdate["endLocation"] = GeoPoint(latitude: endLocation["latitude"]!,
+                                                 longitude: endLocation["longitude"]!)
+        }
+        
+        // add ate before if exists
+        if let ateBefore = session.ateBefore {
+            memberDataToUpdate["ateBefore"] =  session.ateBefore
+        }
+        
+        userDocRef.setData(memberDataToUpdate, merge: true) { error in
+            if error != nil {
+                print("Had issue updating status back to active when rejoining session")
+                completion(error)
+            } else {
+                print("Updated status back to active!")
+            }
+            print("\tUserID: \(userID)\t\tSession ID:\(sessionID)")
+            completion(nil)
+        }
+    }
+    
     /* ------------     Polls      ------------*/
     
     // Create a poll. Return poll ID on sucess. Otherwise error.
