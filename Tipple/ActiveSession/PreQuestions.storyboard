@@ -59,10 +59,10 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <navigationBar contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Iuq-QP-jzn">
+                            <navigationBar contentMode="scaleToFill" fixedFrame="YES" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Iuq-QP-jzn">
                                 <rect key="frame" x="0.0" y="0.0" width="430" height="44"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
-                                <color key="barTintColor" red="0.21176470589999999" green="0.20392156859999999" blue="0.63921568630000003" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <color key="barTintColor" name="Okay"/>
                                 <items>
                                     <navigationItem id="LeO-0A-tPb"/>
                                 </items>
@@ -89,10 +89,11 @@
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iWb-yq-aEA">
                                 <rect key="frame" x="153" y="689" width="125" height="35"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="tintColor" name="Background"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="filled" title="Start Session" titleAlignment="center">
                                     <color key="baseForegroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                    <color key="baseBackgroundColor" red="0.21176470589999999" green="0.20392156859999999" blue="0.63921568630000003" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                    <color key="baseBackgroundColor" name="Okay"/>
                                 </buttonConfiguration>
                                 <connections>
                                     <action selector="startSessionButton:" destination="BbQ-8A-Jot" eventType="touchUpInside" id="lDz-uV-tje"/>
@@ -147,6 +148,9 @@
         </scene>
     </scenes>
     <resources>
+        <namedColor name="Background">
+            <color red="0.96078431372549022" green="0.96078431372549022" blue="0.96078431372549022" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
         <namedColor name="Okay">
             <color red="0.21176470588235294" green="0.20392156862745098" blue="0.63921568627450975" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
