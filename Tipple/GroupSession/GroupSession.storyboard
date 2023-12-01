@@ -60,12 +60,11 @@
                                     <action selector="createSessionButtonPressed:" destination="Y6W-OH-hqX" eventType="touchUpInside" id="qdr-vG-Hg5"/>
                                 </connections>
                             </button>
-                            <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="dateAndTime" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="ocy-jF-s1j">
-                                <rect key="frame" x="40" y="411" width="250" height="45"/>
+                            <datePicker contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" datePickerMode="dateAndTime" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="ocy-jF-s1j">
+                                <rect key="frame" x="30" y="411" width="250" height="45"/>
                                 <color key="tintColor" name="Okay"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="45" id="YSy-e3-H3T"/>
-                                    <constraint firstAttribute="width" constant="250" id="oO0-gI-Kdz"/>
                                 </constraints>
                             </datePicker>
                             <navigationBar contentMode="scaleToFill" fixedFrame="YES" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="f0a-Xl-JoK">
@@ -117,7 +116,7 @@
                             <constraint firstItem="AUr-dj-Gj6" firstAttribute="centerX" secondItem="5EZ-qb-Rvc" secondAttribute="centerX" id="MOI-K9-kqk"/>
                             <constraint firstItem="C35-N7-DmY" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" constant="67" id="YDJ-8A-Jot"/>
                             <constraint firstItem="vq1-ph-xVL" firstAttribute="centerX" secondItem="5EZ-qb-Rvc" secondAttribute="centerX" id="YKq-Pa-9FV"/>
-                            <constraint firstItem="ocy-jF-s1j" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" constant="40" id="Yuj-xi-WR9"/>
+                            <constraint firstItem="ocy-jF-s1j" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" constant="65" id="Yuj-xi-WR9"/>
                             <constraint firstItem="vq1-ph-xVL" firstAttribute="top" secondItem="eCd-Uf-nkJ" secondAttribute="bottom" constant="8" symbolic="YES" id="eE4-gO-0e0"/>
                             <constraint firstItem="eCd-Uf-nkJ" firstAttribute="centerX" secondItem="5EZ-qb-Rvc" secondAttribute="centerX" id="jgF-nw-bNa"/>
                             <constraint firstItem="z6W-GD-d8D" firstAttribute="top" secondItem="ocy-jF-s1j" secondAttribute="bottom" constant="79" id="rRx-2W-1GD"/>
