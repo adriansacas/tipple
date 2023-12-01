@@ -174,6 +174,8 @@ class ManageGroupSessionVC: UIViewController, EditSession {
                     self.setLabelFields(nameField: sessionName, dateField: endTime)
                 }
                 
+                // BAC needs testing
+                /*
                 for user in users {
                     if let curr = user.value["BAC"] as? Double {
                         if let prev = self.prevBAC![user.key] {
@@ -189,6 +191,7 @@ class ManageGroupSessionVC: UIViewController, EditSession {
                         self.prevBAC![user.key]  = curr
                     }
                 }
+                */
             }
         }
     }
