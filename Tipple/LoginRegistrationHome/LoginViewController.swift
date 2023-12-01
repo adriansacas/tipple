@@ -28,12 +28,12 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         passwordTextField.isSecureTextEntry = true;
         
         //TODO: comment out for the demo presentation/final project
-        // Auto login user if they didn't log out
-//        Auth.auth().addStateDidChangeListener() { (auth, user) in
-//            if user != nil {
-//                self.performSegue(withIdentifier: "loginToHomeSegue", sender: nil)
-//            }
-//        }
+        //Auto login user if they didn't log out
+        Auth.auth().addStateDidChangeListener() { (auth, user) in
+            if user != nil {
+                self.performSegue(withIdentifier: "loginToHomeSegue", sender: nil)
+            }
+        }
         
         //TODO: for keychain cleaning purposes
         //print("deleting keychain credentials")

@@ -3,6 +3,7 @@
     <device id="retina6_72" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22131"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -26,7 +27,7 @@
                             <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" title="eatenSwitchToggle" translatesAutoresizingMaskIntoConstraints="NO" id="0ey-T0-SHW">
                                 <rect key="frame" x="361" y="253" width="49" height="31"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="onTintColor" red="0.21176470589999999" green="0.20392156859999999" blue="0.63921568630000003" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <color key="onTintColor" name="Okay"/>
                             </switch>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Share Session Details" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZZQ-ax-QUy">
                                 <rect key="frame" x="20" y="360" width="165" height="21"/>
@@ -38,7 +39,8 @@
                             <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" title="shareDetailsToggle" translatesAutoresizingMaskIntoConstraints="NO" id="Sc7-1c-nnn">
                                 <rect key="frame" x="363" y="355" width="49" height="31"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="onTintColor" red="0.21176470589999999" green="0.20392156859999999" blue="0.63921568630000003" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <color key="tintColor" name="Okay"/>
+                                <color key="onTintColor" name="Okay"/>
                                 <connections>
                                     <action selector="sessionDetailsToggled:" destination="BbQ-8A-Jot" eventType="valueChanged" id="BMu-mK-q8i"/>
                                 </connections>
@@ -145,6 +147,9 @@
         </scene>
     </scenes>
     <resources>
+        <namedColor name="Okay">
+            <color red="0.21176470588235294" green="0.20392156862745098" blue="0.63921568627450975" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

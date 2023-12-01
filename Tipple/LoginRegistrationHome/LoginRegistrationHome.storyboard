@@ -402,12 +402,18 @@
                                                 <color key="textColor" systemColor="systemIndigoColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <datePicker contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" datePickerMode="date" style="compact" translatesAutoresizingMaskIntoConstraints="NO" id="TP5-5b-0ZU">
+                                            <datePicker contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" datePickerMode="date" style="compact" useCurrentDate="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TP5-5b-0ZU">
                                                 <rect key="frame" x="10" y="689" width="150" height="44"/>
+                                                <color key="tintColor" name="Okay"/>
                                                 <constraints>
+                                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="150" id="0mP-PA-KyX"/>
                                                     <constraint firstAttribute="height" constant="44" id="5mR-ck-4yn"/>
                                                     <constraint firstAttribute="width" constant="150" id="MxV-RU-mK2"/>
+                                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="44" id="uO3-Ky-oMc"/>
                                                 </constraints>
+                                                <date key="date" timeIntervalSinceReferenceDate="723156363.40261805">
+                                                    <!--2023-12-01 20:46:03 +0000-->
+                                                </date>
                                             </datePicker>
                                             <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Add weight" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="LSk-sp-ps6">
                                                 <rect key="frame" x="182" y="787" width="120" height="34"/>
@@ -702,7 +708,7 @@
     </scenes>
     <inferredMetricsTieBreakers>
         <segue reference="X0c-9F-Ju1"/>
-        <segue reference="hlQ-b1-GlN"/>
+        <segue reference="cGE-tr-5Qm"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="Tipple_aLogo.png" width="1455" height="1412"/>

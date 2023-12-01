@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="22154" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="lma-sB-nBJ">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="22155" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="lma-sB-nBJ">
     <device id="retina6_72" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22130"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22131"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Sessions List View Controller-->
+        <!--Previous Sessions-->
         <scene sceneID="aa0-rW-S3x">
             <objects>
                 <viewController storyboardIdentifier="ListView" modalPresentationStyle="fullScreen" id="37L-y7-u3C" customClass="SessionsListViewController" customModule="Tipple" customModuleProvider="target" sceneMemberID="viewController">
@@ -49,7 +49,7 @@
                             <constraint firstItem="7Dx-Zp-3p7" firstAttribute="centerX" secondItem="D7I-Bs-O9c" secondAttribute="centerX" id="vVx-U0-dfi"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="AHf-Zp-OrV"/>
+                    <navigationItem key="navigationItem" title="Previous Sessions" id="AHf-Zp-OrV"/>
                     <connections>
                         <outlet property="initialLabel" destination="7Dx-Zp-3p7" id="DeA-jQ-xmz"/>
                         <outlet property="tableView" destination="itJ-Yb-mo6" id="Ng0-re-jg3"/>
@@ -81,6 +81,7 @@
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" allowsMultipleSelection="YES" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="hLc-Nw-SLa">
                                 <rect key="frame" x="0.0" y="103" width="430" height="535"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <color key="tintColor" name="Okay"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="430" id="wM1-8w-2Lw"/>
                                 </constraints>
@@ -210,8 +211,8 @@
                                                     <segue destination="hlF-po-1B8" kind="show" identifier="SymptomsSegueIdentifier" id="Aix-D6-bTp"/>
                                                 </connections>
                                             </button>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No drinks logged this session :)" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="20U-Pw-h5k">
-                                                <rect key="frame" x="55.666666666666657" y="184" width="319" height="26.333333333333343"/>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No drinks logged this session" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="20U-Pw-h5k">
+                                                <rect key="frame" x="65.333333333333343" y="184" width="299.66666666666663" height="26.333333333333343"/>
                                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="22"/>
                                                 <color key="textColor" red="0.34509804840000002" green="0.33725491169999999" blue="0.81176471709999998" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                                 <nil key="highlightedColor"/>
