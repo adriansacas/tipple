@@ -72,6 +72,7 @@
                                 <rect key="frame" x="0.0" y="-74" width="430" height="128"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" name="Okay"/>
+                                <color key="tintColor" name="Okay"/>
                             </imageView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="dQd-cq-9Zl"/>
