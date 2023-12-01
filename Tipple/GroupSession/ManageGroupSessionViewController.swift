@@ -30,6 +30,7 @@ class ManageGroupSessionVC: UIViewController, EditSession {
     var isManager: Bool = true
     var pollTimer: Timer?
     var prevBAC: [String: Double]?
+    var isDD: Bool?
 
     var lastUpdate: [String: [String: Any]]?
     
@@ -217,6 +218,7 @@ class ManageGroupSessionVC: UIViewController, EditSession {
         } else if segue.identifier == activeSessionSegue, let destination = segue.destination as? ShowActiveVC {
             destination.userID = self.userID
             destination.sessionID = self.sessionID
+            destination.isDD = self.isDD
         }  else if segue.identifier == groupListSegue, let destination = segue.destination as? GroupListViewController {
             destination.users = self.lastUpdate
             destination.sessionID = self.sessionID

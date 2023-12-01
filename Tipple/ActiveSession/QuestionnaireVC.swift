@@ -14,6 +14,7 @@ import CoreLocation
 class QuestionnaireVC: UIViewController, UITextFieldDelegate, GMSAutocompleteViewControllerDelegate, CLLocationManagerDelegate{
 
     @IBOutlet weak var eatenToggle: UISwitch!
+    @IBOutlet weak var isDDToggle: UISwitch!
     @IBOutlet weak var shareSession: UISwitch!
     @IBOutlet weak var partyLabel: UILabel!
     @IBOutlet weak var partyLocation: UITextField!
@@ -219,12 +220,14 @@ class QuestionnaireVC: UIViewController, UITextFieldDelegate, GMSAutocompleteVie
             destination.userID = self.userID
             destination.userProfileInfo = self.userProfileInfo
             destination.sessionID = self.sessionID
+            destination.isDD = self.isDDToggle.isOn
         }
         
         if segue.identifier == qToGroupSegue,
            let destination = segue.destination as? RegisterGroupSessionVC {
             destination.userID = self.userID
             destination.sessionID = self.sessionID
+            destination.isDD = self.isDDToggle.isOn
         }
         
         if segue.identifier == qToGroupJoinSegue{
@@ -242,6 +245,7 @@ class QuestionnaireVC: UIViewController, UITextFieldDelegate, GMSAutocompleteVie
             finalDestination!.userID = self.userID
             finalDestination!.sessionID = self.sessionID
             finalDestination!.isManager = false
+            finalDestination!.isDD = self.isDDToggle.isOn
 
         }
     }

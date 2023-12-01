@@ -15,6 +15,7 @@ class ShowActiveVC: UIViewController {
     var currentSession: SessionInfo?
     let firestoreManager = FirestoreManager.shared
     var drinkIncreaseAlert: UIAlertController?
+    var isDD: Bool?
     
     var incrementDrinkBy: Int = 0
     var runningBAC: Float = 0.0
@@ -76,6 +77,9 @@ class ShowActiveVC: UIViewController {
             
             //show underaged alert
             AlertUtils.showAlert(title: "⚠️ Underaged Drinking ⚠️", message: "Be aware that consuming alcohol publicly under the age of 21 is illegal.", viewController: self)
+        }
+        if isDD! {
+            AlertUtils.showAlert(title: "⚠️ Designated Driver ⚠️", message: "Reminder that you are DD. Drive responsibly!", viewController: self)
         }
     }
     

@@ -17,6 +17,7 @@ class RegisterGroupSessionVC: UIViewController, UITextFieldDelegate {
     var userID: String?
     var generatedQR: UIImage?
     var manageGroupSegue = "manageGroupSessionSegue"
+    var isDD: Bool?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -110,6 +111,7 @@ class RegisterGroupSessionVC: UIViewController, UITextFieldDelegate {
         finalDestination.sessionID = self.sessionID
         finalDestination.sessionName = self.sessionNameTextField.text!
         finalDestination.endDate = endSessionDateTimePicker.date
+        finalDestination.isDD = self.isDD
     }
 
 }
