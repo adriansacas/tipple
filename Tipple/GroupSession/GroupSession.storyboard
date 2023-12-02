@@ -155,7 +155,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5g2-3p-wLh">
-                                <rect key="frame" x="136" y="476" width="144" height="35"/>
+                                <rect key="frame" x="136" y="480" width="144" height="35"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="35" id="HfL-Zd-VSZ"/>
                                     <constraint firstAttribute="width" constant="144" id="pYI-Ba-aC5"/>
@@ -169,7 +169,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6il-Ft-eyo">
-                                <rect key="frame" x="139.66666666666666" y="531" width="136.99999999999997" height="35"/>
+                                <rect key="frame" x="139.66666666666666" y="535" width="136.99999999999997" height="35"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="137" id="3kT-Ji-ADO"/>
                                     <constraint firstAttribute="height" constant="35" id="FO0-bW-nbV"/>
@@ -231,20 +231,19 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="dateAndTime" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="5tg-fb-kGU">
-                                <rect key="frame" x="40" y="364" width="250" height="31"/>
-                                <color key="tintColor" name="Okay"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="250" id="SXo-j0-fIp"/>
-                                    <constraint firstAttribute="height" constant="31" id="e8H-me-G84"/>
-                                </constraints>
-                            </datePicker>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="zCh-Z4-KOH">
                                 <rect key="frame" x="-11" y="-10" width="441" height="68"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" name="Okay"/>
                                 <color key="tintColor" name="Okay"/>
                             </imageView>
+                            <datePicker contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="dateAndTime" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="5tg-fb-kGU">
+                                <rect key="frame" x="37" y="368" width="250" height="31"/>
+                                <color key="tintColor" name="Okay"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="31" id="e8H-me-G84"/>
+                                </constraints>
+                            </datePicker>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="1t7-ai-uFE"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -260,13 +259,13 @@
                             <constraint firstItem="tUp-F5-54G" firstAttribute="centerX" secondItem="nHv-GS-dk0" secondAttribute="centerX" id="XNb-uh-lgj"/>
                             <constraint firstItem="tUp-F5-54G" firstAttribute="top" secondItem="XQO-Cj-nCF" secondAttribute="bottom" constant="8" symbolic="YES" id="d7h-vM-sya"/>
                             <constraint firstItem="1t7-ai-uFE" firstAttribute="trailing" secondItem="RVZ-PV-Suc" secondAttribute="trailing" constant="237" id="dJd-2o-y8U"/>
-                            <constraint firstItem="5tg-fb-kGU" firstAttribute="leading" secondItem="1t7-ai-uFE" secondAttribute="leading" constant="40" id="ewD-hZ-fhc"/>
+                            <constraint firstItem="5tg-fb-kGU" firstAttribute="leading" secondItem="1t7-ai-uFE" secondAttribute="leading" constant="65" id="ewD-hZ-fhc"/>
                             <constraint firstItem="6il-Ft-eyo" firstAttribute="centerX" secondItem="nHv-GS-dk0" secondAttribute="centerX" id="fdo-Lx-0HF"/>
                             <constraint firstItem="6il-Ft-eyo" firstAttribute="top" secondItem="5g2-3p-wLh" secondAttribute="bottom" constant="20" id="lxM-Md-ma2"/>
                             <constraint firstItem="XQO-Cj-nCF" firstAttribute="centerX" secondItem="nHv-GS-dk0" secondAttribute="centerX" id="n8F-Ej-sZZ"/>
                             <constraint firstItem="5g2-3p-wLh" firstAttribute="top" secondItem="5tg-fb-kGU" secondAttribute="bottom" constant="81" id="q6R-qx-Ggd"/>
                             <constraint firstItem="YqR-F9-qGh" firstAttribute="centerX" secondItem="nHv-GS-dk0" secondAttribute="centerX" id="qRg-jw-qHp"/>
-                            <constraint firstItem="5tg-fb-kGU" firstAttribute="top" secondItem="RVZ-PV-Suc" secondAttribute="bottom" constant="-2" id="u1W-07-sNa"/>
+                            <constraint firstItem="5tg-fb-kGU" firstAttribute="top" secondItem="RVZ-PV-Suc" secondAttribute="bottom" constant="2" id="u1W-07-sNa"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="YvU-iZ-GFa"/>
