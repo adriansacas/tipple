@@ -70,29 +70,10 @@ class ShowActiveVC: UIViewController {
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        //display underaged alert if user is less than 21 at current session
-        let age = calcAge(birthday: (userProfileInfo?.getBirthDate())!)
-        if(age < 21) {
-            print("User is under 21, cur age: \(age)")
-            
-            //show underaged alert
-            AlertUtils.showAlert(title: "⚠️ Underaged Drinking ⚠️", message: "Be aware that consuming alcohol publicly under the age of 21 is illegal.", viewController: self)
-        }
+        //display designated driver alert if user claims to be DD
         if isDD! {
             AlertUtils.showAlert(title: "⚠️ Designated Driver ⚠️", message: "Reminder that you are DD. Drive responsibly!", viewController: self)
         }
-    }
-    
-    //calculates age of user
-    func calcAge(birthday: String) -> Int {
-        let dateFormater = DateFormatter()
-        dateFormater.dateFormat = "MM/dd/yyyy"
-        let birthdayDate = dateFormater.date(from: birthday)
-        let calendar: NSCalendar! = NSCalendar(calendarIdentifier: .gregorian)
-        let now = Date()
-        let calcAge = calendar.components(.year, from: birthdayDate!, to: now, options: [])
-        let age = calcAge.year
-        return age!
     }
     
     @objc func segmentedControlValueChanged(_ sender: UISegmentedControl) {
