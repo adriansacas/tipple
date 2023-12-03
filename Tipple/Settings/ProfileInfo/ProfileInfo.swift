@@ -18,8 +18,10 @@ class ProfileInfo {
     var weight: Int
     var profileImageURL: String
     var sessionIDS: [String]
+    var shareDrinkInfo: Bool
+    var shareLocation: Bool
 
-    init(firstName: String, lastName: String, phoneNumber: String, birthday: Date, gender: String, heightFeet: Int, heightInches: Int, weight: Int, profileImageURL: String, sessionIDS: [String]? = nil) {
+    init(firstName: String, lastName: String, phoneNumber: String, birthday: Date, gender: String, heightFeet: Int, heightInches: Int, weight: Int, profileImageURL: String, sessionIDS: [String]? = nil, shareDrinkInfo: Bool, shareLocation: Bool) {
         self.firstName = firstName
         self.lastName = lastName
         self.phoneNumber = phoneNumber
@@ -34,6 +36,8 @@ class ProfileInfo {
         } else{
             self.sessionIDS = sessionIDS!
         }
+        self.shareDrinkInfo = shareDrinkInfo
+        self.shareLocation = shareLocation
     }
 
     // Function to return the full name (first name and last name)

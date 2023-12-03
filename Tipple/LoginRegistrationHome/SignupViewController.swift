@@ -122,7 +122,9 @@ class SignupViewController: UIViewController, UIPickerViewDataSource, UIPickerVi
                                                             weight: self.weight,
                                                             email: email, 
                                                             profileImageURL: "",
-                                                            sessionIDS: []
+                                                            sessionIDS: [],
+                                                            shareDrinkInfo: true,
+                                                            shareLocation: true
 )
                         } else {
                             AlertUtils.showAlert(title: "Error Registering Data", message: "Try again later.", viewController: self)

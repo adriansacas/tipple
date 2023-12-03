@@ -49,7 +49,7 @@ class FirestoreManager {
     }
     
     // Function to add a new user document
-    func createUserDocument(userID: String, firstName: String, lastName: String, phoneNumber: String, birthday: Date, gender: String, heightFeet: Int, heightInches: Int, weight: Int, email: String, profileImageURL: String, sessionIDS: [String]) {
+    func createUserDocument(userID: String, firstName: String, lastName: String, phoneNumber: String, birthday: Date, gender: String, heightFeet: Int, heightInches: Int, weight: Int, email: String, profileImageURL: String, sessionIDS: [String], shareDrinkInfo: Bool, shareLocation: Bool) {
         let userRef = db.collection(usersCollection).document(userID)
         let userData: [String: Any] = [
             "firstName": firstName,
@@ -62,7 +62,9 @@ class FirestoreManager {
             "weight": weight,
             "email": email,
             "profileImageURL": profileImageURL,
-            "sessionIDS": sessionIDS
+            "sessionIDS": sessionIDS,
+            "shareDrinkInfo": shareDrinkInfo,
+            "shareLocation": shareLocation
         ]
         
         userRef.setData(userData) { error in
@@ -91,9 +93,11 @@ class FirestoreManager {
                    let heightInches = userData["heightInches"] as? Int,
                    let profileImageURL = userData["profileImageURL"] as? String,
                    let weight = userData["weight"] as? Int,
-                   let sessionIDS = userData["sessionIDS"] as? [String] {
+                   let sessionIDS = userData["sessionIDS"] as? [String],
+                   let shareDrinkInfo = userData["shareDrinkInfo"] as? Bool,
+                   let shareLocation = userData["shareLocation"] as? Bool {
                     let birthday = birthdayTimestamp.dateValue()
-                    let profileInfo = ProfileInfo(firstName: firstName, lastName: lastName, phoneNumber: phoneNumber, birthday: birthday, gender: gender, heightFeet: heightFeet, heightInches: heightInches, weight: weight, profileImageURL: profileImageURL, sessionIDS: sessionIDS)
+                    let profileInfo = ProfileInfo(firstName: firstName, lastName: lastName, phoneNumber: phoneNumber, birthday: birthday, gender: gender, heightFeet: heightFeet, heightInches: heightInches, weight: weight, profileImageURL: profileImageURL, sessionIDS: sessionIDS, shareDrinkInfo: shareDrinkInfo, shareLocation: shareLocation)
                     completion(profileInfo, nil)
                 } else {
                     completion(nil, NSError(domain: "", code: 0, userInfo: ["message": "User data not found or is invalid"]))
