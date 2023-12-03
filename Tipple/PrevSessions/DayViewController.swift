@@ -22,11 +22,11 @@ class DayViewController: UIViewController, updateSymptoms, ChartViewDelegate {
         "Vomiting": "Before: Eat a substantial meal before drinking.\n\nDuring: Pace yourself, and if you feel nauseous, take a break from drinking.\n\nAfter: Rest and rehydrate with water or electrolyte drinks. If vomiting persists, seek medical attention.",
         "Diarrhea": "Before: Avoid spicy or greasy foods before drinking.\n\nDuring: Pace yourself and choose beverages with lower alcohol content.\n\nAfter: Eat bland foods and stay hydrated with water or electrolyte drinks.",
         "Indigestion": "Before: Avoid foods that are known to cause indigestion.\n\nDuring: Pace yourself and take breaks between drinks.\n\nAfter: Consider over-the-counter antacids if needed. Eat a light meal.",
-        "Memory Loss": "Before: Know your limits and avoid excessive drinking.\n\nDuring: Pace yourself and be aware of how much you're consuming.\n\nAfter: Get adequate rest and allow time for your body to recover. Consider limiting alcohol intake in the future.",
-        "Light Sensitivity": "Before: Be mindful of your sensitivity to light and plan accordingly.\n\nDuring: If possible, find a shaded or dimly lit area to reduce light exposure.\n\nAfter: Rest in a dark room if needed and avoid bright screens.",
-        "Reduced Motor Skills": "Before: If you know you'll be drinking, plan for alternative transportation.\n\nDuring: Pace yourself and be aware of your level of intoxication.\n\nAfter: Don't drive if you're still feeling the effects of alcohol. Wait until you are sober.",
-        "Blurred Vision": "Before: Be aware of any vision issues you may have and plan accordingly.\n\nDuring: Pace yourself and be cautious, especially if you experience blurred vision.\n\nAfter: If the blurred vision persists, seek medical attention.",
-        "Slurred Speech": "Before: Be mindful of your speech patterns and pace yourself accordingly.\n\nDuring: Be aware of your speech and try to communicate clearly.\n\nAfter: Rest and allow time for the effects of alcohol to wear off."
+        "Memory loss": "Before: Know your limits and avoid excessive drinking.\n\nDuring: Pace yourself and be aware of how much you're consuming.\n\nAfter: Get adequate rest and allow time for your body to recover. Consider limiting alcohol intake in the future.",
+        "Light sensitivity": "Before: Be mindful of your sensitivity to light and plan accordingly.\n\nDuring: If possible, find a shaded or dimly lit area to reduce light exposure.\n\nAfter: Rest in a dark room if needed and avoid bright screens.",
+        "Reduced motor skills": "Before: If you know you'll be drinking, plan for alternative transportation.\n\nDuring: Pace yourself and be aware of your level of intoxication.\n\nAfter: Don't drive if you're still feeling the effects of alcohol. Wait until you are sober.",
+        "Blurred vision": "Before: Be aware of any vision issues you may have and plan accordingly.\n\nDuring: Pace yourself and be cautious, especially if you experience blurred vision.\n\nAfter: If the blurred vision persists, seek medical attention.",
+        "Slurred speech": "Before: Be mindful of your speech patterns and pace yourself accordingly.\n\nDuring: Be aware of your speech and try to communicate clearly.\n\nAfter: Rest and allow time for the effects of alcohol to wear off."
       ]
 
     @IBOutlet weak var noDrinksLabel: UILabel!
@@ -148,7 +148,9 @@ class DayViewController: UIViewController, updateSymptoms, ChartViewDelegate {
             }
         }
         
-        if sympTemp != "" {
+        if sympTemp == "" {
+            symptomsLabel.text = "No symptoms logged"
+        } else {
             symptomsLabel.text = sympTemp
         }
         

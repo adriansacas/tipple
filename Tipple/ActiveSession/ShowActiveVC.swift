@@ -15,6 +15,7 @@ class ShowActiveVC: UIViewController {
     var currentSession: SessionInfo?
     let firestoreManager = FirestoreManager.shared
     var drinkIncreaseAlert: UIAlertController?
+    var isDD: Bool?
     
     var incrementDrinkBy: Int = 0
     var runningBAC: Float = 0.0
@@ -44,7 +45,6 @@ class ShowActiveVC: UIViewController {
         statusSegmented.isUserInteractionEnabled = false
     }
 
-    
     override func viewWillAppear(_ animated: Bool) {
         firestoreManager.getSessionInfo(userID: self.userID!, sessionDocumentID: self.sessionID!) { sessionTemp, error in
             if let error = error {
@@ -66,6 +66,13 @@ class ShowActiveVC: UIViewController {
                 
                 print("Session successfully retrieved before view appearing with document ID: \(self.sessionID ?? "Value not set")")
             }
+        }
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        //display designated driver alert if user claims to be DD
+        if isDD! {
+            AlertUtils.showAlert(title: "⚠️ Designated Driver ⚠️", message: "Reminder that you are DD. Drive responsibly!", viewController: self)
         }
     }
     
@@ -283,7 +290,8 @@ class ShowActiveVC: UIViewController {
             
             // handle firebase marking of end session
             firestoreManager.endSessionForUser(userID: self.userID!,
-                                               sessionID: self.sessionID!) { error in
+                                               sessionID: self.sessionID!,
+                                               markForDeletion: false) { error in
                 if let error = error {
                     print("Error ending session: \(error)")
                 }

@@ -51,10 +51,11 @@
                                     <segment title="# of Drinks"/>
                                 </segments>
                             </segmentedControl>
-                            <navigationBar contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="eMz-yQ-rZB">
+                            <navigationBar contentMode="scaleToFill" fixedFrame="YES" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eMz-yQ-rZB">
                                 <rect key="frame" x="0.0" y="54" width="430" height="44"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
-                                <color key="barTintColor" red="0.21176470589999999" green="0.20392156859999999" blue="0.63921568630000003" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <color key="tintColor" name="Okay"/>
+                                <color key="barTintColor" name="Okay"/>
                                 <textAttributes key="titleTextAttributes">
                                     <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </textAttributes>
@@ -72,6 +73,7 @@
                                 <rect key="frame" x="0.0" y="-74" width="430" height="128"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" name="Okay"/>
+                                <color key="tintColor" name="Okay"/>
                             </imageView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="dQd-cq-9Zl"/>

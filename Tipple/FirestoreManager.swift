@@ -157,6 +157,7 @@ class FirestoreManager {
                             
                             if let sessionDocument = sessionDocument, sessionDocument.exists,
                                let sessionData = sessionDocument.data(){
+                                
                                 let sessionTemp = SessionInfo()
                                 sessionTemp.sessionDocID = sessionDocument.documentID
                                 if let createdBy = sessionData["createdBy"] as? String {
@@ -236,7 +237,15 @@ class FirestoreManager {
                                         memberList.append(memberID)
                                     }
                                     sessionTemp.membersList = memberList
-                                    sessions.append(sessionTemp)
+                                    
+                                    //** Checking if this session was marked for deletion **//
+                                    if let markForDeletion = sessionData["markForDeletion"] as? Bool {
+                                        if !markForDeletion {
+                                            sessions.append(sessionTemp)
+                                        }
+                                    } else {
+                                        sessions.append(sessionTemp)
+                                    }
                                     sessionsFetched += 1
                                     
                                     if sessionsFetched == sessionIDS.count {
@@ -490,7 +499,7 @@ class FirestoreManager {
     }
     
     // Function to edit group session details (if you are the main person
-    func endSessionForUser(userID: String, sessionID: String,  completion: @escaping (Error?) -> Void) {
+    func endSessionForUser(userID: String, sessionID: String, markForDeletion: Bool, completion: @escaping (Error?) -> Void) {
         let sessionDocRef = db.collection(sessionCollection).document(sessionID)
         
         sessionDocRef.getDocument { (document, error) in
@@ -499,8 +508,18 @@ class FirestoreManager {
             } else if let document = document, document.exists {
                 let sessionData = document.data()
                 
+                
+                
                 if sessionData!["createdBy"] as? String == userID {
-                    sessionDocRef.updateData(["endTime" : Date()]) { updateError in
+                    var dataBeingUpdated: [String: Any]
+                    if markForDeletion {
+                        dataBeingUpdated = ["endTime" : Date(),
+                                            "markForDeletion": markForDeletion]
+                    } else {
+                        dataBeingUpdated = ["endTime" : Date()]
+                    }
+                        
+                    sessionDocRef.updateData(dataBeingUpdated) { updateError in
                         if let updateError = updateError {
                             completion(updateError)
                         }
@@ -744,6 +763,44 @@ class FirestoreManager {
                 }
             }
         }
+    
+    func setStatusActive(sessionID: String, userID: String, session: SessionInfo, completion: @escaping (Error?) -> Void) {
+        let userDocRef = db.collection(sessionCollection)
+            .document(sessionID)
+            .collection(memberColInSess)
+            .document(userID)
+        
+        var memberDataToUpdate: [String : Any] = [:]
+        
+        memberDataToUpdate["activeSession"] = true
+        
+        // Add optional properties if they exist
+        if let shareSession = session.shareSession {
+            memberDataToUpdate["shareSession"] = shareSession
+        }
+        
+        // Add endLocation to memberData if it exists
+        if let endLocation = session.endLocation {
+            memberDataToUpdate["endLocation"] = GeoPoint(latitude: endLocation["latitude"]!,
+                                                 longitude: endLocation["longitude"]!)
+        }
+        
+        // add ate before if exists
+        if let ateBefore = session.ateBefore {
+            memberDataToUpdate["ateBefore"] =  session.ateBefore
+        }
+        
+        userDocRef.setData(memberDataToUpdate, merge: true) { error in
+            if error != nil {
+                print("Had issue updating status back to active when rejoining session")
+                completion(error)
+            } else {
+                print("Updated status back to active!")
+            }
+            print("\tUserID: \(userID)\t\tSession ID:\(sessionID)")
+            completion(nil)
+        }
+    }
     
     /* ------------     Polls      ------------*/
     

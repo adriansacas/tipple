@@ -14,6 +14,7 @@ import CoreLocation
 class QuestionnaireVC: UIViewController, UITextFieldDelegate, GMSAutocompleteViewControllerDelegate, CLLocationManagerDelegate{
 
     @IBOutlet weak var eatenToggle: UISwitch!
+    @IBOutlet weak var isDDToggle: UISwitch!
     @IBOutlet weak var shareSession: UISwitch!
     @IBOutlet weak var partyLabel: UILabel!
     @IBOutlet weak var partyLocation: UITextField!
@@ -54,7 +55,6 @@ class QuestionnaireVC: UIViewController, UITextFieldDelegate, GMSAutocompleteVie
             endLocation.frame = partyLocation.frame
         }
         
-        
         // Do any additional setup after loading the view.
         getUserID()
     }
@@ -63,6 +63,28 @@ class QuestionnaireVC: UIViewController, UITextFieldDelegate, GMSAutocompleteVie
         // Just ensuring that the search fields are getting reset at the end of a view
         partyLocation.text = nil
         endLocation.text = nil
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        
+        //display underaged alert if user is less than 21 at current session
+        let age = calcAge(birthday: (userProfileInfo?.getBirthDate())!)
+        if(age < 21) {
+            //show underaged alert
+            AlertUtils.showAlert(title: "⚠️ Underaged Drinking ⚠️", message: "Be aware that consuming alcohol publicly under the age of 21 is illegal.", viewController: self)
+        }
+    }
+    
+    //calculates age of user
+    func calcAge(birthday: String) -> Int {
+        let dateFormater = DateFormatter()
+        dateFormater.dateFormat = "MM/dd/yyyy"
+        let birthdayDate = dateFormater.date(from: birthday)
+        let calendar: NSCalendar! = NSCalendar(calendarIdentifier: .gregorian)
+        let now = Date()
+        let calcAge = calendar.components(.year, from: birthdayDate!, to: now, options: [])
+        let age = calcAge.year
+        return age!
     }
     
     func getUserProfileData(user: String) {
@@ -85,8 +107,6 @@ class QuestionnaireVC: UIViewController, UITextFieldDelegate, GMSAutocompleteVie
         }
     }
 
-    
-    
     @IBAction func startSessionButton(_ sender: Any) {
         guard (self.sessionType != nil) else {
             return
@@ -122,6 +142,8 @@ class QuestionnaireVC: UIViewController, UITextFieldDelegate, GMSAutocompleteVie
                 }
             }
         } else if self.sessionType == "Join" {
+            // UNCOMMENT THE FOLLOWING IF YOU ARE HARDCODING A SESSION ID
+            // self.sessionID = <sessionID You Want To Join>
             dispatchGroup.enter()
             let session = SessionInfo()
             session.startTime = Date.now
@@ -138,23 +160,31 @@ class QuestionnaireVC: UIViewController, UITextFieldDelegate, GMSAutocompleteVie
                     print("Error adding session: \(error)")
                 } else if let sessionTemp = sessionTemp {
                     if sessionTemp.membersList.contains(self.userID!){
-                        let stopAlertController = UIAlertController(
-                                                            title: "Cannot Rejoin Session",
-                                                            message: "Cannot Rejoin Session After Leaving",
-                                                            preferredStyle: .alert
-                        )
-                        
-                        stopAlertController.addAction(UIAlertAction(
-                                                title: "OK",
-                                                style: .destructive,
-                                                handler: {
-                                                    (action) in
-                                                    dispatchGroup.suspend()
-                                                    self.dismiss(animated: true)
-                                                })
-                        )
-                        
-                        self.present(stopAlertController, animated: true)
+                        self.firestoreManager.setStatusActive(sessionID: self.sessionID!, userID: self.userID!, session: session) { error in
+                            if error != nil {
+                                let stopAlertController = UIAlertController(
+                                                                    title: "Unable to Rejoin Session",
+                                                                    message: "Issue when rejoining session after leaving",
+                                                                    preferredStyle: .alert
+                                )
+        
+                                stopAlertController.addAction(UIAlertAction(
+                                                        title: "OK",
+                                                        style: .destructive,
+                                                        handler: {
+                                                            (action) in
+                                                            dispatchGroup.suspend()
+                                                            self.dismiss(animated: true)
+                                                        })
+                                )
+        
+                                self.present(stopAlertController, animated: true)
+                            } else {
+                                self.sessionName = sessionTemp.sessionName
+                                self.endDate = sessionTemp.endGroupSessionTime
+                                dispatchGroup.leave()
+                            }
+                        }
                     } else {
                         self.sessionName = sessionTemp.sessionName
                         self.endDate = sessionTemp.endGroupSessionTime
@@ -209,12 +239,14 @@ class QuestionnaireVC: UIViewController, UITextFieldDelegate, GMSAutocompleteVie
             destination.userID = self.userID
             destination.userProfileInfo = self.userProfileInfo
             destination.sessionID = self.sessionID
+            destination.isDD = self.isDDToggle.isOn
         }
         
         if segue.identifier == qToGroupSegue,
            let destination = segue.destination as? RegisterGroupSessionVC {
             destination.userID = self.userID
             destination.sessionID = self.sessionID
+            destination.isDD = self.isDDToggle.isOn
         }
         
         if segue.identifier == qToGroupJoinSegue{
@@ -232,6 +264,7 @@ class QuestionnaireVC: UIViewController, UITextFieldDelegate, GMSAutocompleteVie
             finalDestination!.userID = self.userID
             finalDestination!.sessionID = self.sessionID
             finalDestination!.isManager = false
+            finalDestination!.isDD = self.isDDToggle.isOn
 
         }
     }

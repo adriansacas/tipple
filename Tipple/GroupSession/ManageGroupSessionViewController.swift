@@ -11,7 +11,7 @@ import Foundation
 //protocol to update session name
 protocol EditSession {
     func updateSessionInfo(sessionFields: [String : Any])
-    func endSessionForUser()
+    func endSessionForUser(markForDeletion: Bool)
 }
 
 class ManageGroupSessionVC: UIViewController, EditSession {
@@ -29,6 +29,8 @@ class ManageGroupSessionVC: UIViewController, EditSession {
     var endDate: Date?
     var isManager: Bool = true
     var pollTimer: Timer?
+    var prevBAC: [String: Double]?
+    var isDD: Bool?
 
     var lastUpdate: [String: [String: Any]]?
     
@@ -121,11 +123,12 @@ class ManageGroupSessionVC: UIViewController, EditSession {
         }
     }
     
-    func endSessionForUser() {
+    func endSessionForUser(markForDeletion: Bool = false) {
         pollTimer?.invalidate()
         // handle firebase marking of end session
         firestoreManager.endSessionForUser(userID: self.userID!,
-                                           sessionID: self.sessionID!) { error in
+                                           sessionID: self.sessionID!,
+                                           markForDeletion: markForDeletion) { error in
             if let error = error {
                 print("Error ending session: \(error)")
             }
@@ -171,6 +174,25 @@ class ManageGroupSessionVC: UIViewController, EditSession {
                    let endTime = sessionValues["endTime"] as? Date {
                     self.setLabelFields(nameField: sessionName, dateField: endTime)
                 }
+                
+                // BAC needs testing
+                /*
+                for user in users {
+                    if let curr = user.value["BAC"] as? Double {
+                        if let prev = self.prevBAC![user.key] {
+                            if prev < curr && curr > 0.12 {
+                                let name = user.value["Name"] as? String
+                                AlertUtils.showAlert(title: "Check on \(name ?? "your friends")", message: "\(name ?? "someone")'s BAC is at \(curr)", viewController: self)
+                            }
+                        } else if curr > 0.12 { // if no prev BAC existed
+                            let name = user.value["Name"] as? String
+                            AlertUtils.showAlert(title: "Check on \(name ?? "your friends")", message: "\(name ?? "someone")'s BAC is at \(curr)", viewController: self)
+                        }
+                        //set prev to current whether prev existed or not
+                        self.prevBAC![user.key]  = curr
+                    }
+                }
+                */
             }
         }
     }
@@ -196,6 +218,7 @@ class ManageGroupSessionVC: UIViewController, EditSession {
         } else if segue.identifier == activeSessionSegue, let destination = segue.destination as? ShowActiveVC {
             destination.userID = self.userID
             destination.sessionID = self.sessionID
+            destination.isDD = self.isDD
         }  else if segue.identifier == groupListSegue, let destination = segue.destination as? GroupListViewController {
             destination.users = self.lastUpdate
             destination.sessionID = self.sessionID

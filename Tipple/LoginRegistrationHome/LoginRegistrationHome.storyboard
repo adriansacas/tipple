@@ -158,8 +158,8 @@
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" keyboardDismissMode="interactive" translatesAutoresizingMaskIntoConstraints="NO" id="5GM-BV-wCa">
                                 <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                                 <subviews>
-                                    <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="zpV-tv-Gf2">
-                                        <rect key="frame" x="18" y="-19" width="393" height="1000"/>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zpV-tv-Gf2">
+                                        <rect key="frame" x="0.0" y="0.0" width="393" height="1000"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Register your new account to get started" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Cov-NH-JGW">
                                                 <rect key="frame" x="0.0" y="106" width="393" height="21"/>
@@ -402,13 +402,6 @@
                                                 <color key="textColor" systemColor="systemIndigoColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <datePicker contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" datePickerMode="date" style="compact" translatesAutoresizingMaskIntoConstraints="NO" id="TP5-5b-0ZU">
-                                                <rect key="frame" x="10" y="689" width="150" height="44"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="height" constant="44" id="5mR-ck-4yn"/>
-                                                    <constraint firstAttribute="width" constant="150" id="MxV-RU-mK2"/>
-                                                </constraints>
-                                            </datePicker>
                                             <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Add weight" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="LSk-sp-ps6">
                                                 <rect key="frame" x="182" y="787" width="120" height="34"/>
                                                 <constraints>
@@ -418,6 +411,16 @@
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <textInputTraits key="textInputTraits"/>
                                             </textField>
+                                            <datePicker contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="date" style="compact" useCurrentDate="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TP5-5b-0ZU">
+                                                <rect key="frame" x="16" y="689" width="121" height="44"/>
+                                                <color key="tintColor" name="Okay"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="44" id="5mR-ck-4yn"/>
+                                                </constraints>
+                                                <date key="date" timeIntervalSinceReferenceDate="725661963.40261805">
+                                                    <!--2023-12-30 20:46:03 +0000-->
+                                                </date>
+                                            </datePicker>
                                         </subviews>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                         <constraints>
@@ -468,7 +471,6 @@
                                             <constraint firstItem="C6X-Vq-BGG" firstAttribute="top" secondItem="hgY-x4-BfN" secondAttribute="bottom" constant="8" symbolic="YES" id="kwr-pK-bsF"/>
                                             <constraint firstItem="kBv-NW-pNV" firstAttribute="top" secondItem="9pc-US-P8k" secondAttribute="bottom" id="mNx-ha-qGL"/>
                                             <constraint firstAttribute="trailing" secondItem="9pc-US-P8k" secondAttribute="trailing" constant="272" id="meE-Da-oUy"/>
-                                            <constraint firstItem="TP5-5b-0ZU" firstAttribute="leading" secondItem="zpV-tv-Gf2" secondAttribute="leading" constant="10" id="oFY-TU-dHU"/>
                                             <constraint firstItem="hJN-jg-hva" firstAttribute="leading" secondItem="zpV-tv-Gf2" secondAttribute="leading" constant="39" id="rOg-6R-qjV"/>
                                             <constraint firstItem="eDv-Jg-ul8" firstAttribute="leading" secondItem="zpV-tv-Gf2" secondAttribute="leading" constant="39" id="s8u-e5-k6L"/>
                                             <constraint firstItem="dfk-cY-dfY" firstAttribute="top" secondItem="b3o-oV-sdr" secondAttribute="bottom" constant="-1" id="t2h-3V-dDC"/>
@@ -479,6 +481,7 @@
                                             <constraint firstItem="b3o-oV-sdr" firstAttribute="leading" secondItem="zpV-tv-Gf2" secondAttribute="leading" constant="39" id="unM-13-JXD"/>
                                             <constraint firstAttribute="trailing" secondItem="0yB-Ia-EyT" secondAttribute="trailing" constant="150" id="xic-RT-sd7"/>
                                             <constraint firstItem="7i7-vD-fDn" firstAttribute="top" secondItem="k7w-Lq-X2Y" secondAttribute="bottom" constant="9" id="xpk-ah-LK7"/>
+                                            <constraint firstItem="TP5-5b-0ZU" firstAttribute="leading" secondItem="zpV-tv-Gf2" secondAttribute="leading" constant="30" id="yoa-qN-rgm"/>
                                         </constraints>
                                     </view>
                                 </subviews>
@@ -713,10 +716,10 @@
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
         <systemColor name="systemIndigoColor">
-            <color red="0.34509803921568627" green="0.33725490196078434" blue="0.83921568627450982" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.34509803919999998" green="0.33725490200000002" blue="0.83921568629999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemRedColor">
-            <color red="1" green="0.23137254901960785" blue="0.18823529411764706" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>
