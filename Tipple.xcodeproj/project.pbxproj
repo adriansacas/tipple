@@ -93,6 +93,8 @@
 		B3720A232B133BB2004C8A58 /* PollCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3720A222B133BB2004C8A58 /* PollCell.swift */; };
 		B388C6402B181184002321B1 /* PartyMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = B388C63F2B181184002321B1 /* PartyMode.swift */; };
 		B3CE37622AD62FF1004FB1A1 /* Settings.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B3CE37612AD62FF1004FB1A1 /* Settings.storyboard */; };
+		B3DD41C92B1C1723003D3376 /* AuthenticationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3DD41C82B1C1723003D3376 /* AuthenticationManager.swift */; };
+		B3DD41CB2B1D37FC003D3376 /* SharingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3DD41CA2B1D37FC003D3376 /* SharingVC.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -180,6 +182,8 @@
 		B3720A222B133BB2004C8A58 /* PollCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PollCell.swift; sourceTree = "<group>"; };
 		B388C63F2B181184002321B1 /* PartyMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PartyMode.swift; sourceTree = "<group>"; };
 		B3CE37612AD62FF1004FB1A1 /* Settings.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Settings.storyboard; sourceTree = "<group>"; };
+		B3DD41C82B1C1723003D3376 /* AuthenticationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationManager.swift; sourceTree = "<group>"; };
+		B3DD41CA2B1D37FC003D3376 /* SharingVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharingVC.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -253,6 +257,7 @@
 				B3571DE02AF8613E00095EF9 /* Polls */,
 				348821D12AD7932E00B677F3 /* GoogleService-Info.plist */,
 				B3329D332ADB53A300F23531 /* FirestoreManager.swift */,
+				B3DD41C82B1C1723003D3376 /* AuthenticationManager.swift */,
 				349B1F732ADDDF3F00588DCF /* MOCKScrollViewController.swift */,
 				B34377172ADE71BA003B1D96 /* AlertUtils.swift */,
 			);
@@ -359,6 +364,7 @@
 				B36E61E32AD88C2300AFF50E /* SettingsVC.swift */,
 				B33F29472AEB11C200B10CF7 /* ProfileInfo */,
 				B32D02F32B1659DE0072B5DE /* AppearanceVC.swift */,
+				B3DD41CA2B1D37FC003D3376 /* SharingVC.swift */,
 				B388C63F2B181184002321B1 /* PartyMode.swift */,
 			);
 			path = Settings;
@@ -506,6 +512,7 @@
 			files = (
 				3411E5142AD8BF1700297E01 /* SignupViewController.swift in Sources */,
 				340DDE982AD6243A00217F2D /* ViewController.swift in Sources */,
+				B3DD41C92B1C1723003D3376 /* AuthenticationManager.swift in Sources */,
 				B3571DF02AFA169100095EF9 /* OptionCell.swift in Sources */,
 				3448301D2AEB685B00039FAD /* InviteCodeViewController.swift in Sources */,
 				B341BF752AD8C11A00505C37 /* ProfileInfoNameVC.swift in Sources */,
@@ -550,6 +557,7 @@
 				B341BF772AD8F53D00505C37 /* ProfileInfoGenderVC.swift in Sources */,
 				B3329D342ADB53A300F23531 /* FirestoreManager.swift in Sources */,
 				494A45132AF5D7FD00B54542 /* QRScannerController.swift in Sources */,
+				B3DD41CB2B1D37FC003D3376 /* SharingVC.swift in Sources */,
 				B341BF7F2AD92E6200505C37 /* ProfileInfoPhoneVC.swift in Sources */,
 				B388C6402B181184002321B1 /* PartyMode.swift in Sources */,
 			);
