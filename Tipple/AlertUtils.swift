@@ -61,7 +61,8 @@ class AlertUtils {
             // send to login screen
             defaults.set(false, forKey: "tippleStayLoggedIn")
 //            viewController.navigationController?.dismiss(animated: true)
-            viewController.navigationController?.popToRootViewController(animated: false)
+//            viewController.navigationController?.popToRootViewController(animated: false)
+//            viewController.navigationController?.present(destinationVC, animated: true)
             viewController.present(destinationVC, animated: true)
 //            viewController.navigationController?.pushViewController(destinationVC, animated: true, )
         }
