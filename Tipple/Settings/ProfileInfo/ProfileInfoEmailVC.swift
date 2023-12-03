@@ -43,60 +43,53 @@ class ProfileInfoEmailVC: UITableViewController, ProfileInfoDelegateSettingVC {
     @IBAction func saveChanges(_ sender: Any) {
         guard let currentEmail = currentEmailLabel.text,
               let password = passwordTextField.text,
-              let newEmail = newEmailTextField.text else {
+              let newEmail = newEmailTextField.text,
+              currentEmail != newEmail,
+              isValidEmail(newEmail) else {
             // Handle invalid input
+                  AlertUtils.showAlert(title: "Email Update Failed", message: "Please enter a valid email address and password.", viewController: self)
             return
         }
+        
+        // Re-authenticate the user with their current credentials
+        // Then update the email address
+        let user = Auth.auth().currentUser
+        print(user?.isEmailVerified ?? "NA")
+        let credential = EmailAuthProvider.credential(withEmail: currentEmail, password: password)
 
-        if isValidEmail(newEmail) {
-            print("Valid email address")
-        } else {
-            print("Invalid email address")
-        }
-
-        if currentEmail != newEmail {
-            // Re-authenticate the user with their current credentials
-            // Then update the email address
-            let user = Auth.auth().currentUser
-            let credential = EmailAuthProvider.credential(withEmail: currentEmail, password: password)
-
-            user?.reauthenticate(with: credential) { result, error in
-                if let error = error {
-                    // Handle reauthentication error
-                    print("Reauthentication failed: \(error.localizedDescription)")
-                    AlertUtils.showAlert(title: "Reauthentication Failed", message: error.localizedDescription, viewController: self)
-                } else {
-                    // User is successfully reauthenticated
-                    // Verify the new email address first
-                    user?.sendEmailVerification(beforeUpdatingEmail: newEmail) { error in
-                        if let error = error {
-                            // Handle email verification error
-                            print("Email verification failed: \(error.localizedDescription)")
-                            AlertUtils.showAlert(title: "Email Verification Failed", message: error.localizedDescription, viewController: self)
-                        } else {
-                            // Email address verified, now update the email
-                            user?.updateEmail(to: newEmail) { error in
-                                if let error = error {
-                                    // Handle email update error
-                                    print("Email update failed: \(error.localizedDescription)")
-                                    AlertUtils.showAlert(title: "Email Update Failed", message: error.localizedDescription, viewController: self)
-                                } else {
-                                    // Email address updated successfully
-                                    print("Email updated to: \(newEmail)")
-                                    // Update the email in your Firestore document here
-                                    if let updatedProfileInfo = self.userProfileInfo {
-                                        self.delegate?.didUpdateProfileInfo(updatedProfileInfo)
-                                    }
-                                    
-                                    self.navigationController?.popViewController(animated: true)
-                                }
-                            }
+        user?.reauthenticate(with: credential) { result, error in
+            if let error = error {
+                // Handle reauthentication error
+                print("Reauthentication failed: \(error.localizedDescription)")
+                AlertUtils.showAlert(title: "Reauthentication Failed", message: error.localizedDescription, viewController: self)
+            } else {
+                // User is successfully reauthenticated
+                // Verify the new email address first
+                // Email will be updated in Firebase after user verifies through email
+                user?.sendEmailVerification(beforeUpdatingEmail: newEmail) { error in
+                    if let error = error {
+                        // Handle email verification error
+                        print("Email verification failed: \(error.localizedDescription)")
+                        AlertUtils.showAlert(title: "Email Verification Failed", message: error.localizedDescription, viewController: self)
+                    } else {
+                        let alertController = UIAlertController(
+                            title: "Email Update",
+                            message: "Check your inbox to confirm your new email",
+                            preferredStyle: .alert
+                        )
+                        
+                        let action = UIAlertAction(title: "OK", style: .default) { (_) in
+                            // logout user
+                            defaults.set(false, forKey: "tippleStayLoggedIn")
+                            self.performSegue(withIdentifier: "LoginPage", sender: nil)
                         }
+                        
+                        alertController.addAction(action)
+                        
+                        self.present(alertController, animated: true)
                     }
                 }
             }
-        } else {
-            print("New email is the same as the current email")
         }
     }
     

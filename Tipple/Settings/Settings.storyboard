@@ -559,7 +559,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="430" height="932"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <sections>
-                            <tableViewSection id="1is-kH-0Ox">
+                            <tableViewSection footerTitle="You will be signed out after completing this step." id="1is-kH-0Ox">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="AzV-Pk-oeD">
                                         <rect key="frame" x="20" y="18" width="390" height="43.666667938232422"/>
@@ -650,11 +650,12 @@
                         <outlet property="currentEmailLabel" destination="GmW-VL-K7L" id="qkC-Xd-kKH"/>
                         <outlet property="newEmailTextField" destination="ycH-1U-REa" id="KSQ-t8-gln"/>
                         <outlet property="passwordTextField" destination="mXW-Rb-VF9" id="9wd-pG-K1p"/>
+                        <segue destination="Lz0-1D-rGp" kind="show" identifier="LoginPage" id="5gn-vl-Gle"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="phC-Eg-ho9" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3467.9389312977096" y="481.69014084507046"/>
+            <point key="canvasLocation" x="3451" y="482"/>
         </scene>
         <!--Phone-->
         <scene sceneID="YTv-C1-wIU">
@@ -819,6 +820,16 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="d9A-QN-1KT" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2377.8625954198474" y="-618.30985915492965"/>
+        </scene>
+        <!--LoginRegistrationHome-->
+        <scene sceneID="HiB-WX-0fc">
+            <objects>
+                <viewControllerPlaceholder storyboardName="LoginRegistrationHome" id="Lz0-1D-rGp" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="GVA-lg-ddU"/>
+                </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Yoz-xY-t2F" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2902" y="311"/>
         </scene>
     </scenes>
     <resources>
