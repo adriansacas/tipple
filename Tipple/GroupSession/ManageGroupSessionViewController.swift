@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import CoreLocation
 import Foundation
 
 //protocol to update session name
@@ -14,13 +15,14 @@ protocol EditSession {
     func endSessionForUser(markForDeletion: Bool)
 }
 
-class ManageGroupSessionVC: UIViewController, EditSession {
+class ManageGroupSessionVC: UIViewController, CLLocationManagerDelegate, EditSession {
     
     @IBOutlet weak var sessionNameTextLabel: UILabel!
     @IBOutlet weak var sessionEndDateTimeLabel: UILabel!
     @IBOutlet weak var settingsButton: UIButton!
     @IBOutlet weak var stopSessionButton: UIButton!
     let firestoreManager = FirestoreManager.shared
+    let locationManager = FirestoreManager.location
 
     var groupQRCode: UIImage?
     var sessionID: String?
@@ -51,6 +53,10 @@ class ManageGroupSessionVC: UIViewController, EditSession {
         } else {
             stopSessionButton.setTitle("End Session", for: .normal)
         }
+        
+        // Setting Up Location Manager
+        locationManager.delegate = self
+        
         pollTimer = Timer.scheduledTimer(timeInterval: 2, target: self, selector: #selector(pollSessionInfo), userInfo: nil, repeats: true)
     }
     
@@ -58,6 +64,13 @@ class ManageGroupSessionVC: UIViewController, EditSession {
         super.viewDidLoad()
         // Redundant first setting
         setLabelFields(nameField: self.sessionName, dateField: self.endDate!)
+        
+        
+        // Start updating location
+        if locationManager.authorizationStatus == .authorizedAlways ||
+            locationManager.authorizationStatus == .authorizedWhenInUse{
+            locationManager.startUpdatingLocation()
+        }
     }
     
     
@@ -66,6 +79,7 @@ class ManageGroupSessionVC: UIViewController, EditSession {
         // Stop the timer when the view disappears
         pollTimer?.invalidate()
     }
+    
     
     func setLabelFields(nameField: String, dateField: Date) {
         if nameField != self.sessionNameTextLabel.text {
@@ -125,6 +139,7 @@ class ManageGroupSessionVC: UIViewController, EditSession {
     
     func endSessionForUser(markForDeletion: Bool = false) {
         pollTimer?.invalidate()
+        locationManager.stopUpdatingLocation()
         // handle firebase marking of end session
         firestoreManager.endSessionForUser(userID: self.userID!,
                                            sessionID: self.sessionID!,
@@ -195,6 +210,40 @@ class ManageGroupSessionVC: UIViewController, EditSession {
                 */
             }
         }
+    }
+    
+    
+    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
+        // Handle changes if location permissions
+        guard status != .authorizedAlways && status != .authorizedWhenInUse else {
+            // Status changed to allow location updates
+            locationManager.startUpdatingLocation()
+            return
+        }
+        
+        AlertUtils.showAlert(title: "Location Cannot Be Updated",
+                             message: "Please enable location permissions in iOS Settings.",
+                             viewController: self)
+    }
+
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        print("Method Called To Update Location")
+        if let location = locations.last {
+            // Handle location update --> Call firebase manager to update the location
+            firestoreManager.updateLastLocation(sessionID: self.sessionID!,
+                                                userID: self.userID!,
+                                                coordinate: location.coordinate) { error in
+                if error != nil {
+                    print("Issue updating location in firebase")
+                }
+            }
+            
+        }
+    }
+
+    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+        // Handle failure to get a user’s location
+        print("Had an issue retrieving location. Will not do anything for now :/")
     }
 
     

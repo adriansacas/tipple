@@ -587,11 +587,6 @@ class FirestoreManager {
                     
                     let sessionShareBool = memberDoc["shareSession"] as? Bool
                     if sessionShareBool == true {
-                        // Update Users Location For All Users
-                        dispatchGroup.enter()
-                        self.updateLastLocation(sessionID: sessionID,
-                                                userID: memberID)
-                        dispatchGroup.leave()
                         if memberID == userID {
                             continue
                         }
@@ -728,41 +723,32 @@ class FirestoreManager {
         }
     }
 
-    func updateLastLocation(sessionID: String, userID: String) {
-            guard CLLocationManager.locationServicesEnabled() else {
-                print("Location services are not enabled.")
-                return
-            }
+    func updateLastLocation(sessionID: String, userID: String, coordinate: CLLocationCoordinate2D, completion: @escaping (Error?) -> Void) {
+        guard CLLocationManager.locationServicesEnabled() else {
+            print("Location services are not enabled.")
+            return
+        }
 
-        let authorizationStatus = Self.location.authorizationStatus
 
-            guard authorizationStatus == .authorizedAlways || authorizationStatus == .authorizedWhenInUse else {
-                print("Location access is not authorized.")
-                // Handle not authorized case (e.g., prompt the user to enable location services)
-                return
-            }
+        let userDocRef = db.collection(sessionCollection)
+            .document(sessionID)
+            .collection(memberColInSess)
+            .document(userID)
 
-            guard let currentLocation = Self.location.location else {
-                print("Unable to get current location.")
-                return
-            }
-
-            let userDocRef = db.collection(sessionCollection)
-                .document(sessionID)
-                .collection(memberColInSess)
-                .document(userID)
-
-        let locationData = GeoPoint(latitude: currentLocation.coordinate.latitude,
-                                    longitude: currentLocation.coordinate.longitude)
+        let locationData = GeoPoint(latitude: coordinate.latitude,
+                                    longitude: coordinate.longitude)
 
             userDocRef.setData(["lastLocation": locationData], merge: true) { error in
                 if let error = error {
                     print("Error updating last location: \(error.localizedDescription)")
+                    completion(error)
                 } else {
                     print("Last location updated successfully.")
+                    completion(nil)
                 }
             }
-        }
+    }
+    
     
     func setStatusActive(sessionID: String, userID: String, session: SessionInfo, completion: @escaping (Error?) -> Void) {
         let userDocRef = db.collection(sessionCollection)
@@ -1052,6 +1038,7 @@ class FirestoreManager {
             completion(sessionTemp)
         }
     }
+    
     
 }
 

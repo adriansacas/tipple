@@ -67,7 +67,7 @@ class QuestionnaireVC: UIViewController, UITextFieldDelegate, GMSAutocompleteVie
     
     override func viewDidAppear(_ animated: Bool) {
         
-        //display underaged alert if user is less than 21 at current session
+        // display underaged alert if user is less than 21 at current session
         let age = calcAge(birthday: (userProfileInfo?.getBirthDate())!)
         if(age < 21) {
             //show underaged alert
