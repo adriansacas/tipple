@@ -54,7 +54,6 @@ class ProfileInfoEmailVC: UITableViewController, ProfileInfoDelegateSettingVC {
         // Re-authenticate the user with their current credentials
         // Then update the email address
         let user = Auth.auth().currentUser
-        print(user?.isEmailVerified ?? "NA")
         let credential = EmailAuthProvider.credential(withEmail: currentEmail, password: password)
 
         user?.reauthenticate(with: credential) { result, error in
@@ -72,21 +71,7 @@ class ProfileInfoEmailVC: UITableViewController, ProfileInfoDelegateSettingVC {
                         print("Email verification failed: \(error.localizedDescription)")
                         AlertUtils.showAlert(title: "Email Verification Failed", message: error.localizedDescription, viewController: self)
                     } else {
-                        let alertController = UIAlertController(
-                            title: "Email Update",
-                            message: "Check your inbox to confirm your new email",
-                            preferredStyle: .alert
-                        )
-                        
-                        let action = UIAlertAction(title: "OK", style: .default) { (_) in
-                            // logout user
-                            defaults.set(false, forKey: "tippleStayLoggedIn")
-                            self.performSegue(withIdentifier: "LoginPage", sender: nil)
-                        }
-                        
-                        alertController.addAction(action)
-                        
-                        self.present(alertController, animated: true)
+                        AlertUtils.showNeedEmailConfirmationAlert(viewController: self)
                     }
                 }
             }
