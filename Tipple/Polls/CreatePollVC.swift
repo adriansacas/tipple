@@ -162,7 +162,7 @@ class CreatePollVC: UITableViewController, PollsDelegateVC, UITextFieldDelegate 
                 prompt = text
             } 
             if prompt.isEmpty {
-                AlertUtils.showAlert(title: "Invalid Poll", message: "Enter a valid prompt", viewController: self)
+                AlertUtils.showAlert(title: "Invalid Poll", message: "Enter a valid prompt.", viewController: self)
                 return
             }
         }
@@ -180,7 +180,7 @@ class CreatePollVC: UITableViewController, PollsDelegateVC, UITextFieldDelegate 
         }
         
         if options.count < 2 {
-            AlertUtils.showAlert(title: "Invalid Poll", message: "Enter at least two options", viewController: self)
+            AlertUtils.showAlert(title: "Invalid Poll", message: "Enter at least two options.", viewController: self)
             return
         }
         

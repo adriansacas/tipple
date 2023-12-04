@@ -53,7 +53,7 @@ class AlertUtils {
         
         let alertController = UIAlertController(
             title: "Email Update",
-            message: "Check your inbox to confirm your new email address and sign back in.",
+            message: "Check your inbox to confirm your new email address and sign back in. In the meantime, previous login credentials on the keychain will be deleted. Save again on the next login.",
             preferredStyle: .alert
         )
         

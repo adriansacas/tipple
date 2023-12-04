@@ -95,6 +95,7 @@ class ProfileInfoEmailVC: UITableViewController, ProfileInfoDelegateSettingVC {
                         AlertUtils.showAlert(title: "Email Verification Failed", message: error.localizedDescription, viewController: self)
                     } else {
                         AlertUtils.showNeedEmailConfirmationAlert(viewController: self)
+                        self.deleteKeychain()
                     }
                 }
             }
@@ -109,5 +110,20 @@ class ProfileInfoEmailVC: UITableViewController, ProfileInfoDelegateSettingVC {
         }
         
         return false
+    }
+    
+    //deletes login credentials on keychain
+    func deleteKeychain(){
+        
+        let query: [String: Any] = [kSecClass as String: kSecClassInternetPassword,
+                                    kSecAttrServer as String: "www.tipple.com"]
+        
+        let status = SecItemDelete(query as CFDictionary)
+        
+        if (status == errSecSuccess || status == errSecItemNotFound) {
+            print("successfully deleted off keychain")
+        } else {
+            print("something went wrong!!!")
+        }
     }
 }

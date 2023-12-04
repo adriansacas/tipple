@@ -36,8 +36,8 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
 //        }
         
         //TODO: for keychain cleaning purposes
-        //print("deleting keychain credentials")
-        //deleteKeychain()
+//        print("reseting keychain credentials")
+//        deleteKeychain()
         
     }
     
@@ -105,7 +105,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
                         //there's an error, don't allow login and exit
                         if status == errSecItemNotFound {
                             
-                            AlertUtils.showAlert(title: "Login Error", message: "Login credentials do not exist in the Keychain. Please login manually", viewController: self!)
+                            AlertUtils.showAlert(title: "Login Error", message: "Login credentials do not exist in the keychain. Please login manually.", viewController: self!)
                             return
                         }
                         
@@ -116,7 +116,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
                               let email = keychainLogin[kSecAttrAccount as String] as? String
                                 
                         else {
-                            AlertUtils.showAlert(title: "Login Error", message: "Error getting login credentials. Please login manually", viewController: self!)
+                            AlertUtils.showAlert(title: "Login Error", message: "Error getting login credentials. Please login manually.", viewController: self!)
                             return
                         }
                         
@@ -127,7 +127,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
                         Auth.auth().signIn(withEmail: email , password: password) {
                             (authResult, error) in
                             if (error as NSError?) != nil {
-                                AlertUtils.showAlert(title: "Login Error", message: "Email may not exist or password is incorrect.", viewController: self!)
+                                AlertUtils.showAlert(title: "Login Error", message: "Saved login credentials on the keychain are no longer valid. Please reset the Keychain or login manually.", viewController: self!)
                             } else {
                                 self?.performSegue(withIdentifier: "loginToHomeSegue", sender: nil)
                             }
@@ -187,14 +187,40 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         self.view.endEditing(true)
     }
 
+    //query the keychain and check if login information exists on this device already
+    func canSaveOnKeychain() -> Bool {
+        
+        let query: [String: Any] = [kSecClass as String: kSecClassInternetPassword,
+                                    kSecAttrServer as String: "www.tipple.com",
+                                    kSecMatchLimit as String: kSecMatchLimitOne,
+                                    kSecReturnAttributes as String: true,
+                                    kSecReturnData as String: true]
+        
+        var item: CFTypeRef?
+        
+        let status = SecItemCopyMatching(query as CFDictionary, &item)
+        
+        //if no info was found, return true
+        if status == errSecItemNotFound {
+            return true
+        }
+        
+        //else we found one, so we can't add another one
+        return false
+    }
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
         if segue.identifier == "loginToHomeSegue", let nextVC = segue.destination as? HomeViewController {
             
             //only send values isOnKeychain returns true
-            nextVC.saveOnKeychain = false
-            nextVC.saveEmail = ""
-            nextVC.savePassword = ""
+            nextVC.saveOnKeychain = canSaveOnKeychain()
+            
+            //if true save email and password
+            if(nextVC.saveOnKeychain!){
+                nextVC.saveEmail = emailAddressTextField.text!
+                nextVC.savePassword = passwordTextField.text!
+            }
         }
         
     }

@@ -183,7 +183,7 @@ class PollVoteVC: UIViewController, UITableViewDataSource, UITableViewDelegate, 
     @IBAction func submitVote(_ sender: Any) {
         guard !selectedOptionsIndex.isEmpty else {
             // Display an alert or a message to inform the user to select an option
-            AlertUtils.showAlert(title: "Invalid vote", message: "Please select at least one option", viewController: self)
+            AlertUtils.showAlert(title: "Invalid vote", message: "Please select at least one option.", viewController: self)
             return
         }
         

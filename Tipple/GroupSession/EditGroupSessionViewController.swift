@@ -75,8 +75,6 @@ class EditGroupSessionVC: UIViewController, UITextFieldDelegate {
             handler: {
                 (action) in
                 
-                //TODO: set sessions to not be saved
-                
                 self.performSegue(withIdentifier: self.deleteToHomeSegue, sender: nil)
             })
         )
