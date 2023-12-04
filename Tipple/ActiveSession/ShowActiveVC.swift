@@ -231,19 +231,34 @@ class ShowActiveVC: UIViewController {
     
     
     func calculateBac() -> Float {
-         guard self.userProfileInfo != nil else {
-             print("Do Not Have User Profile Information")
-             return 0.0
-         }
-         
-         let r: Float = self.userProfileInfo!.gender == "Male" ? 0.68 : 0.55
-         let alcConsumedInGrams = Float(self.runningDrinkCounter * 14)
-         let bodyWeight = Float(self.userProfileInfo!.weight) * 0.45359237
-
-         let bac = (alcConsumedInGrams / (bodyWeight * 1000.0 * r)) * 100.0
-
-         return bac
+        guard let userProfileInfo = self.userProfileInfo else {
+            print("Do Not Have User Profile Information")
+            return 0.0
+        }
+        
+        let r: Float = userProfileInfo.gender == "Male" ? 0.68 : 0.55
+        let bodyWeight = Float(userProfileInfo.weight) * 0.45359237
+        var adjustedAlcConsumedInGrams: Float = 0.0
+        
+        // Calculate the time elapsed since the last drink
+        let currentTime = Date()
+        
+        if let lastDrink = self.currentSession?.drinksInSession.max(by: { $0.timeAt < $1.timeAt }) {
+            let timeElapsed = currentTime.timeIntervalSince(lastDrink.timeAt)
+            
+            // Calculate the adjusted weight based on time elapsed
+            let timeWeight = max(1.0 - (Float(timeElapsed) / (30.0 * 60.0)) * 0.2, 0.2)
+            
+            // Adjust the alcohol consumed by the time weight and drink quantity
+            adjustedAlcConsumedInGrams = Float(lastDrink.drinkNum) * 14 * timeWeight
+        }
+        
+        let bac = (adjustedAlcConsumedInGrams / (bodyWeight * 1000.0 * r)) * 100.0
+        
+        return bac
     }
+
+
     
     func calculateStatus() -> String {
         if self.runningBAC < 0.08 {
@@ -271,7 +286,6 @@ class ShowActiveVC: UIViewController {
         alertController.addAction(action)
 
         // Add a "Finish" action
-        // TODO: Mark a session as finished one they exit to the main page.
         alertController.addAction(UIAlertAction(title: "Finish", style: .destructive) { _ in
             self.performSegue(withIdentifier: self.endSessionSegue, sender: self)
         })
