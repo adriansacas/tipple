@@ -1,8 +1,11 @@
 # CS371L Tipple
 
 **Group number**: 5
+
 **Team members**: Adrian Sanchez Castaneda, Claudia Castillo, Danica Padlan, Andrew White
+
 **Dependencies**: Xcode 15.0, Swift 5.3
+
 **Special Instructions**:
 - **Running the app**
     - xxx
@@ -18,9 +21,9 @@
 |Settings | User can update their account information and set sharing and display settings   | Alpha   | Alpha   | X   | Adrian (100%)   |
 | QR Scanner | Users can join a group session by scanning a QR code through the built-in camera   | Beta   | Beta   | X   | Andrew (90%), Danica (10%, generated QR code)   |
 | Personal Drink Counter | Users can track their own number of drinks and BAC   |  Alpha  | Alpha   | X   | Andrew (90%), Danica (10%, drew cup statuses)    |
-| Warning Notifications | Designated Driver, Underaged Drinker, XXX   | Alpha   | X   | X   | Claudia, Danica (10%, added 'Underaged Drinker' alert)   |
-| Previous Sessions | X   | Alpha   | X   | X   | Claudia  |
-| Symptoms Tracker and Morning-After Tips | X   | Alpha   | X   | X   | Claudia   |
+| Warning Notifications | Designated Driver, Underaged Drinker, XXX   | Alpha   | Final   | X   | Claudia, Danica (10%, added 'Underaged Drinker' alert)   |
+| Previous Sessions | X   | Alpha   | Alpha   | X   | Claudia  |
+| Symptoms Tracker and Morning-After Tips | X   | Alpha   | Final   | X   | Claudia   |
 | Group Sessions | User can start a group session to track members of their group and post polls   | Alpha   | Alpha   | X   | Danica (75%), Andrew (25%, syncing information to Firebase)   |
 | Members List | X   | Beta   | Beta   | X   | Claudia   |
 | Tracking Locations | X   | Stretch Goal   | Final   | X   | Claudia, Andrew   |
