@@ -16,12 +16,17 @@ class AuthenticationManager {
 
     // Retrieves and validates the current user information
     func getCurrentUser(viewController: UIViewController, completion: @escaping (User?, Error?) -> Void) {
-        let currentUser = Auth.auth().currentUser
-        currentUser?.reload(completion: { [weak self] error in
+        guard let currentUser = Auth.auth().currentUser else {
+            AlertUtils.showSessionExpiredAlert(viewController: viewController)
+            completion(nil, nil)
+            return
+        }
+        
+        currentUser.reload(completion: { [weak self] error in
             if let error = error as NSError? {
                 if self?.isCredentialInvalidError(error) == true {
                     // Handle the invalid credential scenario
-                    self?.promptUserForReauthentication()
+                    AlertUtils.showSessionExpiredAlert(viewController: viewController)
                     completion(nil, error)
                 } else {
                     // Handle other errors
@@ -37,19 +42,6 @@ class AuthenticationManager {
     // Helper function to check for specific invalid credential error
     private func isCredentialInvalidError(_ error: NSError) -> Bool {
         return error.domain == AuthErrorDomain && error.code == AuthErrorCode.userTokenExpired.rawValue
-    }
-
-    // Function to prompt the user to reauthenticate
-    private func promptUserForReauthentication() {
-        // Implementation depends on your app's UI framework
-        // This could be showing an alert, presenting a modal view controller, etc.
-        // Example:
-        // showAlert("Your session has expired. Please log in again.")
-    }
-    
-    // Example function to show an alert (adjust based on your app's UI framework)
-    private func showAlert(_ message: String) {
-        // Implementation of alert presentation
     }
 }
 

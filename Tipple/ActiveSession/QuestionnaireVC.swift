@@ -23,7 +23,7 @@ class QuestionnaireVC: UIViewController, UITextFieldDelegate, GMSAutocompleteVie
     @IBOutlet weak var startButton: UIButton!
     
     var sessionType: String?
-    var userID: String?
+    var currentUser: User?
     var sessionID: String?
     var sessionName: String?
     var endDate: Date?
@@ -56,7 +56,7 @@ class QuestionnaireVC: UIViewController, UITextFieldDelegate, GMSAutocompleteVie
         }
         
         // Do any additional setup after loading the view.
-        getUserID()
+        getCurrentUser()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -65,10 +65,13 @@ class QuestionnaireVC: UIViewController, UITextFieldDelegate, GMSAutocompleteVie
         endLocation.text = nil
     }
     
-    override func viewDidAppear(_ animated: Bool) {
+    func showUnderageDrinkingWarning() {
+        guard let userProfileInfo = userProfileInfo else {
+            return
+        }
         
         // display underaged alert if user is less than 21 at current session
-        let age = calcAge(birthday: (userProfileInfo?.getBirthDate())!)
+        let age = calcAge(birthday: userProfileInfo.getBirthDate())
         if(age < 21) {
             //show underaged alert
             AlertUtils.showAlert(title: "⚠️ Underaged Drinking ⚠️", message: "Be aware that consuming alcohol publicly under the age of 21 is illegal.", viewController: self)
@@ -93,22 +96,32 @@ class QuestionnaireVC: UIViewController, UITextFieldDelegate, GMSAutocompleteVie
                 print("Error fetching user data: \(error.localizedDescription)")
             } else if let profileInfo = profileInfo {
                 self?.userProfileInfo = profileInfo
+                self?.showUnderageDrinkingWarning()
             }
         }
         
     }
     
-    func getUserID() {
-        if let userID = Auth.auth().currentUser?.uid {
-            self.userID = userID
-            getUserProfileData(user: userID)
-        } else {
-            print("Error fetching user ID from currentUser")
+    func getCurrentUser() {
+        AuthenticationManager.shared.getCurrentUser(viewController: self) { user, error in
+            if let error = error {
+                // Errors are handled in AuthenticationManager
+                print("Error retrieving user: \(error.localizedDescription)")
+            } else if let user = user {
+                // Successfully retrieved the currentUser
+                self.currentUser = user
+                // Do anything that needs the currentUser
+                self.getUserProfileData(user: user.uid)
+            } else {
+                // No error and no user. Handled in AuthenticationManager
+                print("No user found and no error occurred.")
+            }
         }
     }
 
     @IBAction func startSessionButton(_ sender: Any) {
-        guard (self.sessionType != nil) else {
+        guard (self.sessionType != nil),
+              let userID = currentUser?.uid else {
             return
         }
         
@@ -118,8 +131,8 @@ class QuestionnaireVC: UIViewController, UITextFieldDelegate, GMSAutocompleteVie
         
         if self.sessionType == "Individual" || self.sessionType == "Group" {
             dispatchGroup.enter()
-            let session = SessionInfo(createdBy: self.userID!,
-                                      membersList: [self.userID!],
+            let session = SessionInfo(createdBy: userID,
+                                      membersList: [userID],
                                       sessionType: self.sessionType!,
                                       startTime: Date.now,
                                       drinksInSession: [],
@@ -132,7 +145,7 @@ class QuestionnaireVC: UIViewController, UITextFieldDelegate, GMSAutocompleteVie
             
             
             
-            firestoreManager.addSessionInfo(userID: self.userID!, session: session) { documentID, error in
+            firestoreManager.addSessionInfo(userID: userID, session: session) { documentID, error in
                 if let error = error {
                     print("Error adding session: \(error)")
                 } else if let documentID = documentID {
@@ -155,12 +168,12 @@ class QuestionnaireVC: UIViewController, UITextFieldDelegate, GMSAutocompleteVie
             session.shareSession = shareSession.isOn
             
             
-            self.firestoreManager.getSessionInfo(userID: self.userID!, sessionDocumentID: self.sessionID!) { sessionTemp, error in
+            self.firestoreManager.getSessionInfo(userID: userID, sessionDocumentID: self.sessionID!) { sessionTemp, error in
                 if let error = error {
                     print("Error adding session: \(error)")
                 } else if let sessionTemp = sessionTemp {
-                    if sessionTemp.membersList.contains(self.userID!){
-                        self.firestoreManager.setStatusActive(sessionID: self.sessionID!, userID: self.userID!, session: session) { error in
+                    if sessionTemp.membersList.contains(userID){
+                        self.firestoreManager.setStatusActive(sessionID: self.sessionID!, userID: userID, session: session) { error in
                             if error != nil {
                                 let stopAlertController = UIAlertController(
                                                                     title: "Unable to Rejoin Session",
@@ -189,7 +202,7 @@ class QuestionnaireVC: UIViewController, UITextFieldDelegate, GMSAutocompleteVie
                         self.sessionName = sessionTemp.sessionName
                         self.endDate = sessionTemp.endGroupSessionTime
                         self.firestoreManager.addMembersToSession(sessionID: self.sessionID!,
-                                                             userID: self.userID!,
+                                                             userID: userID,
                                                              session: session) { error in
                             if let error = error {
                                 print("Error adding member to session: \(error)")
@@ -211,7 +224,7 @@ class QuestionnaireVC: UIViewController, UITextFieldDelegate, GMSAutocompleteVie
             } else if self.sessionType == "Group"{
                 self.performSegue(withIdentifier: self.qToGroupSegue, sender: self)
             } else if self.sessionType == "Join" {
-                print("Session successfully retrieved for joining with document ID: \(self.sessionID ?? "Value not set") \nUserID: \(self.userID ?? "No User")\nSessionEnd:\(self.endDate?.description ?? "no end")")
+                print("Session successfully retrieved for joining with document ID: \(self.sessionID ?? "Value not set") \nUserID: \(userID)\nSessionEnd:\(self.endDate?.description ?? "no end")")
                 self.performSegue(withIdentifier: self.qToGroupJoinSegue, sender: nil)
             }
         }
@@ -234,9 +247,13 @@ class QuestionnaireVC: UIViewController, UITextFieldDelegate, GMSAutocompleteVie
         // Get the new view controller using segue.destination.
         // Pass the selected object to the new view controller.
         
+        guard let userID = currentUser?.uid else {
+            return
+        }
+        
         if segue.identifier == qToActiveSegue,
            let destination = segue.destination as? ShowActiveVC {
-            destination.userID = self.userID
+            destination.userID = self.currentUser?.uid
             destination.userProfileInfo = self.userProfileInfo
             destination.sessionID = self.sessionID
             destination.isDD = self.isDDToggle.isOn
@@ -244,7 +261,7 @@ class QuestionnaireVC: UIViewController, UITextFieldDelegate, GMSAutocompleteVie
         
         if segue.identifier == qToGroupSegue,
            let destination = segue.destination as? RegisterGroupSessionVC {
-            destination.userID = self.userID
+            destination.userID = userID
             destination.sessionID = self.sessionID
             destination.isDD = self.isDDToggle.isOn
         }
@@ -261,7 +278,7 @@ class QuestionnaireVC: UIViewController, UITextFieldDelegate, GMSAutocompleteVie
             
             finalDestination!.sessionName = self.sessionName!
             finalDestination!.endDate = self.endDate!
-            finalDestination!.userID = self.userID
+            finalDestination!.userID = userID
             finalDestination!.sessionID = self.sessionID
             finalDestination!.isManager = false
             finalDestination!.isDD = self.isDDToggle.isOn

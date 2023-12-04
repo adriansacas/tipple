@@ -15,10 +15,12 @@ class ProfileInfoPhoneVC: UITableViewController, UITextFieldDelegate, ProfileInf
     weak var delegate: ProfileInfoDelegate?
     var userProfileInfo: ProfileInfo?
     let firestoreManager = FirestoreManager.shared
+    var currentUser: User?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        getCurrentUser()
         dismissKeyboardGesture()
         
         phoneTextField.borderStyle = .none
@@ -27,6 +29,22 @@ class ProfileInfoPhoneVC: UITableViewController, UITextFieldDelegate, ProfileInf
         phoneTextField.delegate = self
         
         setInitialPhone()
+    }
+    
+    func getCurrentUser() {
+        AuthenticationManager.shared.getCurrentUser(viewController: self) { user, error in
+            if let error = error {
+                // Errors are handled in AuthenticationManager
+                print("Error retrieving user: \(error.localizedDescription)")
+            } else if let user = user {
+                // Successfully retrieved the currentUser
+                self.currentUser = user
+                // Do anything that needs the currentUser
+            } else {
+                // No error and no user. Handled in AuthenticationManager
+                print("No user found and no error occurred.")
+            }
+        }
     }
     
     // Add a gesture recognizer to dismiss the keyboard when the user
@@ -43,7 +61,7 @@ class ProfileInfoPhoneVC: UITableViewController, UITextFieldDelegate, ProfileInf
     }
     
     @IBAction func saveChanges(_ sender: Any) {
-        guard let userID = Auth.auth().currentUser?.uid,
+        guard let currentUser = currentUser,
               let newPhoneNumber = phoneTextField.text else {
             // Handle invalid input or user not authenticated
             return
@@ -54,7 +72,7 @@ class ProfileInfoPhoneVC: UITableViewController, UITextFieldDelegate, ProfileInf
                 "phoneNumber": newPhoneNumber
             ]
 
-            firestoreManager.updateUserDocument(userID: userID, updatedData: updatedData)
+            firestoreManager.updateUserDocument(userID: currentUser.uid, updatedData: updatedData)
 
             userProfileInfo?.phoneNumber = newPhoneNumber
 

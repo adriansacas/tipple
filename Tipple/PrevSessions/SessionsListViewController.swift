@@ -14,7 +14,7 @@ protocol update {
 
 class SessionsListViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, update {
     
-    var userID:String?
+    var currentUser: User?
     var sessions:[SessionInfo]?
     var sessionRow:Int?
     let firestoreManager = FirestoreManager.shared
@@ -30,15 +30,33 @@ class SessionsListViewController: UIViewController, UITableViewDelegate, UITable
         tableView.dataSource = self
         
         self.sessions = []
-
-        // get sessions for user from firebase
-        if let userID = Auth.auth().currentUser?.uid {
-            self.userID = userID
-        } else {
-            print("Error fetching user ID from currentUser")
+        
+        getCurrentUser()
+    }
+    
+    func getCurrentUser() {
+        AuthenticationManager.shared.getCurrentUser(viewController: self) { user, error in
+            if let error = error {
+                // Errors are handled in AuthenticationManager
+                print("Error retrieving user: \(error.localizedDescription)")
+            } else if let user = user {
+                // Successfully retrieved the currentUser
+                self.currentUser = user
+                // Do anything that needs the currentUser
+                self.getAllSessions()
+            } else {
+                // No error and no user. Handled in AuthenticationManager
+                print("No user found and no error occurred.")
+            }
+        }
+    }
+    
+    func getAllSessions() {
+        guard let currentUser = currentUser else {
+            return
         }
         
-        firestoreManager.getAllSessions(userID: userID!) {
+        firestoreManager.getAllSessions(userID: currentUser.uid) {
             list, error in
             if let error = error {
                 print("Error retrieving session: \(error)")
@@ -67,7 +85,6 @@ class SessionsListViewController: UIViewController, UITableViewDelegate, UITable
                 
             }
         }
-        
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -110,7 +127,11 @@ class SessionsListViewController: UIViewController, UITableViewDelegate, UITable
     }
     
     func updateSessions() {
-        firestoreManager.getAllSessions(userID: userID!) {
+        guard let currentUser = currentUser else {
+            return
+        }
+        
+        firestoreManager.getAllSessions(userID: currentUser.uid) {
             list, error in
             if let error = error {
                 print("Error retrieving session: \(error)")
@@ -122,13 +143,17 @@ class SessionsListViewController: UIViewController, UITableViewDelegate, UITable
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        guard let currentUser = currentUser else {
+            return
+        }
+        
         if segue.identifier == "DayViewSegueIdentifier",
            let nextVC = segue.destination as? DayViewController
         {
             nextVC.delegate = self
             nextVC.session = self.sessions![self.sessionRow!]
             nextVC.sessionID = self.self.sessions![self.sessionRow!].getSessionDocID()
-            nextVC.userID = self.userID!
+            nextVC.currentUser = currentUser
         }
     }
 

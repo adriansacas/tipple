@@ -25,6 +25,7 @@ class PollVoteVC: UIViewController, UITableViewDataSource, UITableViewDelegate, 
     let addOptionCellIdentifier = "AddOptionCell"
     
     var createdByUser: ProfileInfo?
+    var currentUser: User?
     
     var selectedOptionsIndex = Set<Int>()
     var options: [String] = []
@@ -38,7 +39,24 @@ class PollVoteVC: UIViewController, UITableViewDataSource, UITableViewDelegate, 
         tableView.delegate = self
         tableView.dataSource = self
         
+        getCurrentUser()
         getPoll()
+    }
+    
+    func getCurrentUser() {
+        AuthenticationManager.shared.getCurrentUser(viewController: self) { user, error in
+            if let error = error {
+                // Errors are handled in AuthenticationManager
+                print("Error retrieving user: \(error.localizedDescription)")
+            } else if let user = user {
+                // Successfully retrieved the currentUser
+                self.currentUser = user
+                // Do anything that needs the currentUser
+            } else {
+                // No error and no user. Handled in AuthenticationManager
+                print("No user found and no error occurred.")
+            }
+        }
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -169,9 +187,9 @@ class PollVoteVC: UIViewController, UITableViewDataSource, UITableViewDelegate, 
             return
         }
         
-        guard let poll = poll,
-              let pollID = poll.pollID,
-              let currentUserUID = Auth.auth().currentUser?.uid else {
+        guard let currentUser = currentUser,
+              let poll = poll,
+              let pollID = poll.pollID else {
             print("Error: no poll, pollID or currentUserUID")
             return
         }
@@ -194,7 +212,7 @@ class PollVoteVC: UIViewController, UITableViewDataSource, UITableViewDelegate, 
             } else {
                 print("Vote saved successfully")
                 
-                self.firestoreManager.updateVoters(pollID: pollID, voter: currentUserUID) { (error) in
+                self.firestoreManager.updateVoters(pollID: pollID, voter: currentUser.uid) { (error) in
                     if let error = error {
                         print("Error submitting voters: \(error)")
                     } else {

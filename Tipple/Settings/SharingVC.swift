@@ -14,24 +14,37 @@ class SharingVC: UITableViewController {
     @IBOutlet weak var shareLocation: UISwitch!
     
     let firestoreManager = FirestoreManager.shared
-    var userID: String?
+    let authManager = AuthenticationManager.shared
+    var currentUser: User?
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        if let user = Auth.auth().currentUser {
-            userID = user.uid
-            setSwitchState()
-        } else {
-            print("No current user.")
+        getCurrentUser()
+    }
+    
+    func getCurrentUser() {
+        AuthenticationManager.shared.getCurrentUser(viewController: self) { user, error in
+            if let error = error {
+                // Errors are handled in AuthenticationManager
+                print("Error retrieving user: \(error.localizedDescription)")
+            } else if let user = user {
+                // Successfully retrieved the currentUser
+                self.currentUser = user
+                // Do anything that needs the currentUser
+                self.setSwitchState()
+            } else {
+                // No error and no user. Handled in AuthenticationManager
+                print("No user found and no error occurred.")
+            }
         }
     }
     
     func setSwitchState() {
-        guard let userID = userID else {
+        guard let currentUser = currentUser else {
             return
         }
         
-        firestoreManager.getUserData(userID: userID) { [weak self] (profileInfo, error) in
+        firestoreManager.getUserData(userID: currentUser.uid) { [weak self] (profileInfo, error) in
             if let error = error {
                 print("Error fetching user data: \(error.localizedDescription)")
             } else if let profileInfo = profileInfo {
@@ -42,7 +55,7 @@ class SharingVC: UITableViewController {
     }
     
     @IBAction func saveChanges(_ sender: Any) {
-        guard let userID = userID else {
+        guard let currentUser = currentUser else {
             return
         }
         
@@ -51,7 +64,7 @@ class SharingVC: UITableViewController {
             "shareLocation": shareLocation.isOn
         ]
         
-        firestoreManager.updateUserDocument(userID: userID, updatedData: updatedData)
+        firestoreManager.updateUserDocument(userID: currentUser.uid, updatedData: updatedData)
         navigationController?.popViewController(animated: true)
     }
 }

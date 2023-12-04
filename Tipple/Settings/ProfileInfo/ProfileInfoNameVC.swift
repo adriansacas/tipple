@@ -16,10 +16,12 @@ class ProfileInfoNameVC: UITableViewController, ProfileInfoDelegateSettingVC {
     weak var delegate: ProfileInfoDelegate?
     var userProfileInfo: ProfileInfo?
     let firestoreManager = FirestoreManager.shared
+    var currentUser: User?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        getCurrentUser()
         dismissKeyboardGesture()
         
         firstNameTextField.borderStyle = .none
@@ -27,6 +29,21 @@ class ProfileInfoNameVC: UITableViewController, ProfileInfoDelegateSettingVC {
         
         firstNameTextField.text = userProfileInfo?.firstName
         lastNameTextField.text = userProfileInfo?.lastName
+    }
+    
+    func getCurrentUser() {
+        AuthenticationManager.shared.getCurrentUser(viewController: self) { user, error in
+            if let error = error {
+                // Errors are handled in AuthenticationManager
+                print("Error retrieving user: \(error.localizedDescription)")
+            } else if let user = user {
+                // Successfully retrieved the currentUser
+                self.currentUser = user
+            } else {
+                // No error and no user. Handled in AuthenticationManager
+                print("No user found and no error occurred.")
+            }
+        }
     }
     
     // Add a gesture recognizer to dismiss the keyboard when the user
@@ -39,7 +56,7 @@ class ProfileInfoNameVC: UITableViewController, ProfileInfoDelegateSettingVC {
     @IBAction func saveChanges(_ sender: Any) {
         guard let firstName = firstNameTextField.text,
               let lastName = lastNameTextField.text,
-              let userID = Auth.auth().currentUser?.uid else {
+              let currentUser = currentUser else {
             // Handle invalid input or user not authenticated
             return
         }
@@ -49,7 +66,7 @@ class ProfileInfoNameVC: UITableViewController, ProfileInfoDelegateSettingVC {
             "lastName": lastName
         ]
         
-        firestoreManager.updateUserDocument(userID: userID, updatedData: updatedData)
+        firestoreManager.updateUserDocument(userID: currentUser.uid, updatedData: updatedData)
         
         userProfileInfo?.firstName = firstName
         userProfileInfo?.lastName = lastName

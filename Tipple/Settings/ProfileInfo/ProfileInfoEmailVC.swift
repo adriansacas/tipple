@@ -12,6 +12,7 @@ class ProfileInfoEmailVC: UITableViewController, ProfileInfoDelegateSettingVC {
     
     weak var delegate: ProfileInfoDelegate?
     var userProfileInfo: ProfileInfo?
+    var currentUser: User?
     
     @IBOutlet weak var currentEmailLabel: UILabel!
     @IBOutlet weak var newEmailTextField: UITextField!
@@ -21,16 +22,38 @@ class ProfileInfoEmailVC: UITableViewController, ProfileInfoDelegateSettingVC {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        getCurrentUser()
         dismissKeyboardGesture()
         
         currentEmailLabel.textColor = UIColor.gray
         newEmailTextField.borderStyle = .none
         passwordTextField.borderStyle = .none
         passwordTextField.isSecureTextEntry = true;
-        
-        if let userEmail = Auth.auth().currentUser?.email {
-            currentEmailLabel.text = userEmail
+    }
+    
+    func getCurrentUser() {
+        AuthenticationManager.shared.getCurrentUser(viewController: self) { user, error in
+            if let error = error {
+                // Errors are handled in AuthenticationManager
+                print("Error retrieving user: \(error.localizedDescription)")
+            } else if let user = user {
+                // Successfully retrieved the currentUser
+                self.currentUser = user
+                // Do anything that needs the currentUser
+                self.setEmailLabel()
+            } else {
+                // No error and no user. Handled in AuthenticationManager
+                print("No user found and no error occurred.")
+            }
         }
+    }
+    
+    func setEmailLabel() {
+        guard let currentUser = currentUser else {
+            return
+        }
+        
+        currentEmailLabel.text = currentUser.email
     }
     
     // Add a gesture recognizer to dismiss the keyboard when the user
@@ -41,7 +64,8 @@ class ProfileInfoEmailVC: UITableViewController, ProfileInfoDelegateSettingVC {
     }
     
     @IBAction func saveChanges(_ sender: Any) {
-        guard let currentEmail = currentEmailLabel.text,
+        guard let currentUser = currentUser,
+              let currentEmail = currentEmailLabel.text,
               let password = passwordTextField.text,
               let newEmail = newEmailTextField.text,
               currentEmail != newEmail,
@@ -53,10 +77,9 @@ class ProfileInfoEmailVC: UITableViewController, ProfileInfoDelegateSettingVC {
         
         // Re-authenticate the user with their current credentials
         // Then update the email address
-        let user = Auth.auth().currentUser
         let credential = EmailAuthProvider.credential(withEmail: currentEmail, password: password)
 
-        user?.reauthenticate(with: credential) { result, error in
+        currentUser.reauthenticate(with: credential) { result, error in
             if let error = error {
                 // Handle reauthentication error
                 print("Reauthentication failed: \(error.localizedDescription)")
@@ -65,7 +88,7 @@ class ProfileInfoEmailVC: UITableViewController, ProfileInfoDelegateSettingVC {
                 // User is successfully reauthenticated
                 // Verify the new email address first
                 // Email will be updated in Firebase after user verifies through email
-                user?.sendEmailVerification(beforeUpdatingEmail: newEmail) { error in
+                currentUser.sendEmailVerification(beforeUpdatingEmail: newEmail) { error in
                     if let error = error {
                         // Handle email verification error
                         print("Email verification failed: \(error.localizedDescription)")

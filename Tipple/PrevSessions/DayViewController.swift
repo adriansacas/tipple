@@ -39,7 +39,7 @@ class DayViewController: UIViewController, updateSymptoms, ChartViewDelegate {
     var session:SessionInfo = SessionInfo()
     var sessionID:String?
     var symptoms:[String] = []
-    var userID:String?
+    var currentUser: User?
     var logs:String = ""
     
     var delegate:UIViewController?
@@ -61,16 +61,28 @@ class DayViewController: UIViewController, updateSymptoms, ChartViewDelegate {
         dateFormatter.dateFormat = "MM/dd/YY"
         self.title = "\(dateFormatter.string(from: session.getStartTime())) - \(session.getName())"
         
-        if let userID = Auth.auth().currentUser?.uid {
-            self.userID = userID
-        } else {
-            print("Error fetching user ID from currentUser")
-        }
+        getCurrentUser()
         
         pieChart.delegate = self
         symptoms = session.getAllSymptoms()
         populateDrinks()
         populateSympAndTips()
+    }
+    
+    func getCurrentUser() {
+        AuthenticationManager.shared.getCurrentUser(viewController: self) { user, error in
+            if let error = error {
+                // Errors are handled in AuthenticationManager
+                print("Error retrieving user: \(error.localizedDescription)")
+            } else if let user = user {
+                // Successfully retrieved the currentUser
+                self.currentUser = user
+                // Do anything that needs the currentUser
+            } else {
+                // No error and no user. Handled in AuthenticationManager
+                print("No user found and no error occurred.")
+            }
+        }
     }
     
     // Draws pie chart
@@ -158,8 +170,11 @@ class DayViewController: UIViewController, updateSymptoms, ChartViewDelegate {
     }
     
     func update(symptoms: [String]) {
+        guard let currentUser = currentUser else {
+            return
+        }
         
-        firestoreManager.updateSymptomsForSession(userID: self.userID!, sessionID: self.sessionID!, symptoms: symptoms) {
+        firestoreManager.updateSymptomsForSession(userID: currentUser.uid, sessionID: self.sessionID!, symptoms: symptoms) {
             error in if let error = error {
                 print("Error updating symptoms: \(error)")
             }
