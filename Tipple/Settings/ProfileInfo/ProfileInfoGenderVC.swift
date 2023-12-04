@@ -18,6 +18,7 @@ class ProfileInfoGenderVC: UIViewController, UITableViewDataSource, UITableViewD
     weak var delegate: ProfileInfoDelegate?
     let firestoreManager = FirestoreManager.shared
     var userProfileInfo: ProfileInfo?
+    var currentUser: User?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -25,7 +26,24 @@ class ProfileInfoGenderVC: UIViewController, UITableViewDataSource, UITableViewD
         tableView.delegate = self
         tableView.dataSource = self
         
+        getCurrentUser()
         initialSelectedIndexPath()
+    }
+    
+    func getCurrentUser() {
+        AuthenticationManager.shared.getCurrentUser(viewController: self) { user, error in
+            if let error = error {
+                // Errors are handled in AuthenticationManager
+                print("Error retrieving user: \(error.localizedDescription)")
+            } else if let user = user {
+                // Successfully retrieved the currentUser
+                self.currentUser = user
+                // Do anything that needs the currentUser
+            } else {
+                // No error and no user. Handled in AuthenticationManager
+                print("No user found and no error occurred.")
+            }
+        }
     }
     
     func initialSelectedIndexPath() {
@@ -71,7 +89,7 @@ class ProfileInfoGenderVC: UIViewController, UITableViewDataSource, UITableViewD
 
     @IBAction func saveChanges(_ sender: Any) {
         guard let selectedIndexPath = selectedIndexPath,
-              let userID = Auth.auth().currentUser?.uid else {
+              let currentUser = currentUser else {
             // Handle invalid input or user not authenticated
             return
         }
@@ -82,7 +100,7 @@ class ProfileInfoGenderVC: UIViewController, UITableViewDataSource, UITableViewD
             "gender": gender
         ]
         
-        firestoreManager.updateUserDocument(userID: userID, updatedData: updatedData)
+        firestoreManager.updateUserDocument(userID: currentUser.uid, updatedData: updatedData)
         
         userProfileInfo?.gender = gender
         if let updatedProfileInfo = userProfileInfo {

@@ -27,6 +27,7 @@ class SettingsProfileInfoVC: UIViewController, UITableViewDataSource, UITableVie
     let tableFields: [String] = ["Name", "Birthday", "Gender", "Height", "Weight", "Phone", "Email"]
     let firestoreManager = FirestoreManager.shared
     var userProfileInfo: ProfileInfo?
+    var currentUser: User?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -38,9 +39,25 @@ class SettingsProfileInfoVC: UIViewController, UITableViewDataSource, UITableVie
         tableView.delegate = self
         tableView.dataSource = self
         
-        getUserProfileData()
-        
+        getCurrentUser()
         tapGesture()
+    }
+    
+    func getCurrentUser() {
+        AuthenticationManager.shared.getCurrentUser(viewController: self) { user, error in
+            if let error = error {
+                // Errors are handled in AuthenticationManager
+                print("Error retrieving user: \(error.localizedDescription)")
+            } else if let user = user {
+                // Successfully retrieved the currentUser
+                self.currentUser = user
+                // Do anything that needs the currentUser
+                self.getUserProfileData()
+            } else {
+                // No error and no user. Handled in AuthenticationManager
+                print("No user found and no error occurred.")
+            }
+        }
     }
     
     func didUpdateProfileInfo(_ updatedInfo: ProfileInfo) {
@@ -76,7 +93,7 @@ class SettingsProfileInfoVC: UIViewController, UITableViewDataSource, UITableVie
             case "Phone":
                 cell.detailTextLabel?.text = userProfileInfo.getPhoneNumber()
             case "Email":
-                cell.detailTextLabel?.text = Auth.auth().currentUser?.email
+                cell.detailTextLabel?.text = currentUser?.email
             default:
                 cell.detailTextLabel?.text = "N/A"
             }
@@ -122,17 +139,19 @@ class SettingsProfileInfoVC: UIViewController, UITableViewDataSource, UITableVie
     }
     
     func getUserProfileData() {
-        if let userID = Auth.auth().currentUser?.uid {
-            firestoreManager.getUserData(userID: userID) { [weak self] (profileInfo, error) in
-                if let error = error {
-                    print("Error fetching user data: \(error.localizedDescription)")
-                } else if let profileInfo = profileInfo {
-                    self?.userProfileInfo = profileInfo
-                    // Reload the table view to update the detailTextLabels
-                    DispatchQueue.main.async {
-                        self?.tableView.reloadData()
-                        self?.setProfileImage()
-                    }
+        guard let currentUser  = currentUser else {
+            return
+        }
+        
+        firestoreManager.getUserData(userID: currentUser.uid) { [weak self] (profileInfo, error) in
+            if let error = error {
+                print("Error fetching user data: \(error.localizedDescription)")
+            } else if let profileInfo = profileInfo {
+                self?.userProfileInfo = profileInfo
+                // Reload the table view to update the detailTextLabels
+                DispatchQueue.main.async {
+                    self?.tableView.reloadData()
+                    self?.setProfileImage()
                 }
             }
         }
@@ -170,14 +189,18 @@ class SettingsProfileInfoVC: UIViewController, UITableViewDataSource, UITableVie
     }
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
+        guard let currentUser = currentUser else {
+            return
+        }
+        
         if let selectedImage = info[.originalImage] as? UIImage {
             uploadImageToFirebaseStorage(image: selectedImage) { [weak self] (url, error) in
-                if let url = url, let userID = Auth.auth().currentUser?.uid {
+                if let url = url {
                     let updatedData: [String: Any] = [
                         "profileImageURL": url.absoluteString
                     ]
 
-                    self?.firestoreManager.updateUserDocument(userID: userID, updatedData: updatedData)
+                    self?.firestoreManager.updateUserDocument(userID: currentUser.uid, updatedData: updatedData)
 
                     // Update the profileImage UIImageView with the selected image
                     self?.profileImage.image = selectedImage
@@ -192,12 +215,16 @@ class SettingsProfileInfoVC: UIViewController, UITableViewDataSource, UITableVie
     }
     
     func uploadImageToFirebaseStorage(image: UIImage, completion: @escaping (URL?, Error?) -> Void) {
+        guard let currentUser = currentUser else {
+            return
+        }
+        
         // Create a reference to Firebase Storage
         let storage = Storage.storage()
         let storageReference = storage.reference()
 
         // Create a unique name for the image (e.g., user's UID + a timestamp)
-        let imageName = "\(Auth.auth().currentUser?.uid ?? "").jpg"
+        let imageName = "\(currentUser.uid).jpg"
 
         // Create a reference to the file in Firebase Storage
         let imageRef = storageReference.child("profile_images/\(imageName)")

@@ -22,6 +22,7 @@ class CreatePollVC: UITableViewController, PollsDelegateVC, UITextFieldDelegate 
     var switchCellLabels: [String] = ["Multiple votes", "Voters can add options"]
     weak var session: SessionInfo?
     weak var delegate: PollsDelegate?
+    var currentUser: User?
     
     let promptCellIdentifier = "PromptCell"
     let optionCellIdentifier = "OptionCell"
@@ -32,6 +33,7 @@ class CreatePollVC: UITableViewController, PollsDelegateVC, UITextFieldDelegate 
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        getCurrentUser()
         sections = buildSections()
     }
     
@@ -46,6 +48,22 @@ class CreatePollVC: UITableViewController, PollsDelegateVC, UITextFieldDelegate 
 
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.view.endEditing(true)
+    }
+    
+    func getCurrentUser() {
+        AuthenticationManager.shared.getCurrentUser(viewController: self) { user, error in
+            if let error = error {
+                // Errors are handled in AuthenticationManager
+                print("Error retrieving user: \(error.localizedDescription)")
+            } else if let user = user {
+                // Successfully retrieved the currentUser
+                self.currentUser = user
+                // Do anything that needs the currentUser
+            } else {
+                // No error and no user. Handled in AuthenticationManager
+                print("No user found and no error occurred.")
+            }
+        }
     }
     
     func buildSections() -> [[String]] {
@@ -134,6 +152,10 @@ class CreatePollVC: UITableViewController, PollsDelegateVC, UITextFieldDelegate 
     }
 
     @IBAction func saveButtonTapped(_ sender: UIBarButtonItem) {
+        guard let currentUser = currentUser else {
+            return
+        }
+        
         // Get the prompt value
         if let cell = tableView.cellForRow(at: IndexPath(row: 0, section: 0)) as? PromptCell {
             if let text = cell.textField.text {
@@ -170,11 +192,9 @@ class CreatePollVC: UITableViewController, PollsDelegateVC, UITextFieldDelegate 
             votersAddOptions = cell.switchSlider.isOn
         }
         
-        let user = Auth.auth().currentUser
+        let poll = Poll(prompt: prompt, options: options, multipleVotes: multipleVotes, votersAddOptions: votersAddOptions, expiration: expirationDate, createdBy: currentUser.uid, voters: voters)
         
-        let poll = Poll(prompt: prompt, options: options, multipleVotes: multipleVotes, votersAddOptions: votersAddOptions, expiration: expirationDate, createdBy: user!.uid, voters: voters)
-        
-        firestoreManager.createPoll(userID: user!.uid, prompt: prompt, options: options, multipleVotes: multipleVotes, votersAddOptions: votersAddOptions, expiration: expirationDate, voters: voters) { pollID, error in
+        firestoreManager.createPoll(userID: currentUser.uid, prompt: prompt, options: options, multipleVotes: multipleVotes, votersAddOptions: votersAddOptions, expiration: expirationDate, voters: voters) { pollID, error in
             if let error = error {
                 // Handle the error
                 print("Error creating poll: \(error)")
@@ -189,12 +209,11 @@ class CreatePollVC: UITableViewController, PollsDelegateVC, UITextFieldDelegate 
     }
     
     func updateSession(pollID: String) {
-        guard let session = session,
+        guard let currentUser = currentUser,
+              let session = session,
               let sessionDocID = session.sessionDocID else {
             return
         }
-        
-        let user = Auth.auth().currentUser
         
         if session.polls == nil {
             session.polls = []
@@ -204,7 +223,7 @@ class CreatePollVC: UITableViewController, PollsDelegateVC, UITextFieldDelegate 
         let fields = ["polls": session.polls as Any] as [String : Any]
         
         // TODO: Consider using FieldValue.arrayUnion(valuesToAdd) instead of passing all the current pollIDs
-        firestoreManager.updateGroupSession(userID: user!.uid, sessionID: sessionDocID, fields: fields) { error in
+        firestoreManager.updateGroupSession(userID: currentUser.uid, sessionID: sessionDocID, fields: fields) { error in
             if let error = error {
                 print("Error updating group session: \(error.localizedDescription)")
             } else {

@@ -29,20 +29,34 @@ class PollsVC: UIViewController, UITableViewDataSource, UITableViewDelegate, Pol
     let pollResultsSegueIdentifier = "PollResultsSegueIdentifier"
     let firestoreManager = FirestoreManager.shared
     var polls: [Poll] = []
-//    TODO: change to sessionID, get the session info, pass the session id from the parent view
     var sessionID: String?
     var session: SessionInfo?
+    var currentUser: User?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         tableView.delegate = self
         tableView.dataSource = self
-        
-        //TODO: Comment out after testing
-//        sessionID = "7cuNiTanSGvGqkfXVpBe"
 
-        getSession()
+        getCurrentUser()
+    }
+    
+    func getCurrentUser() {
+        AuthenticationManager.shared.getCurrentUser(viewController: self) { user, error in
+            if let error = error {
+                // Errors are handled in AuthenticationManager
+                print("Error retrieving user: \(error.localizedDescription)")
+            } else if let user = user {
+                // Successfully retrieved the currentUser
+                self.currentUser = user
+                // Do anything that needs the currentUser
+                self.getSession()
+            } else {
+                // No error and no user. Handled in AuthenticationManager
+                print("No user found and no error occurred.")
+            }
+        }
     }
     
     func didCreateNewPoll(_ newPoll: Poll) {
@@ -70,7 +84,7 @@ class PollsVC: UIViewController, UITableViewDataSource, UITableViewDelegate, Pol
         if editingStyle == .delete {
             let pollToDelete = polls[indexPath.row]
             if let pollIDToDelete = pollToDelete.pollID {
-                if let currentUserUID = Auth.auth().currentUser?.uid, currentUserUID == pollToDelete.createdBy {
+                if let currentUserUID = currentUser?.uid, currentUserUID == pollToDelete.createdBy {
                     firestoreManager.deletePoll(pollID: pollIDToDelete) { error in
                         if let error = error {
                             print("Error deleting poll: \(error)")
@@ -103,10 +117,13 @@ class PollsVC: UIViewController, UITableViewDataSource, UITableViewDelegate, Pol
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let poll = polls[indexPath.row]
-        let user = Auth.auth().currentUser
+        guard let currentUser = currentUser else {
+            return
+        }
         
-        if poll.voters.contains(user!.uid) { // has voted. show results
+        let poll = polls[indexPath.row]
+        
+        if poll.voters.contains(currentUser.uid) { // has voted. show results
             performSegue(withIdentifier: pollResultsSegueIdentifier, sender: self)
         } else {
             performSegue(withIdentifier: pollDetailsSegueIdentifier, sender: self)
@@ -134,12 +151,12 @@ class PollsVC: UIViewController, UITableViewDataSource, UITableViewDelegate, Pol
     }
     
     func getSession() {
-        guard let sessionID = sessionID else {
+        guard let currentUser = currentUser,
+              let sessionID = sessionID else {
             return
         }
-        let user = Auth.auth().currentUser
         
-        firestoreManager.getSessionInfo(userID: user!.uid, sessionDocumentID: sessionID) { sessionInfo, error in
+        firestoreManager.getSessionInfo(userID: currentUser.uid, sessionDocumentID: sessionID) { sessionInfo, error in
             if let error = error {
                 print("Error fetching session information: \(error.localizedDescription)")
             } else if let sessionInfo = sessionInfo {

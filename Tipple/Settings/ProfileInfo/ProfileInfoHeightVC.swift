@@ -16,10 +16,12 @@ class ProfileInfoHeightVC: UITableViewController, ProfileInfoDelegateSettingVC {
     weak var delegate: ProfileInfoDelegate?
     var userProfileInfo: ProfileInfo?
     let firestoreManager = FirestoreManager.shared
+    var currentUser: User?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        getCurrentUser()
         dismissKeyboardGesture()
         
         feetTextField.borderStyle = .none
@@ -29,6 +31,22 @@ class ProfileInfoHeightVC: UITableViewController, ProfileInfoDelegateSettingVC {
         inchesTextField.keyboardType = .numberPad
         
         setInitialHeight()
+    }
+    
+    func getCurrentUser() {
+        AuthenticationManager.shared.getCurrentUser(viewController: self) { user, error in
+            if let error = error {
+                // Errors are handled in AuthenticationManager
+                print("Error retrieving user: \(error.localizedDescription)")
+            } else if let user = user {
+                // Successfully retrieved the currentUser
+                self.currentUser = user
+                // Do anything that needs the currentUser
+            } else {
+                // No error and no user. Handled in AuthenticationManager
+                print("No user found and no error occurred.")
+            }
+        }
     }
     
     // Add a gesture recognizer to dismiss the keyboard when the user
@@ -49,7 +67,7 @@ class ProfileInfoHeightVC: UITableViewController, ProfileInfoDelegateSettingVC {
     }
     
     @IBAction func saveChanges(_ sender: Any) {
-        guard let userID = Auth.auth().currentUser?.uid,
+        guard let currentUser = currentUser,
               let feetText = feetTextField.text,
               let inchesText = inchesTextField.text else {
             // Handle user not authenticated
@@ -72,7 +90,7 @@ class ProfileInfoHeightVC: UITableViewController, ProfileInfoDelegateSettingVC {
                 "heightInches": inches
             ]
             
-            firestoreManager.updateUserDocument(userID: userID, updatedData: updatedData)
+            firestoreManager.updateUserDocument(userID: currentUser.uid, updatedData: updatedData)
             
             userProfileInfo?.heightFeet = feet
             userProfileInfo?.heightInches = inches
