@@ -66,6 +66,8 @@ class ManageGroupSessionVC: UIViewController, CLLocationManagerDelegate, EditSes
         // Redundant first setting
         setLabelFields(nameField: self.sessionName, dateField: self.endDate!)
         
+        self.groupQRCode = generateQRCode(from: self.sessionID!)
+
         
         // Start updating location
         if isLocationEnabled && 
@@ -81,6 +83,22 @@ class ManageGroupSessionVC: UIViewController, CLLocationManagerDelegate, EditSes
         pollTimer?.invalidate()
     }
     
+    
+    func generateQRCode(from string: String) -> UIImage? {
+        print("Generating QR Code: \(string)")
+        let data = string.data(using: String.Encoding.ascii)
+
+        if let filter = CIFilter(name: "CIQRCodeGenerator") {
+            filter.setValue(data, forKey: "inputMessage")
+            let transform = CGAffineTransform(scaleX: 3, y: 3)
+
+            if let output = filter.outputImage?.transformed(by: transform) {
+                print("\tSuccess on QR Generation!!")
+                return UIImage(ciImage: output)
+            }
+        }
+        return nil
+    }
     
     func setLabelFields(nameField: String, dateField: Date) {
         if nameField != self.sessionNameTextLabel.text {
