@@ -1,16 +1,18 @@
 # CS371L Tipple
 
-##Group number: 5
-##Team members: Adrian Sanchez Castaneda, Claudia Castillo, Danica Padlan, Andrew White
-##Dependencies: Xcode 10.2, Swift 4
-Special Instructions:
+## Group number: 5
+
+## Team members: Adrian Sanchez Castaneda, Claudia Castillo, Danica Padlan, Andrew White
+
+## Dependencies: Xcode 10.2, Swift 4
+## Special Instructions:
 -
 - Running the app
     - x
     - x
     - x
 
-##Testing README table
+## Testing README table
 | Feature | Description | Release Planned | Release Actual | Deviations | Who/Percentage Worked On |
 | :---:   |    :---:    |      :---:      |      :---:     |   :---:    |           :---:          |
 | X | X   | X   | X   | X   | X   |
