@@ -1,22 +1,34 @@
 # CS371L Tipple
 
-## Group number: 5
+**Group number**: 5
+**Team members**: Adrian Sanchez Castaneda, Claudia Castillo, Danica Padlan, Andrew White
+**Dependencies**: Xcode 15.0, Swift 5.3
+**Special Instructions**:
+- **Running the app**
+    - xxx
+    - xxx
+    - xxx
 
-## Team members: Adrian Sanchez Castaneda, Claudia Castillo, Danica Padlan, Andrew White
-
-## Dependencies: Xcode 10.2, Swift 4
-## Special Instructions:
--
-- Running the app
-    - x
-    - x
-    - x
-
-## Testing README table
+## Feature Table
 | Feature | Description | Release Planned | Release Actual | Deviations | Who/Percentage Worked On |
 | :---:   |    :---:    |      :---:      |      :---:     |   :---:    |           :---:          |
-| X | X   | X   | X   | X   | X   |
+| Login and Sign Up | Allows the user to create and sign into their account   | Alpha   | Alpha   | X   | Danica (100%)   |
+| Face ID Login | Allows the user to login with Face ID   | Alpha   | Final   | X   | Danica (100%)   |
+| Home Page | Connects user to other features of the app   | Alpha   | Alpha   | X   | Danica (100%)   |
+|Settings | User can update their account information and set sharing and display settings   | Alpha   | Alpha   | X   | Adrian (100%)   |
+| QR Scanner | Users can join a group session by scanning a QR code through the built-in camera   | Beta   | Beta   | X   | Andrew (90%), Danica (10%, generated QR code)   |
+| Personal Drink Counter | Users can track their own number of drinks and BAC   |  Alpha  | Alpha   | X   | Andrew (90%), Danica (10%, drew cup statuses)    |
+| Warning Notifications | Designated Driver, Underaged Drinker, XXX   | Alpha   | X   | X   | Claudia, Danica (10%, added 'Underaged Drinker' alert)   |
+| Previous Sessions | X   | Alpha   | X   | X   | Claudia  |
+| Symptoms Tracker and Morning-After Tips | X   | Alpha   | X   | X   | Claudia   |
+| Group Sessions | User can start a group session to track members of their group and post polls   | Alpha   | Alpha   | X   | Danica (75%), Andrew (25%, syncing information to Firebase)   |
+| Members List | X   | Beta   | Beta   | X   | Claudia   |
+| Tracking Locations | X   | Stretch Goal   | Final   | X   | Claudia, Andrew   |
+| Group Polls | X   | Beta   | Final   | X   | Adrian   |
+| UI | Colors, buttons, and user navigation flow   | Final   | Final   | X   | Adrian (25%), Claudia (25%), Danica (25%), Andrew (25%)   |
 
+
+##Beta Notes (delete for Final Submission)
 Adrian Sanchez (25%)
 -
 - Firebase
