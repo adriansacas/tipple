@@ -15,7 +15,6 @@ class RegisterGroupSessionVC: UIViewController, UITextFieldDelegate {
     let firestoreManager = FirestoreManager.shared
     var sessionID: String?
     var userID: String?
-    var generatedQR: UIImage?
     var manageGroupSegue = "manageGroupSessionSegue"
     var isDD: Bool?
     var isLocationEnabled: Bool?
@@ -66,30 +65,12 @@ class RegisterGroupSessionVC: UIViewController, UITextFieldDelegate {
                     if let error = error {
                         print("Error adding session: \(error)")
                     } else {
-                        //generate and save group session's QR code using the sessionID
-                        self.generatedQR = generateQRCode(from: self.sessionID!)
                         //segue to new screen
                         self.performSegue(withIdentifier: self.manageGroupSegue, sender: self)
                     }
                 }
             }
         }
-    }
-    
-    //boiler plate code
-    //TODO: move code genration to ManageViewControllerView!
-    func generateQRCode(from string: String) -> UIImage? {
-        let data = string.data(using: String.Encoding.ascii)
-
-        if let filter = CIFilter(name: "CIQRCodeGenerator") {
-            filter.setValue(data, forKey: "inputMessage")
-            let transform = CGAffineTransform(scaleX: 3, y: 3)
-
-            if let output = filter.outputImage?.transformed(by: transform) {
-                return UIImage(ciImage: output)
-            }
-        }
-        return nil
     }
     
     // Called when 'return' key pressed
@@ -114,7 +95,6 @@ class RegisterGroupSessionVC: UIViewController, UITextFieldDelegate {
             return
         }
         
-        finalDestination.groupQRCode = self.generatedQR
         finalDestination.userID = self.userID
         finalDestination.sessionID = self.sessionID
         finalDestination.sessionName = self.sessionNameTextField.text!
