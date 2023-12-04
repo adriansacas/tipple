@@ -644,17 +644,19 @@ class FirestoreManager {
                         }
                     }
 
-                    
-                    if !drinksInSession.isEmpty {
-                        if let mostRecentDrink = drinksInSession.max(by: { $0.timeAt < $1.timeAt }) {
-                            // `mostRecentDrink` now contains the `DrinkInfo` with the most recent timestamp
-                            dictOfMembers[memberID]?["BAC"] = mostRecentDrink.getBAC()
-                        } else {
-                            // The `drinksInSession` array is empty
-                            dictOfMembers[memberID]?["BAC"] = "0.00"
-                        }
+
+                    if sessionDrinksBool == false {
+                        dictOfMembers[memberID]?["BAC"] = "---"
                     } else {
-                        dictOfMembers[memberID]?["BAC"] = "0.00"
+                        if !drinksInSession.isEmpty {
+                            if let mostRecentDrink = drinksInSession.max(by: { $0.timeAt < $1.timeAt }) {
+                                // `mostRecentDrink` now contains the `DrinkInfo` with the most recent timestamp
+                                dictOfMembers[memberID]?["BAC"] = mostRecentDrink.getBAC()
+                            } else {
+                                // The `drinksInSession` array is empty
+                                dictOfMembers[memberID]?["BAC"] = "0.00"
+                            }
+                        }
                     }
 
 
@@ -670,6 +672,7 @@ class FirestoreManager {
                             dictOfMembers[memberID]?["Profile Pic"] = tempProfile.profileImageURL
                         } else {
                             // Handle the case where profileInfo is nil
+                            dictOfMembers.removeValue(forKey: memberID)
                         }
                         // Leave the Dispatch Group when self.getUserData is complete
                         dispatchGroup.leave()
