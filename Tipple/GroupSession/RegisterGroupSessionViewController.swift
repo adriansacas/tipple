@@ -18,6 +18,8 @@ class RegisterGroupSessionVC: UIViewController, UITextFieldDelegate {
     var generatedQR: UIImage?
     var manageGroupSegue = "manageGroupSessionSegue"
     var isDD: Bool?
+    var isLocationEnabled: Bool?
+    var sessionObj: SessionInfo?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -54,18 +56,24 @@ class RegisterGroupSessionVC: UIViewController, UITextFieldDelegate {
         let newSessionFields = ["sessionName" : (sessionNameTextField.text ?? "") as String,
                                 "endTime" : endSessionDateTimePicker.date] as [String : Any]
         
-        firestoreManager.updateGroupSession(userID: self.userID!, sessionID: self.sessionID!, fields: newSessionFields) { error in
+        firestoreManager.addSessionInfo(userID: self.userID!, session: self.sessionObj!) { documentID, error in
             if let error = error {
                 print("Error adding session: \(error)")
-            } else {
-                //generate and save group session's QR code using the sessionID
-                self.generatedQR = self.generateQRCode(from: self.sessionID!)
-            
-                //segue to new screen
-                self.performSegue(withIdentifier: self.manageGroupSegue, sender: self)
+            } else if let documentID = documentID {
+                self.sessionID = documentID
+                print("Session added successfully with document ID: \(self.sessionID ?? "Value not set")")
+                self.firestoreManager.updateGroupSession(userID: self.userID!, sessionID: self.sessionID!, fields: newSessionFields) { [self] error in
+                    if let error = error {
+                        print("Error adding session: \(error)")
+                    } else {
+                        //generate and save group session's QR code using the sessionID
+                        self.generatedQR = generateQRCode(from: self.sessionID!)
+                        //segue to new screen
+                        self.performSegue(withIdentifier: self.manageGroupSegue, sender: self)
+                    }
+                }
             }
         }
-
     }
     
     //boiler plate code
@@ -112,6 +120,7 @@ class RegisterGroupSessionVC: UIViewController, UITextFieldDelegate {
         finalDestination.sessionName = self.sessionNameTextField.text!
         finalDestination.endDate = endSessionDateTimePicker.date
         finalDestination.isDD = self.isDD
+        finalDestination.isLocationEnabled = self.isLocationEnabled!
     }
 
 }

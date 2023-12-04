@@ -33,6 +33,7 @@ class ManageGroupSessionVC: UIViewController, CLLocationManagerDelegate, EditSes
     var pollTimer: Timer?
     var prevBAC: [String: Double]?
     var isDD: Bool?
+    var isLocationEnabled: Bool = false
 
     var lastUpdate: [String: [String: Any]]?
     
@@ -67,8 +68,8 @@ class ManageGroupSessionVC: UIViewController, CLLocationManagerDelegate, EditSes
         
         
         // Start updating location
-        if locationManager.authorizationStatus == .authorizedAlways ||
-            locationManager.authorizationStatus == .authorizedWhenInUse{
+        if isLocationEnabled && 
+            (locationManager.authorizationStatus == .authorizedAlways || locationManager.authorizationStatus == .authorizedWhenInUse){
             locationManager.startUpdatingLocation()
         }
     }
@@ -215,7 +216,7 @@ class ManageGroupSessionVC: UIViewController, CLLocationManagerDelegate, EditSes
     
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
         // Handle changes if location permissions
-        guard status != .authorizedAlways && status != .authorizedWhenInUse else {
+        guard isLocationEnabled, status != .authorizedAlways && status != .authorizedWhenInUse else {
             // Status changed to allow location updates
             locationManager.startUpdatingLocation()
             return
@@ -227,22 +228,33 @@ class ManageGroupSessionVC: UIViewController, CLLocationManagerDelegate, EditSes
     }
 
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        guard isLocationEnabled else {
+            return
+        }
+
         print("Method Called To Update Location")
+
         if let location = locations.last {
-            // Handle location update --> Call firebase manager to update the location
-            firestoreManager.updateLastLocation(sessionID: self.sessionID!,
-                                                userID: self.userID!,
-                                                coordinate: location.coordinate) { error in
-                if error != nil {
-                    print("Issue updating location in firebase")
+            // Perform UI-related tasks on the main thread
+            DispatchQueue.main.async {
+                // Handle location update --> Call firebase manager to update the location
+                self.firestoreManager.updateLastLocation(sessionID: self.sessionID!,
+                                                    userID: self.userID!,
+                                                    coordinate: location.coordinate) { error in
+                    if error != nil {
+                        print("Issue updating location in firebase")
+                    }
                 }
             }
-            
         }
     }
 
+
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
         // Handle failure to get a user’s location
+        guard isLocationEnabled else {
+            return
+        }
         print("Had an issue retrieving location. Will not do anything for now :/")
     }
 

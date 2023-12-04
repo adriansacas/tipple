@@ -15,12 +15,18 @@ class QuestionnaireVC: UIViewController, UITextFieldDelegate, GMSAutocompleteVie
 
     @IBOutlet weak var eatenToggle: UISwitch!
     @IBOutlet weak var isDDToggle: UISwitch!
-    @IBOutlet weak var shareSession: UISwitch!
     @IBOutlet weak var partyLabel: UILabel!
     @IBOutlet weak var partyLocation: UITextField!
     @IBOutlet weak var endLabel: UILabel!
     @IBOutlet weak var endLocation: UITextField!
     @IBOutlet weak var startButton: UIButton!
+    
+    
+    @IBOutlet weak var shareDrinkLabel: UILabel!
+    @IBOutlet weak var shareLocationLabel: UILabel!
+    @IBOutlet weak var shareLocation: UISwitch!
+    @IBOutlet weak var shareDrinks: UISwitch!
+    
     
     var sessionType: String?
     var currentUser: User?
@@ -51,8 +57,29 @@ class QuestionnaireVC: UIViewController, UITextFieldDelegate, GMSAutocompleteVie
             partyLocation.isEnabled = false
             partyLabel.isHidden = true
             partyLocation.isHidden = true
-            endLabel.frame = partyLabel.frame
-            endLocation.frame = partyLocation.frame
+            
+            // Move active location up
+            shareLocation.frame.origin.y = shareDrinks.frame.origin.y
+            shareLocationLabel.frame.origin.y = shareDrinkLabel.frame.origin.y
+
+            // Move Drinks Up
+            shareDrinks.frame.origin.y = endLocation.frame.origin.y
+            shareDrinkLabel.frame.origin.y = endLabel.frame.origin.y
+
+            // Move End Location Up
+            endLabel.frame.origin.y = partyLabel.frame.origin.y
+            endLocation.frame.origin.y = partyLocation.frame.origin.y
+
+            
+        } else {
+            // Individual Session --> Should not ask these questions
+            shareDrinks.isHidden = true
+            shareLocation.isHidden = true
+            shareLocationLabel.isHidden = true
+            shareDrinkLabel.isHidden = true
+            
+            shareDrinks.isEnabled = false
+            shareLocation.isEnabled = false
         }
         
         // Do any additional setup after loading the view.
@@ -63,6 +90,28 @@ class QuestionnaireVC: UIViewController, UITextFieldDelegate, GMSAutocompleteVie
         // Just ensuring that the search fields are getting reset at the end of a view
         partyLocation.text = nil
         endLocation.text = nil
+    }
+    
+    
+    func toggleShare() {
+        guard let userProfileInfo = userProfileInfo else {
+            return
+        }
+        
+        guard sessionType == "Join" || sessionType == "Group" else {
+            shareDrinks.isOn = true
+            shareLocation.isOn = false
+            return
+        }
+        
+        if userProfileInfo.shareDrinkInfo {
+            self.shareDrinks.setOn(true, animated: true)
+        }
+        
+        if userProfileInfo.shareLocation {
+            self.shareLocation.setOn(true, animated: true)
+            sessionDetailsToggled(shareLocation!)
+        }
     }
     
     func showUnderageDrinkingWarning() {
@@ -97,6 +146,7 @@ class QuestionnaireVC: UIViewController, UITextFieldDelegate, GMSAutocompleteVie
             } else if let profileInfo = profileInfo {
                 self?.userProfileInfo = profileInfo
                 self?.showUnderageDrinkingWarning()
+                self?.toggleShare()
             }
         }
         
@@ -127,11 +177,10 @@ class QuestionnaireVC: UIViewController, UITextFieldDelegate, GMSAutocompleteVie
         
         let defaultCoordinates = ["latitude": 30.2850, "longitude": -97.7335]
         let dispatchGroup = DispatchGroup()
-
+        var session = SessionInfo()
         
         if self.sessionType == "Individual" || self.sessionType == "Group" {
-            dispatchGroup.enter()
-            let session = SessionInfo(createdBy: userID,
+            session = SessionInfo(createdBy: userID,
                                       membersList: [userID],
                                       sessionType: self.sessionType!,
                                       startTime: Date.now,
@@ -141,31 +190,33 @@ class QuestionnaireVC: UIViewController, UITextFieldDelegate, GMSAutocompleteVie
                                       endLocation: endCoord ?? defaultCoordinates,
                                       ateBefore: eatenToggle.isOn,
                                       sessionName: "My Session",
-                                      shareSession: shareSession.isOn)
-            
-            
-            
-            firestoreManager.addSessionInfo(userID: userID, session: session) { documentID, error in
-                if let error = error {
-                    print("Error adding session: \(error)")
-                } else if let documentID = documentID {
-                    self.sessionID = documentID
-                    print("Session added successfully with document ID: \(self.sessionID ?? "Value not set")")
-                    dispatchGroup.leave()
+                                      shareDrinks: shareDrinks.isOn,
+                                      shareLocation: shareLocation.isOn)
+            if self.sessionType == "Individual" {
+                dispatchGroup.enter()
+                firestoreManager.addSessionInfo(userID: userID, session: session) { documentID, error in
+                    if let error = error {
+                        print("Error adding session: \(error)")
+                    } else if let documentID = documentID {
+                        self.sessionID = documentID
+                        print("Session added successfully with document ID: \(self.sessionID ?? "Value not set")")
+                        dispatchGroup.leave()
+                    }
                 }
             }
         } else if self.sessionType == "Join" {
             // UNCOMMENT THE FOLLOWING IF YOU ARE HARDCODING A SESSION ID
             // self.sessionID = <sessionID You Want To Join>
             dispatchGroup.enter()
-            let session = SessionInfo()
+            session = SessionInfo()
             session.startTime = Date.now
             session.drinksInSession = []
             session.stillActive = true
             session.startLocation = startCoord ?? defaultCoordinates
             session.endLocation = endCoord ?? defaultCoordinates
             session.ateBefore = eatenToggle.isOn
-            session.shareSession = shareSession.isOn
+            session.shareDrinks = shareDrinks.isOn
+            session.shareLocation = shareLocation.isOn
             
             
             self.firestoreManager.getSessionInfo(userID: userID, sessionDocumentID: self.sessionID!) { sessionTemp, error in
@@ -222,7 +273,7 @@ class QuestionnaireVC: UIViewController, UITextFieldDelegate, GMSAutocompleteVie
             if self.sessionType == "Individual" {
                 self.performSegue(withIdentifier: self.qToActiveSegue, sender: self)
             } else if self.sessionType == "Group"{
-                self.performSegue(withIdentifier: self.qToGroupSegue, sender: self)
+                self.performSegue(withIdentifier: self.qToGroupSegue, sender: session)
             } else if self.sessionType == "Join" {
                 print("Session successfully retrieved for joining with document ID: \(self.sessionID ?? "Value not set") \nUserID: \(userID)\nSessionEnd:\(self.endDate?.description ?? "no end")")
                 self.performSegue(withIdentifier: self.qToGroupJoinSegue, sender: nil)
@@ -264,6 +315,8 @@ class QuestionnaireVC: UIViewController, UITextFieldDelegate, GMSAutocompleteVie
             destination.userID = userID
             destination.sessionID = self.sessionID
             destination.isDD = self.isDDToggle.isOn
+            destination.isLocationEnabled = self.shareLocation.isOn
+            destination.sessionObj = sender as? SessionInfo
         }
         
         if segue.identifier == qToGroupJoinSegue{
@@ -282,6 +335,7 @@ class QuestionnaireVC: UIViewController, UITextFieldDelegate, GMSAutocompleteVie
             finalDestination!.sessionID = self.sessionID
             finalDestination!.isManager = false
             finalDestination!.isDD = self.isDDToggle.isOn
+            finalDestination?.isLocationEnabled = self.shareLocation.isOn
 
         }
     }
@@ -326,7 +380,7 @@ class QuestionnaireVC: UIViewController, UITextFieldDelegate, GMSAutocompleteVie
     }
     
     @IBAction func sessionDetailsToggled(_ sender: Any) {
-        guard shareSession.isOn else {
+        guard shareLocation.isOn else {
             return
         }
         

@@ -27,7 +27,8 @@ class SessionInfo {
     
     // Optional Group Session Fields
     var sessionName: String?            // String on firebase
-    var shareSession: Bool?             // Bool on firebase
+    var shareDrinks: Bool?              // Bool on firebase
+    var shareLocation: Bool?
     var endGroupSessionTime: Date?      // Endtime on firebase
     var polls: [String]?
     
@@ -46,14 +47,15 @@ class SessionInfo {
         self.symptomsList = []
         
         self.sessionName = ""
-        self.shareSession = false
+        self.shareDrinks = false
+        self.shareLocation = false
         self.endGroupSessionTime = Date()
         self.polls = []
     }
     
     init(createdBy: String, sessionDocID: String? = nil, membersList: [String], sessionType: String, startTime: Date, drinksInSession: [DrinkInfo], stillActive: Bool,
              startLocation: [String: Double]? = nil, endLocation: [String: Double]? = nil, ateBefore: Bool? = nil, symptomsList: [String]? = nil,
-             sessionName: String? = nil, shareSession: Bool? = nil, endGroupSessionTime: Date? = nil, polls: [String]? = nil) {
+             sessionName: String? = nil, shareDrinks: Bool? = nil, shareLocation: Bool? = nil, endGroupSessionTime: Date? = nil, polls: [String]? = nil) {
 
             self.createdBy = createdBy
             self.sessionDocID = sessionDocID
@@ -67,7 +69,8 @@ class SessionInfo {
             self.ateBefore = ateBefore
             self.symptomsList = symptomsList
             self.sessionName = sessionName
-            self.shareSession = shareSession
+            self.shareDrinks = shareDrinks
+            self.shareLocation = shareLocation
             self.endGroupSessionTime = endGroupSessionTime
             self.polls = polls
     }

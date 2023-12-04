@@ -196,6 +196,14 @@ class FirestoreManager {
                                                 sessionTemp.stillActive = activeSession
                                             }
                                             
+                                            if let shareDrinks = memberDoc["shareDrinks"] as? Bool {
+                                                sessionTemp.shareDrinks = shareDrinks
+                                            }
+                                            
+                                            if let shareLocation = memberDoc["shareLocation"] as? Bool {
+                                                sessionTemp.shareLocation = shareLocation
+                                            }
+                                            
                                             if let ateBefore = memberDoc["ateBefore"] as? Bool {
                                                 sessionTemp.ateBefore = ateBefore
                                             }
@@ -295,8 +303,12 @@ class FirestoreManager {
         ]
         
         // Add optional properties if they exist
-        if let shareSession = session.shareSession {
-            memberData["shareSession"] = shareSession
+        if let shareDrinks = session.shareDrinks {
+            memberData["shareDrinks"] = shareDrinks
+        }
+        
+        if let shareLocation = session.shareLocation {
+            memberData["shareLocation"] = shareLocation
         }
         
         // Add startLocation to memberData if it exists
@@ -589,25 +601,27 @@ class FirestoreManager {
                     let memberID = document.documentID
                 
                     
-                    let sessionShareBool = memberDoc["shareSession"] as? Bool
-                    if sessionShareBool == true {
-                        if memberID == userID {
-                            continue
-                        }
-                        dictOfMembers[memberID] = [:]
+                    let sessionDrinksBool = memberDoc["shareDrinks"] as? Bool
+                    let sessionLocationBool = memberDoc["shareLocation"] as? Bool
+                    
 
-                    } else {
+                    if memberID == userID {
                         continue
                     }
+                    dictOfMembers[memberID] = [:]
+
+
                     
                     
 
-                    
-                    if let lastKnownLoc = memberDoc["lastLocation"] as? GeoPoint {
-                        let lastKnownLocDict = ["latitude": lastKnownLoc.latitude,
-                                                "longitude": lastKnownLoc.longitude]
-                        dictOfMembers[memberID]?["Last Known Location"] = lastKnownLocDict
+                    if sessionLocationBool != nil && sessionLocationBool == true {
+                        if let lastKnownLoc = memberDoc["lastLocation"] as? GeoPoint {
+                            let lastKnownLocDict = ["latitude": lastKnownLoc.latitude,
+                                                    "longitude": lastKnownLoc.longitude]
+                            dictOfMembers[memberID]?["Last Known Location"] = lastKnownLocDict
+                        }
                     }
+
 
                     if let activeSession = memberDoc["activeSession"] as? Bool {
                         dictOfMembers[memberID]?["Still Active?"] = activeSession.description
@@ -615,18 +629,21 @@ class FirestoreManager {
                     
 
                     var drinksInSession: [DrinkInfo] = []
-                    if let drinksInSessionData = memberDoc["drinksInSession"] as? [[String: Any]] {
-                        for drinkData in drinksInSessionData {
-                                if let type = drinkData["type"] as? String,
-                                   let timeAtTimestamp = drinkData["timeAt"] as? Timestamp,
-                                   let drinkNum = drinkData["drinkNum"] as? Int,
-                                   let bacAtTime = drinkData["bacAtTime"] as? Float {
-                                    let timeAt = timeAtTimestamp.dateValue()
-                                    let drinkInfo = DrinkInfo(drinkType: type, drinkNum: drinkNum, bacAtTime: bacAtTime, timeAt: timeAt)
-                                    drinksInSession.append(drinkInfo)
-                                }
+                    if sessionDrinksBool != nil && sessionDrinksBool == true {
+                        if let drinksInSessionData = memberDoc["drinksInSession"] as? [[String: Any]] {
+                            for drinkData in drinksInSessionData {
+                                    if let type = drinkData["type"] as? String,
+                                       let timeAtTimestamp = drinkData["timeAt"] as? Timestamp,
+                                       let drinkNum = drinkData["drinkNum"] as? Int,
+                                       let bacAtTime = drinkData["bacAtTime"] as? Float {
+                                        let timeAt = timeAtTimestamp.dateValue()
+                                        let drinkInfo = DrinkInfo(drinkType: type, drinkNum: drinkNum, bacAtTime: bacAtTime, timeAt: timeAt)
+                                        drinksInSession.append(drinkInfo)
+                                    }
+                            }
                         }
                     }
+
                     
                     if !drinksInSession.isEmpty {
                         if let mostRecentDrink = drinksInSession.max(by: { $0.timeAt < $1.timeAt }) {
@@ -765,9 +782,14 @@ class FirestoreManager {
         memberDataToUpdate["activeSession"] = true
         
         // Add optional properties if they exist
-        if let shareSession = session.shareSession {
-            memberDataToUpdate["shareSession"] = shareSession
+        if let shareDrinks = session.shareDrinks {
+            memberDataToUpdate["shareDrinks"] = shareDrinks
         }
+        
+        if let shareLocation = session.shareLocation {
+            memberDataToUpdate["shareLocation"] = shareLocation
+        }
+        
         
         // Add endLocation to memberData if it exists
         if let endLocation = session.endLocation {
@@ -777,7 +799,7 @@ class FirestoreManager {
         
         // add ate before if exists
         if let ateBefore = session.ateBefore {
-            memberDataToUpdate["ateBefore"] =  session.ateBefore
+            memberDataToUpdate["ateBefore"] =  ateBefore
         }
         
         userDocRef.setData(memberDataToUpdate, merge: true) { error in
@@ -1006,6 +1028,14 @@ class FirestoreManager {
                     if let startLocationGeoPoint = memberDoc["startLocation"] as? GeoPoint {
                         let startLocation = ["latitude": startLocationGeoPoint.latitude, "longitude": startLocationGeoPoint.longitude]
                         sessionTemp.startLocation = startLocation
+                    }
+                    
+                    if let shareDrinks = memberDoc["shareDrinks"] as? Bool {
+                        sessionTemp.shareDrinks = shareDrinks
+                    }
+                    
+                    if let shareLocation = memberDoc["shareLocation"] as? Bool {
+                        sessionTemp.shareLocation = shareLocation
                     }
                     
                     var drinksInSession: [DrinkInfo] = []
