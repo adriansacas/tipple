@@ -24,7 +24,6 @@ class EditGroupSessionVC: UIViewController, UITextFieldDelegate {
         //Update text field to current session and time
         editSessionNameTextField.text = sessionName
         editEndSessionDateTimePicker.date = endDate
-        
         editEndSessionDateTimePicker.datePickerMode = .dateAndTime
     }
     
@@ -66,9 +65,8 @@ class EditGroupSessionVC: UIViewController, UITextFieldDelegate {
         
         let action = UIAlertAction(title: "Cancel", style: .default)
         action.setValue(UIColor.okay, forKey:"titleTextColor")
-        
+
         deleteAlertController.addAction(action)
-        
         deleteAlertController.addAction(UIAlertAction(
             title: "Delete",
             style: .destructive,
@@ -94,9 +92,11 @@ class EditGroupSessionVC: UIViewController, UITextFieldDelegate {
     }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
         // Get the new view controller using segue.destination.
         // Pass the selected object to the new view controller.
         if segue.identifier == deleteToHomeSegue,  let destination = segue.destination as? HomeViewController {
+            
             // handle firebase marking of end session
             //call protocol functions to update session
             let mainVC = delegate as? EditSession

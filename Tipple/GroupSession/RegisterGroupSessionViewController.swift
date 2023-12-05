@@ -28,8 +28,6 @@ class RegisterGroupSessionVC: UIViewController, UITextFieldDelegate {
         endSessionDateTimePicker.datePickerMode = .dateAndTime
     }
     
-
-    
     @IBAction func createSessionButtonPressed(_ sender: Any) {
         
         //display warning to fill all fields
@@ -60,7 +58,6 @@ class RegisterGroupSessionVC: UIViewController, UITextFieldDelegate {
                 print("Error adding session: \(error)")
             } else if let documentID = documentID {
                 self.sessionID = documentID
-                print("Session added successfully with document ID: \(self.sessionID ?? "Value not set")")
                 self.firestoreManager.updateGroupSession(userID: self.userID!, sessionID: self.sessionID!, fields: newSessionFields) { [self] error in
                     if let error = error {
                         print("Error adding session: \(error)")

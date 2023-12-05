@@ -33,7 +33,7 @@ class SignupViewController: UIViewController, UIPickerViewDataSource, UIPickerVi
     var heightPicker = UIPickerView()
     
     let genderIdentityChoices = ["Man", "Woman", "Non-Binary"]
-    let weightRangeChoices: [Int] = Array(0 ... 2000) //change between 0 - 1000
+    let weightRangeChoices: [Int] = Array(0 ... 2000)
     let heightFeetChoices: [Int] = Array(3 ... 7)
     let heightInchChoices: [Int] = Array(0 ... 11)
     
@@ -125,7 +125,7 @@ class SignupViewController: UIViewController, UIPickerViewDataSource, UIPickerVi
                                                             sessionIDS: [],
                                                             shareDrinkInfo: true,
                                                             shareLocation: true
-)
+                            )
                         } else {
                             AlertUtils.showAlert(title: "Error Registering Data", message: "Try again later.", viewController: self)
                         }

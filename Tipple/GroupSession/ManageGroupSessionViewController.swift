@@ -34,7 +34,6 @@ class ManageGroupSessionVC: UIViewController, CLLocationManagerDelegate, EditSes
     var prevBAC: [String: Double]?
     var isDD: Bool?
     var isLocationEnabled: Bool = false
-
     var lastUpdate: [String: [String: Any]]?
     
     let inviteCodeSegue = "inviteCodeSegue"
@@ -43,7 +42,6 @@ class ManageGroupSessionVC: UIViewController, CLLocationManagerDelegate, EditSes
     let groupListSegue = "groupListSegue"
     let pollsSegue = "PollsSegueIdentifier"
     let manageHomeSegue = "manageToHomeScreen"
-    
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
@@ -76,13 +74,11 @@ class ManageGroupSessionVC: UIViewController, CLLocationManagerDelegate, EditSes
         }
     }
     
-    
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         // Stop the timer when the view disappears
         pollTimer?.invalidate()
     }
-    
     
     func generateQRCode(from string: String) -> UIImage? {
         print("Generating QR Code: \(string)")
@@ -126,7 +122,6 @@ class ManageGroupSessionVC: UIViewController, CLLocationManagerDelegate, EditSes
             
             self.present(stopAlertController, animated: true)
         }
-        
 
         // Display current session name and end date/time
         let dateFormatter = DateFormatter()
@@ -159,6 +154,7 @@ class ManageGroupSessionVC: UIViewController, CLLocationManagerDelegate, EditSes
     func endSessionForUser(markForDeletion: Bool = false) {
         pollTimer?.invalidate()
         locationManager.stopUpdatingLocation()
+        
         // handle firebase marking of end session
         firestoreManager.endSessionForUser(userID: self.userID!,
                                            sessionID: self.sessionID!,
@@ -177,13 +173,11 @@ class ManageGroupSessionVC: UIViewController, CLLocationManagerDelegate, EditSes
             preferredStyle: .alert
         )
         
-        
         let action = UIAlertAction(
             title: "Cancel",
             style: .default)
         
         action.setValue(UIColor.okay, forKey:"titleTextColor")
-        
         stopAlertController.addAction(action)
         
         stopAlertController.addAction(UIAlertAction(
@@ -208,25 +202,6 @@ class ManageGroupSessionVC: UIViewController, CLLocationManagerDelegate, EditSes
                    let endTime = sessionValues["endTime"] as? Date {
                     self.setLabelFields(nameField: sessionName, dateField: endTime)
                 }
-                
-                // BAC needs testing
-                /*
-                for user in users {
-                    if let curr = user.value["BAC"] as? Double {
-                        if let prev = self.prevBAC![user.key] {
-                            if prev < curr && curr > 0.12 {
-                                let name = user.value["Name"] as? String
-                                AlertUtils.showAlert(title: "Check on \(name ?? "your friends")", message: "\(name ?? "someone")'s BAC is at \(curr)", viewController: self)
-                            }
-                        } else if curr > 0.12 { // if no prev BAC existed
-                            let name = user.value["Name"] as? String
-                            AlertUtils.showAlert(title: "Check on \(name ?? "your friends")", message: "\(name ?? "someone")'s BAC is at \(curr)", viewController: self)
-                        }
-                        //set prev to current whether prev existed or not
-                        self.prevBAC![user.key]  = curr
-                    }
-                }
-                */
             }
         }
     }

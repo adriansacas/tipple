@@ -35,26 +35,6 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
 //            }
 //        }
         
-        //TODO: for keychain cleaning purposes
-//        print("reseting keychain credentials")
-//        deleteKeychain()
-        
-    }
-    
-    //DEMO/TESTING purposes: for deleting key on xcode simulator!
-    func deleteKeychain(){
-        
-        let query: [String: Any] = [kSecClass as String: kSecClassInternetPassword,
-                                    kSecAttrServer as String: "www.tipple.com"]
-        
-        let status = SecItemDelete(query as CFDictionary)
-        
-        if (status == errSecSuccess || status == errSecItemNotFound) {
-            print("successfully deleted off keychain")
-        } else {
-            print("something went wrong!!!")
-        }
-        
     }
     
     @IBAction func loginButtonPressed(_ sender: Any) {
@@ -74,7 +54,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         }
     }
     
-    
+    //checks and processes FaceID login
     @IBAction func faceIDLoginButtonPressed(_ sender: Any) {
         
         let context = LAContext()
@@ -120,9 +100,6 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
                             return
                         }
                         
-                        print("email from keychain: \(email)")
-                        print("password from keychain: \(password)")
-                        
                         //login with keychain login info
                         Auth.auth().signIn(withEmail: email , password: password) {
                             (authResult, error) in
@@ -165,7 +142,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
                 title: "OK",
                 style: .default)
             
-            action.setValue(UIColor(hex: "#3634A3"), forKey:"titleTextColor")
+            action.setValue(UIColor.okay, forKey:"titleTextColor")
             alert.addAction(action)
             
             present(alert, animated: true)

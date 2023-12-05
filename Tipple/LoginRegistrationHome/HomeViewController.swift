@@ -20,19 +20,11 @@ class HomeViewController: UIViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        
-//        //TODO: comment out after debugging, this works
-//        print("saveOnKeychain: \(saveOnKeychain ?? false)")
-//        print("saveEmail: \(saveEmail ?? "blank")")
-//        print("savePassword: \(savePassword ?? "blank")")
-        
+        //check if login credentials already exist on the keychain and has valid email and password
         if(saveOnKeychain! && saveEmail! != "" && savePassword! != ""){
-            print("can save on keychain, calling presentSheet()")
             
-            //call only if the query for 'tipple.com is empty'
+            //call only if the query for 'www.tipple.com is empty'
             presentSheet()
-        } else {
-            print("login info already exists on keychain, no overwrite")
         }
     }
     
@@ -54,13 +46,10 @@ class HomeViewController: UIViewController {
                     action in self.saveLoginToKeychain()
                 }
             )
-            
             action.setValue(UIColor.okay, forKey:"titleTextColor")
-            
             keychainAlert.addAction(action)
             
             action = UIAlertAction(title: "Not Now", style: .cancel)
-            
             action.setValue(UIColor.okay, forKey:"titleTextColor")
             
             keychainAlert.addAction(action)
@@ -69,7 +58,6 @@ class HomeViewController: UIViewController {
     }
     
     func saveLoginToKeychain(){
-        print("saving info to keychain")
         
         let encryptedPassword = savePassword?.data(using: String.Encoding.utf8)!
         
@@ -81,17 +69,10 @@ class HomeViewController: UIViewController {
         
         
         let status = SecItemAdd(query as CFDictionary, nil)
-        
-        guard status == errSecSuccess
-        else {
-            print("ERROR something went wrong!!")
-            return
-        }
-        
-        print("successfully saved!")
     }
     
     
+    //display options for starting and individual or group session
     @IBAction func startSessionButtonPressed(_ sender: Any) {
         
         let controller = UIAlertController(
@@ -127,7 +108,6 @@ class HomeViewController: UIViewController {
             style: .default
         )
         cancelAction.setValue(UIColor.okay, forKey:"titleTextColor")
-        
         controller.addAction(cancelAction)
         
         present(controller, animated: true)
@@ -143,9 +123,9 @@ class HomeViewController: UIViewController {
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
         // Get the new view controller using segue.destination.
         // Pass the selected object to the new view controller.
-        
         if segue.identifier == "individualToQASegue",
            let destination = segue.destination as? QuestionnaireVC {
             destination.sessionType = self.sessionType
