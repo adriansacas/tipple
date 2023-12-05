@@ -31,7 +31,7 @@ class ManageGroupSessionVC: UIViewController, CLLocationManagerDelegate, EditSes
     var endDate: Date?
     var isManager: Bool = true
     var pollTimer: Timer?
-    var prevBAC: [String: Double]?
+    var prevBAC: [String: Double] = [:]
     var isDD: Bool?
     var isLocationEnabled: Bool = false
     var lastUpdate: [String: [String: Any]]?
@@ -202,10 +202,33 @@ class ManageGroupSessionVC: UIViewController, CLLocationManagerDelegate, EditSes
                    let endTime = sessionValues["endTime"] as? Date {
                     self.setLabelFields(nameField: sessionName, dateField: endTime)
                 }
+                self.checkDrunkFriends(users: users)
             }
         }
     }
     
+    func checkDrunkFriends(users: [String: [String: Any]]) {
+        
+        for user in users.keys {
+            if(user == "SESSIONVALUES") {
+                continue
+            } else if self.prevBAC[user] == nil { // set to 0.0 if we don't have a prev BAC
+                self.prevBAC[user] = 0.0
+            }
+            
+            let curr =  Double((users[user]!["BAC"] as? String)!)
+            if(curr != nil) {
+                let prev = self.prevBAC[user]
+                // display alert if BAC has increment and is higher than 0.12
+                if prev! < curr! && curr! > 0.12 {
+                    let name = users[user]!["name"] as? String
+                    AlertUtils.showAlert(title: "Check on \(name ?? "your friends")", message: "\(name ?? "someone")'s BAC is at \(users[user]!["BAC"] as? String ?? "a dangerous level")", viewController: self)
+                }
+                // update BAC
+                self.prevBAC[user] = curr
+            }
+        }
+    }
     
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
         // Handle changes if location permissions

@@ -76,21 +76,11 @@ class SessionsListViewController: UIViewController, UITableViewDelegate, UITable
                 self.tableView.endUpdates()
                 self.tableView.reloadData()
                 
-                // Update the polls array and refresh the table view
-//                self.sessions! = list!.sorted(by: { $0.startTime.compare($1.startTime) == .orderedDescending })
-//                self.tableView.reloadData()
-//                DispatchQueue.main.async {
-//                    self?.tableView.reloadData()
-//                }
-                
             }
         }
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // let count = sessions!.count
-//        self.tableView.isHidden = count == 0 // Hide tableView if no polls
-//        self.initialLabel.isHidden = count != 0 // Show noPollsLabel if no polls
         return sessions!.count
     }
     

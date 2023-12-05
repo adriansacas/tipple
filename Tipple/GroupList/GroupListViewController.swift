@@ -25,10 +25,10 @@ class GroupListViewController: UIViewController, UITableViewDelegate, UITableVie
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
         tableView.delegate = self
         tableView.dataSource = self
 
+        // pull users from firebase
         firestoreManager.pollGroupSession(userID: userID!, sessionID: sessionID!) {
             users, error in
             if let error = error {
@@ -64,9 +64,8 @@ class GroupListViewController: UIViewController, UITableViewDelegate, UITableVie
         let cell = tableView.dequeueReusableCell(withIdentifier: textCellIdentifier, for: indexPath as IndexPath)
     
         let row = indexPath.row
-        
         let user = users![keys[row]]
-        print(user!)
+        
         cell.textLabel?.text = user!["name"] as? String
         
         return cell

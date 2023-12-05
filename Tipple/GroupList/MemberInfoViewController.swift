@@ -29,6 +29,7 @@ class MemberInfoViewController: UIViewController, UITableViewDelegate, UITableVi
         tableView.delegate = self
         tableView.dataSource = self
         
+        // profile pic
         self.profilePic.layer.masksToBounds = false
         self.profilePic.layer.cornerRadius = profilePic.frame.size.height / 2
         self.profilePic.clipsToBounds = true

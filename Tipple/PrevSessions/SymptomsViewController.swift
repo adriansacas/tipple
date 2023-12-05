@@ -30,6 +30,7 @@ class SymptomsViewController: UIViewController, UITableViewDelegate, UITableView
         tableView.delegate = self
         tableView.dataSource = self
         
+        // select logged symptoms
         for i in 0...symptoms.count-1 {
             selected[i] = sessionSymptoms.contains(symptoms[i])
         }

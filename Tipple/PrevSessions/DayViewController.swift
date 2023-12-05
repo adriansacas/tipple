@@ -120,6 +120,7 @@ class DayViewController: UIViewController, updateSymptoms, ChartViewDelegate {
     
     func populateDrinks() {
         
+        // put most recent drink on top
         let drinks = session.getSessionDrinks().reversed()
         
         drinks.forEach { drink in
