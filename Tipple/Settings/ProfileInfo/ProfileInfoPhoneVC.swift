@@ -106,12 +106,6 @@ class ProfileInfoPhoneVC: UITableViewController, UITextFieldDelegate, ProfileInf
         if newLength > 10 {
             return false
         }
-        
-//        TODO: add hyphens to phone number as the user types
-        // Add hyphens to format the phone number
-//        if newLength == 4 || newLength == 9 {
-//            textField.text?.insert("-", at: textField.text!.index(textField.text!.endIndex, offsetBy: -1))
-//        }
         	
         return true
     }

@@ -60,11 +60,7 @@ class AlertUtils {
         let action = UIAlertAction(title: "OK", style: .default) { (_) in
             // send to login screen
             defaults.set(false, forKey: "tippleStayLoggedIn")
-//            viewController.navigationController?.dismiss(animated: true)
-//            viewController.navigationController?.popToRootViewController(animated: false)
-//            viewController.navigationController?.present(destinationVC, animated: true)
             viewController.present(destinationVC, animated: true)
-//            viewController.navigationController?.pushViewController(destinationVC, animated: true, )
         }
         
         action.setValue(UIColor.okay, forKey:"titleTextColor")
