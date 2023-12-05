@@ -251,6 +251,8 @@ class ShowActiveVC: UIViewController {
             
             // Adjust the alcohol consumed by the time weight and drink quantity
             adjustedAlcConsumedInGrams = Float(lastDrink.drinkNum) * 14 * timeWeight
+        } else {
+            adjustedAlcConsumedInGrams = Float(self.runningDrinkCounter * 14)
         }
         
         let bac = (adjustedAlcConsumedInGrams / (bodyWeight * 1000.0 * r)) * 100.0
