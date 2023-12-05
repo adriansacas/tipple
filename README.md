@@ -7,13 +7,10 @@
 **Dependencies**: Xcode 15.0, Swift 5.3
 
 **Special Instructions**:
+- **Best ran on iPhone 15 Pro Max simulator**
 - **Group Sessions --> Joining A Session**
     - Group Sessions are joinable through a QR Code. This requires the application to be pushed onto an iOS device with a camera in order to scan QR code
     - **!!! For the sake of this submission and TA testing !!!** We have added a UIAlert that lets the TA enter the session ID. Additionally, the sessionID is presented as a UILabel only if running on simulator.
-- **Running the app**
-    - xxx
-    - xxx
-    - xxx
 
 ## Feature Table
 | Feature | Description | Release Planned | Release Actual | Deviations | Who/Percentage Worked On |
@@ -30,5 +27,5 @@
 | Group Sessions | User can start a group session to track members of their group and post polls   | Alpha   | Alpha   | X   | Danica (75%), Andrew (25%, syncing information to Firebase)   |
 | Members List | Displays everyone in a group session. Can individually view each person's detailed info (BAC, location, active status)   | Beta   | Beta   | X   | Claudia (80%, UI), Andrew (20%, Firebase storage and methods)   |
 | Tracking Locations | Tracks a person's last known location. Can be seen by other's in their group session if enabled.   | Stretch Goal   | Final   | X   | Claudia (10%, UI), Andrew (90% handled concurrent location updates w/ firebase)   |
-| Group Polls | Create and delete polls in group sessions. Allow multiple voting. Allow participants to add options. See polls results.  | Beta   | Final   | X   | Adrian   |
+| Group Polls | Create and delete polls in group sessions. Allow multiple voting. Allow participants to add options. See polls results.  | Beta   | Final   | X   | Adrian (100%)   |
 | UI | Colors, buttons, and user navigation flow   | Final   | Final   | X   | Adrian (25%), Claudia (25%), Danica (25%), Andrew (25%)   |
