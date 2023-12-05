@@ -39,7 +39,6 @@ class QRScannerController: UIViewController {
         super.viewDidLoad()
         
         checkCameraAccess { granted in
-            print(granted)
             if granted {
                 // Camera access is granted, proceed with your logic
                 // Get the back-facing camera for capturing videos

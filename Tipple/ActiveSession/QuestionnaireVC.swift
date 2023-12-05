@@ -149,7 +149,6 @@ class QuestionnaireVC: UIViewController, UITextFieldDelegate, GMSAutocompleteVie
                 self?.toggleShare()
             }
         }
-        
     }
     
     func getCurrentUser() {
@@ -340,7 +339,7 @@ class QuestionnaireVC: UIViewController, UITextFieldDelegate, GMSAutocompleteVie
         }
     }
     
-    // -------- location Stuff --------- /
+    // -------- location delegate and handling --------- //
     func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
         activeTextField = textField
         let autocompleteController = GMSAutocompleteViewController()
