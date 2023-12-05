@@ -286,6 +286,7 @@ class ManageGroupSessionVC: UIViewController, CLLocationManagerDelegate, EditSes
         if segue.identifier == inviteCodeSegue, let destination = segue.destination as? InviteCodeVC {
             destination.groupQRCode = self.groupQRCode
             destination.sessionName = self.sessionName
+            destination.sessionID = self.sessionID!
             destination.endDate = self.endDate!
             
         } else if segue.identifier == sessionSettingSegue, let destination = segue.destination as? EditGroupSessionVC {

@@ -656,6 +656,8 @@ class FirestoreManager {
                                 // The `drinksInSession` array is empty
                                 dictOfMembers[memberID]?["BAC"] = "0.00"
                             }
+                        } else {
+                            dictOfMembers[memberID]?["BAC"] = "0.00"
                         }
                     }
 

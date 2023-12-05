@@ -15,7 +15,7 @@ class InviteCodeVC: UIViewController {
     
     var sessionName: String = ""
     var endDate: Date = Date()
-    
+    var sessionID: String = ""
     var groupQRCode: UIImage?
     
     override func viewDidLoad() {
@@ -30,6 +30,31 @@ class InviteCodeVC: UIViewController {
         dateFormatter.timeStyle = .short
         let formattedDate = dateFormatter.string(from: endDate)
         self.sessionEndDateTimeLabel.text = formattedDate
+        
+        
+        // Create a UILabel for the sessionID
+        #if targetEnvironment(simulator)
+
+        let sessionIDLabel = UILabel()
+        sessionIDLabel.text = "Session ID: \(sessionID)"
+        sessionIDLabel.textAlignment = .center
+        sessionIDLabel.textColor = .black
+        sessionIDLabel.font = UIFont.systemFont(ofSize: 18.0)
+        sessionIDLabel.numberOfLines = 0 // Allow multiple lines if needed
+
+        // Add the UILabel below the QRCode
+        view.addSubview(sessionIDLabel)
+
+        // Position the UILabel below the QRCode
+        let labelHeight: CGFloat = 50.0
+        sessionIDLabel.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            sessionIDLabel.leadingAnchor.constraint(equalTo: inviteCodeImageView.leadingAnchor),
+            sessionIDLabel.trailingAnchor.constraint(equalTo: inviteCodeImageView.trailingAnchor),
+            sessionIDLabel.topAnchor.constraint(equalTo: inviteCodeImageView.bottomAnchor),
+            sessionIDLabel.heightAnchor.constraint(equalToConstant: labelHeight)
+        ])
+        #endif
     }
     
     //TODO: make QR image bigger when clicked on

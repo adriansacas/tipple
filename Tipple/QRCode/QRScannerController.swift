@@ -37,7 +37,66 @@ class QRScannerController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        #if targetEnvironment(simulator)
+
+        // Create an instance variable to store the user-entered sessionID
+        var enteredSessionID: String?
+
+        // Create a UIAlertController with a text field
+        let alertController = UIAlertController(title: "Enter Session ID\n(TA ACCESS ONLY)", message: "Please enter the session ID:", preferredStyle: .alert)
+
+        // Add a text field to the alert controller
+        alertController.addTextField { textField in
+            textField.placeholder = "Session ID"
+        }
+
+        // Add actions to the alert controller
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { [weak self] _ in
+            // Dismiss the view controller when the "Cancel" button is tapped
+            self?.dismiss(animated: true, completion: nil)
+        }
+
+        let submitAction = UIAlertAction(title: "Submit", style: .default) { [weak self] _ in
+            // Retrieve the entered sessionID from the text field
+            enteredSessionID = alertController.textFields?.first?.text
+            
+            // Check if the sessionID is empty
+            guard let sessionID = enteredSessionID, !sessionID.isEmpty else {
+                // Show an error alert for empty session ID
+                let emptyIDAlert = UIAlertController(title: "Error", message: "Session ID cannot be empty.", preferredStyle: .alert)
+                emptyIDAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                self?.present(emptyIDAlert, animated: true, completion: nil)
+                return
+            }
+            
+            // Validate the sessionID and dismiss or show an error alert
+            self?.firestoreManager.validateSession(sessionID: sessionID) { isValid, error in
+                if isValid {
+                    // Session is valid, perform the segue
+                    self?.messageLabel.text! = sessionID
+                    self?.performSegue(withIdentifier: "qrToQuestionSegue", sender: nil)
+                } else {
+                    // Session is invalid, show an error alert and dismiss the view controller
+                    let errorAlert = UIAlertController(title: "Invalid Session", message: "The entered session ID is not valid.", preferredStyle: .alert)
+                    errorAlert.addAction(UIAlertAction(title: "OK", style: .default) { _ in
+                        self?.dismiss(animated: true, completion: nil)
+                    })
+                    self?.present(errorAlert, animated: true, completion: nil)
+                }
+            }
+        }
+
+        // Add actions to the alert controller
+        alertController.addAction(cancelAction)
+        alertController.addAction(submitAction)
+
+        // Present the alert controller
+        self.present(alertController, animated: true, completion: nil)
+
+        #endif
+
+
+
         checkCameraAccess { granted in
             if granted {
                 // Camera access is granted, proceed with your logic
